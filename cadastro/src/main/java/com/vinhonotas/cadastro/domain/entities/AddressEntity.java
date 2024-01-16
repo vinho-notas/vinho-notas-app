@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "address")
-public class Address {
+public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
@@ -27,5 +27,6 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)
     private StateEntity uf;
+    @Column(name = "phone_number")
     private String phoneNumber;
 }
