@@ -1,4 +1,4 @@
-package com.vinhonotas.cadastro.domain.entities;
+package com.vinhonotas.cadastro.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
