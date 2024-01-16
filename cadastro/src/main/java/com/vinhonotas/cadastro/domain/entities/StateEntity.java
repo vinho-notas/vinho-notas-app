@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "state")
-public class State {
+public class StateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
