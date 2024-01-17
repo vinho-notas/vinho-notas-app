@@ -13,18 +13,15 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "state")
-public class StateEntity {
+@Table(name = "country")
+public class CountryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
-    @Column(name = "state")
-    private String stateName;
-    @Column(name = "uf")
-    private String uf;
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private CountryEntity country;
+    @Column(name = "country")
+    private String countryName;
+    @Column(name = "continent")
+    private String continentName;
 }
