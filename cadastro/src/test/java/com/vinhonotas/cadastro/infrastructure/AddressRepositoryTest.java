@@ -46,8 +46,8 @@ class AddressRepositoryTest {
         AddressEntity addressSaved = assertDoesNotThrow(() -> addressRepository.save(addressSc));
 
         assertNotNull(addressSaved);
-        assertEquals("Rua 1", addressSaved.getStreet());
-        assertEquals(123, addressSaved.getNumber());
+        assertEquals("Rua 1", addressSaved.getAddressDescription());
+        assertEquals(123, addressSaved.getAddressNumber());
         assertEquals("Casa", addressSaved.getComplement());
         assertEquals("Centro", addressSaved.getDistrict());
         assertEquals("Joinville", addressSaved.getCity());
@@ -64,8 +64,8 @@ class AddressRepositoryTest {
         AddressEntity addressFound = addressRepository.findById(addressSaved.getId()).orElse(null);
 
         assertNotNull(addressFound);
-        assertEquals("Rua 1", addressFound.getStreet());
-        assertEquals(123, addressFound.getNumber());
+        assertEquals("Rua 1", addressFound.getAddressDescription());
+        assertEquals(123, addressFound.getAddressNumber());
         assertEquals("Casa", addressFound.getComplement());
         assertEquals("Centro", addressFound.getDistrict());
         assertEquals("Joinville", addressFound.getCity());
@@ -91,8 +91,8 @@ class AddressRepositoryTest {
         AddressEntity addressSc = createAddressSC();
         AddressEntity addressSaved = assertDoesNotThrow(() -> addressRepository.save(addressSc));
 
-        addressSaved.setStreet("Rua 1 Alterado");
-        addressSaved.setNumber(1234);
+        addressSaved.setAddressDescription("Rua 1 Alterado");
+        addressSaved.setAddressNumber(1234);
         addressSaved.setComplement("Casa Alterado");
         addressSaved.setDistrict("Centro Alterado");
         addressSaved.setCity("Joinville Alterado");
@@ -102,8 +102,8 @@ class AddressRepositoryTest {
         AddressEntity addressUpdated = assertDoesNotThrow(() -> addressRepository.save(addressSaved));
 
         assertNotNull(addressUpdated);
-        assertEquals("Rua 1 Alterado", addressUpdated.getStreet());
-        assertEquals(1234, addressUpdated.getNumber());
+        assertEquals("Rua 1 Alterado", addressUpdated.getAddressDescription());
+        assertEquals(1234, addressUpdated.getAddressNumber());
         assertEquals("Casa Alterado", addressUpdated.getComplement());
         assertEquals("Centro Alterado", addressUpdated.getDistrict());
         assertEquals("Joinville Alterado", addressUpdated.getCity());
@@ -132,24 +132,28 @@ class AddressRepositoryTest {
 
     private AddressEntity createAddressPR() {
         return AddressEntity.builder()
-                .street("Rua 2")
-                .number(456)
+                .addressDescription("Rua 2")
+                .addressNumber(456)
                 .complement("Casa")
                 .district("Centro")
                 .city("Curitiba")
+                .zipCode("12345-123")
                 .uf(pr)
+                .country(brasil)
                 .phoneNumber("(41) 99999-9999")
                 .build();
     }
 
     private AddressEntity createAddressSC() {
         return AddressEntity.builder()
-                .street("Rua 1")
-                .number(123)
+                .addressDescription("Rua 1")
+                .addressNumber(123)
                 .complement("Casa")
                 .district("Centro")
+                .zipCode("12345-123")
                 .city("Joinville")
                 .uf(sc)
+                .country(brasil)
                 .phoneNumber("(47) 99999-9999")
                 .build();
     }

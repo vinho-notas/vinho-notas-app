@@ -6,9 +6,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/vinho-notas-cadastro
     username: postgres
     password: 1234567
+
   jpa:
     hibernate:
       ddl-auto: update
+      default_schema: cadastro
     show-sql: true
 
 logging:

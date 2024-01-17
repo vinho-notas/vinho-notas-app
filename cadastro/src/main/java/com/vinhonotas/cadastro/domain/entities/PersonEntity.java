@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "person")
+@Table(name = "Tbperson", schema = "cadastro")
 public class PersonEntity {
 
     @Id
@@ -25,7 +25,7 @@ public class PersonEntity {
     private String name;
     @Column(name = "document")
     private String document;
-    @Column(name = "birth_date")
+    @Column(name = "birthdate")
     private LocalDate birthDate;
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)

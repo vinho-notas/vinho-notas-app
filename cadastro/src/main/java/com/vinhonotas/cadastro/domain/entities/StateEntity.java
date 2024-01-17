@@ -13,14 +13,14 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "state")
+@Table(name = "Tbstate", schema = "cadastro")
 public class StateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
-    @Column(name = "state")
+    @Column(name = "statename")
     private String stateName;
     @Column(name = "uf")
     private String uf;

@@ -13,15 +13,15 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "country")
+@Table(name = "Tbcountry", schema = "cadastro")
 public class CountryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
-    @Column(name = "country")
+    @Column(name = "countryname")
     private String countryName;
-    @Column(name = "continent")
+    @Column(name = "continentname")
     private String continentName;
 }
