@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS state (
+CREATE TABLE IF NOT EXISTS cadastro.Tbstate (
      id uuid NOT NULL,
-     state varchar(255) NOT NULL,
+     statename varchar(255) NOT NULL,
      uf varchar(2) NOT NULL,
      country_id uuid NOT NULL,
-     CONSTRAINT state_pk PRIMARY KEY (id),
-     CONSTRAINT country_fk FOREIGN KEY (country_id) REFERENCES country (id)
+     CONSTRAINT tbstate_pk PRIMARY KEY (id),
+     CONSTRAINT tbstate_fk FOREIGN KEY (country_id) REFERENCES cadastro.Tbcountry(id)
 );
 
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "wine_system_user")
+@Table(name = "Tbsystemuser", schema = "cadastro")
 public class UserEntity {
 
     @Id
@@ -24,8 +24,9 @@ public class UserEntity {
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
     private PersonEntity person;
-    @Column(name = "enum_profile")
-    private EnumProfile profile;
+    @Column(name = "enumprofile")
+    @Enumerated(EnumType.STRING)
+    private EnumProfile enumProfile;
     @Column(name = "email")
     private String email;
     @Column(name = "password")

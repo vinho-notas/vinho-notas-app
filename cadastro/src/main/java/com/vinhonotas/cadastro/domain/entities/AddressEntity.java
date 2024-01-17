@@ -13,20 +13,30 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "address")
+@Table(name = "Tbaddress", schema = "cadastro")
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
-    private String street;
-    private int number;
+    @Column(name = "addressdescription")
+    private String addressDescription;
+    @Column(name = "addressnumber")
+    private int addressNumber;
+    @Column(name = "complement")
     private String complement;
+    @Column(name = "district")
     private String district;
+    @Column(name = "zipcode")
+    private String zipCode;
+    @Column(name = "city")
     private String city;
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false)
     private StateEntity uf;
-    @Column(name = "phone_number")
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
+    private CountryEntity country;
+    @Column(name = "phonenumber")
     private String phoneNumber;
 }

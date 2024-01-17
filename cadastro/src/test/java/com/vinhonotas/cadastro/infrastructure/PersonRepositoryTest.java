@@ -117,12 +117,14 @@ class PersonRepositoryTest {
 
     private AddressEntity createAddress1() {
         return AddressEntity.builder()
-                .street("Rua 3")
-                .number(456)
+                .addressDescription("Rua 3")
+                .addressNumber(456)
                 .complement("Complemento 1")
                 .district("Bairro 1")
+                .zipCode("99999999")
                 .city("Cidade 1")
                 .uf(uf)
+                .country(country)
                 .phoneNumber("47999999999")
                 .build();
     }
@@ -146,12 +148,14 @@ class PersonRepositoryTest {
 
     private AddressEntity createAddress2() {
         return AddressEntity.builder()
-                .street("Rua 2")
-                .number(123)
+                .addressDescription("Rua 2")
+                .addressNumber(123)
                 .complement("Complemento 2")
                 .district("Bairro 2")
+                .zipCode("88888888")
                 .city("Cidade 2")
                 .uf(uf)
+                .country(country)
                 .phoneNumber("47999999999")
                 .build();
     }

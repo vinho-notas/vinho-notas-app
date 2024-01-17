@@ -62,7 +62,7 @@ class UserRepositoryTest {
 
         assertNotNull(userEntitySaved);
         assertEquals(personEnofilo, userEntitySaved.getPerson());
-        assertEquals(EnumProfile.OENOPHILE, userEntitySaved.getProfile());
+        assertEquals(EnumProfile.OENOPHILE, userEntitySaved.getEnumProfile());
         assertEquals("person@enofilo.com", userEntitySaved.getEmail());
         assertEquals("123456", userEntitySaved.getPassword());
     }
@@ -75,7 +75,7 @@ class UserRepositoryTest {
 
         assertNotNull(userEntityFound);
         assertEquals(personEnofilo, userEntityFound.getPerson());
-        assertEquals(EnumProfile.OENOPHILE, userEntityFound.getProfile());
+        assertEquals(EnumProfile.OENOPHILE, userEntityFound.getEnumProfile());
         assertEquals("person@enofilo.com", userEntitySaved.getEmail());
         assertEquals("123456", userEntitySaved.getPassword());
     }
@@ -94,7 +94,7 @@ class UserRepositoryTest {
     @DisplayName("Deve atualizar um usuário no banco de dados")
     void testUpdate() {
         UserEntity userEntitySaved = assertDoesNotThrow(() -> userRepository.save(userEnofilo));
-        userEntitySaved.setProfile(EnumProfile.SOMMELIER);
+        userEntitySaved.setEnumProfile(EnumProfile.SOMMELIER);
         userEntitySaved.setEmail("new@email.com");
         userEntitySaved.setPassword("654321");
 
@@ -102,7 +102,7 @@ class UserRepositoryTest {
 
         assertNotNull(userEntityUpdated);
         assertEquals(personEnofilo, userEntityUpdated.getPerson());
-        assertEquals(EnumProfile.SOMMELIER, userEntityUpdated.getProfile());
+        assertEquals(EnumProfile.SOMMELIER, userEntityUpdated.getEnumProfile());
         assertEquals("new@email.com", userEntityUpdated.getEmail());
         assertEquals("654321", userEntityUpdated.getPassword());
     }
@@ -133,13 +133,15 @@ class UserRepositoryTest {
 
     private AddressEntity createAddress() {
         return AddressEntity.builder()
-                .street("Rua 3")
-                .number(456)
+                .addressDescription("Rua 3")
+                .addressNumber(456)
                 .complement("Complemento 1")
                 .district("Bairro 1")
+                .zipCode("89000000")
                 .city("Cidade 1")
                 .uf(uf)
                 .phoneNumber("47999999999")
+                .country(country)
                 .build();
     }
 
@@ -173,7 +175,7 @@ class UserRepositoryTest {
     private UserEntity createUserEnofilo() {
         return UserEntity.builder()
                 .person(personEnofilo)
-                .profile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE)
                 .email("person@enofilo.com")
                 .password("123456")
                 .build();
@@ -182,7 +184,7 @@ class UserRepositoryTest {
     private UserEntity createUserSommerlier() {
         return UserEntity.builder()
                 .person(personSommelier)
-                .profile(EnumProfile.SOMMELIER)
+                .enumProfile(EnumProfile.SOMMELIER)
                 .email("person@sommelier.com")
                 .password("123456")
                 .build();
@@ -191,7 +193,7 @@ class UserRepositoryTest {
     private UserEntity createUserParceiro() {
         return UserEntity.builder()
                 .person(personParceiro)
-                .profile(EnumProfile.PARTNER)
+                .enumProfile(EnumProfile.PARTNER)
                 .email("person@parceiro.com")
                 .password("123456")
                 .build();
