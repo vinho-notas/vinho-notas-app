@@ -1,6 +1,6 @@
 package com.vinhonotas.cadastro.infrastructure;
 
-import com.vinhonotas.cadastro.domain.entities.Country;
+import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,15 +19,15 @@ class StateRepositoryTest {
     private CountryRepository countryRepository;
     private StateEntity santaCatarina;
     private StateEntity parana;
-    private Country country;
+    private CountryEntity countryEntity;
 
     @BeforeEach
     void setUp() {
-        country = createCountryBrasil();
+        countryEntity = createCountryBrasil();
         santaCatarina = createStateSantaCatarina();
         parana = createStateParana();
 
-        countryRepository.save(country);
+        countryRepository.save(countryEntity);
     }
 
     @Test
@@ -38,7 +38,7 @@ class StateRepositoryTest {
         assertNotNull(stateSaved);
         assertEquals("Santa Catarina", stateSaved.getStateName());
         assertEquals("SC", stateSaved.getUf());
-        assertEquals(country.getCountryName(), stateSaved.getCountry().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateSaved.getCountryEntity().getCountryName());
     }
 
     @Test
@@ -50,7 +50,7 @@ class StateRepositoryTest {
         assertNotNull(stateFound);
         assertEquals("Santa Catarina", stateFound.getStateName());
         assertEquals("SC", stateFound.getUf());
-        assertEquals(country.getCountryName(), stateFound.getCountry().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateFound.getCountryEntity().getCountryName());
     }
 
     @Test
@@ -73,7 +73,7 @@ class StateRepositoryTest {
         assertNotNull(stateUpdated);
         assertEquals("Santa Catarina Alterado", stateUpdated.getStateName());
         assertEquals("SC Alterado", stateUpdated.getUf());
-        assertEquals(country.getCountryName(), stateUpdated.getCountry().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateUpdated.getCountryEntity().getCountryName());
     }
 
     @Test
@@ -89,12 +89,12 @@ class StateRepositoryTest {
         return StateEntity.builder()
                 .stateName("Paraná")
                 .uf("PR")
-                .country(country)
+                .countryEntity(countryEntity)
                 .build();
     }
 
-    private Country createCountryBrasil() {
-        return Country.builder()
+    private CountryEntity createCountryBrasil() {
+        return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
@@ -104,7 +104,7 @@ class StateRepositoryTest {
         return StateEntity.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .country(country)
+                .countryEntity(countryEntity)
                 .build();
     }
 

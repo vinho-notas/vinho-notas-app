@@ -1,7 +1,7 @@
 package com.vinhonotas.cadastro.infrastructure;
 
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
-import com.vinhonotas.cadastro.domain.entities.Country;
+import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ class AddressRepositoryTest {
 
     private StateEntity sc;
     private StateEntity pr;
-    private Country brasil;
+    private CountryEntity brasil;
 
     @BeforeEach
     void setUp() {
@@ -123,8 +123,8 @@ class AddressRepositoryTest {
         assertEquals(0, addressRepository.findAll().size());
     }
 
-    private Country createCountry() {
-        return Country.builder()
+    private CountryEntity createCountry() {
+        return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
@@ -158,7 +158,7 @@ class AddressRepositoryTest {
         return StateEntity.builder()
                 .stateName("Paraná")
                 .uf("PR")
-                .country(brasil)
+                .countryEntity(brasil)
                 .build();
     }
 
@@ -166,7 +166,7 @@ class AddressRepositoryTest {
         return StateEntity.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .country(brasil)
+                .countryEntity(brasil)
                 .build();
     }
 
