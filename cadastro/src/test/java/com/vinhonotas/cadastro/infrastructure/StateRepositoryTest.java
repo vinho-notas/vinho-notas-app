@@ -38,7 +38,7 @@ class StateRepositoryTest {
         assertNotNull(stateSaved);
         assertEquals("Santa Catarina", stateSaved.getStateName());
         assertEquals("SC", stateSaved.getUf());
-        assertEquals(countryEntity.getCountryName(), stateSaved.getCountryEntity().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateSaved.getCountry().getCountryName());
     }
 
     @Test
@@ -50,7 +50,7 @@ class StateRepositoryTest {
         assertNotNull(stateFound);
         assertEquals("Santa Catarina", stateFound.getStateName());
         assertEquals("SC", stateFound.getUf());
-        assertEquals(countryEntity.getCountryName(), stateFound.getCountryEntity().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateFound.getCountry().getCountryName());
     }
 
     @Test
@@ -73,7 +73,7 @@ class StateRepositoryTest {
         assertNotNull(stateUpdated);
         assertEquals("Santa Catarina Alterado", stateUpdated.getStateName());
         assertEquals("SC Alterado", stateUpdated.getUf());
-        assertEquals(countryEntity.getCountryName(), stateUpdated.getCountryEntity().getCountryName());
+        assertEquals(countryEntity.getCountryName(), stateUpdated.getCountry().getCountryName());
     }
 
     @Test
@@ -89,7 +89,7 @@ class StateRepositoryTest {
         return StateEntity.builder()
                 .stateName("Paraná")
                 .uf("PR")
-                .countryEntity(countryEntity)
+                .country(countryEntity)
                 .build();
     }
 
@@ -104,7 +104,7 @@ class StateRepositoryTest {
         return StateEntity.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .countryEntity(countryEntity)
+                .country(countryEntity)
                 .build();
     }
 

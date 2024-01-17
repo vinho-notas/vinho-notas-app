@@ -158,7 +158,7 @@ class AddressRepositoryTest {
         return StateEntity.builder()
                 .stateName("Paraná")
                 .uf("PR")
-                .countryEntity(brasil)
+                .country(brasil)
                 .build();
     }
 
@@ -166,7 +166,7 @@ class AddressRepositoryTest {
         return StateEntity.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .countryEntity(brasil)
+                .country(brasil)
                 .build();
     }
 
