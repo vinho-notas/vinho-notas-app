@@ -5,7 +5,7 @@ import com.vinhonotas.cadastro.application.services.CountryService;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
