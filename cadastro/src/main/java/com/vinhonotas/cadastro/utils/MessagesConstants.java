@@ -29,4 +29,17 @@ public class MessagesConstants {
     public static final String USER_NOT_FOUND_WITH_NAME = "Usuário não encontrado com o nome: ";
     public static final String ERROR_UPDATE_USER_DATA = "Erro ao atualizar dados do usuário";
     public static final String ERROR_DELETE_USER_DATA = "Erro ao deletar usuário";
+
+    //COUNTRY
+    public static final String ERROR_WHEN_SAVING_COUNTRY = "Erro ao gravar dados do país";
+    public static final String COUNTRY_NOT_FOUND = "País não encontrado";
+    public static final String COUNTRY_NOT_FOUND_WITH_NAME = "País não encontrado com o nome: ";
+    public static final String COUNTRY_NOT_FOUND_WITH_CONTINENT = "País não encontrado com o continente: ";
+    public static final String ERROR_UPDATE_COUNTRY_DATA = "Erro ao atualizar dados do país";
+    public static final String ERROR_DELETE_COUNTRY_DATA = "Erro ao deletar país";
+    public static final String COUNTRIES_NOT_FOUND = "Nenhum país encontrado";
+    public static final String COUNTRY_ALREADY_EXISTS = "Já existe um país cadastrado com os parâmetros informados";
+
+    //CONTROLLER
+    public static final String INVALID_FIELDS = "A requisição possui campos inválidos, verifique";
 }
