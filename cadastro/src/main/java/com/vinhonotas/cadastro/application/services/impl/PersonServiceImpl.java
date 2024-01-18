@@ -58,7 +58,7 @@ public class PersonServiceImpl implements PersonService {
             personRepository.save(personConverter.toEntityUpdate(personEntity, id, personInputDTO));
             return personRepository.findByName(personEntity.getName());
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_WHEN_UPDATING_PERSON);
+            throw new IllegalArgumentException(MessagesConstants.ERROR_UPDATE_PERSON_DATA);
         }
     }
 
@@ -67,7 +67,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             personRepository.deleteById(id);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_WHEN_DELETING_PERSON);
+            throw new IllegalArgumentException(MessagesConstants.ERROR_DELETE_PERSON_DATA);
         }
     }
 }

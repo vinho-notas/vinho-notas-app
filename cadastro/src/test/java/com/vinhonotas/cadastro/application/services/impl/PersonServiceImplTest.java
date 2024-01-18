@@ -168,7 +168,7 @@ class PersonServiceImplTest {
         when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(Exception.class, () -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING_PERSON, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_UPDATE_PERSON_DATA, exception.getMessage());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
         verify(personConverter, times(0)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(personRepository, times(0)).save(entity);
@@ -187,7 +187,7 @@ class PersonServiceImplTest {
         doThrow(IllegalArgumentException.class).when(personRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
 
         Exception exception = assertThrows(Exception.class, () -> personService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
-        assertEquals(MessagesConstants.ERROR_WHEN_DELETING_PERSON, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_DELETE_PERSON_DATA, exception.getMessage());
         verify(personRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
 

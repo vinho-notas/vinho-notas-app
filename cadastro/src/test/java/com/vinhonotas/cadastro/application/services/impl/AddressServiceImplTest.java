@@ -164,7 +164,7 @@ class AddressServiceImplTest {
         when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
 
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
         verify(addressConverter, times(1)).toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);

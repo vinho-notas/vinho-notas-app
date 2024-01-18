@@ -13,13 +13,13 @@ public class MessagesConstants {
     //ADDRESS
     public static final String ERROR_WHEN_SAVING_ADDRESS = "Erro ao salvar endereço";
     public static final String ADDRESS_NOT_FOUND = "Endereço não encontrado";
-    public static final String ERROR_WHEN_UPDATING_ADDRESS = "Erro ao atualizar endereço";
+    public static final String ERROR_UPDATE_ADDRESS_DATA = "Erro ao atualizar endereço";
     public static final String ERROR_DELETE_ADDRESS_DATA = "Erro ao deletar endereço";
 
     //PERSON
     public static final String ERROR_WHEN_SAVING_PERSON = "Erro ao gravar dados da pessoa";
     public static final String PERSON_NOT_FOUND = "Pessoa não encontrado";
     public static final String PERSON_NOT_FOUND_WITH_NAME = "Pessoa não encontrada com o nome: ";
-    public static final String ERROR_WHEN_UPDATING_PERSON = "Erro ao atualizar dados da pessoa";
-    public static final String ERROR_WHEN_DELETING_PERSON = "Erro ao deletar pessoa";
+    public static final String ERROR_UPDATE_PERSON_DATA = "Erro ao atualizar dados da pessoa";
+    public static final String ERROR_DELETE_PERSON_DATA = "Erro ao deletar pessoa";
 }
