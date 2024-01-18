@@ -65,7 +65,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public List<CountryEntity> getByContinent(String continent) {
         List<CountryEntity> entityList = countryRepository.findByContinentName(continent);
-        if (entityList.isEmpty()) {
+        if (Objects.isNull(entityList) || entityList.isEmpty()) {
             throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + continent);
         }
         return entityList;
