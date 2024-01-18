@@ -22,4 +22,11 @@ public class MessagesConstants {
     public static final String PERSON_NOT_FOUND_WITH_NAME = "Pessoa não encontrada com o nome: ";
     public static final String ERROR_UPDATE_PERSON_DATA = "Erro ao atualizar dados da pessoa";
     public static final String ERROR_DELETE_PERSON_DATA = "Erro ao deletar pessoa";
+
+    //USER
+    public static final String ERROR_WHEN_SAVING_USER = "Erro ao gravar dados do usuário";
+    public static final String USER_NOT_FOUND = "Usuário não encontrado";
+    public static final String USER_NOT_FOUND_WITH_NAME = "Usuário não encontrado com o nome: ";
+    public static final String ERROR_UPDATE_USER_DATA = "Erro ao atualizar dados do usuário";
+    public static final String ERROR_DELETE_USER_DATA = "Erro ao deletar usuário";
 }
