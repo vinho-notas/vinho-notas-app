@@ -47,7 +47,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Teste de criação de pessoa com sucesso")
+    @DisplayName("Teste de criação de usuário com sucesso")
     void testCreateSuccess() {
         when(userConverter.toEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
@@ -63,7 +63,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Teste de criação de pessoa com exceção")
+    @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
         when(userConverter.toEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenThrow(RuntimeException.class);
@@ -75,7 +75,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma lista de pessoas")
+    @DisplayName("Deve retornar uma lista de usuários")
     void testGetAll() {
         when(userRepository.findAll()).thenReturn(List.of(entity));
 
@@ -90,7 +90,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma pessoa pelo id")
+    @DisplayName("Deve retornar um usuário pelo id")
     void testGetById() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
 
@@ -104,7 +104,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma exceção ao buscar uma pessoa pelo id")
+    @DisplayName("Deve retornar uma exceção ao buscar um usuário pelo id")
     void testGetByIdException() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
@@ -114,7 +114,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma pessoa pelo nome")
+    @DisplayName("Deve retornar um usuário pelo nome")
     void testGetByName() {
         when(userRepository.findByPersonName("João")).thenReturn(entity);
 
@@ -128,7 +128,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma exceção ao buscar uma pessoa pelo nome")
+    @DisplayName("Deve retornar uma exceção ao buscar um usuário pelo nome")
     void testGetByNameException() {
         when(userRepository.findByPersonName("João")).thenThrow(IllegalArgumentException.class);
 
@@ -138,7 +138,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar uma pessoa")
+    @DisplayName("Deve atualizar um usuário")
     void testUpdate() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
         when(userConverter.toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
@@ -158,7 +158,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma exceção ao atualizar uma pessoa")
+    @DisplayName("Deve retornar uma exceção ao atualizar um usuário")
     void testUpdateException() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
@@ -170,14 +170,14 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve deletar uma pessoa")
+    @DisplayName("Deve deletar um usuário")
     void testDelete() {
         assertDoesNotThrow(() -> userService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         verify(userRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
 
     @Test
-    @DisplayName("Deve retornar uma exceção ao deletar uma pessoa")
+    @DisplayName("Deve retornar uma exceção ao deletar um usuário")
     void testDeleteException() {
         doThrow(IllegalArgumentException.class).when(userRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
 
