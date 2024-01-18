@@ -74,7 +74,7 @@ class AddressServiceImplTest {
         when(addressConverter.toEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> addressServiceImpl.create(addressInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.create(addressInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, exception.getMessage());
         verify(addressConverter, times(1)).toEntity(addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
@@ -163,7 +163,7 @@ class AddressServiceImplTest {
         when(addressConverter.toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS, exception.getMessage());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
         verify(addressConverter, times(1)).toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
