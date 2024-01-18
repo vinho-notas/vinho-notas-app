@@ -164,11 +164,29 @@ class AddressServiceImplTest {
         when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
 
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
         verify(addressConverter, times(1)).toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
     }
+
+    @Test
+    @DisplayName("Teste deve deletar endereço")
+    void testDeleteSucesso() {
+        assertDoesNotThrow(() -> addressServiceImpl.delete(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b")));
+        verify(addressRepository, times(1)).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma exceção ao deletar um endereço")
+    void testDeleteErro() {
+        doThrow(new IllegalArgumentException()).when(addressRepository).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
+
+        Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.delete(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b")));
+        assertEquals(MessagesConstants.ERROR_DELETE_ADDRESS_DATA, exception.getMessage());
+        verify(addressRepository, times(1)).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
+    }
+
 
     private AddressEntity createAddressEntity() {
         return AddressEntity.builder()

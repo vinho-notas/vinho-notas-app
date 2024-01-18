@@ -48,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
             AddressEntity addressEntity = this.getById(id);
             return addressRepository.save(addressConverter.toEntityUpdate(addressEntity, id, addressInputDTO));
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS);
+            throw new IllegalArgumentException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
         }
     }
 
