@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getByName(String name) {
         try {
-            return userRepository.findByPersonByName(name);
+            return userRepository.findByPersonName(name);
         } catch (Exception e) {
             throw new IllegalArgumentException(MessagesConstants.USER_NOT_FOUND_WITH_NAME + name);
         }
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         try {
             UserEntity userEntity = this.getById(id);
             userRepository.save(userConverter.toEntityUpdate(userEntity, id, userInputDTO));
-            return userRepository.findByPersonByName(userEntity.getPerson().getName());
+            return userRepository.findByPersonName(userEntity.getPerson().getName());
         } catch (Exception e) {
             throw new IllegalArgumentException(MessagesConstants.ERROR_UPDATE_USER_DATA);
         }

@@ -116,7 +116,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma pessoa pelo nome")
     void testGetByName() {
-        when(userRepository.findByPersonByName("João")).thenReturn(entity);
+        when(userRepository.findByPersonName("João")).thenReturn(entity);
 
         UserEntity entity = assertDoesNotThrow(() -> userService.getByName("João"));
         assertNotNull(entity);
@@ -124,17 +124,17 @@ class UserServiceImplTest {
         assertEquals("João", entity.getPerson().getName());
         assertEquals("email@email.com", entity.getEmail());
         assertEquals("123456", entity.getPassword());
-        verify(userRepository, times(1)).findByPersonByName("João");
+        verify(userRepository, times(1)).findByPersonName("João");
     }
 
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar uma pessoa pelo nome")
     void testGetByNameException() {
-        when(userRepository.findByPersonByName("João")).thenThrow(IllegalArgumentException.class);
+        when(userRepository.findByPersonName("João")).thenThrow(IllegalArgumentException.class);
 
         Exception exception = assertThrows(Exception.class, () -> userService.getByName("João"));
         assertEquals(MessagesConstants.USER_NOT_FOUND_WITH_NAME + "João", exception.getMessage());
-        verify(userRepository, times(1)).findByPersonByName("João");
+        verify(userRepository, times(1)).findByPersonName("João");
     }
 
     @Test
@@ -143,7 +143,7 @@ class UserServiceImplTest {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
         when(userConverter.toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
-        when(userRepository.findByPersonByName("João")).thenReturn(entity);
+        when(userRepository.findByPersonName("João")).thenReturn(entity);
 
         UserEntity entity = assertDoesNotThrow(() -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
         assertNotNull(entity);
@@ -154,7 +154,7 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
         verify(userConverter, times(1)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(userRepository, times(1)).save(entity);
-        verify(userRepository, times(1)).findByPersonByName("João");
+        verify(userRepository, times(1)).findByPersonName("João");
     }
 
     @Test
