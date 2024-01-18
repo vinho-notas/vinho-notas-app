@@ -13,6 +13,6 @@ public interface CountryService {
     public CountryEntity getById(UUID id);
     public CountryEntity getByName(String name);
     public List<CountryEntity> getByContinent(String continent);
-    public CountryEntity update(CountryEntity countryEntity);
+    public CountryEntity update(UUID id, CountryInputDTO countryInputDTO);
     public void delete(UUID id);
 }

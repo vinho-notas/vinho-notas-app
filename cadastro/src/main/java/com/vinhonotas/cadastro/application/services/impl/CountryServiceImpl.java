@@ -7,6 +7,7 @@ import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class CountryServiceImpl implements CountryService {
     private final CountryConverter countryConverter;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CountryEntity create(CountryInputDTO countryInputDTO) {
         try {
             CountryEntity countryEntity = countryConverter.toEntity(countryInputDTO);
@@ -30,36 +32,50 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public List<CountryEntity> getAll() {
-        //TODO: Implementar
-        return null;
+        return countryRepository.findAll();
     }
 
     @Override
     public CountryEntity getById(UUID id) {
-        //TODO: Implementar
-        return null;
+        return countryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("País não encontrado"));
     }
 
     @Override
     public CountryEntity getByName(String name) {
-        //TODO: Implementar
-        return null;
+        try {
+            return countryRepository.findByCountryName(name);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("País não encontrado com o nome: " + name);
+        }
     }
 
     @Override
     public List<CountryEntity> getByContinent(String continent) {
-        //TODO: Implementar
-        return null;
+        try {
+            return countryRepository.findByContinentName(continent);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("País não encontrado com o continente: " + continent);
+        }
     }
 
     @Override
-    public CountryEntity update(CountryEntity countryEntity) {
-        //TODO: Implementar
-        return null;
+    public CountryEntity update(UUID id, CountryInputDTO countryInputDTO) {
+        try {
+            CountryEntity entity = this.getById(id);
+            countryRepository.save(countryConverter.toEntityUpdate(entity, id, countryInputDTO));
+            return countryRepository.findByCountryName(entity.getCountryName());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Erro ao atualizar dados do país");
+        }
     }
 
     @Override
     public void delete(UUID id) {
-        //TODO: Implementar
+        try {
+            countryRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Erro ao deletar país");
+        }
     }
 }
