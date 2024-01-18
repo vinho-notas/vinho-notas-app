@@ -180,7 +180,7 @@ class AddressServiceImplTest {
                 .zipCode("00000-000")
                 .city("São Paulo")
                 .uf(createSaoPauloEntity())
-                .country(createBrasilEntity())
+                .country(brasilEntity)
                 .phoneNumber("11999999999")
                 .build();
     }
@@ -194,7 +194,7 @@ class AddressServiceImplTest {
                 .zipCode("00000-000")
                 .city("São Paulo")
                 .uf(createSaoPauloEntity())
-                .country(createBrasilEntity())
+                .country(brasilEntity)
                 .phoneNumber("11999999999")
                 .build();
     }
@@ -203,7 +203,7 @@ class AddressServiceImplTest {
         return StateEntity.builder()
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(createBrasilEntity())
+                .country(brasilEntity)
                 .build();
     }
 
