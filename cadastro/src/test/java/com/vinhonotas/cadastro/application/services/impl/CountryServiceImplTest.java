@@ -1,16 +1,22 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.utils.MessagesConstants;
 import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,7 +68,7 @@ class CountryServiceImplTest {
         when(countryRepository.save(brasilEntity)).thenThrow(RuntimeException.class);
 
         Exception exception = assertThrows(Exception.class, () -> countryService.create(brasilInputDTO));
-        assertEquals("Erro ao gravar dados do país", exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_COUNTRY, exception.getMessage());
         verify(countryConverter, times(1)).toEntity(brasilInputDTO);
         verify(countryRepository, times(1)).save(brasilEntity);
     }
@@ -100,7 +106,7 @@ class CountryServiceImplTest {
         when(countryRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(Exception.class, () -> countryService.getById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
-        assertEquals("País não encontrado", exception.getMessage());
+        assertEquals(MessagesConstants.COUNTRY_NOT_FOUND, exception.getMessage());
         verify(countryRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
 
@@ -120,10 +126,10 @@ class CountryServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar um país pelo nome")
     void testGetByNameException() {
-        when(countryRepository.findByCountryName("Brasil")).thenThrow(IllegalArgumentException.class);
+        when(countryRepository.findByCountryName("Brasil")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> countryService.getByName("Brasil"));
-        assertEquals("País não encontrado com o nome: Brasil", exception.getMessage());
+        assertEquals(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + "Brasil", exception.getMessage());
         verify(countryRepository, times(1)).findByCountryName("Brasil");
     }
 
@@ -144,11 +150,16 @@ class CountryServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar uma lista de países pelo continente")
     void testGetByContinentException() {
-        when(countryRepository.findByContinentName("América do Sul")).thenThrow(IllegalArgumentException.class);
+        when(countryRepository.findByContinentName("América do Sul")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> countryService.getByContinent("América do Sul"));
-        assertEquals("País não encontrado com o continente: América do Sul", exception.getMessage());
+        assertEquals(MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + "América do Sul", exception.getMessage());
         verify(countryRepository, times(1)).findByContinentName("América do Sul");
+
+        when(countryRepository.findByContinentName("América do Sul")).thenReturn(Collections.emptyList());
+        exception = assertThrows(Exception.class, () -> countryService.getByContinent("América do Sul"));
+        assertEquals(MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + "América do Sul", exception.getMessage());
+        verify(countryRepository, times(2)).findByContinentName("América do Sul");
     }
 
     @Test
@@ -176,7 +187,7 @@ class CountryServiceImplTest {
         when(countryRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(Exception.class, () -> countryService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO));
-        assertEquals("Erro ao atualizar dados do país", exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_UPDATE_COUNTRY_DATA, exception.getMessage());
         verify(countryRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
         verify(countryConverter, times(0)).toEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO);
         verify(countryRepository, times(0)).save(brasilEntity);
@@ -185,6 +196,7 @@ class CountryServiceImplTest {
     @Test
     @DisplayName("Deve deletar um país")
     void testDelete() {
+        when(countryRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(brasilEntity));
         assertDoesNotThrow(() -> countryService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         verify(countryRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
@@ -192,13 +204,16 @@ class CountryServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao deletar um país")
     void testDeleteException() {
-        doThrow(IllegalArgumentException.class).when(countryRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-
         Exception exception = assertThrows(Exception.class, () -> countryService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
-        assertEquals("Erro ao deletar país", exception.getMessage());
-        verify(countryRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-    }
+        assertEquals(MessagesConstants.COUNTRY_NOT_FOUND, exception.getMessage());
+        verify(countryRepository, times(0)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        verify(countryRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
 
+        when(countryRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(brasilEntity));
+        doThrow(BadRequestException.class).when(countryRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        exception = assertThrows(Exception.class, () -> countryService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
+        assertEquals(MessagesConstants.ERROR_DELETE_COUNTRY_DATA, exception.getMessage());
+    }
 
     private CountryInputDTO createBrasilInputDTO() {
         return CountryInputDTO.builder()
