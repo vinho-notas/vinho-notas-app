@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
 import com.vinhonotas.cadastro.application.services.AddressService;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.infrastructure.AddressRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
@@ -27,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
             AddressEntity addressEntity = addressConverter.toEntity(addressInputDTO);
             return addressRepository.save(addressEntity);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
         }
     }
 
@@ -39,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressEntity getById(UUID id) {
         return addressRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(MessagesConstants.ADDRESS_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND));
     }
 
     @Override
@@ -48,7 +49,7 @@ public class AddressServiceImpl implements AddressService {
             AddressEntity addressEntity = this.getById(id);
             return addressRepository.save(addressConverter.toEntityUpdate(addressEntity, id, addressInputDTO));
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
+            throw new BadRequestException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
         }
     }
 
@@ -57,7 +58,7 @@ public class AddressServiceImpl implements AddressService {
         try {
             addressRepository.deleteById(id);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_DELETE_ADDRESS_DATA);
+            throw new BadRequestException(MessagesConstants.ERROR_DELETE_ADDRESS_DATA);
         }
     }
 }
