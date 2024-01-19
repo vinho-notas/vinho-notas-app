@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -23,6 +24,15 @@ public class StateConverter {
                 .stateName(stateInputDTO.getStateName() != null ? stateInputDTO.getStateName() : entity.getStateName())
                 .uf(stateInputDTO.getUf() != null ? stateInputDTO.getUf() : entity.getUf())
                 .country(stateInputDTO.getCountry() != null ? stateInputDTO.getCountry() : entity.getCountry())
+                .build();
+    }
+
+    public StateOutputDTO convertToOutputDTO(StateEntity state) {
+        return StateOutputDTO.builder()
+                .id(state.getId())
+                .stateName(state.getStateName())
+                .uf(state.getUf())
+                .country(state.getCountry())
                 .build();
     }
 }
