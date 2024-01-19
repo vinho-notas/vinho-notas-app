@@ -1,10 +1,11 @@
-package com.vinhonotas.cadastro.interfaces.dtos.controllers;
+package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.services.CountryService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
+import com.vinhonotas.cadastro.interfaces.controllers.CountryController;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import lombok.extern.log4j.Log4j2;

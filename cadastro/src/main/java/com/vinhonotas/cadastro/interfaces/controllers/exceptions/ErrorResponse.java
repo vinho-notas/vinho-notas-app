@@ -1,4 +1,4 @@
-package com.vinhonotas.cadastro.interfaces.dtos.controllers.exceptions;
+package com.vinhonotas.cadastro.interfaces.controllers.exceptions;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
