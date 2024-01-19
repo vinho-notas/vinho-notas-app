@@ -42,7 +42,7 @@ public class AddressConverter {
 
     public AddressOutputDTO convertToOutputDTO(AddressEntity addressEntity) {
         return AddressOutputDTO.builder()
-                .id(addressEntity.getId().toString())
+                .id(addressEntity.getId())
                 .addressDescription(addressEntity.getAddressDescription())
                 .addressNumber(addressEntity.getAddressNumber())
                 .complement(addressEntity.getComplement())
@@ -63,7 +63,7 @@ public class AddressConverter {
 
     public AddressOutputDTO convertToOutputDTOUpdate(AddressEntity addressEntity, UUID id, AddressOutputDTO addressOutputDTO) {
         return AddressOutputDTO.builder()
-                .id(id.toString())
+                .id(id)
                 .addressDescription(addressOutputDTO.getAddressDescription() != null ? addressOutputDTO.getAddressDescription() : addressEntity.getAddressDescription())
                 .addressNumber(addressOutputDTO.getAddressNumber() != 0 ? addressOutputDTO.getAddressNumber() : addressEntity.getAddressNumber())
                 .complement(addressOutputDTO.getComplement() != null ? addressOutputDTO.getComplement() : addressEntity.getComplement())

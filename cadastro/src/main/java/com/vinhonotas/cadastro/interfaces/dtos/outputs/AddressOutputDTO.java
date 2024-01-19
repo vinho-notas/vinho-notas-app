@@ -5,11 +5,13 @@ import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Builder
 public class AddressOutputDTO {
 
-    private String id;
+    private UUID id;
     private String addressDescription;
     private int addressNumber;
     private String complement;
