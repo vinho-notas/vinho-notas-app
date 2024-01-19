@@ -47,37 +47,16 @@ class StateControllerTest {
     private StateInputDTO stateInputDTO;
     private StateEntity stateEntity;
     private StateOutputDTO stateOutputDTO;
+    private CountryEntity country;
 
     @BeforeEach
     void setUp() {
         log.info("Iniciando teste");
 
-        CountryEntity country = CountryEntity.builder()
-                .id(UUID.fromString("e50ae4ba-b799-4506-9efb-345a3f6556fa"))
-                .countryName("Brasil")
-                .continentName("América do Sul")
-                .build();
-
-        stateInputDTO = StateInputDTO.builder()
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(country)
-                .build();
-
-        stateEntity = StateEntity.builder()
-                .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(country)
-                .build();
-
-        stateOutputDTO = StateOutputDTO.builder()
-                .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(country)
-                .build();
-
+        country = createCountry();
+        stateInputDTO = createStateInputDTO();
+        stateEntity = createStateEntity();
+        stateOutputDTO = createOutputDTO();
     }
 
     @Test
@@ -124,17 +103,6 @@ class StateControllerTest {
                 .andExpect(jsonPath("$[0].uf").value(stateEntity.getUf()))
                 .andExpect(jsonPath("$[0].country.id").value(stateEntity.getCountry().getId().toString()));
     }
-
-//    @Test
-//    @DisplayName("Deve retornar um erro ao listar todos os estados")
-//    void testGetAllStatesError() throws Exception {
-//        when(stateService.getAll()).thenThrow(new BadRequestException(MessagesConstants.STATES_NOT_FOUND));
-//
-//        mockMvc.perform(get("/api/v1/states")
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isBadRequest());
-//    }
 
     @Test
     @DisplayName("Deve retornar um estado pelo id")
@@ -273,7 +241,39 @@ class StateControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    private StateOutputDTO createOutputDTO() {
+        return StateOutputDTO.builder()
+                .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
+                .stateName("São Paulo")
+                .uf("SP")
+                .country(country)
+                .build();
+    }
 
+    private StateEntity createStateEntity() {
+        return StateEntity.builder()
+                .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
+                .stateName("São Paulo")
+                .uf("SP")
+                .country(country)
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("São Paulo")
+                .uf("SP")
+                .country(country)
+                .build();
+    }
+
+    private CountryEntity createCountry() {
+        return CountryEntity.builder()
+                .id(UUID.fromString("e50ae4ba-b799-4506-9efb-345a3f6556fa"))
+                .countryName("Brasil")
+                .continentName("América do Sul")
+                .build();
+    }
 
     @AfterEach
     void tearDownEach() {
