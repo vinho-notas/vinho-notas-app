@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
@@ -27,7 +28,7 @@ public class PersonServiceImpl implements PersonService {
             PersonEntity personEntity = personConverter.toEntity(personInputDTO);
             return personRepository.save(personEntity);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
         }
     }
 
@@ -39,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonEntity getById(UUID id) {
         return personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(MessagesConstants.PERSON_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(MessagesConstants.PERSON_NOT_FOUND));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             return personRepository.findByName(name);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
+            throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
         }
     }
 
@@ -58,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
             personRepository.save(personConverter.toEntityUpdate(personEntity, id, personInputDTO));
             return personRepository.findByName(personEntity.getName());
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_UPDATE_PERSON_DATA);
+            throw new BadRequestException(MessagesConstants.ERROR_UPDATE_PERSON_DATA);
         }
     }
 
@@ -67,7 +68,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             personRepository.deleteById(id);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MessagesConstants.ERROR_DELETE_PERSON_DATA);
+            throw new BadRequestException(MessagesConstants.ERROR_DELETE_PERSON_DATA);
         }
     }
 }
