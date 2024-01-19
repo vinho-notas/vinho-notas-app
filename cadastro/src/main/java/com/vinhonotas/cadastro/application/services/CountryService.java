@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface CountryService {
 
-    public CountryEntity create(CountryInputDTO countryInputDTO);
-    public List<CountryEntity> getAll();
-    public CountryEntity getById(UUID id);
-    public CountryEntity getByName(String name);
-    public List<CountryEntity> getByContinent(String continent);
-    public CountryEntity update(UUID id, CountryInputDTO countryInputDTO);
-    public void delete(UUID id);
+    CountryEntity create(CountryInputDTO countryInputDTO);
+    List<CountryEntity> getAll();
+    CountryEntity getById(UUID id);
+    CountryEntity getByName(String name);
+    List<CountryEntity> getByContinent(String continent);
+    CountryEntity update(UUID id, CountryInputDTO countryInputDTO);
+    void delete(UUID id);
 }

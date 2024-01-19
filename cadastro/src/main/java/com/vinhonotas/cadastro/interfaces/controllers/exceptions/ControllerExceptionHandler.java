@@ -1,4 +1,4 @@
-package com.vinhonotas.cadastro.interfaces.dtos.controllers.exceptions;
+package com.vinhonotas.cadastro.interfaces.controllers.exceptions;
 
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.springframework.http.HttpStatusCode;

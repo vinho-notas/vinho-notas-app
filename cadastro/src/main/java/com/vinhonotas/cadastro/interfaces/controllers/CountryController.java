@@ -1,4 +1,4 @@
-package com.vinhonotas.cadastro.interfaces.dtos.controllers;
+package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.services.CountryService;

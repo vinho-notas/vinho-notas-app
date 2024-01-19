@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public interface AddressService {
 
-    public AddressEntity create(AddressInputDTO addressInputDTO);
-    public List<AddressEntity> getAll();
-    public AddressEntity getById(UUID id);
-    public AddressEntity update(UUID id, AddressInputDTO addressInputDTO);
-    public void delete(UUID id);
+    AddressEntity create(AddressInputDTO addressInputDTO);
+    List<AddressEntity> getAll();
+    AddressEntity getById(UUID id);
+    AddressEntity update(UUID id, AddressInputDTO addressInputDTO);
+    void delete(UUID id);
 
 }
