@@ -2,8 +2,8 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.services.CountryService;
-import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,33 +21,34 @@ public class CountryController {
     private final CountryConverter countryConverter;
 
     @PostMapping
-    public ResponseEntity<CountryEntity> createCountry(@Valid @RequestBody CountryInputDTO countryInputDTO) {
-        return ResponseEntity.ok(countryService.create(countryInputDTO));
+    public ResponseEntity<CountryOutputDTO> createCountry(@Valid @RequestBody CountryInputDTO countryInputDTO) {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTO(countryService.create(countryInputDTO)));
     }
 
     @GetMapping
-    public ResponseEntity<List<CountryEntity>> getAllCountries() {
-        return ResponseEntity.ok(countryService.getAll());
+    public ResponseEntity<List<CountryOutputDTO>> getAllCountries() {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTOList(countryService.getAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryEntity> getCountryById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(countryService.getById(UUID.fromString(id)));
+    public ResponseEntity<CountryOutputDTO> getCountryById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTO(countryService.getById(UUID.fromString(id))));
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<CountryEntity> getCountryByName(@PathVariable("name") String name) {
-        return ResponseEntity.ok(countryService.getByName(name));
+    public ResponseEntity<CountryOutputDTO> getCountryByName(@PathVariable("name") String name) {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTO(countryService.getByName(name)));
     }
 
     @GetMapping("/continent/{continent}")
-    public ResponseEntity<List<CountryEntity>> getCountryByContinent(@PathVariable("continent") String continent) {
-        return ResponseEntity.ok(countryService.getByContinent(continent));
+    public ResponseEntity<List<CountryOutputDTO>> getCountryByContinent(@PathVariable("continent") String continent) {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTOList(countryService.getByContinent(continent)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CountryEntity> updateCountry(@PathVariable("id") String id, @Valid @RequestBody CountryInputDTO countryInputDTO) {
-        return ResponseEntity.ok(countryService.update(UUID.fromString(id), countryInputDTO));
+    public ResponseEntity<CountryOutputDTO> updateCountry(@PathVariable("id") String id, @Valid @RequestBody CountryInputDTO countryInputDTO) {
+        return ResponseEntity.ok(countryConverter.convertToOutputDTOUpdate(countryService.update(UUID.fromString(id),
+                countryInputDTO), UUID.fromString(id), countryConverter.convertToOutputDTO(countryService.update(UUID.fromString(id), countryInputDTO))));
     }
 
     @DeleteMapping("/{id}")
