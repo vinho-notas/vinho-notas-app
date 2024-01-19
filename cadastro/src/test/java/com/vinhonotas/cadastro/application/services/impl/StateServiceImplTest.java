@@ -1,8 +1,10 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.StateConverter;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -33,6 +35,8 @@ class StateServiceImplTest {
     private StateRepository stateRepository;
     @Mock
     private StateConverter stateConverter;
+    @Mock
+    private CountryRepository countryRepository;
 
     private StateEntity scEntity;
     private StateInputDTO scInputDTO;
@@ -50,6 +54,8 @@ class StateServiceImplTest {
     void testCreateSuccess() {
         when(stateConverter.toEntity(scInputDTO)).thenReturn(scEntity);
         when(stateRepository.save(scEntity)).thenReturn(scEntity);
+        when(stateRepository.findByStateName(scInputDTO.getStateName())).thenReturn(null);
+        when(countryRepository.findByCountryName(scInputDTO.getCountry().getCountryName())).thenReturn(createBrasilEntity());
 
         StateEntity entity = assertDoesNotThrow(() -> stateService.create(scInputDTO));
         assertNotNull(entity);
@@ -64,13 +70,12 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Teste de criação de estado com exceção")
     void testCreateException() {
-        when(stateConverter.toEntity(scInputDTO)).thenReturn(scEntity);
-        when(stateRepository.save(scEntity)).thenThrow(RuntimeException.class);
-
         Exception exception = assertThrows(Exception.class, () -> stateService.create(scInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_STATE, exception.getMessage());
-        verify(stateConverter, times(1)).toEntity(scInputDTO);
-        verify(stateRepository, times(1)).save(scEntity);
+        verify(stateConverter, times(0)).toEntity(scInputDTO);
+        verify(stateRepository, times(0)).save(scEntity);
+        verify(stateRepository, times(1)).findByStateName(scInputDTO.getStateName());
+        verify(countryRepository, times(1)).findByCountryName(scInputDTO.getCountry().getCountryName());
     }
 
     @Test
@@ -129,7 +134,7 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar um estado pelo nome")
     void testGetByNameException() {
-        when(stateRepository.findByStateName("Santa Catarina")).thenThrow(IllegalArgumentException.class);
+        when(stateRepository.findByStateName("Santa Catarina")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> stateService.getByName("Santa Catarina"));
         assertEquals(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + "Santa Catarina", exception.getMessage());
@@ -139,22 +144,21 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma lista de estados pela UF")
     void testGetByUf() {
-        when(stateRepository.findByUf("SC")).thenReturn(List.of(scEntity));
+        when(stateRepository.findByUf("SC")).thenReturn(scEntity);
 
-        List<StateEntity> list = assertDoesNotThrow(() -> stateService.getByUf("SC"));
-        assertNotNull(list);
-        assertEquals(1, list.size());
-        assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), list.get(0).getId());
-        assertEquals("Santa Catarina", list.get(0).getStateName());
-        assertEquals("SC", list.get(0).getUf());
-        assertEquals("Brasil", list.get(0).getCountry().getCountryName());
+        StateEntity state = assertDoesNotThrow(() -> stateService.getByUf("SC"));
+        assertNotNull(state);
+        assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), state.getId());
+        assertEquals("Santa Catarina", state.getStateName());
+        assertEquals("SC", state.getUf());
+        assertEquals("Brasil", state.getCountry().getCountryName());
         verify(stateRepository, times(1)).findByUf("SC");
     }
 
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar uma lista de estados pela UF")
     void testGetByUfException() {
-        when(stateRepository.findByUf("SC")).thenThrow(IllegalArgumentException.class);
+        when(stateRepository.findByUf("SC")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> stateService.getByUf("SC"));
         assertEquals(MessagesConstants.STATE_NOT_FOUND_WITH_UF + "SC", exception.getMessage());
@@ -196,6 +200,7 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Deve deletar um estado")
     void testDelete() {
+        when(stateRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(scEntity));
         assertDoesNotThrow(() -> stateService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         verify(stateRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
@@ -203,7 +208,8 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao deletar um estado")
     void testDeleteException() {
-        doThrow(IllegalArgumentException.class).when(stateRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        doThrow(BadRequestException.class).when(stateRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        when(stateRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(scEntity));
 
         Exception exception = assertThrows(Exception.class, () -> stateService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         assertEquals(MessagesConstants.ERROR_DELETE_STATE_DATA, exception.getMessage());

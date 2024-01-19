@@ -9,6 +9,8 @@ public class MessagesConstants {
     public static final String STATE_NOT_FOUND_WITH_UF = "Estado não encontrado com a UF: ";
     public static final String ERROR_UPDATE_STATE_DATA = "Erro ao atualizar dados do estado";
     public static final String ERROR_DELETE_STATE_DATA = "Erro ao deletar estado";
+    public static final String STATE_ALREADY_EXISTS = "Já existe um estado cadastrado com os parâmetros informados";
+    public static final String STATES_NOT_FOUND = "Nenhum estado encontrado";
 
     //ADDRESS
     public static final String ERROR_WHEN_SAVING_ADDRESS = "Erro ao salvar endereço";

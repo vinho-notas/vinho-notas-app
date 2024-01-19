@@ -12,7 +12,7 @@ public interface StateService {
     List<StateEntity> getAll();
     StateEntity getById(UUID id);
     StateEntity getByName(String name);
-    List<StateEntity> getByUf(String uf);
+    StateEntity getByUf(String uf);
     StateEntity update(UUID id, StateInputDTO stateInputDTO);
     void delete(UUID id);
 }
