@@ -5,6 +5,8 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.AddressRepository;
+import com.vinhonotas.cadastro.infrastructure.CountryRepository;
+import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import lombok.extern.log4j.Log4j2;
@@ -34,10 +36,16 @@ class AddressServiceImplTest {
     private AddressRepository addressRepository;
     @Mock
     private AddressConverter addressConverter;
+    @Mock
+    private StateRepository stateRepository;
+    @Mock
+    private CountryRepository countryRepository;
 
     private AddressInputDTO addressInputDTO;
     private CountryEntity brasilEntity;
     private AddressEntity addressEntity;
+    private StateEntity state;
+
     @BeforeEach
     void setUp() {
         log.info("Iniciando teste");
@@ -46,11 +54,15 @@ class AddressServiceImplTest {
         addressEntity = createAddressEntity();
     }
 
+
+
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
         when(addressConverter.toEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
+        when(stateRepository.findByUf(addressInputDTO.getUf().getUf())).thenReturn(createSaoPauloEntity());
+        when(countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName())).thenReturn(brasilEntity);
         AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.create(addressInputDTO));
 
         assertNotNull(address);
@@ -71,13 +83,10 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de criação de endereço com erro")
     void testCreateErro() {
-        when(addressConverter.toEntity(addressInputDTO)).thenReturn(addressEntity);
-        when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
-
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.create(addressInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, exception.getMessage());
-        verify(addressConverter, times(1)).toEntity(addressInputDTO);
-        verify(addressRepository, times(1)).save(addressEntity);
+        verify(addressConverter, times(0)).toEntity(addressInputDTO);
+        verify(addressRepository, times(0)).save(addressEntity);
     }
 
     @Test
@@ -173,6 +182,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste deve deletar endereço")
     void testDeleteSucesso() {
+        when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
+
         assertDoesNotThrow(() -> addressServiceImpl.delete(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b")));
         verify(addressRepository, times(1)).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
     }
@@ -180,13 +191,10 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao deletar um endereço")
     void testDeleteErro() {
-        doThrow(new IllegalArgumentException()).when(addressRepository).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
-
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.delete(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b")));
-        assertEquals(MessagesConstants.ERROR_DELETE_ADDRESS_DATA, exception.getMessage());
-        verify(addressRepository, times(1)).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
+        assertEquals(MessagesConstants.ADDRESS_NOT_FOUND, exception.getMessage());
+        verify(addressRepository, times(0)).deleteById(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b0b9b9b9b9b"));
     }
-
 
     private AddressEntity createAddressEntity() {
         return AddressEntity.builder()

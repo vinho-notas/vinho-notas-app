@@ -14,7 +14,7 @@ public class MessagesConstants {
 
     //ADDRESS
     public static final String ERROR_WHEN_SAVING_ADDRESS = "Erro ao salvar endereço";
-    public static final String ADDRESS_NOT_FOUND = "Endereço não encontrado";
+    public static final String ADDRESS_NOT_FOUND = "Nenhum endereço encontrado";
     public static final String ERROR_UPDATE_ADDRESS_DATA = "Erro ao atualizar endereço";
     public static final String ERROR_DELETE_ADDRESS_DATA = "Erro ao deletar endereço";
 
