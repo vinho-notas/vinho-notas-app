@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public interface StateService {
 
-    public StateEntity create(StateInputDTO stateInputDTO);
-    public List<StateEntity> getAll();
-    public StateEntity getById(UUID id);
-    public StateEntity getByName(String name);
-    public List<StateEntity> getByUf(String uf);
-    public StateEntity update(UUID id, StateInputDTO stateInputDTO);
-    public void delete(UUID id);
+    StateEntity create(StateInputDTO stateInputDTO);
+    List<StateEntity> getAll();
+    StateEntity getById(UUID id);
+    StateEntity getByName(String name);
+    List<StateEntity> getByUf(String uf);
+    StateEntity update(UUID id, StateInputDTO stateInputDTO);
+    void delete(UUID id);
 }

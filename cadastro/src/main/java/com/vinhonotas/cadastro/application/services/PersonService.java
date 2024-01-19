@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public interface PersonService {
 
-    public PersonEntity create(PersonInputDTO personInputDTO);
-    public List<PersonEntity> getAll();
-    public PersonEntity getById(UUID id);
-    public PersonEntity getByName(String name);
-    public PersonEntity update(UUID id, PersonInputDTO personInputDTO);
-    public void delete(UUID id);
+    PersonEntity create(PersonInputDTO personInputDTO);
+    List<PersonEntity> getAll();
+    PersonEntity getById(UUID id);
+    PersonEntity getByName(String name);
+    PersonEntity update(UUID id, PersonInputDTO personInputDTO);
+    void delete(UUID id);
 }
