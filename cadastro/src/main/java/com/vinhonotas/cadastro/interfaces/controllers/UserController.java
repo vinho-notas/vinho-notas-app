@@ -42,13 +42,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody UserInputDTO userInputDTO) {
-        return ResponseEntity.ok(
-                userConverter.convertToOutputDTOUpdate(
-                        userService.update(UUID.fromString(id),
-                        userInputDTO),
-                        UUID.fromString(id),
-                        userConverter.convertToOutputDTO(
-                                userService.update(UUID.fromString(id), userInputDTO))));
+        return ResponseEntity.ok(userConverter.convertToOutputDTOUpdate(userService.update(UUID.fromString(id),
+                        userInputDTO), UUID.fromString(id), userConverter.convertToOutputDTO(userService.update(UUID.fromString(id), userInputDTO))));
     }
 
     @DeleteMapping("/{id}")

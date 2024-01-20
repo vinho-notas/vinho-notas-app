@@ -1,6 +1,7 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.UserConverter;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
@@ -66,7 +67,7 @@ class UserServiceImplTest {
     @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
         when(userConverter.toEntity(inputDTO)).thenReturn(entity);
-        when(userRepository.save(entity)).thenThrow(RuntimeException.class);
+        when(userRepository.save(entity)).thenThrow(BadRequestException.class);
 
         Exception exception = assertThrows(Exception.class, () -> userService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_USER, exception.getMessage());
@@ -130,8 +131,6 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar um usuário pelo nome")
     void testGetByNameException() {
-        when(userRepository.findByPersonName("João")).thenThrow(IllegalArgumentException.class);
-
         Exception exception = assertThrows(Exception.class, () -> userService.getByName("João"));
         assertEquals(MessagesConstants.USER_NOT_FOUND_WITH_NAME + "João", exception.getMessage());
         verify(userRepository, times(1)).findByPersonName("João");
@@ -172,6 +171,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve deletar um usuário")
     void testDelete() {
+        when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
         assertDoesNotThrow(() -> userService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         verify(userRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
@@ -179,11 +179,9 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao deletar um usuário")
     void testDeleteException() {
-        doThrow(IllegalArgumentException.class).when(userRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-
         Exception exception = assertThrows(Exception.class, () -> userService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
-        assertEquals(MessagesConstants.ERROR_DELETE_USER_DATA, exception.getMessage());
-        verify(userRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        assertEquals(MessagesConstants.USER_NOT_FOUND, exception.getMessage());
+        verify(userRepository, times(0)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
 
     private UserEntity createEntity() {

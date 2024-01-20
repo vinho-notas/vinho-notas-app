@@ -176,6 +176,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve deletar uma pessoa")
     void testDelete() {
+        when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
         assertDoesNotThrow(() -> personService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
         verify(personRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
@@ -183,11 +184,9 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao deletar uma pessoa")
     void testDeleteException() {
-        doThrow(IllegalArgumentException.class).when(personRepository).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-
         Exception exception = assertThrows(Exception.class, () -> personService.delete(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465")));
-        assertEquals(MessagesConstants.ERROR_DELETE_PERSON_DATA, exception.getMessage());
-        verify(personRepository, times(1)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
+        assertEquals(MessagesConstants.PERSON_NOT_FOUND, exception.getMessage());
+        verify(personRepository, times(0)).deleteById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
     }
 
     private PersonEntity createEntity() {

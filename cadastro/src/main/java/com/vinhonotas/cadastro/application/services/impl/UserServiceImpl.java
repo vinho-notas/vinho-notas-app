@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity create(UserInputDTO userInputDTO) {
-        UserEntity person = userRepository.findByPersonName(userInputDTO.getPerson().getName());
+        UserEntity person = userRepository.findByPersonId(userInputDTO.getPerson().getId());
         if (Objects.nonNull(person)) {
             throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
         }
@@ -76,6 +77,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new BadRequestException(MessagesConstants.USER_NOT_FOUND);
+        }
         try {
             userRepository.deleteById(id);
         } catch (Exception e) {
