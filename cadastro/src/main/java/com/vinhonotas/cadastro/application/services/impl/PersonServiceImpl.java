@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -24,6 +25,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PersonEntity create(PersonInputDTO personInputDTO) {
+        PersonEntity person = personRepository.findByDocument(personInputDTO.getDocument());
+        if (Objects.nonNull(person)) {
+            throw new BadRequestException(MessagesConstants.PERSON_ALREADY_EXISTS);
+        }
         try {
             PersonEntity personEntity = personConverter.toEntity(personInputDTO);
             return personRepository.save(personEntity);
@@ -34,7 +39,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonEntity> getAll() {
-        return personRepository.findAll();
+        List<PersonEntity> personList = personRepository.findAll();
+        if (personList.isEmpty()) {
+            throw new BadRequestException(MessagesConstants.PERSONS_NOT_FOUND);
+        }
+        return personList;
     }
 
     @Override
@@ -45,14 +54,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonEntity getByName(String name) {
-        try {
-            return personRepository.findByName(name);
-        } catch (Exception e) {
+        PersonEntity person = personRepository.findByName(name);
+        if (Objects.isNull(person)) {
             throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
         }
+        return person;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PersonEntity update(UUID id, PersonInputDTO personInputDTO) {
         try {
             PersonEntity personEntity = this.getById(id);
@@ -64,6 +74,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
         try {
             personRepository.deleteById(id);

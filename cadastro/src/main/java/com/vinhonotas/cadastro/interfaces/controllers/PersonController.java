@@ -42,8 +42,13 @@ public class PersonController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody PersonInputDTO personInputDTO) {
-        return ResponseEntity.ok(personConverter.convertToOutputDTOUpdate(personService.update(UUID.fromString(id),
-                personInputDTO), UUID.fromString(id), personConverter.convertToOutputDTO(personService.update(UUID.fromString(id), personInputDTO))));
+        return ResponseEntity.ok(
+                personConverter.convertToOutputDTOUpdate(
+                        personService.update(UUID.fromString(id),
+                        personInputDTO),
+                        UUID.fromString(id),
+                        personConverter.convertToOutputDTO(
+                                personService.update(UUID.fromString(id), personInputDTO))));
     }
 
     @DeleteMapping("/{id}")
