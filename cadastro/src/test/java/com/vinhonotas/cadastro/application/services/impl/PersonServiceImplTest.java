@@ -1,6 +1,7 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
+import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
@@ -68,7 +69,7 @@ class PersonServiceImplTest {
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
         when(personConverter.toEntity(inputDTO)).thenReturn(entity);
-        when(personRepository.save(entity)).thenThrow(RuntimeException.class);
+        when(personRepository.save(entity)).thenThrow(BadRequestException.class);
 
         Exception exception = assertThrows(Exception.class, () -> personService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
@@ -134,8 +135,6 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve retornar uma exceção ao buscar uma pessoa pelo nome")
     void testGetByNameException() {
-        when(personRepository.findByName("João")).thenThrow(IllegalArgumentException.class);
-
         Exception exception = assertThrows(Exception.class, () -> personService.getByName("João"));
         assertEquals(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + "João", exception.getMessage());
         verify(personRepository, times(1)).findByName("João");
