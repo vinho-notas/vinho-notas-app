@@ -24,6 +24,8 @@ public class MessagesConstants {
     public static final String PERSON_NOT_FOUND_WITH_NAME = "Pessoa não encontrada com o nome: ";
     public static final String ERROR_UPDATE_PERSON_DATA = "Erro ao atualizar dados da pessoa";
     public static final String ERROR_DELETE_PERSON_DATA = "Erro ao deletar pessoa";
+    public static final String PERSONS_NOT_FOUND = "Nenhuma pessoa encontrada";
+    public static final String PERSON_ALREADY_EXISTS = "Já existe uma pessoa cadastrada com os parâmetros informados";
 
     //USER
     public static final String ERROR_WHEN_SAVING_USER = "Erro ao gravar dados do usuário";
