@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -76,6 +77,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
+        Optional<PersonEntity> person = personRepository.findById(id);
+        if (person.isEmpty()) {
+            throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND);
+        }
         try {
             personRepository.deleteById(id);
         } catch (Exception e) {

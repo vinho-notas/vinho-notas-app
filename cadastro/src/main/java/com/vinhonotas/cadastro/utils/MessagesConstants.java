@@ -33,6 +33,8 @@ public class MessagesConstants {
     public static final String USER_NOT_FOUND_WITH_NAME = "Usuário não encontrado com o nome: ";
     public static final String ERROR_UPDATE_USER_DATA = "Erro ao atualizar dados do usuário";
     public static final String ERROR_DELETE_USER_DATA = "Erro ao deletar usuário";
+    public static final String USER_ALREADY_EXISTS = "Já existe um usuário cadastrado com os parâmetros informados";
+    public static final String USERS_NOT_FOUND = "Nenhum usuário encontrado";
 
     //COUNTRY
     public static final String ERROR_WHEN_SAVING_COUNTRY = "Erro ao gravar dados do país";
