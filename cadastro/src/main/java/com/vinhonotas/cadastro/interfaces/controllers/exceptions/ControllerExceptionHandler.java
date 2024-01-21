@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -29,6 +28,6 @@ public class ControllerExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .map(error -> new ErrorObject(error.getDefaultMessage(), error.getField(), error.getRejectedValue()))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

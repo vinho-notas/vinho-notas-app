@@ -31,7 +31,7 @@ public class StateController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StateOutputDTO> getStateById(@PathVariable("id") String id) {        ;
+    public ResponseEntity<StateOutputDTO> getStateById(@PathVariable("id") String id) {
         return ResponseEntity.ok(stateConverter.convertToOutputDTO(stateService.getById(UUID.fromString(id))));
     }
 
