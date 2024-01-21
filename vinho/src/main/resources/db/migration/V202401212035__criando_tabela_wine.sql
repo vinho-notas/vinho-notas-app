@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS vinho.Tbwine (
         region varchar(255) NOT NULL,
         maturation varchar(255) NOT NULL,
         harmonization varchar(255) NOT NULL,
-        CONSTRAINT tbcountry_pk PRIMARY KEY (id)
+        CONSTRAINT tbwine_pk PRIMARY KEY (id)
 );
