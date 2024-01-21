@@ -48,4 +48,11 @@ public class MessagesConstants {
 
     //CONTROLLER
     public static final String INVALID_FIELDS = "A requisição possui campos inválidos, verifique";
+
+    private MessagesConstants() {
+    }
+
+    public static MessagesConstants createMessagesConstants() {
+        return new MessagesConstants();
+    }
 }
