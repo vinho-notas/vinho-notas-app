@@ -5,6 +5,7 @@ import com.vinhonotas.cadastro.application.services.StateService;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/states")
+@Tag(name = "Estados", description = "Operações relacionadas a estados")
 public class StateController {
 
     private final StateService stateService;

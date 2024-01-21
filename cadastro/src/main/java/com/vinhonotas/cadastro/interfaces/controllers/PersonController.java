@@ -5,6 +5,7 @@ import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/persons")
+@Tag(name = "Pessoas", description = "Operações relacionadas a pessoas")
 public class PersonController {
 
     private final PersonService personService;
