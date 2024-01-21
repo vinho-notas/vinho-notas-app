@@ -9,8 +9,6 @@ import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@Log4j2
 class PersonServiceImplTest {
 
     @InjectMocks
@@ -43,8 +40,6 @@ class PersonServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste");
-
         inputDTO = createInputDTO();
         entity = createEntity();
     }
@@ -267,11 +262,6 @@ class PersonServiceImplTest {
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
     }
 
 }

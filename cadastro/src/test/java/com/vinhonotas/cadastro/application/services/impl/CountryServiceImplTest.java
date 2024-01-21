@@ -6,8 +6,6 @@ import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@Log4j2
 @ExtendWith(MockitoExtension.class)
 class CountryServiceImplTest {
 
@@ -40,8 +37,6 @@ class CountryServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste");
-
         brasilEntity = createBrasilEntity();
         brasilInputDTO = createBrasilInputDTO();
     }
@@ -229,11 +224,5 @@ class CountryServiceImplTest {
                 .continentName("América do Sul")
                 .build();
     }
-
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
-    }
-
 
 }

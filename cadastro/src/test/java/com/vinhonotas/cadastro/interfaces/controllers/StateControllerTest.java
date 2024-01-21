@@ -9,8 +9,6 @@ import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = StateController.class)
-@Log4j2
 class StateControllerTest {
 
     @Autowired
@@ -51,8 +48,6 @@ class StateControllerTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste");
-
         country = createCountry();
         stateInputDTO = createStateInputDTO();
         stateEntity = createStateEntity();
@@ -273,11 +268,6 @@ class StateControllerTest {
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
     }
 
 }
