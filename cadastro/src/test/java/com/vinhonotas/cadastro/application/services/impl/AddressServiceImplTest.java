@@ -9,8 +9,6 @@ import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@Log4j2
 class AddressServiceImplTest {
 
     @InjectMocks
@@ -48,7 +45,6 @@ class AddressServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste");
         brasilEntity = createBrasilEntity();
         addressInputDTO = createAddressInputDTO();
         addressEntity = createAddressEntity();
@@ -240,9 +236,4 @@ class AddressServiceImplTest {
                 .build();
     }
 
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
-    }
-
-}
+ }

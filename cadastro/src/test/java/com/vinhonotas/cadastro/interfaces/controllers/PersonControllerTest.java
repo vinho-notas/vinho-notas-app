@@ -11,8 +11,6 @@ import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PersonController.class)
-@Log4j2
 class PersonControllerTest {
 
     @Autowired
@@ -56,8 +53,6 @@ class PersonControllerTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste");
-
         countryEntity = createCountryEntity();
         stateEntity = createStateEntity();
         addressEntity = createAddressEntity();
@@ -287,11 +282,6 @@ class PersonControllerTest {
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(addressEntity)
                 .build();
-    }
-
-    @AfterEach
-    void tearDown() {
-        log.info("Finalizando teste");
     }
 
 }

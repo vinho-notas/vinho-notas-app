@@ -5,8 +5,6 @@ import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-@Log4j2
 class AddressConverterTest {
 
     @InjectMocks
@@ -33,7 +30,6 @@ class AddressConverterTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste: ");
         addressInputDTO = createAddressInputDTO();
         addressEntity = createAddressEntity();
         addressOutputDTO = createAddressOutputDTO();
@@ -170,11 +166,6 @@ class AddressConverterTest {
                 .country(Mockito.mock(CountryEntity.class))
                 .phoneNumber("0000000000")
                 .build();
-    }
-
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
     }
 
 }

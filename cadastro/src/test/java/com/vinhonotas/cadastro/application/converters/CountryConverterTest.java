@@ -3,8 +3,6 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
-import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-@Log4j2
 class CountryConverterTest {
 
     @InjectMocks
@@ -30,8 +27,6 @@ class CountryConverterTest {
 
     @BeforeEach
     void setUp() {
-        log.info("Iniciando teste: ");
-
         countryEntity = createCountryEntity();
         countryInputDTO = createCountryInputDTO();
         countryOutputDTO = createCountryOutputDTO();
@@ -115,11 +110,5 @@ class CountryConverterTest {
                 .continentName("América do Sul")
                 .build();
     }
-
-    @AfterEach
-    void tearDownEach() {
-        log.info("Finalizando teste");
-    }
-
 
 }
