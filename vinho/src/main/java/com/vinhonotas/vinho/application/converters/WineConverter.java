@@ -4,6 +4,8 @@ import com.vinhonotas.vinho.domain.entities.WineEntity;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class WineConverter {
 
@@ -26,6 +28,29 @@ public class WineConverter {
                 .region(wineInputDTO.getRegion())
                 .maturation(wineInputDTO.getMaturation())
                 .harmonization(wineInputDTO.getHarmonization())
+                .build();
+    }
+
+    public WineEntity toEntityUpdate(WineEntity wineSaved, UUID id, WineInputDTO wineInputDTO) {
+        return WineEntity.builder()
+                .id(id)
+                .name(wineInputDTO.getName() != null ? wineInputDTO.getName() : wineSaved.getName())
+                .price(wineInputDTO.getPrice() != null ? wineInputDTO.getPrice() : wineSaved.getPrice())
+                .purchaseLocation(wineInputDTO.getPurchaseLocation() != null ? wineInputDTO.getPurchaseLocation() : wineSaved.getPurchaseLocation())
+                .purchaseDate(wineInputDTO.getPurchaseDate() != null ? wineInputDTO.getPurchaseDate() : wineSaved.getPurchaseDate())
+                .wineType(wineInputDTO.getWineType() != null ? wineInputDTO.getWineType() : wineSaved.getWineType())
+                .wineClassification(wineInputDTO.getWineClassification() != null ? wineInputDTO.getWineClassification() : wineSaved.getWineClassification())
+                .alcoholContent(wineInputDTO.getAlcoholContent() != 0 ? wineInputDTO.getAlcoholContent() : wineSaved.getAlcoholContent())
+                .volumeMl(wineInputDTO.getVolumeMl() != 0 ? wineInputDTO.getVolumeMl() : wineSaved.getVolumeMl())
+                .grape(wineInputDTO.getGrape() != null ? wineInputDTO.getGrape() : wineSaved.getGrape())
+                .winery(wineInputDTO.getWinery() != null ? wineInputDTO.getWinery() : wineSaved.getWinery())
+                .serviceTemperature(wineInputDTO.getServiceTemperature() != 0 ? wineInputDTO.getServiceTemperature() : wineSaved.getServiceTemperature())
+                .harvest(wineInputDTO.getHarvest() != 0 ? wineInputDTO.getHarvest() : wineSaved.getHarvest())
+                .country(wineInputDTO.getCountry() != null ? wineInputDTO.getCountry() : wineSaved.getCountry())
+                .guardTime(wineInputDTO.getGuardTime() != null ? wineInputDTO.getGuardTime() : wineSaved.getGuardTime())
+                .region(wineInputDTO.getRegion() != null ? wineInputDTO.getRegion() : wineSaved.getRegion())
+                .maturation(wineInputDTO.getMaturation() != null ? wineInputDTO.getMaturation() : wineSaved.getMaturation())
+                .harmonization(wineInputDTO.getHarmonization() != null ? wineInputDTO.getHarmonization() : wineSaved.getHarmonization())
                 .build();
     }
 }

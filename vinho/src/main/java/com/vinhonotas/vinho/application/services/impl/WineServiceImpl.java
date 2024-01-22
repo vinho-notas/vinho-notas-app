@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,21 +34,41 @@ public class WineServiceImpl implements WineService {
 
     @Override
     public List<WineEntity> getAll() {
-        return null;
+        List<WineEntity> wineList = wineRepository.findAll();
+        if (wineList.isEmpty()) {
+            throw new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND);
+        }
+        return wineList;
     }
 
     @Override
     public WineEntity getById(UUID id) {
-        return null;
+       return wineRepository.findById(id)
+               .orElseThrow(() -> new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public WineEntity update(UUID id, WineInputDTO wineInputDTO) {
-        return null;
+        try {
+            WineEntity wineSaved = this.getById(id);
+            return wineRepository.save(wineConverter.toEntityUpdate(wineSaved, id, wineInputDTO));
+        } catch (Exception e) {
+            throw new BadRequestException(MessagesConstants.ERROR_UPDATE_WINE_DATA);
+        }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
-
+        Optional<WineEntity> wine = wineRepository.findById(id);
+        if (wine.isEmpty()) {
+            throw new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND);
+        }
+        try {
+            wineRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new BadRequestException(MessagesConstants.ERROR_DELETE_WINE);
+        }
     }
 }
