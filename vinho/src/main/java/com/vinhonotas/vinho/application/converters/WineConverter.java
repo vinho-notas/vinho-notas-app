@@ -2,8 +2,10 @@ package com.vinhonotas.vinho.application.converters;
 
 import com.vinhonotas.vinho.domain.entities.WineEntity;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
+import com.vinhonotas.vinho.interfaces.dtos.outputs.WineOutputDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -51,6 +53,58 @@ public class WineConverter {
                 .region(wineInputDTO.getRegion() != null ? wineInputDTO.getRegion() : wineSaved.getRegion())
                 .maturation(wineInputDTO.getMaturation() != null ? wineInputDTO.getMaturation() : wineSaved.getMaturation())
                 .harmonization(wineInputDTO.getHarmonization() != null ? wineInputDTO.getHarmonization() : wineSaved.getHarmonization())
+                .build();
+    }
+
+    public WineOutputDTO toOutputDTO(WineEntity wineEntity) {
+        return WineOutputDTO.builder()
+                .id(wineEntity.getId())
+                .name(wineEntity.getName())
+                .price(wineEntity.getPrice())
+                .purchaseLocation(wineEntity.getPurchaseLocation())
+                .purchaseDate(wineEntity.getPurchaseDate())
+                .wineType(wineEntity.getWineType())
+                .wineClassification(wineEntity.getWineClassification())
+                .alcoholContent(wineEntity.getAlcoholContent())
+                .volumeMl(wineEntity.getVolumeMl())
+                .grape(wineEntity.getGrape())
+                .winery(wineEntity.getWinery())
+                .serviceTemperature(wineEntity.getServiceTemperature())
+                .harvest(wineEntity.getHarvest())
+                .country(wineEntity.getCountry())
+                .guardTime(wineEntity.getGuardTime())
+                .region(wineEntity.getRegion())
+                .maturation(wineEntity.getMaturation())
+                .harmonization(wineEntity.getHarmonization())
+                .build();
+    }
+
+    public List<WineOutputDTO> toOutputDTOList(List<WineEntity> list) {
+        return list.stream()
+                .map(this::toOutputDTO)
+                .toList();
+    }
+
+    public WineOutputDTO toOutputDTOUpdate(WineEntity wineUpdated, UUID uuid, WineOutputDTO wineOutputDTO) {
+        return WineOutputDTO.builder()
+                .id(uuid)
+                .name(wineUpdated.getName() != null ? wineUpdated.getName() : wineOutputDTO.getName())
+                .price(wineUpdated.getPrice() != null ? wineUpdated.getPrice() : wineOutputDTO.getPrice())
+                .purchaseLocation(wineUpdated.getPurchaseLocation() != null ? wineUpdated.getPurchaseLocation() : wineOutputDTO.getPurchaseLocation())
+                .purchaseDate(wineUpdated.getPurchaseDate() != null ? wineUpdated.getPurchaseDate() : wineOutputDTO.getPurchaseDate())
+                .wineType(wineUpdated.getWineType() != null ? wineUpdated.getWineType() : wineOutputDTO.getWineType())
+                .wineClassification(wineUpdated.getWineClassification() != null ? wineUpdated.getWineClassification() : wineOutputDTO.getWineClassification())
+                .alcoholContent(wineUpdated.getAlcoholContent() != 0 ? wineUpdated.getAlcoholContent() : wineOutputDTO.getAlcoholContent())
+                .volumeMl(wineUpdated.getVolumeMl() != 0 ? wineUpdated.getVolumeMl() : wineOutputDTO.getVolumeMl())
+                .grape(wineUpdated.getGrape() != null ? wineUpdated.getGrape() : wineOutputDTO.getGrape())
+                .winery(wineUpdated.getWinery() != null ? wineUpdated.getWinery() : wineOutputDTO.getWinery())
+                .serviceTemperature(wineUpdated.getServiceTemperature() != 0 ? wineUpdated.getServiceTemperature() : wineOutputDTO.getServiceTemperature())
+                .harvest(wineUpdated.getHarvest() != 0 ? wineUpdated.getHarvest() : wineOutputDTO.getHarvest())
+                .country(wineUpdated.getCountry() != null ? wineUpdated.getCountry() : wineOutputDTO.getCountry())
+                .guardTime(wineUpdated.getGuardTime() != null ? wineUpdated.getGuardTime() : wineOutputDTO.getGuardTime())
+                .region(wineUpdated.getRegion() != null ? wineUpdated.getRegion() : wineOutputDTO.getRegion())
+                .maturation(wineUpdated.getMaturation() != null ? wineUpdated.getMaturation() : wineOutputDTO.getMaturation())
+                .harmonization(wineUpdated.getHarmonization() != null ? wineUpdated.getHarmonization() : wineOutputDTO.getHarmonization())
                 .build();
     }
 }
