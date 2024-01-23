@@ -15,7 +15,7 @@ public class SwaggerConfiguration {
     public OpenAPI openApiInformation() {
         Server localServer =
                 new Server()
-                        .url("http://localhost:8080")
+                        .url("http://localhost:8081")
                         .description("Localhost Server URL");
         Contact contact = new Contact()
                 .email("vanderlei.master@gmail.com")

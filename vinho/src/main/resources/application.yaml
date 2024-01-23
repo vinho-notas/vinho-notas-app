@@ -1,6 +1,8 @@
 server:
   error:
     include-stacktrace: never
+  port: 8081
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/vinho-notas-vinho
