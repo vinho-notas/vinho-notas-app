@@ -1,0 +1,23 @@
+server:
+  error:
+    include-stacktrace: never
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vinho-notas-cadastro
+    username: postgres
+    password: 1234567
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      default_schema: cadastro
+    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+springdoc:
+  api-docs:
+    path: /api-docs
