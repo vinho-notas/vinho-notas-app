@@ -1,13 +1,13 @@
-//package com.vinhonotas.cadastro;
+//package com.vinhonotas.vinho;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //@SpringBootTest
-//class CadastroApplicationTests {
+//class VinhoApplicationTests {
 //
-//    @Test
-//    void contextLoads() {
-//    }
+//	@Test
+//	void contextLoads() {
+//	}
 //
 //}
