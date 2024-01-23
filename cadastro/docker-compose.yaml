@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234567
-      POSTGRES_DB: vinho-notas-cadastro
+      POSTGRES_DB: vinho-notas
     volumes:
       - ./.data/postgresql:/var/lib/postgresql/data
     networks:

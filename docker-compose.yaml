@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  postgresql-main:
+    image: postgres:15-alpine
+    container_name: postgres-cadastro
+    environment:
+      POSTGRES_DB: vinho-notas-cadastro
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+    ports:
+      - "5432:5432"
+    networks:
+      - main-network
+
+  postgresql-secondary:
+    image: postgres:15-alpine
+    container_name: postgres-vinho
+    environment:
+      POSTGRES_DB: vinho-notas-vinho
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+    ports:
+      - "5433:5432"  # Use uma porta diferente para o segundo banco
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge
