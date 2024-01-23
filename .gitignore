@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+##POSTGRESQL
+cadastro/.data
+vinho/.data
