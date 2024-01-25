@@ -2,9 +2,11 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches-ignore:
+      - 'none'
+    branches: [ '*' ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ '*' ]
 
 jobs:
   build:
@@ -31,3 +33,8 @@ jobs:
         mvn -B package --file pom.xml
         mvn test
       
+    - name: Build and execute testes with Maven on 'avaliacao'
+      run: |
+        cd avaliacao
+        mvn -B package --file pom.xml
+        mvn test
