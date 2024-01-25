@@ -2,8 +2,6 @@ name: Java CI with Maven
 
 on:
   push:
-    branches-ignore:
-      - 'none'
     branches: [ '*' ]
   pull_request:
     branches: [ '*' ]
