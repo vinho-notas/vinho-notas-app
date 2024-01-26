@@ -2,8 +2,10 @@ package com.vinhonotas.avaliacao.application.converters;
 
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
+import com.vinhonotas.avaliacao.interfaces.dtos.outputs.PointScaleOutputDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -31,6 +33,38 @@ public class PointScaleConverter {
                 .whatFlavors(pointScaleInputDTO.getWhatFlavors() != null ? pointScaleInputDTO.getWhatFlavors() : pointScaleEntity.getWhatFlavors())
                 .whatOpinion(pointScaleInputDTO.getWhatOpinion() != null ? pointScaleInputDTO.getWhatOpinion() : pointScaleEntity.getWhatOpinion())
                 .pointScale(pointScaleInputDTO.getPointScale() != null ? pointScaleInputDTO.getPointScale() : pointScaleEntity.getPointScale())
+                .build();
+    }
+
+    public PointScaleOutputDTO toOutputDTO(PointScaleEntity pointScaleEntity) {
+        return PointScaleOutputDTO.builder()
+                .id(pointScaleEntity.getId())
+                .whatTasted(pointScaleEntity.getWhatTasted())
+                .whenTasted(pointScaleEntity.getWhenTasted())
+                .whatSaw(pointScaleEntity.getWhatSaw())
+                .whatAromas(pointScaleEntity.getWhatAromas())
+                .whatFlavors(pointScaleEntity.getWhatFlavors())
+                .whatOpinion(pointScaleEntity.getWhatOpinion())
+                .pointScale(pointScaleEntity.getPointScale())
+                .build();
+    }
+
+    public List<PointScaleOutputDTO> toOutputDTOList(List<PointScaleEntity> pointScaleEntityList) {
+        return pointScaleEntityList.stream()
+                .map(this::toOutputDTO)
+                .toList();
+    }
+
+    public PointScaleOutputDTO toOutputDTOUpdate(PointScaleEntity pointScaleEntity, UUID uuid, PointScaleInputDTO pointScaleInputDTO) {
+        return PointScaleOutputDTO.builder()
+                .id(uuid)
+                .whatTasted(pointScaleEntity.getWhatTasted() != null ? pointScaleEntity.getWhatTasted() : pointScaleInputDTO.getWhatTasted())
+                .whenTasted(pointScaleEntity.getWhenTasted() != null ? pointScaleEntity.getWhenTasted() : pointScaleInputDTO.getWhenTasted())
+                .whatSaw(pointScaleEntity.getWhatSaw() != null ? pointScaleEntity.getWhatSaw() : pointScaleInputDTO.getWhatSaw())
+                .whatAromas(pointScaleEntity.getWhatAromas() != null ? pointScaleEntity.getWhatAromas() : pointScaleInputDTO.getWhatAromas())
+                .whatFlavors(pointScaleEntity.getWhatFlavors() != null ? pointScaleEntity.getWhatFlavors() : pointScaleInputDTO.getWhatFlavors())
+                .whatOpinion(pointScaleEntity.getWhatOpinion() != null ? pointScaleEntity.getWhatOpinion() : pointScaleInputDTO.getWhatOpinion())
+                .pointScale(pointScaleEntity.getPointScale() != null ? pointScaleEntity.getPointScale() : pointScaleInputDTO.getPointScale())
                 .build();
     }
 }
