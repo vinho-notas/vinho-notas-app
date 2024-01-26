@@ -10,6 +10,8 @@ services:
       POSTGRES_PASSWORD: 1234567
     ports:
       - "5432:5432"
+    volumes:
+      - ./.data/postgresql/data-cadastro:/var/lib/postgresql/data
     networks:
       - main-network
 
@@ -22,6 +24,8 @@ services:
       POSTGRES_PASSWORD: 1234567
     ports:
       - "5433:5432"
+    volumes:
+      - ./.data/postgresql/data-vinho:/var/lib/postgresql/data
     networks:
       - main-network
 
@@ -34,6 +38,8 @@ services:
       POSTGRES_PASSWORD: 1234567
     ports:
       - "5434:5432"
+    volumes:
+      - ./.data/postgresql/data-avaliacao:/var/lib/postgresql/data
     networks:
       - main-network
 
