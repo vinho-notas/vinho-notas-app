@@ -55,16 +55,16 @@ public class PointScaleConverter {
                 .toList();
     }
 
-    public PointScaleOutputDTO toOutputDTOUpdate(PointScaleEntity pointScaleEntity, UUID uuid, PointScaleInputDTO pointScaleInputDTO) {
+    public PointScaleOutputDTO toOutputDTOUpdate(PointScaleEntity pointScaleEntity, UUID uuid, PointScaleOutputDTO pointScaleOutputDTO) {
         return PointScaleOutputDTO.builder()
                 .id(uuid)
-                .whatTasted(pointScaleEntity.getWhatTasted() != null ? pointScaleEntity.getWhatTasted() : pointScaleInputDTO.getWhatTasted())
-                .whenTasted(pointScaleEntity.getWhenTasted() != null ? pointScaleEntity.getWhenTasted() : pointScaleInputDTO.getWhenTasted())
-                .whatSaw(pointScaleEntity.getWhatSaw() != null ? pointScaleEntity.getWhatSaw() : pointScaleInputDTO.getWhatSaw())
-                .whatAromas(pointScaleEntity.getWhatAromas() != null ? pointScaleEntity.getWhatAromas() : pointScaleInputDTO.getWhatAromas())
-                .whatFlavors(pointScaleEntity.getWhatFlavors() != null ? pointScaleEntity.getWhatFlavors() : pointScaleInputDTO.getWhatFlavors())
-                .whatOpinion(pointScaleEntity.getWhatOpinion() != null ? pointScaleEntity.getWhatOpinion() : pointScaleInputDTO.getWhatOpinion())
-                .pointScale(pointScaleEntity.getPointScale() != null ? pointScaleEntity.getPointScale() : pointScaleInputDTO.getPointScale())
+                .whatTasted(pointScaleEntity.getWhatTasted() != null ? pointScaleEntity.getWhatTasted() : pointScaleOutputDTO.getWhatTasted())
+                .whenTasted(pointScaleEntity.getWhenTasted() != null ? pointScaleEntity.getWhenTasted() : pointScaleOutputDTO.getWhenTasted())
+                .whatSaw(pointScaleEntity.getWhatSaw() != null ? pointScaleEntity.getWhatSaw() : pointScaleOutputDTO.getWhatSaw())
+                .whatAromas(pointScaleEntity.getWhatAromas() != null ? pointScaleEntity.getWhatAromas() : pointScaleOutputDTO.getWhatAromas())
+                .whatFlavors(pointScaleEntity.getWhatFlavors() != null ? pointScaleEntity.getWhatFlavors() : pointScaleOutputDTO.getWhatFlavors())
+                .whatOpinion(pointScaleEntity.getWhatOpinion() != null ? pointScaleEntity.getWhatOpinion() : pointScaleOutputDTO.getWhatOpinion())
+                .pointScale(pointScaleEntity.getPointScale() != null ? pointScaleEntity.getPointScale() : pointScaleOutputDTO.getPointScale())
                 .build();
     }
 }
