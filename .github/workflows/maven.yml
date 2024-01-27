@@ -1,0 +1,38 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build and execute testes with Maven on 'cadastro'
+      run: |
+        cd cadastro
+        mvn -B package --file pom.xml
+        mvn test
+
+    - name: Build and execute testes with Maven on 'vinho'
+      run: |
+        cd vinho
+        mvn -B package --file pom.xml
+        mvn test
+      
+    - name: Build and execute testes with Maven on 'avaliacao'
+      run: |
+        cd avaliacao
+        mvn -B package --file pom.xml
+        mvn test
