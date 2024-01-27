@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EnumSweetsType {
 
-    Jam("Compota"),
-    Honey("Mel"),
-    Bullet("Bala");
+    JAM("Compota"),
+    HONEY("Mel"),
+    BULLET("Bala");
 
     private final String description;
 }
