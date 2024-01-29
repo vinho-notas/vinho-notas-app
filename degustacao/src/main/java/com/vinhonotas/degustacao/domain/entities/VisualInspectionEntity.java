@@ -23,28 +23,28 @@ public class VisualInspectionEntity {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
     @Column(name = "tastingdata")
-    LocalDate tastingData;
+    private LocalDate tastingData;
     @Column(name = "winetasted")
-    String wineTasted;
+    private String wineTasted;
     @Column(name = "clarity")
     @Enumerated(EnumType.STRING)
-    EnumClarityType clarity;
+    private EnumClarityType clarity;
     @Column(name = "brightness")
     @Enumerated(EnumType.STRING)
-    EnumBrightnessType brightness;
+    private EnumBrightnessType brightness;
     @Column(name = "viscosity")
     @Enumerated(EnumType.STRING)
-    EnumViscosityType viscosity;
+    private EnumViscosityType viscosity;
     @Column(name = "colorred")
     @Enumerated(EnumType.STRING)
-    EnumRedColorType colorRed;
+    private EnumRedColorType colorRed;
     @Column(name = "colorwhite")
     @Enumerated(EnumType.STRING)
-    EnumWhiteColorType colorWhite;
+    private EnumWhiteColorType colorWhite;
     @Column(name = "colorrose")
     @Enumerated(EnumType.STRING)
-    EnumRoseColorType colorRose;
+    private EnumRoseColorType colorRose;
     @Column(name = "classification")
     @Enumerated(EnumType.STRING)
-    EnumClassificationType classification;
+    private EnumClassificationType classification;
 }
