@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,6 +25,10 @@ public class GustatoryInspectionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+    @Column(name = "tastingdata")
+    private LocalDate tastingData;
+    @Column(name = "winetasted")
+    private String wineTasted;
     @Column(name = "body")
     @Enumerated(EnumType.STRING)
     private EnumBodyType body;
@@ -33,6 +38,7 @@ public class GustatoryInspectionEntity {
     @Column(name = "tannin")
     @Enumerated(EnumType.STRING)
     EnumTanninType tannin;
+    @Column(name = "classification")
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
 
