@@ -1,5 +1,6 @@
 package com.vinhonotas.degustacao.domain.entities;
 
+import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -23,25 +25,12 @@ public class TastingEntity {
     private UUID id;
     @Column(name = "tastingdata")
     private LocalDate tastingData;
-    @Column(name = "winetasted")
-    private String wineTasted;
-    @Column(name = "hearvest")
-    private String hearvest;
-    @Column(name = "grapes")
-    private String grapes;
-    @Column(name = "country")
-    private String country;
-    @Column(name = "region")
-    private String region;
-    @Column(name = "visualinspection")
-    private String visualInspection;
-    @Column(name = "olfactoryinspection")
-    private String olfactoryInspection;
-    @Column(name = "gustatoryinspection")
-    private String gustatoryInspection;
-    @Column(name = "opinion")
-    private String opinion;
-    @Column(name = "score")
-    private String score;
+    @Column(name = "tastingtype")
+    @Enumerated(EnumType.STRING)
+    private EnumTastingType tastingType;
+    @OneToMany(mappedBy = "tasting")
+    @Column(name = "tasting")
+    @JoinColumn(name = "tastingcards_id")
+    private Set<TastingCardEntity> tastingCards;
 
 }
