@@ -1,6 +1,9 @@
 package com.vinhonotas.degustacao.domain.entities;
 
-import com.vinhonotas.degustacao.domain.enums.*;
+import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
+import com.vinhonotas.degustacao.domain.enums.EnumIntensityType;
+import com.vinhonotas.degustacao.domain.enums.EnumPersistenceType;
+import com.vinhonotas.degustacao.domain.enums.EnumQualityType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +18,8 @@ import java.util.UUID;
 @Data
 @Builder
 @Entity
-@Table(name = "Tbvisualinspection", schema = "degustacao")
-public class VisualInspectionEntity {
+@Table(name = "Tbolfactoryinspection", schema = "degustacao")
+public class OlfactoryInspectionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,24 +29,18 @@ public class VisualInspectionEntity {
     private LocalDate tastingData;
     @Column(name = "winetasted")
     private String wineTasted;
-    @Column(name = "clarity")
+    @Column(name = "intensity")
     @Enumerated(EnumType.STRING)
-    private EnumClarityType clarity;
-    @Column(name = "brightness")
+    private EnumIntensityType intensity;
+    @Column(name = "persistence")
     @Enumerated(EnumType.STRING)
-    private EnumBrightnessType brightness;
-    @Column(name = "viscosity")
+    private EnumPersistenceType persistence;
+    @Column(name = "quality")
     @Enumerated(EnumType.STRING)
-    private EnumViscosityType viscosity;
-    @Column(name = "colorred")
+    private EnumQualityType quality;
+    @Column(name = "aromas")
     @Enumerated(EnumType.STRING)
-    private EnumRedColorType colorRed;
-    @Column(name = "colorwhite")
-    @Enumerated(EnumType.STRING)
-    private EnumWhiteColorType colorWhite;
-    @Column(name = "colorrose")
-    @Enumerated(EnumType.STRING)
-    private EnumRoseColorType colorRose;
+    private String aromas;
     @Column(name = "classification")
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
