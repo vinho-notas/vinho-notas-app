@@ -38,7 +38,7 @@ public class OlfactoryInspectionEntity {
     @Column(name = "quality")
     @Enumerated(EnumType.STRING)
     private EnumQualityType quality;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "aromas_id", nullable = false)
     @Column(name = "aromas")
     private AromasEntity aromas;
