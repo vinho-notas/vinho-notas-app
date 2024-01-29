@@ -37,7 +37,7 @@ public class GustatoryInspectionEntity {
     private EnumSweetnessType sweetness;
     @Column(name = "tannin")
     @Enumerated(EnumType.STRING)
-    EnumTanninType tannin;
+    private EnumTanninType tannin;
     @Column(name = "classification")
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
