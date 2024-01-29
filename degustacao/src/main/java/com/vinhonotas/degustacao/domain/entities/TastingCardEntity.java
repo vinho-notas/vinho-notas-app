@@ -1,5 +1,6 @@
 package com.vinhonotas.degustacao.domain.entities;
 
+import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,15 +35,22 @@ public class TastingCardEntity {
     @Column(name = "region")
     private String region;
     @Column(name = "visualinspection")
-    private String visualInspection;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "visualinspection_id", referencedColumnName = "id")
+    private VisualInspectionEntity visualInspection;
     @Column(name = "olfactoryinspection")
-    private String olfactoryInspection;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "olfactoryinspection_id", referencedColumnName = "id")
+    private OlfactoryInspectionEntity olfactoryInspection;
     @Column(name = "gustatoryinspection")
-    private String gustatoryInspection;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gustatoryinspection_id", referencedColumnName = "id")
+    private GustatoryInspectionEntity gustatoryInspection;
     @Column(name = "opinion")
     private String opinion;
-    @Column(name = "score")
-    private String score;
+    @Column(name = "pointscale")
+    @Enumerated(EnumType.STRING)
+    private EnumPointScale pointScale;
     @Column(name = "tasting")
     @ManyToOne
     @JoinColumn(name = "tasting_id", insertable = false, updatable = false)
