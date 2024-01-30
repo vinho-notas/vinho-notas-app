@@ -3,6 +3,7 @@ package com.vinhonotas.degustacao.infraestructure;
 import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -30,6 +31,7 @@ class VisualInspectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("Deve criar uma inspeção visual")
     void testCreate() {
         VisualInspectionEntity visualInspectionSaved = assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionOne));
         assertNotNull(visualInspectionSaved);
@@ -44,6 +46,7 @@ class VisualInspectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("Deve listar todas as inspeções visuais")
     void testReadAll() {
         assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionOne));
         assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionTwo));
@@ -57,6 +60,7 @@ class VisualInspectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("Deve listar uma inspeção visual por id")
     void testReadById() {
         VisualInspectionEntity visualInspectionSaved = assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionTwo));
 
@@ -76,6 +80,7 @@ class VisualInspectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar uma inspeção visual")
     void testUpdate() {
         VisualInspectionEntity visualInspectionSaved = assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionOne));
         visualInspectionSaved.setWineTasted("Wine Tasted Updated");
@@ -89,6 +94,7 @@ class VisualInspectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("Deve deletar uma inspeção visual")
     void testDelete() {
         VisualInspectionEntity visualInspectionSaved = assertDoesNotThrow(() -> visualInspectionRepository.save(visualInspectionOne));
         assertDoesNotThrow(() -> visualInspectionRepository.deleteById(visualInspectionSaved.getId()));
