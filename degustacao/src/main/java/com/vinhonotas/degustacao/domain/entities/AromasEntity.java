@@ -77,8 +77,4 @@ public class AromasEntity {
     @Enumerated(EnumType.STRING)
     private EnumSweetsType sweets;
 
-    @Column(name = "classification")
-    @Enumerated(EnumType.STRING)
-    private EnumClassificationType classification;
-
 }
