@@ -1,9 +1,6 @@
 package com.vinhonotas.degustacao.domain.entities;
 
-import com.vinhonotas.degustacao.domain.enums.EnumBodyType;
-import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
-import com.vinhonotas.degustacao.domain.enums.EnumSweetnessType;
-import com.vinhonotas.degustacao.domain.enums.EnumTanninType;
+import com.vinhonotas.degustacao.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +44,27 @@ public class GustatoryInspectionEntity {
     @Column(name = "classification")
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @Column(name = "acidity")
+    @Enumerated(EnumType.STRING)
+    EnumAcidityType acidity;
 
+    @Column(name = "alcohol")
+    @Enumerated(EnumType.STRING)
+    EnumAlcoholType alcohol;
+
+    @Column(name = "persistence")
+    @Enumerated(EnumType.STRING)
+    EnumPersistenceType persistence;
+
+    @Column(name = "maturity")
+    @Enumerated(EnumType.STRING)
+    EnumMaturityType maturity;
+
+    @Column(name = "typicality")
+    @Enumerated(EnumType.STRING)
+    EnumTypicalityType typicality;
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @OneToOne(mappedBy = "gustatoryInspection")
     private TastingCardEntity tastingCard;
 
