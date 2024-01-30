@@ -7,7 +7,6 @@ import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
 import com.vinhonotas.degustacao.domain.enums.EnumIntensityType;
 import com.vinhonotas.degustacao.domain.enums.EnumPersistenceType;
 import com.vinhonotas.degustacao.domain.enums.EnumQualityType;
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Log4j2
 class OlfactoryInspectionRepositoryTest {
 
     @Autowired
