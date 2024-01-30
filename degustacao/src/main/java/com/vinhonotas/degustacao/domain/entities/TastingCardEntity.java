@@ -22,36 +22,44 @@ public class TastingCardEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @Column(name = "tastingdata")
     private LocalDate tastingData;
+
     @Column(name = "winetasted")
     private String wineTasted;
-    @Column(name = "hearvest")
-    private int hearvest;
+
+    @Column(name = "harvest")
+    private int harvest;
+
     @Column(name = "grapes")
     private String grapes;
+
     @Column(name = "country")
     private String country;
+
     @Column(name = "region")
     private String region;
-    @Column(name = "visualinspection")
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "visualinspection_id", referencedColumnName = "id")
     private VisualInspectionEntity visualInspection;
-    @Column(name = "olfactoryinspection")
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "olfactoryinspection_id", referencedColumnName = "id")
     private OlfactoryInspectionEntity olfactoryInspection;
-    @Column(name = "gustatoryinspection")
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gustatoryinspection_id", referencedColumnName = "id")
     private GustatoryInspectionEntity gustatoryInspection;
+
     @Column(name = "opinion")
     private String opinion;
+
     @Column(name = "pointscale")
     @Enumerated(EnumType.STRING)
     private EnumPointScale pointScale;
-    @Column(name = "tasting")
+
     @ManyToOne
     @JoinColumn(name = "tasting_id", insertable = false, updatable = false)
     private TastingEntity tasting;

@@ -23,14 +23,15 @@ public class TastingEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @Column(name = "tastingdata")
     private LocalDate tastingData;
+
     @Column(name = "tastingtype")
     @Enumerated(EnumType.STRING)
     private EnumTastingType tastingType;
+
     @OneToMany(mappedBy = "tasting")
-    @Column(name = "tasting")
-    @JoinColumn(name = "tastingcards_id")
     private Set<TastingCardEntity> tastingCards;
 
 }
