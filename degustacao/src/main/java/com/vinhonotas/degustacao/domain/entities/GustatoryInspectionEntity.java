@@ -44,7 +44,7 @@ public class GustatoryInspectionEntity {
     @Column(name = "classification")
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     @Column(name = "acidity")
     @Enumerated(EnumType.STRING)
     EnumAcidityType acidity;
@@ -64,7 +64,7 @@ public class GustatoryInspectionEntity {
     @Column(name = "typicality")
     @Enumerated(EnumType.STRING)
     EnumTypicalityType typicality;
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     @OneToOne(mappedBy = "gustatoryInspection")
     private TastingCardEntity tastingCard;
 
