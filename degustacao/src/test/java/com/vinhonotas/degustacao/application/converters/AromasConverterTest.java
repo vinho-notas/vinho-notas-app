@@ -36,7 +36,7 @@ class AromasConverterTest {
 
     @Test
     @DisplayName("Deve converter para entidade aromas")
-    void toEntity() {
+    void testToEntity() {
         AromasEntity aromas = assertDoesNotThrow(() -> aromasConverter.toEntity(aromasInputDTO));
 
         assertNotNull(aromas);
@@ -58,7 +58,7 @@ class AromasConverterTest {
 
     @Test
     @DisplayName("Deve converter para entidade aromas com alterações")
-    void toEntityUpdate() {
+    void testToEntityUpdate() {
         AromasEntity aromas = assertDoesNotThrow(() -> aromasConverter.toEntityUpdate(aromasInputDTO, aromasEntity.getId(), aromasEntity));
 
         assertNotNull(aromas);
@@ -80,7 +80,7 @@ class AromasConverterTest {
 
     @Test
     @DisplayName("Deve converter para DTO de saída")
-    void toOutputDTO() {
+    void testToOutputDTO() {
         AromasOutputDTO outputDTO = assertDoesNotThrow(() -> aromasConverter.toOutputDTO(aromasEntity));
 
         assertNotNull(outputDTO);
@@ -103,7 +103,7 @@ class AromasConverterTest {
 
     @Test
     @DisplayName("Deve converter para lista de DTO de saída")
-    void toOutputDTOList() {
+    void testToOutputDTOList() {
         List<AromasOutputDTO> list = assertDoesNotThrow(() -> aromasConverter.toOutputDTOList(List.of(aromasEntity)));
 
         assertNotNull(list);
@@ -127,7 +127,7 @@ class AromasConverterTest {
 
     @Test
     @DisplayName("Deve converter para DTO de saída com alterações")
-    void toOutputDTOUpdate() {
+    void testToOutputDTOUpdate() {
         AromasOutputDTO outputDTO = assertDoesNotThrow(() -> aromasConverter.toOutputDTOUpdate(aromasEntity, aromasEntity.getId(), aromasOutputDTO));
 
         assertNotNull(outputDTO);
