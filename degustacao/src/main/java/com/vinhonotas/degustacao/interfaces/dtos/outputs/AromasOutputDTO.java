@@ -1,4 +1,4 @@
-package com.vinhonotas.degustacao.interfaces.dtos.inputs;
+package com.vinhonotas.degustacao.interfaces.dtos.outputs;
 
 import com.vinhonotas.degustacao.domain.enums.*;
 import lombok.Builder;
