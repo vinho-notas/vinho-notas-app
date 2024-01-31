@@ -17,11 +17,11 @@ public class GustatoryInspectionInputDTO {
     private EnumSweetnessType sweetness;
     private EnumTanninType tannin;
     private EnumClassificationType classification;
-    EnumAcidityType acidity;
-    EnumAlcoholType alcohol;
-    EnumPersistenceType persistence;
-    EnumMaturityType maturity;
-    EnumTypicalityType typicality;
+    private EnumAcidityType acidity;
+    private EnumAlcoholType alcohol;
+    private EnumPersistenceType persistence;
+    private EnumMaturityType maturity;
+    private EnumTypicalityType typicality;
     private TastingCardEntity tastingCard;
 
 }
