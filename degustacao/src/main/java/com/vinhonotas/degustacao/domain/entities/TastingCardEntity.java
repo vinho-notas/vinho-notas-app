@@ -30,7 +30,7 @@ public class TastingCardEntity {
     private String wineTasted;
 
     @Column(name = "harvest")
-    private int harvest;
+    private String harvest;
 
     @Column(name = "grapes")
     private String grapes;
