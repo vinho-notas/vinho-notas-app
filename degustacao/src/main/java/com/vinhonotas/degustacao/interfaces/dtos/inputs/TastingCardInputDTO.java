@@ -16,7 +16,7 @@ public class TastingCardInputDTO {
 
     private LocalDate tastingData;
     private String wineTasted;
-    private int harvest;
+    private String harvest;
     private String grapes;
     private String country;
     private String region;

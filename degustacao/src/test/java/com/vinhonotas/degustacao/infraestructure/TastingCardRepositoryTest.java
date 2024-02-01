@@ -79,7 +79,7 @@ class TastingCardRepositoryTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .harvest(2021)
+                .harvest("2021")
                 .grapes("Grapes")
                 .country("Country")
                 .region("Region")
