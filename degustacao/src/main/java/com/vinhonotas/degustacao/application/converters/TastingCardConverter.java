@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class TastingCardConverter {
@@ -69,7 +68,7 @@ public class TastingCardConverter {
         return tastingCardEntityList
                 .stream()
                 .map(this::toOutputDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TastingCardOutputDTO toOutputDTOUpdate(TastingCardEntity tastingCardEntity, UUID id, TastingCardOutputDTO tastingCardOutputDTO) {
