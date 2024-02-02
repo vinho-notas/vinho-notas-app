@@ -31,4 +31,11 @@ public class MessagesConstants {
     public static final String TASTING_NOT_FOUND = "Nenhuma degustação encontrada";
     public static final String ERROR_WHEN_UPDATING_TASTING = "Erro ao atualizar a degustação";
     public static final String ERROR_WHEN_DELETING_TASTING = "Erro ao deletar a degustação";
+
+    //TastingCard
+    public static final String ERROR_WHEN_SAVING_TASTING_CARD = "Erro ao salvar a ficha de degustação";
+    public static final String TASTING_CARD_NOT_FOUND = "Nenhuma ficha de degustação encontrada";
+    public static final String ERROR_WHEN_UPDATING_TASTING_CARD = "Erro ao atualizar a ficha de degustação";
+    public static final String ERROR_WHEN_DELETING_TASTING_CARD = "Erro ao deletar a ficha de degustação";
+
 }
