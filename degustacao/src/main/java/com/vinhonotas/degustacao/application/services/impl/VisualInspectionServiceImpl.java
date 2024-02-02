@@ -29,7 +29,7 @@ public class VisualInspectionServiceImpl implements VisualInspectionService {
             VisualInspectionEntity visualInspectionEntity = visualInspectionConverter.toEntity(visualInspectionInputDTO);
             return visualInspectionRepository.save(visualInspectionEntity);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_SAVING_VISUAL_INSPECTION);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_VISUAL_INSPECTION);
         }
     }
 
