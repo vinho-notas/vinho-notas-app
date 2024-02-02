@@ -28,7 +28,7 @@ public class GustatoryInspectionServiceImpl implements GustatoryInspectionServic
         try {
             return gustatoryInspectionRepository.save(gustatoryInspectionConverter.toEntity(gustatoryInspectionInputDTO));
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_CREATE_GUSTATORY_INSPECTION);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_GUSTATORY_INSPECTION);
         }
     }
 

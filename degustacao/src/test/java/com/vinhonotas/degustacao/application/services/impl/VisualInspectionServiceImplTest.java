@@ -68,10 +68,10 @@ class VisualInspectionServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao criar uma inspeção visual")
     void testCreateThrowsBadRequestException() {
-        when(repository.save(entity)).thenThrow(new BadRequestException(MessagesConstants.ERROR_SAVING_VISUAL_INSPECTION));
+        when(repository.save(entity)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_VISUAL_INSPECTION));
 
         Exception exception = assertThrows(Exception.class, () -> service.create(inputDTO));
-        assertEquals(MessagesConstants.ERROR_SAVING_VISUAL_INSPECTION, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_VISUAL_INSPECTION, exception.getMessage());
     }
 
     @Test
