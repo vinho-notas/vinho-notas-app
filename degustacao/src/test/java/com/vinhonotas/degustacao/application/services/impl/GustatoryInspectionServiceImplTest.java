@@ -71,10 +71,10 @@ class GustatoryInspectionServiceImplTest {
     @DisplayName("Deve lançar BadRequestException ao tentar criar uma nova avaliação gustativa")
     void testCreateThrowBadRequestException() {
         when(converter.toEntity(inputDTO)).thenReturn(entity);
-        when(repository.save(entity)).thenThrow(new BadRequestException(MessagesConstants.ERROR_CREATE_GUSTATORY_INSPECTION));
+        when(repository.save(entity)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_GUSTATORY_INSPECTION));
 
         Exception ex = assertThrows(Exception.class, () -> service.create(inputDTO));
-        assertEquals(MessagesConstants.ERROR_CREATE_GUSTATORY_INSPECTION, ex.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_GUSTATORY_INSPECTION, ex.getMessage());
     }
 
     @Test
