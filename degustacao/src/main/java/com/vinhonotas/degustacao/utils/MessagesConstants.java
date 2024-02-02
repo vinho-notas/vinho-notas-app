@@ -14,4 +14,9 @@ public class MessagesConstants {
     public static final String ERROR_WHEN_UPDATING_OLFACTORY_INSPECTION = "Erro ao atualizar a inspeção olfativa";
     public static final String ERROR_WHEN_DELETING_OLFACTORY_INSPECTION = "Erro ao deletar a inspeção olfativa";
 
+    //VisualInspection
+    public static final String ERROR_SAVING_VISUAL_INSPECTION = "Erro ao salvar a inspeção visual";
+    public static final String VISUAL_INSPECTION_NOT_FOUND = "Nenhuma inspeção visual encontrada";
+    public static final String ERROR_WHEN_UPDATING_VISUAL_INSPECTION = "Erro ao atualizar a inspeção visual";
+    public static final String ERROR_WHEN_DELETING_VISUAL_INSPECTION = "Erro ao deletar a inspeção visual";
 }
