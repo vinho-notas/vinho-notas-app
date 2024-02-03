@@ -38,4 +38,11 @@ public class MessagesConstants {
     public static final String ERROR_WHEN_UPDATING_TASTING_CARD = "Erro ao atualizar a ficha de degustação";
     public static final String ERROR_WHEN_DELETING_TASTING_CARD = "Erro ao deletar a ficha de degustação";
 
+    private MessagesConstants() {
+    }
+
+    public static MessagesConstants createMessagesConstants() {
+        return new MessagesConstants();
+    }
+
 }
