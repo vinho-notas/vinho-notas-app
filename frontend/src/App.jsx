@@ -1,17 +1,17 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import Login from './components/Login'
-import { Routes, Route, Link, NavLink } from 'react-router-dom';
+import Login from './components/login/Login';
+import { Routes, Route, } from 'react-router-dom';
+import Header from './components/header/Header';
+import Home from './components/home/Home';
 
 function App() {
   return (
     <>
-     <nav>
-      <ul>
-        <li><Link to="/login">Login</Link></li>
-      </ul>
-     </nav>
-      <Routes>       
-        <Route path="/login" element={<Login />} />
+    <Header />       
+      <Routes>
+        <Route path="/" element={<Home />} />       
+        <Route path="/login" element={<Login />} />       
       </Routes>
     </>
   )
