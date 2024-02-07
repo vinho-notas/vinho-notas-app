@@ -4,6 +4,7 @@ import Login from './components/login/Login';
 import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
+import Cadastro from './components/cadastro/Cadastro';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
     <Header />       
       <Routes>
         <Route path="/" element={<Home />} />       
-        <Route path="/login" element={<Login />} />       
+        <Route path="/login" element={<Login />} />   
+        <Route path="/cadastro" element={<Cadastro />} />   
       </Routes>
     </>
   )
