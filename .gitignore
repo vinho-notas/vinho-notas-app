@@ -33,7 +33,9 @@ build/
 .vscode/
 
 ##POSTGRESQL
+.data
 cadastro/.data
 vinho/.data
 avaliacao/.data
 degustacao/.data
+frontend/.data
