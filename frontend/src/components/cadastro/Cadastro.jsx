@@ -1,47 +1,118 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
+import { Container, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import StepOne from './forms/StepOne';
+import StepTwo from './forms/StepTwo';
+import StepThree from './forms/StepThree';
+import Final from './forms/Final';
+
 
 const Cadastro = () => {
-    return (
-        <div>           
-            <Form className='form-cadastro'>
-            <label className="h3 mb-3 fw-normal">Formulário de cadastro</label>
+    const [step, setStep] = useState(1);
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicName">
-                <Form.Label as={Row} htmlFor="floatingInput">Nome</Form.Label>
-                <Form.Control type="text" className="form-control" id="floatingInput" placeholder="Informe seu nome completo"  />          
-            </Form.Group>
+    const [formData, setFormData] = useState({
+        name: '', 
+        document: '',
+        birthDate: '',
+        addressDescription: '',
+        addressNumber: '',
+        complement: '',
+        district: '',
+        zipCode: '',
+        city: '',
+        uf: '',
+        country: '',
+        phoneNumber: ''
+    });
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicDocumento">
-                <Form.Label as={Row} htmlFor="floatingInput">Documento</Form.Label>
-                <Form.Control type="text" className="form-control" id="floatingInput" placeholder="Informe seu CPF"  />          
-            </Form.Group>
+    const nextStep = () => {
+        setStep(step + 1);
+    };
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicDataNascimento">
-                <Form.Label as={Row} htmlFor="floatingInput">Data de nascimento</Form.Label>
-                <Form.Control type="text" className="form-control" id="floatingInput" placeholder="Informe sua data de nascimento"  />          
-            </Form.Group>
+    const prevStep = () => {
+        setStep(step - 1);
+    };
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicEndereco">
-                <Form.Label as={Row} htmlFor="floatingInput">Endereço</Form.Label>
-                <Form.Control type="text" className="form-control" id="floatingInput" placeholder="Informe seu endereço completo"  />          
-            </Form.Group>
+    const handleInputData = input => e => {
+        const { value } = e.target;
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Concordo com os termos e condições de serviço" />
-            </Form.Group>
+        setFormData(prevState => ({
+            ...prevState,
+            [input]: value
+        }));
+    };
 
-            <Button variant="primary" type="submit">Submit</Button> 
-
-            </Form>        
-
-
-
-
-        </div>
-    )
-}
+    switch (step) {
+        case 1:
+            return (
+                <div className='App'>
+                    <Container>
+                        <Row>
+                            <Col md={{ span: 6, offset: 3 }} className='custom-margin'>
+                                <StepOne
+                                    nextStep={nextStep}
+                                    handleFormData={handleInputData}
+                                    values={formData}
+                                />
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            );
+        case 2:
+            return (
+                <div className='App'>
+                    <Container>
+                        <Row>
+                            <Col md={{ span: 6, offset: 3 }} className='custom-margin'>
+                                <StepTwo
+                                    nextStep={nextStep}
+                                    prevStep={prevStep}
+                                    handleFormData={handleInputData}
+                                    values={formData}
+                                />
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            );
+        case 3:
+            return (
+                <div className='App'>
+                    <Container>
+                        <Row>
+                            <Col md={{ span: 6, offset: 3 }} className='custom-margin'>
+                                <StepThree
+                                    nextStep={nextStep}
+                                    prevStep={prevStep}
+                                    handleFormData={handleInputData}
+                                    values={formData}
+                                />
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            );
+        case 4:
+            return (
+                <div className='App'>
+                    <Container>
+                        <Row>
+                            <Col md={{ span: 6, offset: 3 }} className='custom-margin'>
+                                <Final
+                                    values={formData}
+                                />
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            );
+        default:
+            return (
+                <div className='App'>
+                </div>
+            );
+    }
+};
 
 export default Cadastro
