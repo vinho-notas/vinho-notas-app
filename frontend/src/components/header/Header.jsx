@@ -14,6 +14,7 @@ const Header = () => {
                 <Link className="me-auto p-1 d-inline-block" to="/">Home</Link>
                 <Link className="me-auto p-1 d-inline-block" to="/login">Login</Link>
                 <Link className="me-auto p-1 d-inline-block" to="/cadastro">Cadastro</Link>             
+                <Link className="me-auto p-1 d-inline-block" to="/vinho">vinho</Link>             
             </Nav>
             </Navbar.Collapse>
         </Container>
