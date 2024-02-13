@@ -2,12 +2,10 @@ import { Form, Card, Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 
-const Vinho = () => {
-
-
+const WineRegistration = () => {
     return (
         <Card style={{ marginTop: 100 }}>
-            <Card.Header>Cadastro de Vinho</Card.Header>
+            <Card.Header as="h5">Cadastro de Vinho</Card.Header>
             <Card.Body>
                 <Form>
                     <Row className="mb-3">
@@ -69,7 +67,7 @@ const Vinho = () => {
                         </Form.Group>
 
                         <Form.Group as={Col} className="mb-3">
-                            <Form.Label>Classificação vinho</Form.Label>
+                            <Form.Label>Classificação do vinho</Form.Label>
                             <Form.Select aria-label="Default select example">
                                 <option>Selectione a classificação do vinho</option>
                                 <option value="DRYWINE">Vinho Seco</option>
@@ -143,7 +141,7 @@ const Vinho = () => {
 
                     <Row className="mb-3">
                         <Form.Group as={Col} className="mb-3">
-                            <Form.Label>País de origme</Form.Label>
+                            <Form.Label>País de origem</Form.Label>
                             <Form.Control
                                 name='country'
                                 type='text'
@@ -157,6 +155,15 @@ const Vinho = () => {
                                 name='guardTime'
                                 type='text'
                                 placeholder="Informe o tempo de guarda do vinho"
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} className="mb-3">
+                            <Form.Label>Região</Form.Label>
+                            <Form.Control
+                                name='region'
+                                type='text'
+                                placeholder="Informe a região de origem do vinho"
                             />
                         </Form.Group>
 
@@ -187,4 +194,4 @@ const Vinho = () => {
     )
 }
 
-export default Vinho
+export default WineRegistration
