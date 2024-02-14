@@ -1,11 +1,11 @@
-import { Card } from 'react-bootstrap';
+import { Card, Dropdown, DropdownButton, InputGroup, SplitButton } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 
-const VinhoList = () => {
-  return (
+const WineList = () => {
+  return (    
     <Card style={{ marginTop: 100 }}>
-      <Card.Header as="h5" >Lista de Vinhos</Card.Header>
+      <Card.Header as="h5" >Lista de Vinhos</Card.Header>     
       <Table responsive>
         <thead>
           <tr>
@@ -27,6 +27,7 @@ const VinhoList = () => {
             <th>Região</th>
             <th>Maturação</th>
             <th>Harmonização</th>
+            <th>Ação</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,19 @@ const VinhoList = () => {
             <td>La Rioja</td>
             <td>10 meses em barricas de carvalho francês</td>
             <td>Peixe assado na folha de bananeira, frutos do mar, arroz com brócolis, espetinho de camarão, massas, burrata, saladas.</td>
+            <td>
+              <InputGroup className="mb-3">               
+              <DropdownButton
+                title="Ação"
+                variant="primary"
+                alignRight
+              >                
+                  <Dropdown.Item href="#">Adicionar</Dropdown.Item>
+                  <Dropdown.Item href="#">Editar</Dropdown.Item>
+                  <Dropdown.Item href="#">Excluir</Dropdown.Item> 
+                </DropdownButton>
+              </InputGroup>
+            </td>
           </tr>
           <tr>
             <td><Form.Check /></td>
@@ -57,6 +71,31 @@ const VinhoList = () => {
             <td>Empório do Vinho</td>
             <td>01/01/2021</td>
             <td>Vinho Tinto</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <InputGroup className="mb-3">               
+              <DropdownButton
+                title="Ação"
+                variant="primary"
+                alignRight
+              >                
+                  <Dropdown.Item href="#">Adicionar</Dropdown.Item>
+                  <Dropdown.Item href="#">Editar</Dropdown.Item>
+                  <Dropdown.Item href="#">Excluir</Dropdown.Item>                                   
+                </DropdownButton>
+              </InputGroup>
+            </td>
           </tr>
           <tr>
             <td><Form.Check /></td>
@@ -65,6 +104,31 @@ const VinhoList = () => {
             <td>Empório do Vinho</td>
             <td>01/01/2021</td>
             <td>Vinho Tinto</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <InputGroup className="mb-3">               
+              <DropdownButton
+                title="Ação"
+                variant="primary"
+                alignRight
+              >                
+                  <Dropdown.Item href="#">Adicionar</Dropdown.Item>
+                  <Dropdown.Item href="#">Editar</Dropdown.Item>
+                  <Dropdown.Item href="#">Excluir</Dropdown.Item>                 
+                </DropdownButton>               
+              </InputGroup>
+            </td>
           </tr>
         </tbody>
       </Table>
@@ -72,4 +136,4 @@ const VinhoList = () => {
   )
 }
 
-export default VinhoList
+export default WineList

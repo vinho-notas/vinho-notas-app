@@ -16,6 +16,7 @@ const Header = () => {
                 <Link className="me-auto p-1 d-inline-block" to="/registration">Cadastro</Link>             
                 <Link className="me-auto p-1 d-inline-block" to="/wine">Vinho</Link>             
                 <Link className="me-auto p-1 d-inline-block" to="/wine-review">Avaliação de vinho</Link>             
+                <Link className="me-auto p-1 d-inline-block" to="/search-wine">Consultas</Link>             
             </Nav>
             </Navbar.Collapse>
         </Container>
