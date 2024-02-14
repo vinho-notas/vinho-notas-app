@@ -6,6 +6,7 @@ import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Registration from './components/registration/Registration';
 import Wine from './components/wine/Wine';
+import WineReview from './components/wine/WineReview';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />       
         <Route path="/login" element={<Login />} />   
-        <Route path="/cadastro" element={<Registration />} />   
-        <Route path="/vinho" element={<Wine />} />
+        <Route path="/registration" element={<Registration />} />   
+        <Route path="/wine" element={<Wine />} />
+        <Route path="/wine-review" element={<WineReview />} />
       </Routes>
     </>
   )

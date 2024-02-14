@@ -4,9 +4,9 @@ import WineRegistration from './WineRegistration';
 const Vinho = () => {
     return (
         <>
-        <WineRegistration />
-        <VinhoList />
-        </>        
+            <WineRegistration />
+            <VinhoList />
+        </>
     )
 }
 
