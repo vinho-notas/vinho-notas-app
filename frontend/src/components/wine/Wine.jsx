@@ -1,11 +1,11 @@
-import VinhoList from './WineList';
+import WineList from './WineList';
 import WineRegistration from './WineRegistration';
 
 const Vinho = () => {
     return (
         <>
             <WineRegistration />
-            <VinhoList />
+            <WineList />
         </>
     )
 }

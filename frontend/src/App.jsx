@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Registration from './components/registration/Registration';
 import Wine from './components/wine/Wine';
 import WineReview from './components/wine/WineReview';
+import SearchWine from './components/wine/SearchWine';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/registration" element={<Registration />} />   
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-review" element={<WineReview />} />
+        <Route path="/search-wine" element={<SearchWine />} />
       </Routes>
     </>
   )
