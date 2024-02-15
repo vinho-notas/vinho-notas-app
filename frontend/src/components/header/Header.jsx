@@ -1,26 +1,19 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { TabMenu } from 'primereact/tabmenu';
 
 const Header = () => {
+
+  const items = [
+    { label: 'Home', icon: 'pi pi-home', url: '/' },
+    { label: 'Login', icon: 'pi pi-user', url: '/login' },
+    { label: 'Cadastro', icon: 'pi pi-user-plus', url: '/registration' },
+    { label: 'Vinho', icon: 'pi pi-folder-open', url: '/wine' },
+    { label: 'Avaliação de vinho', icon: 'pi pi-folder-open', url: '/wine-review' },
+    { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' }
+  ];
+
   return (
-    <div>
-      <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
-        <Container>        
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-                <Link className="me-auto p-1 d-inline-block" to="/">Home</Link>
-                <Link className="me-auto p-1 d-inline-block" to="/login">Login</Link>
-                <Link className="me-auto p-1 d-inline-block" to="/registration">Cadastro</Link>             
-                <Link className="me-auto p-1 d-inline-block" to="/wine">Vinho</Link>             
-                <Link className="me-auto p-1 d-inline-block" to="/wine-review">Avaliação de vinho</Link>             
-                <Link className="me-auto p-1 d-inline-block" to="/search-wine">Consultas</Link>             
-            </Nav>
-            </Navbar.Collapse>
-        </Container>
-    </Navbar>    
+    <div >
+      <TabMenu model={items} />
     </div>
   )
 }
