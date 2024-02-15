@@ -4,7 +4,10 @@ import Login from './components/login/Login';
 import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import Cadastro from './components/cadastro/Cadastro';
+import Registration from './components/registration/Registration';
+import Wine from './components/wine/Wine';
+import WineReview from './components/wine/WineReview';
+import SearchWine from './components/wine/SearchWine';
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />       
         <Route path="/login" element={<Login />} />   
-        <Route path="/cadastro" element={<Cadastro />} />   
+        <Route path="/registration" element={<Registration />} />   
+        <Route path="/wine" element={<Wine />} />
+        <Route path="/wine-review" element={<WineReview />} />
+        <Route path="/search-wine" element={<SearchWine />} />
       </Routes>
     </>
   )

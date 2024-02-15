@@ -7,7 +7,7 @@ import StepThree from './forms/StepThree';
 import Final from './forms/Final';
 
 
-const Cadastro = () => {
+const Registration = () => {
     const [step, setStep] = useState(1);
 
     const [formData, setFormData] = useState({
@@ -115,4 +115,4 @@ const Cadastro = () => {
     }
 };
 
-export default Cadastro
+export default Registration
