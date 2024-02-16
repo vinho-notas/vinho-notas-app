@@ -87,7 +87,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
                             )}
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">Continue</Button>
+                        <Button variant="primary" type="submit">Continuar</Button>
 
                     </Form>
                 </Card.Body>

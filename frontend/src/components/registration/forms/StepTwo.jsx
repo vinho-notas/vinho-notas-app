@@ -86,6 +86,7 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
                                 type='number'
                                 placeholder="Informe o número"
                                 onChange={handleFormData('addressNumber')}
+                                min="0"
                             />
                             {errors.addressNumber && (
                                 <Form.Text style={{ color: 'red' }}>Este campo é obrigatório</Form.Text>
@@ -200,10 +201,10 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
 
                         <div style={{ display: "flex", justifyContent: "space-around" }}>
                             <Button variant="primary" onClick={prevStep}>
-                                Previous
+                                Voltar
                             </Button>
 
-                            <Button variant="primary" type="submit">Continue</Button>
+                            <Button variant="primary" type="submit">Continuar</Button>
                         </div>
 
                     </Form>
