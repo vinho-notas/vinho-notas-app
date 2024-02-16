@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import { Form, Card, Button } from 'react-bootstrap';
 import validator from 'validator';
 import Row from 'react-bootstrap/Row';
+import InputMask from 'react-input-mask';
 
 const StepThree = ({ nextStep, handleFormData, prevStep, values }) => {
 
-    const [error, setError] = useState(false);
+    const [errors, setErrors] = useState(
+        {
+            email: false,
+            password: false
+        }
+    );
+
 
     const submitFormData = (e) => {
         e.preventDefault();
 
-        if (
-            validator.isEmpty(values.email) ||
-            validator.isEmpty(values.password)
-        ) {
-            setError(true);
-        } else {
+        const newErrors = {
+            email: validator.isEmpty(values.email),
+            password: validator.isEmpty(values.password)
+        }
+
+        setErrors(newErrors);
+
+        if (!Object.values(newErrors).some(error => error)) {
             nextStep();
         }
     };
@@ -29,44 +38,43 @@ const StepThree = ({ nextStep, handleFormData, prevStep, values }) => {
                         <Form.Group as={Row} className='mb-3'>
                             <Form.Label as={Row}>Email</Form.Label>
                             <Form.Control
-                                style={{ border: error ? '2px solid red' : '' }}
+                                style={{ border: errors.email ? '2px solid red' : '' }}
                                 name='email'
                                 defaultValue={values.email}
                                 type='email'
                                 placeholder="Informe o email"
                                 onChange={handleFormData('email')}
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\.[a-z]{2,}$"
+                                title="Insira um email válido no formato seuemail@email.com"
                             />
-                            {error ? (
+                            {errors.email && (
                                 <Form.Text style={{ color: 'red' }}>Este campo é obrigatório</Form.Text>
-                            ) : (
-                                ''
                             )}
                         </Form.Group>
 
                         <Form.Group as={Row} className='mb-3'>
                             <Form.Label as={Row}>Senha</Form.Label>
                             <Form.Control
-                                style={{ border: error ? '2px solid red' : '' }}
+                                style={{ border: errors.password ? '2px solid red' : '' }}
                                 name='password'
                                 defaultValue={values.password}
-                                type='text'
+                                type='password'
                                 placeholder="Informe uma senha"
                                 onChange={handleFormData('password')}
+                                maxLength={4}
                             />
-                            {error ? (
+                            {errors.password && (
                                 <Form.Text style={{ color: 'red' }}>Este campo é obrigatório</Form.Text>
-                            ) : (
-                                ''
                             )}
                         </Form.Group>
 
                         <div style={{ display: "flex", justifyContent: "space-around" }}>
                             <Button variant="primary" onClick={prevStep}>
-                                Previous
+                                Voltar
                             </Button>
 
                             <Button variant="primary" type="submit">
-                                Submit
+                                Cadastrar
                             </Button>
                         </div>
 
