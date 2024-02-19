@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { Card } from "react-bootstrap";
 import SearchWineTastedForm from "./forms/SearchWineTastedForm";
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import Stack from 'react-bootstrap/Stack';
-
+import WineTastedForm from "./forms/WineTastedForm";
 
 const Tasting = () => {
     const [step, setStep] = useState(1);
 
     const [formData, setFormData] = useState({
         whatTasted: '',
-        tastingData: '',
+        tastingDate: '',
         tastingType: '',
         tastingCards: ''
     });
@@ -41,11 +38,27 @@ const Tasting = () => {
                     <Card.Header as="h5">Registrar degustação</Card.Header>
                     <SearchWineTastedForm
                         nextStep={nextStep}
-                        handleInputData={handleInputData}
+                        handleFormData={handleInputData}
                         values={formData}
                         />
                 </Card>
             );
+
+            case 2:
+                return (
+                    <Card style={{ marginTop: 100 }}>
+                        <Card.Header as="h5">Registrar degustação</Card.Header>
+                        <Card.Body>
+                            <WineTastedForm 
+                                nextStep={nextStep}
+                                prevStep={prevStep}
+                                handleFormData={handleInputData}
+                                values={formData}
+                            />
+                            
+                        </Card.Body>
+                    </Card>
+                );
 
             default:
             return (

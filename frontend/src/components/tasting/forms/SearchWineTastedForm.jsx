@@ -20,8 +20,7 @@ const SearchWineTastedForm = ({ nextStep, handleFormData, values }) => {
                         placeholder="Escreva o nome do vinho aqui..."
                         required
                         name='whatTasted'
-                        // onChange={handleFormData('whatTasted')}
-                        onChange={(e) => handleFormData('whatTasted', e.target.value)}
+                        onChange={handleFormData('whatTasted')}
                     />
                     <Button variant="primary" type="submit">Buscar</Button>
                 </Stack>
