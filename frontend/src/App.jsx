@@ -9,6 +9,8 @@ import Wine from './components/wine/Wine';
 import WineReview from './components/wine/WineReview';
 import SearchWine from './components/wine/SearchWine';
 import Footer from './components/footer/Footer';
+import Tasting from './components/tasting/Tasting';
+import TastingCard from './components/tasting/TastingCard';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-review" element={<WineReview />} />
+        <Route path="/tasting" element={<Tasting />} />
+        <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
       </Routes>      
       <Footer />
