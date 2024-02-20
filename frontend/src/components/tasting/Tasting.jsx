@@ -54,8 +54,7 @@ const Tasting = () => {
                                 prevStep={prevStep}
                                 handleFormData={handleInputData}
                                 values={formData}
-                            />
-                            
+                            />                            
                         </Card.Body>
                     </Card>
                 );
