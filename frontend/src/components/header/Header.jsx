@@ -10,7 +10,8 @@ const Header = () => {
     { label: 'Avaliação de vinho', icon: 'pi pi-folder-open', url: '/wine-review' },
     { label: 'Degustação', icon: 'pi pi-folder-open', url: '/tasting' },
     { label: 'Ficha de degustação', icon: 'pi pi-folder-open', url: '/tasting-card' },
-    { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' }
+    { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' },
+    { label: 'Inspeção visual', icon: 'pi pi-folder-open', url: '/visual-inspection' }
   ];
 
   return (
