@@ -24,7 +24,6 @@ const WineReviewForm = ({ nextStep, handleFormData, prevStep, values }) => {
                         name='whenTasted'
                         defaultValue={values.whenTasted}
                         type='date'
-                        // placeholder="Informe o email"
                         onChange={handleFormData('whenTasted')}
                     />
                 </Form.Group>
