@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import EnumTastingType from '../../../utils/enums/EnumTastingType';
 import { Menu } from 'primereact/menu';
 import TastingCard from '../TastingCard';
@@ -44,7 +45,9 @@ const WineTastedForm = ({ nextStep, handleFormData, prevStep, values }) => {
                 <>
                     <p style={{ textAlign: 'left', marginTop: 20 }}><strong>Vinho:</strong> {whatTasted}{" "}</p>
                     <Form onSubmit={submitFormData}>
-                        <Form.Group as={Row} className='mb-3'>
+                        <Row className="mb-3">
+
+                        <Form.Group as={Col} className='mb-3'>
                             <Form.Label as={Row}>Data da degustação</Form.Label>
                             <Form.Control
                                 style={{ border: error ? '2px solid red' : '' }}
@@ -55,7 +58,7 @@ const WineTastedForm = ({ nextStep, handleFormData, prevStep, values }) => {
                             />
                         </Form.Group>
 
-                        <Form.Group as={Row} className='mb-3'>
+                        <Form.Group as={Col} className='mb-3'>
                             <Form.Label as={Row}>Tipo de degustação</Form.Label>
                             <Form.Select
                                 style={{ border: error ? '2px solid red' : '' }}
@@ -69,6 +72,7 @@ const WineTastedForm = ({ nextStep, handleFormData, prevStep, values }) => {
                                 ))}
                             </Form.Select>
                         </Form.Group>
+                        </Row>
 
                         <Form.Group as={Row} className='mb-3'>
                             <Form.Label as={Row}>Ficha de degustação</Form.Label>

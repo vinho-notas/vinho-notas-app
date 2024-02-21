@@ -23,19 +23,10 @@ const OlfactoryInspection = () => {
   };
 
   return (
-    <Card style={{ marginTop: 50 }}>
+    <Card style={{ marginTop: 10 }}>
       <Card.Header as="h5">Inspeção olfativa</Card.Header>
       <Card.Body>
-        <Form onSubmit={submitFormData}>
-
-          <Row className="mb-3">
-            <Form.Group as={Row} className="mb-3">
-              <Form.Text>
-                <h5><strong>Vinho: </strong>Vinho XYZ</h5>
-                <hr></hr>
-              </Form.Text>
-            </Form.Group>
-          </Row>
+        <Form onSubmit={submitFormData}>         
 
           <Row className="mb-3">
             <Form.Group as={Col} className='mb-3'>
