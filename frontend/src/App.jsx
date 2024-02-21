@@ -11,10 +11,6 @@ import SearchWine from './components/wine/SearchWine';
 import Footer from './components/footer/Footer';
 import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
-import OlfactoryInspection from './components/tasting/forms/OlfactoryInspection';
-import Aromas from './components/tasting/forms/Aromas';
-import VisualInspection from './components/tasting/forms/VisualInspection';
-import GustatoryInspection from './components/tasting/forms/GustatoryInspection';
 
 function App() {
   return (
@@ -29,10 +25,7 @@ function App() {
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
-        <Route path="/visual-inspection" element={<VisualInspection />} />
-        <Route path="/olfactory-inspection" element={<OlfactoryInspection />} />       
-        <Route path="/gustatory-inspection" element={<GustatoryInspection />} />       
-      </Routes>      
+      </Routes>
       <Footer />
     </>
   )
