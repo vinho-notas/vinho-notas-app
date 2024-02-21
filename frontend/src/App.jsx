@@ -29,8 +29,7 @@ function App() {
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
         <Route path="/visual-inspection" element={<VisualInspection />} />
-        <Route path="/olfactory-inspection" element={<OlfactoryInspection />} />
-        <Route path="/aromas" element={<Aromas />} />
+        <Route path="/olfactory-inspection" element={<OlfactoryInspection />} />       
       </Routes>      
       <Footer />
     </>
