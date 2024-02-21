@@ -61,7 +61,7 @@ const TastingCard = () => {
                         </Form.Group>
 
                         <Form.Group as={Col} className="mb-3">
-                            <Form.Label>REgião</Form.Label>
+                            <Form.Label>Região</Form.Label>
                             <Form.Control
                                 name='region'
                                 type='text'

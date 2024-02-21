@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Card, Form } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
-import EnumClarityType from '../../utils/enums/EnumClarityType';
-import EnumBrightnessType from '../../utils/enums/EnumBrightnessType';
-import EnumViscosityType from '../../utils/enums/EnumViscosityType';
-import EnumRedColorType from '../../utils/enums/EnumRedColorType';
-import EnumWhiteColorType from '../../utils/enums/EnumWhiteColorType';
-import EnumRoseColorType from '../../utils/enums/EnumRoseColorType';
-import EnumClassificationType from '../../utils/enums/EnumClassificationType';
+import EnumClarityType from '../../../utils/enums/EnumClarityType';
+import EnumBrightnessType from '../../../utils/enums/EnumBrightnessType';
+import EnumViscosityType from '../../../utils/enums/EnumViscosityType';
+import EnumRedColorType from '../../../utils/enums/EnumRedColorType';
+import EnumWhiteColorType from '../../../utils/enums/EnumWhiteColorType';
+import EnumRoseColorType from '../../../utils/enums/EnumRoseColorType';
+import EnumClassificationType from '../../../utils/enums/EnumClassificationType';
 
 const VisualInspection = () => {
     const clarityType = Object.values(EnumClarityType);

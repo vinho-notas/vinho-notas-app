@@ -11,7 +11,9 @@ const Header = () => {
     { label: 'Degustação', icon: 'pi pi-folder-open', url: '/tasting' },
     { label: 'Ficha de degustação', icon: 'pi pi-folder-open', url: '/tasting-card' },
     { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' },
-    { label: 'Inspeção visual', icon: 'pi pi-folder-open', url: '/visual-inspection' }
+    { label: 'Inspeção visual', icon: 'pi pi-folder-open', url: '/visual-inspection' },
+    { label: 'Inspeção olfativa', icon: 'pi pi-folder-open', url: '/olfactory-inspection' },
+    { label: 'Aromas', icon: 'pi pi-folder-open', url: '/aromas' }
   ];
 
   return (
