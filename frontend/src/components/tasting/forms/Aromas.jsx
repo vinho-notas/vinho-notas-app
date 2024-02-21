@@ -42,7 +42,7 @@ const Aromas = () => {
   };
 
   return (
-    <Card style={{ marginTop: 50 }}>
+    <Card style={{ marginTop: 10 }}>
       <Card.Header as="h5">Aromas</Card.Header>
       <Card.Body>
         <Form onSubmit={submitFormData}>
