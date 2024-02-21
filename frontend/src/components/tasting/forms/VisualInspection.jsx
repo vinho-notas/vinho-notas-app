@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Card, Form } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
-import EnumClarityType from '../../utils/enums/EnumClarityType';
-import EnumBrightnessType from '../../utils/enums/EnumBrightnessType';
-import EnumViscosityType from '../../utils/enums/EnumViscosityType';
-import EnumRedColorType from '../../utils/enums/EnumRedColorType';
-import EnumWhiteColorType from '../../utils/enums/EnumWhiteColorType';
-import EnumRoseColorType from '../../utils/enums/EnumRoseColorType';
-import EnumClassificationType from '../../utils/enums/EnumClassificationType';
+import EnumClarityType from '../../../utils/enums/EnumClarityType';
+import EnumBrightnessType from '../../../utils/enums/EnumBrightnessType';
+import EnumViscosityType from '../../../utils/enums/EnumViscosityType';
+import EnumRedColorType from '../../../utils/enums/EnumRedColorType';
+import EnumWhiteColorType from '../../../utils/enums/EnumWhiteColorType';
+import EnumRoseColorType from '../../../utils/enums/EnumRoseColorType';
+import EnumClassificationType from '../../../utils/enums/EnumClassificationType';
 
 const VisualInspection = () => {
     const clarityType = Object.values(EnumClarityType);
@@ -48,14 +48,15 @@ const VisualInspection = () => {
 
     return (
         <Card style={{ marginTop: 50 }}>
-            <Card.Header as="h5">Ficha de degustação</Card.Header>
+            <Card.Header as="h5">Inspeção visual</Card.Header>
             <Card.Body>
                 <Form onSubmit={submitFormData}>
                     <Row className="mb-3">
                         <Form.Group as={Row} className="mb-3">
                             <Form.Text>
-                                <p><strong>Vinho: </strong>Vinho XYZ</p>
-                                <h2>Cor e tonalidade</h2>
+                                <h5><strong>Vinho: </strong>Vinho XYZ</h5>
+                                <hr></hr>
+                                <h5>Cor e tonalidade</h5>
                             </Form.Text>
                         </Form.Group>
                     </Row>
@@ -125,7 +126,7 @@ const VisualInspection = () => {
                         </Form.Group>
                     </Row>
 
-                    <h2>Transparência, opacidade e viscosidade</h2>
+                    <h5>Transparência, opacidade e viscosidade</h5>
 
                     <Row className="mb-3">
                         <Form.Group as={Col} className='mb-3'>
