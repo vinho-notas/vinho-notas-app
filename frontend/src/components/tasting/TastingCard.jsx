@@ -1,6 +1,10 @@
 import { Card, Form, Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
+import VisualInspection from '../tasting/forms/VisualInspection';
+import OlfatoryInspection from '../tasting/forms/OlfactoryInspection';
+import GustatoryInspection from '../tasting/forms/GustatoryInspection';
+import GeneralValuation from './forms/GeneralValuation';
 
 const TastingCard = () => {
     return (
@@ -37,10 +41,8 @@ const TastingCard = () => {
                                 placeholder="Informe a safra do vinho degustado"
                             />
                         </Form.Group>
-                    </Row>
 
-                    <Row className="mb-3">
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Col} className="mb-3">
                             <Form.Label>Uvas</Form.Label>
                             <Form.Control
                                 name='grapes'
@@ -61,12 +63,21 @@ const TastingCard = () => {
                         </Form.Group>
 
                         <Form.Group as={Col} className="mb-3">
-                            <Form.Label>REgião</Form.Label>
+                            <Form.Label>Região</Form.Label>
                             <Form.Control
                                 name='region'
                                 type='text'
                                 placeholder="Informe a região de origem do vinho"
                             />
+                        </Form.Group>
+                    </Row>
+
+                    <Row className="mb-3">     
+                        <Form.Group as={Col} className="mb-3">                            
+                            <VisualInspection />
+                            <OlfatoryInspection />
+                            <GustatoryInspection />
+                            <GeneralValuation />
                         </Form.Group>
                     </Row>
 

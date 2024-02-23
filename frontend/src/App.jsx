@@ -26,8 +26,8 @@ function App() {
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
-        <Route path="/wine-tasted-list" element={<ListWineTastedForm />} />
-      </Routes>      
+        <Route path="/wine-tasted-list" element={<ListWineTastedForm />} />     
+      </Routes>
       <Footer />
     </>
   )
