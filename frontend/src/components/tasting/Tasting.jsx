@@ -34,7 +34,7 @@ const Tasting = () => {
     switch (step) {
         case 1:
             return (
-                <Card style={{ marginTop: 50 }}>
+                <Card style={{ marginTop: 10 }}>
                     <Card.Header as="h5">Registrar degustação</Card.Header>
                     <SearchWineTastedForm
                         nextStep={nextStep}
@@ -46,7 +46,7 @@ const Tasting = () => {
 
             case 2:
                 return (
-                    <Card style={{ marginTop: 50 }}>
+                    <Card style={{ marginTop: 10 }}>
                         <Card.Header as="h5">Registrar degustação</Card.Header>
                         <Card.Body>
                             <WineTastedForm 

@@ -11,6 +11,7 @@ import SearchWine from './components/wine/SearchWine';
 import Footer from './components/footer/Footer';
 import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
+import ListWineTastedForm from './components/tasting/forms/ListWineTastedForm';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
+        <Route path="/wine-tasted-list" element={<ListWineTastedForm />} />     
       </Routes>
       <Footer />
     </>
