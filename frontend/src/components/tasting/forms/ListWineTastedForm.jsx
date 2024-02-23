@@ -1,25 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 import tastings from '../../../data/tasting_data_mock.json';
-
-// https://primereact.org/datatable/
-
-// You can do this by leveraging on one more prop, the 
-// expandableRowExpanded which tracks the current row that is expanded. 
-// It takes a callback that you can use to compare to a state that you
-// set in the onRowExpandToggled prop.
-//           const [currentRow, setCurrentRow] = useState(null);
-//           <DataTable
-//             expandableRows
-//             expandableRowExpanded={(row) => (row === currentRow)}
-//             expandOnRowClicked
-//             onRowClicked={(row) => setCurrentRow(row)}
-//             expandableRowsComponent={<ExpandableTable />}
-//             onRowExpandToggled={(bool, row) => setCurrentRow(row)}
-//             data={filteredData}
-//          />
 
 const ListWineTastedForm = () => {
     const [selectedTasting, setSelectedTasting] = useState(null);
@@ -29,20 +12,6 @@ const ListWineTastedForm = () => {
     const allowExpansion = (tasting) => {
         return tasting.tastingCards ? true : false;
     };
-
-    // const rowExpansionTemplate = (tasting) => {
-    //     return (
-    //         <div className="p-3">
-    //             <h5>Ficha de degustação de {tasting.tastingCards.wineTasted}</h5>
-    //             <DataTable value={[tasting.tastingCards]}>
-    //                 <Column field="harvest" header="Safra" sortable></Column>
-    //                 <Column field="grapes" header="Uvas" sortable></Column>
-    //                 <Column field="country" header="País" sortable></Column>
-    //                 <Column field="region" header="Região" sortable></Column>
-    //             </DataTable>
-    //         </div>
-    //     );
-    // };
 
     const rowExpansionTemplate = (tasting) => {
         return (
@@ -100,33 +69,7 @@ const ListWineTastedForm = () => {
         );
     };
 
-    return (
-        <>
-            {/* <div className="card">
-                <DataTable
-                    value={tastings}
-                    expandedRows={expandedRows}
-                    onRowToggle={(e) => setExpandedRows(e.value)}
-                    rowExpansionTemplate={rowExpansionTemplate}
-
-                    selectionMode={rowClick ? null : 'checkbox'}
-                    selection={selectedTasting}
-                    onSelectionChange={(e) => setSelectedTasting(e.value)}
-                    dataKey="id"
-                    paginator rows={10}
-                    rowsPerPageOptions={[10, 20, 30, 50]}
-                    tableStyle={{ minWidth: '50rem' }}
-                    removableSort
-                >
-
-                    <Column expander={allowExpansion} style={{ width: '5rem' }} />
-                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} ></Column>
-                    <Column field="tastingData" header="Data"></Column>
-                    <Column field="tastingType" header="Tipo de degustação"></Column>
-
-                </DataTable>
-            </div> */}
-
+    return (       
             <div className="card">
             <DataTable
                 value={tastings}
@@ -151,7 +94,6 @@ const ListWineTastedForm = () => {
                 <Column field="tastingCards.pointScale" header="Avaliação geral"></Column>
             </DataTable>
         </div>
-        </>
     )
 }
 
