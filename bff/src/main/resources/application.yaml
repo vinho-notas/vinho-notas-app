@@ -1,0 +1,4 @@
+server:
+  error:
+    include-stacktrace: never
+  port: 8084
