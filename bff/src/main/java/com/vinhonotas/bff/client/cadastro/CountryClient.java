@@ -10,13 +10,13 @@ import java.util.List;
 @FeignClient(name = "country", url = "${cadastro-api.url}")
 public interface CountryClient {
 
-    @GetMapping
+    @GetMapping("/countries")
     List<CountryOutputDTO> getAllCountries();
 
-    @GetMapping("/{id}")
+    @GetMapping("/countries/{id}")
     CountryOutputDTO getCountryById(@PathVariable("id") String id);
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/countries/name/{name}")
     CountryOutputDTO getCountryByName(@PathVariable("name") String name);
 
 }
