@@ -20,6 +20,12 @@ public class MessagesConstants {
     public static final String ERROR_UPDATE_USER_DATA = "Erro ao atualizar dados do usuário";
     public static final String ERROR_WHEN_DELETING_USER = "Erro ao deletar usuário";
 
+    //ADDRESS
+    public static final String ERROR_WHEN_SAVING_ADDRESS = "Erro ao salvar endereço";
+    public static final String ADDRESS_NOT_FOUND = "Nenhum endereço encontrado";
+    public static final String ERROR_WHEN_UPDATING_ADDRESS = "Erro ao atualizar endereço";
+    public static final String ERROR_WHEN_DELETING_ADDRESS = "Erro ao deletar endereço";
+
     private MessagesConstants() {
     }
 
