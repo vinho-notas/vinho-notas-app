@@ -42,7 +42,7 @@ public class StateServiceImpl implements StateService {
             } else {
                 throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
             }
-            StateEntity stateEntity = stateConverter.toEntity(stateInputDTO);
+            StateEntity stateEntity = stateConverter.convertToEntity(stateInputDTO);
             return stateRepository.save(stateEntity);
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_STATE);
@@ -87,7 +87,7 @@ public class StateServiceImpl implements StateService {
     public StateEntity update(UUID id, StateInputDTO stateInputDTO) {
         try {
             StateEntity entity = this.getById(id);
-            stateRepository.save(stateConverter.toEntityUpdate(entity, id, stateInputDTO));
+            stateRepository.save(stateConverter.convertToEntityUpdate(entity, id, stateInputDTO));
             return stateRepository.findByStateName(entity.getStateName());
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_STATE_DATA);

@@ -1,6 +1,8 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
+import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
@@ -8,6 +10,8 @@ import com.vinhonotas.cadastro.infrastructure.AddressRepository;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,10 +33,15 @@ class AddressServiceImplTest {
 
     @InjectMocks
     private AddressServiceImpl addressServiceImpl;
-    @Mock
-    private AddressRepository addressRepository;
+
     @Mock
     private AddressConverter addressConverter;
+    @Mock
+    private StateConverter stateConverter;
+    @Mock
+    private CountryConverter countryConverter;
+    @Mock
+    private AddressRepository addressRepository;
     @Mock
     private StateRepository stateRepository;
     @Mock
@@ -215,9 +224,24 @@ class AddressServiceImplTest {
                 .district("Centro")
                 .zipCode("00000-000")
                 .city("São Paulo")
-                .uf(createSaoPauloEntity())
-                .country(brasilEntity)
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
                 .phoneNumber("11999999999")
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("São Paulo")
+                .uf("SP")
+                .country(createCountryInputDTO())
                 .build();
     }
 
