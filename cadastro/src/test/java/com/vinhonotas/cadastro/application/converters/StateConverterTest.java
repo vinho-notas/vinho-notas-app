@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
@@ -43,11 +44,12 @@ class StateConverterTest {
     @Test
     @DisplayName("Teste de conversão de StateInputDTO para StateEntity")
     void testToEntity() {
+
         StateEntity state = assertDoesNotThrow(()-> stateConverter.toEntity(stateInputDTO));
         assertNotNull(stateEntity);
         assertEquals(stateInputDTO.getStateName(), state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());
-        assertEquals(stateInputDTO.getCountry(), state.getCountry());
+        assertEquals(countryConverter.convertToEntity(stateInputDTO.getCountry()), state.getCountry());
     }
 
     @Test
@@ -59,7 +61,7 @@ class StateConverterTest {
         assertNotNull(state);
         assertEquals("Rio de Janeiro", state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());
-        assertEquals(stateInputDTO.getCountry(), state.getCountry());
+        assertEquals(countryConverter.convertToEntity(stateInputDTO.getCountry()), state.getCountry());
     }
 
     @Test
@@ -112,7 +114,14 @@ class StateConverterTest {
         return StateInputDTO.builder()
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(Mockito.mock(CountryEntity.class))
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

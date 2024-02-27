@@ -31,7 +31,7 @@ public class CountryServiceImpl implements CountryService {
             throw new BadRequestException(MessagesConstants.COUNTRY_ALREADY_EXISTS);
         }
         try {
-            CountryEntity countryEntity = countryConverter.toEntity(countryInputDTO);
+            CountryEntity countryEntity = countryConverter.convertToEntity(countryInputDTO);
             return countryRepository.save(countryEntity);
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_COUNTRY);
@@ -76,7 +76,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryEntity update(UUID id, CountryInputDTO countryInputDTO) {
         try {
             CountryEntity entity = this.getById(id);
-            countryRepository.save(countryConverter.toEntityUpdate(entity, id, countryInputDTO));
+            countryRepository.save(countryConverter.convertToEntityUpdate(entity, id, countryInputDTO));
             return countryRepository.findByCountryName(entity.getCountryName());
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_COUNTRY_DATA);

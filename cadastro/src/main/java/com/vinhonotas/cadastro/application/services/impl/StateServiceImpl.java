@@ -1,5 +1,6 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.StateService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
@@ -24,6 +25,7 @@ public class StateServiceImpl implements StateService {
 
     private final StateRepository stateRepository;
     private final StateConverter stateConverter;
+    private final CountryConverter countryConverter;
     private final CountryRepository countryRepository;
 
     @Override
@@ -36,7 +38,7 @@ public class StateServiceImpl implements StateService {
         try {
             CountryEntity country = countryRepository.findByCountryName(stateInputDTO.getCountry().getCountryName());
             if (Objects.nonNull(country)) {
-                stateInputDTO.setCountry(country);
+                stateInputDTO.setCountry(countryConverter.convertToInputDTO(country));
             } else {
                 throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
             }

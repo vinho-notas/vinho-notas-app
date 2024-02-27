@@ -19,7 +19,7 @@ public class StateConverter {
         return StateEntity.builder()
                 .stateName(stateInputDTO.getStateName())
                 .uf(stateInputDTO.getUf())
-                .country(stateInputDTO.getCountry())
+                .country(countryConverter.convertToEntity(stateInputDTO.getCountry()))
                 .build();
     }
 
@@ -28,7 +28,8 @@ public class StateConverter {
                 .id(id)
                 .stateName(stateInputDTO.getStateName() != null ? stateInputDTO.getStateName() : entity.getStateName())
                 .uf(stateInputDTO.getUf() != null ? stateInputDTO.getUf() : entity.getUf())
-                .country(stateInputDTO.getCountry() != null ? stateInputDTO.getCountry() : entity.getCountry())
+                .country(stateInputDTO.getCountry() != null ?
+                        countryConverter.convertToEntity(stateInputDTO.getCountry()) : entity.getCountry())
                 .build();
     }
 

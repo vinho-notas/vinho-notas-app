@@ -1,11 +1,13 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +34,8 @@ class StateServiceImplTest {
     private StateRepository stateRepository;
     @Mock
     private StateConverter stateConverter;
+    @Mock
+    private CountryConverter countryConverter;
     @Mock
     private CountryRepository countryRepository;
 
@@ -215,7 +219,14 @@ class StateServiceImplTest {
         return StateInputDTO.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .country(createBrasilEntity())
+                .country(createBrasilInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createBrasilInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 
