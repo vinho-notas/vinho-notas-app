@@ -35,7 +35,7 @@ class CountryConverterTest {
     @Test
     @DisplayName("Teste de conversão de CountryInputDTO para CountryEntity")
     void testToEntity() {
-        CountryEntity country = assertDoesNotThrow(() -> countryConverter.toEntity(countryInputDTO));
+        CountryEntity country = assertDoesNotThrow(() -> countryConverter.convertToEntity(countryInputDTO));
         assertNotNull(country);
         assertEquals(countryInputDTO.getCountryName(), country.getCountryName());
         assertEquals(countryInputDTO.getContinentName(), country.getContinentName());
@@ -46,7 +46,7 @@ class CountryConverterTest {
     void testToEntityUpdate() {
         countryInputDTO.setCountryName("Argentina");
 
-        CountryEntity country = assertDoesNotThrow(()-> countryConverter.toEntityUpdate(countryEntity, countryEntity.getId(), countryInputDTO));
+        CountryEntity country = assertDoesNotThrow(()-> countryConverter.convertToEntityUpdate(countryEntity, countryEntity.getId(), countryInputDTO));
         assertNotNull(country);
         assertEquals("Argentina", country.getCountryName());
         assertEquals(countryInputDTO.getContinentName(), country.getContinentName());
