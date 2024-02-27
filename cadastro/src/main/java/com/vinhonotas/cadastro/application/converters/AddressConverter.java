@@ -16,7 +16,7 @@ public class AddressConverter {
     private final StateConverter stateConverter;
     private final CountryConverter countryConverter;
 
-    public AddressEntity toEntity(AddressInputDTO addressInputDTO) {
+    public AddressEntity convertToEntity(AddressInputDTO addressInputDTO) {
         return AddressEntity.builder()
                 .addressDescription(addressInputDTO.getAddressDescription())
                 .addressNumber(addressInputDTO.getAddressNumber())
@@ -30,7 +30,7 @@ public class AddressConverter {
                 .build();
     }
 
-    public AddressEntity toEntityUpdate(AddressEntity entity, UUID id, AddressInputDTO addressInputDTO) {
+    public AddressEntity convertToEntityUpdate(AddressEntity entity, UUID id, AddressInputDTO addressInputDTO) {
         return AddressEntity.builder()
                 .id(id)
                 .addressDescription(addressInputDTO.getAddressDescription() != null ? addressInputDTO.getAddressDescription() : entity.getAddressDescription())

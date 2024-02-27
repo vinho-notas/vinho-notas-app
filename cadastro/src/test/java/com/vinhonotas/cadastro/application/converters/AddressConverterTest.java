@@ -49,7 +49,7 @@ class AddressConverterTest {
     @Test
     @DisplayName("Teste de conversão de AddressInputDTO para AddressEntity")
     void testToEntity() {
-        AddressEntity addressEntity = assertDoesNotThrow(()-> addressConverter.toEntity(addressInputDTO));
+        AddressEntity addressEntity = assertDoesNotThrow(()-> addressConverter.convertToEntity(addressInputDTO));
         assertNotNull(addressEntity);
         assertEquals(addressInputDTO.getAddressDescription(), addressEntity.getAddressDescription());
         assertEquals(addressInputDTO.getAddressNumber(), addressEntity.getAddressNumber());
@@ -67,7 +67,7 @@ class AddressConverterTest {
     void testToEntityUpdate() {
         addressInputDTO.setAddressNumber(200);
 
-        AddressEntity addressEntityUpdate = assertDoesNotThrow(()-> addressConverter.toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO));
+        AddressEntity addressEntityUpdate = assertDoesNotThrow(()-> addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO));
         assertNotNull(addressEntityUpdate);
         assertEquals(addressInputDTO.getAddressDescription(), addressEntityUpdate.getAddressDescription());
         assertEquals(200, addressEntityUpdate.getAddressNumber());

@@ -2,13 +2,17 @@ package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,6 +27,9 @@ class PersonConverterTest {
 
     @InjectMocks
     private PersonConverter personConverter;
+
+    @Mock
+    private AddressConverter addressConverter;
 
     private PersonInputDTO personInputDTO;
     private PersonEntity personEntity;
@@ -43,7 +50,7 @@ class PersonConverterTest {
         assertEquals(personInputDTO.getName(), personEntity.getName());
         assertEquals(personInputDTO.getDocument(), personEntity.getDocument());
         assertEquals(personInputDTO.getBirthDate(), personEntity.getBirthDate());
-        assertEquals(personInputDTO.getAddress(), personEntity.getAddress());
+        assertEquals(addressConverter.convertToEntity(personInputDTO.getAddress()), personEntity.getAddress());
     }
 
     @Test
@@ -57,7 +64,7 @@ class PersonConverterTest {
         assertEquals("Mauricio", entity.getName());
         assertEquals("123456789", entity.getDocument());
         assertEquals(LocalDate.of(1995, 10, 10), entity.getBirthDate());
-        assertEquals(personInputDTO.getAddress(), entity.getAddress());
+        assertEquals(addressConverter.convertToEntity(personInputDTO.getAddress()), entity.getAddress());
     }
 
     @Test
@@ -122,7 +129,21 @@ class PersonConverterTest {
                 .name("Vinicius")
                 .document("123456789")
                 .birthDate(LocalDate.of(1995, 10, 10))
-                .address(Mockito.mock(AddressEntity.class))
+                .address(createAddressInputDTO())
+                .build();
+    }
+
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
+                .addressDescription("Rua 1")
+                .addressNumber(1)
+                .complement("Casa 1")
+                .district("Bairro 1")
+                .zipCode("00000-000")
+                .city("Cidade 1")
+                .uf(Mockito.mock(StateInputDTO.class))
+                .country(Mockito.mock(CountryInputDTO.class))
+                .phoneNumber("00000000000")
                 .build();
     }
 

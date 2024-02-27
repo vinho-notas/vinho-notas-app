@@ -7,7 +7,10 @@ import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -218,8 +221,8 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private AddressEntity createAddressInputDTO() {
-        return AddressEntity.builder()
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
                 .addressDescription("Rua 3")
                 .addressNumber(456)
                 .complement("Complemento 1")
@@ -241,8 +244,8 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private StateEntity createUfInputDTO() {
-        return StateEntity.builder()
+    private StateInputDTO createUfInputDTO() {
+        return StateInputDTO.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(createCountryInputDTO())
@@ -257,8 +260,8 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private CountryEntity createCountryInputDTO() {
-        return CountryEntity.builder()
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();

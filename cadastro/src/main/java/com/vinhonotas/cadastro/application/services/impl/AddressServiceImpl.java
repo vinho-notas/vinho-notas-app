@@ -51,7 +51,7 @@ public class AddressServiceImpl implements AddressService {
                 throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
             }
 
-            AddressEntity addressEntity = addressConverter.toEntity(addressInputDTO);
+            AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
             return addressRepository.save(addressEntity);
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
@@ -78,7 +78,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity update(UUID id, AddressInputDTO addressInputDTO) {
         try {
             AddressEntity addressEntity = this.getById(id);
-            return addressRepository.save(addressConverter.toEntityUpdate(addressEntity, id, addressInputDTO));
+            return addressRepository.save(addressConverter.convertToEntityUpdate(addressEntity, id, addressInputDTO));
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
         }
