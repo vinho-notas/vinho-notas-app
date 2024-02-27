@@ -6,7 +6,9 @@ import com.vinhonotas.cadastro.application.services.StateService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -241,7 +243,15 @@ class StateControllerTest {
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(country)
+                .country(createCountryOutputDTO())
+                .build();
+    }
+
+    private CountryOutputDTO createCountryOutputDTO() {
+        return CountryOutputDTO.builder()
+                .id(UUID.fromString("e50ae4ba-b799-4506-9efb-345a3f6556fa"))
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 
@@ -258,7 +268,14 @@ class StateControllerTest {
         return StateInputDTO.builder()
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(country)
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

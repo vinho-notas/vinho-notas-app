@@ -4,12 +4,17 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -17,12 +22,18 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AddressConverterTest {
 
     @InjectMocks
     private AddressConverter addressConverter;
+
+    @Mock
+    private StateConverter stateConverter;
+    @Mock
+    private CountryConverter countryConverter;
 
     private AddressInputDTO addressInputDTO;
     private AddressEntity addressEntity;
@@ -46,8 +57,8 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntity.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntity.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntity.getCity());
-        assertEquals(addressInputDTO.getUf(), addressEntity.getUf());
-        assertEquals(addressInputDTO.getCountry(), addressEntity.getCountry());
+        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntity.getUf());
+        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntity.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntity.getPhoneNumber());
     }
 
@@ -64,14 +75,17 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntityUpdate.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntityUpdate.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntityUpdate.getCity());
-        assertEquals(addressInputDTO.getUf(), addressEntityUpdate.getUf());
-        assertEquals(addressInputDTO.getCountry(), addressEntityUpdate.getCountry());
+        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntityUpdate.getUf());
+        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntityUpdate.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntityUpdate.getPhoneNumber());
     }
 
     @Test
     @DisplayName("Teste de conversão de AddressEntity para AddressOutputDTO")
     void testConvertToOutputDTO() {
+        when(stateConverter.convertToOutputDTO(Mockito.any(StateEntity.class))).thenReturn(Mockito.mock(StateOutputDTO.class));
+        when(countryConverter.convertToOutputDTO(Mockito.any(CountryEntity.class))).thenReturn(Mockito.mock(CountryOutputDTO.class));
+
         AddressOutputDTO addressOutput = assertDoesNotThrow(()-> addressConverter.convertToOutputDTO(addressEntity));
         assertNotNull(addressOutput);
         assertEquals(addressEntity.getId(), addressOutput.getId());
@@ -81,14 +95,15 @@ class AddressConverterTest {
         assertEquals(addressEntity.getDistrict(), addressOutput.getDistrict());
         assertEquals(addressEntity.getZipCode(), addressOutput.getZipCode());
         assertEquals(addressEntity.getCity(), addressOutput.getCity());
-        assertEquals(addressEntity.getUf(), addressOutput.getUf());
-        assertEquals(addressEntity.getCountry(), addressOutput.getCountry());
         assertEquals(addressEntity.getPhoneNumber(), addressOutput.getPhoneNumber());
     }
 
     @Test
     @DisplayName("Teste de conversão de List<AddressEntity> para List<AddressOutputDTO>")
     void testConvertToOutputDTOList() {
+        when(stateConverter.convertToOutputDTO(Mockito.any(StateEntity.class))).thenReturn(Mockito.mock(StateOutputDTO.class));
+        when(countryConverter.convertToOutputDTO(Mockito.any(CountryEntity.class))).thenReturn(Mockito.mock(CountryOutputDTO.class));
+
         List<AddressOutputDTO> list = assertDoesNotThrow(()-> addressConverter.convertToOutputDTOList(List.of(addressEntity)));
         assertNotNull(list);
         assertEquals(1, list.size());
@@ -100,8 +115,6 @@ class AddressConverterTest {
         assertEquals(addressEntity.getDistrict(), addressOutput.getDistrict());
         assertEquals(addressEntity.getZipCode(), addressOutput.getZipCode());
         assertEquals(addressEntity.getCity(), addressOutput.getCity());
-        assertEquals(addressEntity.getUf(), addressOutput.getUf());
-        assertEquals(addressEntity.getCountry(), addressOutput.getCountry());
         assertEquals(addressEntity.getPhoneNumber(), addressOutput.getPhoneNumber());
     }
 
@@ -133,8 +146,8 @@ class AddressConverterTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(Mockito.mock(StateEntity.class))
-                .country(Mockito.mock(CountryEntity.class))
+                .uf(Mockito.mock(StateOutputDTO.class))
+                .country(Mockito.mock(CountryOutputDTO.class))
                 .phoneNumber("0000000000")
                 .build();
     }
@@ -162,9 +175,24 @@ class AddressConverterTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(Mockito.mock(StateEntity.class))
-                .country(Mockito.mock(CountryEntity.class))
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
                 .phoneNumber("0000000000")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("America do Sul")
                 .build();
     }
 

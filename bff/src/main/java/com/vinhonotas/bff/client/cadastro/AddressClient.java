@@ -20,10 +20,10 @@ public interface AddressClient {
     @GetMapping("/address/{id}")
     AddressOutputDTO getAddressById(@PathVariable("id") String id);
 
-    @PutMapping("/{id}")
+    @PutMapping("/address/{id}")
     AddressOutputDTO updateAddress(@PathVariable("id") String id, @Valid @RequestBody AddressInputDTO addressInputDTO);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/address/{id}")
     void deleteAddress(@PathVariable("id") String id);
 
 }

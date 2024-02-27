@@ -44,7 +44,7 @@ class CountryServiceImplTest {
     @Test
     @DisplayName("Teste de criação de país com sucesso")
     void testCreateSuccess() {
-        when(countryConverter.toEntity(brasilInputDTO)).thenReturn(brasilEntity);
+        when(countryConverter.convertToEntity(brasilInputDTO)).thenReturn(brasilEntity);
         when(countryRepository.save(brasilEntity)).thenReturn(brasilEntity);
 
         CountryEntity entity = assertDoesNotThrow(() -> countryService.create(brasilInputDTO));
@@ -52,19 +52,19 @@ class CountryServiceImplTest {
         assertEquals("Brasil", entity.getCountryName());
         assertEquals("América do Sul", entity.getContinentName());
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
-        verify(countryConverter, times(1)).toEntity(brasilInputDTO);
+        verify(countryConverter, times(1)).convertToEntity(brasilInputDTO);
         verify(countryRepository, times(1)).save(brasilEntity);
     }
 
     @Test
     @DisplayName("Teste de criação de país com exceção")
     void testCreateException() {
-        when(countryConverter.toEntity(brasilInputDTO)).thenReturn(brasilEntity);
+        when(countryConverter.convertToEntity(brasilInputDTO)).thenReturn(brasilEntity);
         when(countryRepository.save(brasilEntity)).thenThrow(RuntimeException.class);
 
         Exception exception = assertThrows(Exception.class, () -> countryService.create(brasilInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_COUNTRY, exception.getMessage());
-        verify(countryConverter, times(1)).toEntity(brasilInputDTO);
+        verify(countryConverter, times(1)).convertToEntity(brasilInputDTO);
         verify(countryRepository, times(1)).save(brasilEntity);
     }
 
@@ -161,7 +161,7 @@ class CountryServiceImplTest {
     @DisplayName("Deve atualizar um país")
     void testUpdate() {
         when(countryRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(brasilEntity));
-        when(countryConverter.toEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO)).thenReturn(brasilEntity);
+        when(countryConverter.convertToEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO)).thenReturn(brasilEntity);
         when(countryRepository.save(brasilEntity)).thenReturn(brasilEntity);
         when(countryRepository.findByCountryName("Brasil")).thenReturn(brasilEntity);
 
@@ -171,7 +171,7 @@ class CountryServiceImplTest {
         assertEquals("América do Sul", entity.getContinentName());
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         verify(countryRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(countryConverter, times(1)).toEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO);
+        verify(countryConverter, times(1)).convertToEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO);
         verify(countryRepository, times(1)).save(brasilEntity);
         verify(countryRepository, times(1)).findByCountryName("Brasil");
     }
@@ -184,7 +184,7 @@ class CountryServiceImplTest {
         Exception exception = assertThrows(Exception.class, () -> countryService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_COUNTRY_DATA, exception.getMessage());
         verify(countryRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(countryConverter, times(0)).toEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO);
+        verify(countryConverter, times(0)).convertToEntityUpdate(brasilEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), brasilInputDTO);
         verify(countryRepository, times(0)).save(brasilEntity);
     }
 

@@ -1,11 +1,13 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,8 @@ class StateServiceImplTest {
     @Mock
     private StateConverter stateConverter;
     @Mock
+    private CountryConverter countryConverter;
+    @Mock
     private CountryRepository countryRepository;
 
     private StateEntity scEntity;
@@ -47,7 +51,7 @@ class StateServiceImplTest {
     @Test
     @DisplayName("Teste de criação de estado com sucesso")
     void testCreateSuccess() {
-        when(stateConverter.toEntity(scInputDTO)).thenReturn(scEntity);
+        when(stateConverter.convertToEntity(scInputDTO)).thenReturn(scEntity);
         when(stateRepository.save(scEntity)).thenReturn(scEntity);
         when(stateRepository.findByStateName(scInputDTO.getStateName())).thenReturn(null);
         when(countryRepository.findByCountryName(scInputDTO.getCountry().getCountryName())).thenReturn(createBrasilEntity());
@@ -58,7 +62,7 @@ class StateServiceImplTest {
         assertEquals("SC", entity.getUf());
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("Brasil", entity.getCountry().getCountryName());
-        verify(stateConverter, times(1)).toEntity(scInputDTO);
+        verify(stateConverter, times(1)).convertToEntity(scInputDTO);
         verify(stateRepository, times(1)).save(scEntity);
     }
 
@@ -67,7 +71,7 @@ class StateServiceImplTest {
     void testCreateException() {
         Exception exception = assertThrows(Exception.class, () -> stateService.create(scInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_STATE, exception.getMessage());
-        verify(stateConverter, times(0)).toEntity(scInputDTO);
+        verify(stateConverter, times(0)).convertToEntity(scInputDTO);
         verify(stateRepository, times(0)).save(scEntity);
         verify(stateRepository, times(1)).findByStateName(scInputDTO.getStateName());
         verify(countryRepository, times(1)).findByCountryName(scInputDTO.getCountry().getCountryName());
@@ -164,7 +168,7 @@ class StateServiceImplTest {
     @DisplayName("Deve atualizar um estado")
     void testUpdate() {
         when(stateRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(scEntity));
-        when(stateConverter.toEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO)).thenReturn(scEntity);
+        when(stateConverter.convertToEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO)).thenReturn(scEntity);
         when(stateRepository.save(scEntity)).thenReturn(scEntity);
         when(stateRepository.findByStateName("Santa Catarina")).thenReturn(scEntity);
 
@@ -175,7 +179,7 @@ class StateServiceImplTest {
         assertEquals("Brasil", entity.getCountry().getCountryName());
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         verify(stateRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(stateConverter, times(1)).toEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO);
+        verify(stateConverter, times(1)).convertToEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO);
         verify(stateRepository, times(1)).save(scEntity);
         verify(stateRepository, times(1)).findByStateName("Santa Catarina");
     }
@@ -188,7 +192,7 @@ class StateServiceImplTest {
         Exception exception = assertThrows(Exception.class, () -> stateService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_STATE_DATA, exception.getMessage());
         verify(stateRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(stateConverter, times(0)).toEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO);
+        verify(stateConverter, times(0)).convertToEntityUpdate(scEntity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), scInputDTO);
         verify(stateRepository, times(0)).save(scEntity);
     }
 
@@ -215,7 +219,14 @@ class StateServiceImplTest {
         return StateInputDTO.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
-                .country(createBrasilEntity())
+                .country(createBrasilInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createBrasilInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 
