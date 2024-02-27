@@ -1,5 +1,6 @@
 package com.vinhonotas.bff.client.cadastro;
 
+import com.vinhonotas.bff.configuration.FeignConfig;
 import com.vinhonotas.bff.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.AddressOutputDTO;
 import jakarta.validation.Valid;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "address", url = "${cadastro-api.url}")
+@FeignClient(name = "address", url = "${cadastro-api.url}", configuration = FeignConfig.class)
 public interface AddressClient {
 
     @PostMapping("/address")

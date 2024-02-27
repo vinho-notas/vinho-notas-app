@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.cadastro.CountryService;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.CountryClient;
-import com.vinhonotas.bff.interfaces.controllers.exceptions.NotFoundException;
 import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
