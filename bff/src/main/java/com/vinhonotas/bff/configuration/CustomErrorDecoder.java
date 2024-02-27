@@ -1,7 +1,7 @@
 package com.vinhonotas.bff.configuration;
 
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
-import com.vinhonotas.bff.interfaces.controllers.exceptions.NotFoundException;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import feign.Response;
 import feign.codec.ErrorDecoder;
