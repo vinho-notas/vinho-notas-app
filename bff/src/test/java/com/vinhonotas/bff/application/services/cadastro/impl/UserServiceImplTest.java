@@ -61,10 +61,10 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao criar um usuário")
     void testCreateUserThrowBadRequestException() {
-        when(userClient.createUser(userInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_USER));
+        when(userClient.createUser(userInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING));
 
         Exception exception = assertThrows(Exception.class, () -> userService.createUser(userInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_USER, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING, exception.getMessage());
         verify(userClient).createUser(userInputDTO);
     }
 
@@ -93,7 +93,7 @@ class UserServiceImplTest {
         when(userClient.getAllUser()).thenReturn(new ArrayList<>());
 
         Exception exception = assertThrows(Exception.class, () -> userService.getAllUser());
-        assertEquals(MessagesConstants.USERS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(userClient).getAllUser();
     }
 
@@ -119,7 +119,7 @@ class UserServiceImplTest {
         when(userClient.getUserById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> userService.getUserById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
-        assertEquals(MessagesConstants.USERS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(userClient).getUserById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
     }
 
@@ -145,7 +145,7 @@ class UserServiceImplTest {
         when(userClient.getUserByName("Vinicius Junior")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> userService.getUserByName("Vinicius Junior"));
-        assertEquals(MessagesConstants.USERS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(userClient).getUserByName("Vinicius Junior");
     }
 
@@ -170,10 +170,10 @@ class UserServiceImplTest {
     @DisplayName("Deve lançar BadRequestException ao atualizar um usuário")
     void testUpdateUserThrowBadRequestException() {
         when(userClient.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO))
-                .thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_USER_DATA));
+                .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
         Exception exception = assertThrows(Exception.class, () -> userService.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO));
-        assertEquals(MessagesConstants.ERROR_UPDATE_USER_DATA, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
         verify(userClient).updateUser(userOutputDTO.getId().toString(), userInputDTO);
     }
 
@@ -187,11 +187,11 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao deletar um usuário")
     void testDeleteUserThrowBadRequestException() {
-        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING_USER))
+        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING))
                 .when(userClient).deleteUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
 
         Exception exception = assertThrows(Exception.class, () -> userService.deleteUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
-        assertEquals(MessagesConstants.ERROR_WHEN_DELETING_USER, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_DELETING, exception.getMessage());
         verify(userClient).deleteUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
     }
 

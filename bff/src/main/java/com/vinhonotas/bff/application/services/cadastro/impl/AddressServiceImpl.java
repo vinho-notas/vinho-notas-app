@@ -2,6 +2,7 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.cadastro.AddressService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.AddressClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.AddressOutputDTO;
@@ -23,7 +24,7 @@ public class AddressServiceImpl implements AddressService {
         try {
             return addressClient.createAddress(addressInputDTO);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING);
         }
     }
 
@@ -31,7 +32,7 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressOutputDTO> getAllAddress() {
         List<AddressOutputDTO> addresses = addressClient.getAllAddress();
         if (addresses.isEmpty()) {
-            throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return addresses;
     }
@@ -40,7 +41,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressOutputDTO getAddressById(String id) {
         AddressOutputDTO address = addressClient.getAddressById(id);
         if (Objects.isNull(address)) {
-            throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return address;
     }
@@ -50,7 +51,7 @@ public class AddressServiceImpl implements AddressService {
         try {
             return addressClient.updateAddress(id, addressInputDTO);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING);
         }
     }
 
@@ -59,7 +60,7 @@ public class AddressServiceImpl implements AddressService {
         try {
             addressClient.deleteAddress(id);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING_ADDRESS);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING);
         }
     }
 

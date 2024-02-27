@@ -61,7 +61,7 @@ class StateServiceImplTest {
         when(stateClient.getAllStates()).thenReturn(new ArrayList<>());
         Exception exception = assertThrows(Exception.class, () -> stateService.getAllStates());
 
-        assertEquals(MessagesConstants.STATES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(stateClient).getAllStates();
     }
 
@@ -84,7 +84,7 @@ class StateServiceImplTest {
     void testGetStateByIdNotFound() {
         Exception exception = assertThrows(Exception.class, () -> stateService.getStateById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
 
-        assertEquals(MessagesConstants.STATES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(stateClient).getStateById(Mockito.anyString());
     }
 
@@ -107,7 +107,7 @@ class StateServiceImplTest {
     void testGetStateByNameNotFound() {
         Exception exception = assertThrows(Exception.class, () -> stateService.getStateByName("São Paulo"));
 
-        assertEquals(MessagesConstants.STATES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(stateClient).getStateByName(Mockito.anyString());
     }
 
@@ -130,7 +130,7 @@ class StateServiceImplTest {
     void testGetStateByUfNotFound() {
         Exception exception = assertThrows(Exception.class, () -> stateService.getStateByUf("SP"));
 
-        assertEquals(MessagesConstants.STATES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(stateClient).getStateByUf(Mockito.anyString());
     }
 
