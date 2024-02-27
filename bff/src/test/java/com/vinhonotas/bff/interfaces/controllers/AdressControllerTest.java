@@ -193,7 +193,7 @@ class AdressControllerTest {
     void testDeleteAddressBadRequestException() throws Exception {
         doThrow(new BadRequestException(MessagesConstants.BAD_REQUEST)).when(addressService)
                 .deleteAddress("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
-        
+
         mockMvc.perform(delete("/api/v1/address/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
