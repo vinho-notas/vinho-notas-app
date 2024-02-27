@@ -3,13 +3,17 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class StateConverter {
+
+    private final CountryConverter countryConverter;
 
     public StateEntity toEntity(StateInputDTO stateInputDTO) {
         return StateEntity.builder()
@@ -33,7 +37,7 @@ public class StateConverter {
                 .id(state.getId())
                 .stateName(state.getStateName())
                 .uf(state.getUf())
-                .country(state.getCountry())
+                .country(countryConverter.convertToOutputDTO(state.getCountry()))
                 .build();
     }
 
@@ -48,7 +52,8 @@ public class StateConverter {
                 .id(id)
                 .stateName(stateOutputDTO.getStateName() != null ? stateOutputDTO.getStateName() : state.getStateName())
                 .uf(stateOutputDTO.getUf() != null ? stateOutputDTO.getUf() : state.getUf())
-                .country(stateOutputDTO.getCountry() != null ? stateOutputDTO.getCountry() : state.getCountry())
+                .country(stateOutputDTO.getCountry() != null ? stateOutputDTO.getCountry()
+                        : countryConverter.convertToOutputDTO(state.getCountry()))
                 .build();
     }
 }
