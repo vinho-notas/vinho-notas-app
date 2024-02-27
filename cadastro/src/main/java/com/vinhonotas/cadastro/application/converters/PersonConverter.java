@@ -3,20 +3,24 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class PersonConverter {
+
+    private final AddressConverter addressConverter;
 
     public PersonEntity toEntity(PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
                 .name(personInputDTO.getName())
                 .document(personInputDTO.getDocument())
                 .birthDate(personInputDTO.getBirthDate())
-                .address(personInputDTO.getAddress())
+                .address(addressConverter.convertToEntity(personInputDTO.getAddress()))
                 .build();
     }
 
@@ -26,7 +30,7 @@ public class PersonConverter {
                 .name(personInputDTO.getName() != null ? personInputDTO.getName() : entity.getName())
                 .document(personInputDTO.getDocument() != null ? personInputDTO.getDocument() : entity.getDocument())
                 .birthDate(personInputDTO.getBirthDate() != null ? personInputDTO.getBirthDate() : entity.getBirthDate())
-                .address(personInputDTO.getAddress() != null ? personInputDTO.getAddress() : entity.getAddress())
+                .address(personInputDTO.getAddress() != null ? addressConverter.convertToEntity(personInputDTO.getAddress()) : entity.getAddress())
                 .build();
     }
 

@@ -8,7 +8,10 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -280,7 +283,36 @@ class PersonControllerTest {
                 .name("Nome da pessoa")
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
-                .address(addressEntity)
+                .address(createAddressInputDTO())
+                .build();
+    }
+
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
+                .addressDescription("Descrição do endereço")
+                .addressNumber(123)
+                .complement("Complemento da pessoa")
+                .district("Bairro da pessoa")
+                .city("Cidade da pessoa")
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
+                .zipCode("12345678")
+                .phoneNumber("12345678910")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Nome do estado")
+                .uf("UF")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

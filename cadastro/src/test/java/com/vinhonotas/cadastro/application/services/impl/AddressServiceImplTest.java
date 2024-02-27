@@ -64,7 +64,7 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
-        when(addressConverter.toEntity(addressInputDTO)).thenReturn(addressEntity);
+        when(addressConverter.convertToEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
         when(stateRepository.findByUf(addressInputDTO.getUf().getUf())).thenReturn(createSaoPauloEntity());
         when(countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName())).thenReturn(brasilEntity);
@@ -81,7 +81,7 @@ class AddressServiceImplTest {
         assertEquals(addressEntity.getUf(), address.getUf());
         assertEquals(addressEntity.getCountry(), address.getCountry());
         assertEquals(addressEntity.getPhoneNumber(), address.getPhoneNumber());
-        verify(addressConverter, times(1)).toEntity(addressInputDTO);
+        verify(addressConverter, times(1)).convertToEntity(addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
     }
 
@@ -90,7 +90,7 @@ class AddressServiceImplTest {
     void testCreateErro() {
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.create(addressInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, exception.getMessage());
-        verify(addressConverter, times(0)).toEntity(addressInputDTO);
+        verify(addressConverter, times(0)).convertToEntity(addressInputDTO);
         verify(addressRepository, times(0)).save(addressEntity);
     }
 
@@ -150,7 +150,7 @@ class AddressServiceImplTest {
     @DisplayName("Teste de atualização de endereço")
     void testUpdateSucesso() {
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
-        when(addressConverter.toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
+        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
         AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
 
@@ -166,7 +166,7 @@ class AddressServiceImplTest {
         assertEquals(addressEntity.getCountry(), address.getCountry());
         assertEquals(addressEntity.getPhoneNumber(), address.getPhoneNumber());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
-        verify(addressConverter, times(1)).toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
     }
 
@@ -174,13 +174,13 @@ class AddressServiceImplTest {
     @DisplayName("Teste de atualização de endereço com erro")
     void testUpdateErro() {
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
-        when(addressConverter.toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
+        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
 
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
-        verify(addressConverter, times(1)).toEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
     }
 
