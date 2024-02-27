@@ -8,6 +8,8 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
@@ -248,9 +250,24 @@ class AddressControllerTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(state)
-                .country(country)
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
                 .phoneNumber("00000000000")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

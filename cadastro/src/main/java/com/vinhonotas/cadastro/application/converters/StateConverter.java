@@ -15,7 +15,7 @@ public class StateConverter {
 
     private final CountryConverter countryConverter;
 
-    public StateEntity toEntity(StateInputDTO stateInputDTO) {
+    public StateEntity convertToEntity(StateInputDTO stateInputDTO) {
         return StateEntity.builder()
                 .stateName(stateInputDTO.getStateName())
                 .uf(stateInputDTO.getUf())
@@ -23,7 +23,7 @@ public class StateConverter {
                 .build();
     }
 
-    public StateEntity toEntityUpdate(StateEntity entity, UUID id, StateInputDTO stateInputDTO) {
+    public StateEntity convertToEntityUpdate(StateEntity entity, UUID id, StateInputDTO stateInputDTO) {
         return StateEntity.builder()
                 .id(id)
                 .stateName(stateInputDTO.getStateName() != null ? stateInputDTO.getStateName() : entity.getStateName())
@@ -57,4 +57,13 @@ public class StateConverter {
                         : countryConverter.convertToOutputDTO(state.getCountry()))
                 .build();
     }
+
+    public StateInputDTO convertToInputDTO(StateEntity state) {
+        return StateInputDTO.builder()
+                .stateName(state.getStateName())
+                .uf(state.getUf())
+                .country(countryConverter.convertToInputDTO(state.getCountry()))
+                .build();
+    }
+
 }

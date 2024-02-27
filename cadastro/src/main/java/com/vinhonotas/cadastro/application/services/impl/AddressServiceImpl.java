@@ -1,6 +1,8 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
+import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.AddressService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
@@ -24,8 +26,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    private final AddressRepository addressRepository;
     private final AddressConverter addressConverter;
+    private final StateConverter stateConverter;
+    private final CountryConverter countryConverter;
+    private final AddressRepository addressRepository;
     private final StateRepository stateRepository;
     private final CountryRepository countryRepository;
 
@@ -35,14 +39,14 @@ public class AddressServiceImpl implements AddressService {
         try {
             StateEntity state = stateRepository.findByUf(addressInputDTO.getUf().getUf());
             if (Objects.nonNull(state)) {
-                addressInputDTO.setUf(state);
+                addressInputDTO.setUf(stateConverter.convertToInputDTO(state));
             } else {
                 throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + addressInputDTO.getUf().getUf());
             }
 
             CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName());
             if (Objects.nonNull(country)) {
-                addressInputDTO.setCountry(country);
+                addressInputDTO.setCountry(countryConverter.convertToInputDTO(country));
             } else {
                 throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
             }

@@ -45,7 +45,7 @@ class StateConverterTest {
     @DisplayName("Teste de conversão de StateInputDTO para StateEntity")
     void testToEntity() {
 
-        StateEntity state = assertDoesNotThrow(()-> stateConverter.toEntity(stateInputDTO));
+        StateEntity state = assertDoesNotThrow(()-> stateConverter.convertToEntity(stateInputDTO));
         assertNotNull(stateEntity);
         assertEquals(stateInputDTO.getStateName(), state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());
@@ -57,7 +57,7 @@ class StateConverterTest {
     void testToEntityUpdate() {
         stateInputDTO.setStateName("Rio de Janeiro");
 
-        StateEntity state = assertDoesNotThrow(()-> stateConverter.toEntityUpdate(stateEntity, stateEntity.getId(), stateInputDTO));
+        StateEntity state = assertDoesNotThrow(()-> stateConverter.convertToEntityUpdate(stateEntity, stateEntity.getId(), stateInputDTO));
         assertNotNull(state);
         assertEquals("Rio de Janeiro", state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());

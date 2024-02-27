@@ -4,6 +4,8 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
@@ -55,8 +57,8 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntity.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntity.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntity.getCity());
-        assertEquals(addressInputDTO.getUf(), addressEntity.getUf());
-        assertEquals(addressInputDTO.getCountry(), addressEntity.getCountry());
+        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntity.getUf());
+        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntity.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntity.getPhoneNumber());
     }
 
@@ -73,8 +75,8 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntityUpdate.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntityUpdate.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntityUpdate.getCity());
-        assertEquals(addressInputDTO.getUf(), addressEntityUpdate.getUf());
-        assertEquals(addressInputDTO.getCountry(), addressEntityUpdate.getCountry());
+        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntityUpdate.getUf());
+        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntityUpdate.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntityUpdate.getPhoneNumber());
     }
 
@@ -173,9 +175,24 @@ class AddressConverterTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(Mockito.mock(StateEntity.class))
-                .country(Mockito.mock(CountryEntity.class))
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
                 .phoneNumber("0000000000")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("America do Sul")
                 .build();
     }
 
