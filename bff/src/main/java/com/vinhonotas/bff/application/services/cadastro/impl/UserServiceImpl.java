@@ -2,6 +2,7 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.UserClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.UserOutputDTO;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userClient.createUser(userInputDTO);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_USER);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING);
         }
     }
 
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public List<UserOutputDTO> getAllUser() {
         List<UserOutputDTO> users = userClient.getAllUser();
         if (users.isEmpty()) {
-            throw new BadRequestException(MessagesConstants.USERS_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return users;
     }
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public UserOutputDTO getUserById(String id) {
         UserOutputDTO user = userClient.getUserById(id);
         if (Objects.isNull(user)) {
-            throw new BadRequestException(MessagesConstants.USERS_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return user;
     }
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public UserOutputDTO getUserByName(String name) {
         UserOutputDTO user = userClient.getUserByName(name);
         if (Objects.isNull(user)) {
-            throw new BadRequestException(MessagesConstants.USERS_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return user;
     }
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userClient.updateUser(id, userInputDTO);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_UPDATE_USER_DATA);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING);
         }
     }
 
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
         try {
             userClient.deleteUser(id);
         } catch (Exception e) {
-            throw new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING_USER);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING);
         }
 
     }

@@ -59,10 +59,10 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao criar uma pessoa")
     void testCreatePersonThrowBadRequestException() {
-        when(personClient.createPerson(personInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON));
+        when(personClient.createPerson(personInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING));
 
         Exception exception = assertThrows(Exception.class, () -> personService.createPerson(personInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING, exception.getMessage());
         verify(personClient).createPerson(personInputDTO);
     }
 
@@ -91,7 +91,7 @@ class PersonServiceImplTest {
         when(personClient.getAllPerson()).thenReturn(new ArrayList<>());
 
         Exception exception = assertThrows(Exception.class, () -> personService.getAllPerson());
-        assertEquals(MessagesConstants.PERSONS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(personClient).getAllPerson();
     }
 
@@ -116,7 +116,7 @@ class PersonServiceImplTest {
     void testGetPersonByIdThrowBadRequestException() {
         Exception exception = assertThrows(Exception.class, () -> personService.getPersonById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
 
-        assertEquals(MessagesConstants.PERSONS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(personClient).getPersonById("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
     }
 
@@ -141,7 +141,7 @@ class PersonServiceImplTest {
     void testGetPersonByNameThrowBadRequestException() {
         Exception exception = assertThrows(Exception.class, () -> personService.getPersonByName("Vinicius Junior"));
 
-        assertEquals(MessagesConstants.PERSONS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(personClient).getPersonByName(personOutputDTO.getName());
     }
 
@@ -162,10 +162,10 @@ class PersonServiceImplTest {
     @DisplayName("Deve lançar BadRequestException ao atualizar uma pessoa")
     void testUpdatePersonThrowBadRequestException() {
         when(personClient.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO))
-                .thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_PERSON_DATA));
+                .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
         Exception exception = assertThrows(Exception.class, () -> personService.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO));
-        assertEquals(MessagesConstants.ERROR_UPDATE_PERSON_DATA, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
         verify(personClient).updatePerson(personOutputDTO.getId().toString(), personInputDTO);
     }
 
@@ -179,11 +179,11 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao deletar uma pessoa")
     void testDeletePersonThrowBadRequestException() {
-        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING_PERSON))
+        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING))
                 .when(personClient).deletePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
 
         Exception exception = assertThrows(Exception.class, () -> personService.deletePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"));
-        assertEquals(MessagesConstants.ERROR_WHEN_DELETING_PERSON, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_DELETING, exception.getMessage());
         verify(personClient).deletePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
     }
 

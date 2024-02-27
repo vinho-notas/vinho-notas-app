@@ -1,7 +1,7 @@
 package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.cadastro.StateService;
-import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.StateClient;
 import com.vinhonotas.bff.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
@@ -21,7 +21,7 @@ public class StateServiceImpl implements StateService {
     public List<StateOutputDTO> getAllStates() {
         List<StateOutputDTO> states = stateClient.getAllStates();
         if (states.isEmpty()) {
-            throw new BadRequestException(MessagesConstants.STATES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return states;
     }
@@ -30,7 +30,7 @@ public class StateServiceImpl implements StateService {
     public StateOutputDTO getStateById(String id) {
         StateOutputDTO state = stateClient.getStateById(id);
         if (Objects.isNull(state)) {
-            throw new BadRequestException(MessagesConstants.STATES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return state;
     }
@@ -39,7 +39,7 @@ public class StateServiceImpl implements StateService {
     public StateOutputDTO getStateByName(String name) {
         StateOutputDTO state = stateClient.getStateByName(name);
         if (Objects.isNull(state)) {
-            throw new BadRequestException(MessagesConstants.STATES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return state;
     }
@@ -48,7 +48,7 @@ public class StateServiceImpl implements StateService {
     public StateOutputDTO getStateByUf(String uf) {
         StateOutputDTO state = stateClient.getStateByUf(uf);
         if (Objects.isNull(state)) {
-            throw new BadRequestException(MessagesConstants.STATES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return state;
     }

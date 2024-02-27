@@ -58,7 +58,7 @@ class CountryServiceImplTest {
         when(countryClient.getAllCountries()).thenReturn(new ArrayList<>());
         Exception exception = assertThrows(Exception.class, () -> countryService.getAllCountries());
 
-        assertEquals(MessagesConstants.COUNTRIES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(countryClient).getAllCountries();
     }
 
@@ -81,7 +81,7 @@ class CountryServiceImplTest {
     void testGetCountryByIdNotFound() {
         Exception exception = assertThrows(Exception.class, () -> countryService.getCountryById("d0d7c2a0-0b7a-4e1e-8b7a-0b7a4e1e8b7a"));
 
-        assertEquals(MessagesConstants.COUNTRIES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(countryClient).getCountryById("d0d7c2a0-0b7a-4e1e-8b7a-0b7a4e1e8b7a");
     }
 
@@ -104,7 +104,7 @@ class CountryServiceImplTest {
     void testGetCountryByNameNotFound() {
         Exception exception = assertThrows(Exception.class, () -> countryService.getCountryByName("Brasil"));
 
-        assertEquals(MessagesConstants.COUNTRIES_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
         verify(countryClient).getCountryByName("Brasil");
     }
 

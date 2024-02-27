@@ -65,10 +65,10 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao criar um endereço")
     void testCreateAddressThrowBadRequestException() {
-        when(addressClient.createAddress(addressInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS));
+        when(addressClient.createAddress(addressInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING));
 
         Exception exception = assertThrows(Exception.class, () -> addressService.createAddress(addressInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_SAVING, exception.getMessage());
         verify(addressClient).createAddress(addressInputDTO);
     }
 
@@ -101,7 +101,7 @@ class AddressServiceImplTest {
         when(addressClient.getAllAddress()).thenReturn(new ArrayList<>());
 
         Exception exception = assertThrows(Exception.class, () -> addressService.getAllAddress());
-        assertEquals(MessagesConstants.ADDRESS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
     }
 
     @Test
@@ -130,7 +130,7 @@ class AddressServiceImplTest {
         when(addressClient.getAddressById("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a")).thenReturn(null);
 
         Exception exception = assertThrows(Exception.class, () -> addressService.getAddressById("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"));
-        assertEquals(MessagesConstants.ADDRESS_NOT_FOUND, exception.getMessage());
+        assertEquals(MessagesConstants.NOT_FOUND, exception.getMessage());
     }
 
     @Test
@@ -150,10 +150,10 @@ class AddressServiceImplTest {
     @DisplayName("Deve lançar BadRequestException ao atualizar um endereço")
     void testUpdateAddressThrowBadRequestException() {
         when(addressClient.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO))
-                .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS));
+                .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
         Exception exception = assertThrows(Exception.class, () -> addressService.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO));
-        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING_ADDRESS, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
         verify(addressClient).updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO);
     }
 
@@ -167,11 +167,11 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao deletar um endereço")
     void testDeleteAddressThrowBadRequestException() {
-        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING_ADDRESS))
+        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING))
                 .when(addressClient).deleteAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a");
 
         Exception exception = assertThrows(Exception.class, () -> addressService.deleteAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"));
-        assertEquals(MessagesConstants.ERROR_WHEN_DELETING_ADDRESS, exception.getMessage());
+        assertEquals(MessagesConstants.ERROR_WHEN_DELETING, exception.getMessage());
         verify(addressClient).deleteAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a");
     }
 

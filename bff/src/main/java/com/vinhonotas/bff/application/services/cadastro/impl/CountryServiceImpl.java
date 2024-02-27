@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.cadastro.CountryService;
-import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.CountryClient;
+import com.vinhonotas.bff.interfaces.controllers.exceptions.NotFoundException;
 import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class CountryServiceImpl implements CountryService {
     public List<CountryOutputDTO> getAllCountries() {
         List<CountryOutputDTO> countries = countryClient.getAllCountries();
         if (countries.isEmpty()) {
-            throw new BadRequestException(MessagesConstants.COUNTRIES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return countries;
     }
@@ -30,7 +30,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryOutputDTO getCountryById(String id) {
         CountryOutputDTO country = countryClient.getCountryById(id);
         if (Objects.isNull(country)) {
-            throw new BadRequestException(MessagesConstants.COUNTRIES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return country;
     }
@@ -39,7 +39,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryOutputDTO getCountryByName(String name) {
         CountryOutputDTO country = countryClient.getCountryByName(name);
         if (Objects.isNull(country)) {
-            throw new BadRequestException(MessagesConstants.COUNTRIES_NOT_FOUND);
+            throw new NotFoundException(MessagesConstants.NOT_FOUND);
         }
         return country;
     }
