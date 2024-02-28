@@ -15,7 +15,7 @@ public class PersonConverter {
 
     private final AddressConverter addressConverter;
 
-    public PersonEntity toEntity(PersonInputDTO personInputDTO) {
+    public PersonEntity convertToEntity(PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
                 .name(personInputDTO.getName())
                 .document(personInputDTO.getDocument())
@@ -24,7 +24,7 @@ public class PersonConverter {
                 .build();
     }
 
-    public PersonEntity toEntityUpdate(PersonEntity entity, UUID id, PersonInputDTO personInputDTO) {
+    public PersonEntity convertToEntityUpdate(PersonEntity entity, UUID id, PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
                 .id(id)
                 .name(personInputDTO.getName() != null ? personInputDTO.getName() : entity.getName())

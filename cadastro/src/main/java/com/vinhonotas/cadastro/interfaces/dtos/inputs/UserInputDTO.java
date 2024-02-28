@@ -9,8 +9,9 @@ import lombok.Data;
 @Builder
 public class UserInputDTO {
 
-    private PersonEntity person;
+    private PersonInputDTO person;
     private EnumProfile enumProfile;
     private String email;
     private String password;
+
 }

@@ -50,7 +50,7 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com sucesso")
     void testCreateSuccess() {
-        when(personConverter.toEntity(inputDTO)).thenReturn(entity);
+        when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
 
         PersonEntity entity = assertDoesNotThrow(() -> personService.create(inputDTO));
@@ -59,19 +59,19 @@ class PersonServiceImplTest {
         assertEquals("12345678900", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
-        verify(personConverter, times(1)).toEntity(inputDTO);
+        verify(personConverter, times(1)).convertToEntity(inputDTO);
         verify(personRepository, times(1)).save(entity);
     }
 
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
-        when(personConverter.toEntity(inputDTO)).thenReturn(entity);
+        when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenThrow(BadRequestException.class);
 
         Exception exception = assertThrows(Exception.class, () -> personService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
-        verify(personConverter, times(1)).toEntity(inputDTO);
+        verify(personConverter, times(1)).convertToEntity(inputDTO);
         verify(personRepository, times(1)).save(entity);
     }
 
@@ -142,7 +142,7 @@ class PersonServiceImplTest {
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdate() {
         when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
-        when(personConverter.toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
+        when(personConverter.convertToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
         when(personRepository.findByName("João")).thenReturn(entity);
 
@@ -154,7 +154,7 @@ class PersonServiceImplTest {
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(personConverter, times(1)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(personConverter, times(1)).convertToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(personRepository, times(1)).save(entity);
         verify(personRepository, times(1)).findByName("João");
     }
@@ -167,7 +167,7 @@ class PersonServiceImplTest {
         Exception exception = assertThrows(Exception.class, () -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_PERSON_DATA, exception.getMessage());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(personConverter, times(0)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(personConverter, times(0)).convertToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(personRepository, times(0)).save(entity);
     }
 

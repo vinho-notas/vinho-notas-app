@@ -50,7 +50,7 @@ class PersonConverterTest {
     @Test
     @DisplayName("Teste de conversão de PersonInputDTO para PersonEntity")
     void testToEntity() {
-        PersonEntity personEntity = assertDoesNotThrow(() -> personConverter.toEntity(personInputDTO));
+        PersonEntity personEntity = assertDoesNotThrow(() -> personConverter.convertToEntity(personInputDTO));
         assertNotNull(personEntity);
         assertEquals(personInputDTO.getName(), personEntity.getName());
         assertEquals(personInputDTO.getDocument(), personEntity.getDocument());
@@ -63,7 +63,7 @@ class PersonConverterTest {
     void testToEntityUpdate() {
         personInputDTO.setName("Mauricio");
 
-        PersonEntity entity = assertDoesNotThrow(() -> personConverter.toEntityUpdate(personEntity, personEntity.getId(), personInputDTO));
+        PersonEntity entity = assertDoesNotThrow(() -> personConverter.convertToEntityUpdate(personEntity, personEntity.getId(), personInputDTO));
         assertNotNull(personEntity);
         assertEquals(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"), entity.getId());
         assertEquals("Mauricio", entity.getName());
