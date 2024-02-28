@@ -37,7 +37,7 @@ public class UserConverter {
     public UserOutputDTO convertToOutputDTO(UserEntity userEntity) {
         return UserOutputDTO.builder()
                 .id(userEntity.getId())
-                .person(userEntity.getPerson())
+                .person(personConverter.convertToOutputDTO(userEntity.getPerson()))
                 .enumProfile(userEntity.getEnumProfile())
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())
@@ -47,7 +47,8 @@ public class UserConverter {
     public UserOutputDTO convertToOutputDTOUpdate(UserEntity update, UUID uuid, UserOutputDTO userOutputDTO) {
         return UserOutputDTO.builder()
                 .id(uuid)
-                .person(update.getPerson() != null ? update.getPerson() : userOutputDTO.getPerson())
+                .person(personConverter.convertToOutputDTO(update.getPerson()) != null ?
+                        personConverter.convertToOutputDTO(update.getPerson()) : userOutputDTO.getPerson())
                 .enumProfile(update.getEnumProfile() != null ? update.getEnumProfile() : userOutputDTO.getEnumProfile())
                 .email(update.getEmail() != null ? update.getEmail() : userOutputDTO.getEmail())
                 .password(update.getPassword() != null ? update.getPassword() : userOutputDTO.getPassword())

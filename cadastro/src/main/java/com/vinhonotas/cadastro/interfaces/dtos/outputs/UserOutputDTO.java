@@ -12,8 +12,9 @@ import java.util.UUID;
 public class UserOutputDTO {
 
     private UUID id;
-    private PersonEntity person;
+    private PersonOutputDTO person;
     private EnumProfile enumProfile;
     private String email;
     private String password;
+
 }
