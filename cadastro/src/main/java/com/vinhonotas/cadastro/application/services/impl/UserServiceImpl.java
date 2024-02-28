@@ -26,12 +26,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity create(UserInputDTO userInputDTO) {
-        UserEntity person = userRepository.findByPersonId(userInputDTO.getPerson().getId());
+        UserEntity person = userRepository.findByPersonDocument(userInputDTO.getPerson().getDocument());
         if (Objects.nonNull(person)) {
             throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
         }
         try {
-            UserEntity userEntity = userConverter.toEntity(userInputDTO);
+            UserEntity userEntity = userConverter.convertToEntity(userInputDTO);
             return userRepository.save(userEntity);
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_USER);
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UUID id, UserInputDTO userInputDTO) {
         try {
             UserEntity userEntity = this.getById(id);
-            userRepository.save(userConverter.toEntityUpdate(userEntity, id, userInputDTO));
+            userRepository.save(userConverter.converteToEntityUpdate(userEntity, id, userInputDTO));
             return userRepository.findByPersonName(userEntity.getPerson().getName());
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_USER_DATA);

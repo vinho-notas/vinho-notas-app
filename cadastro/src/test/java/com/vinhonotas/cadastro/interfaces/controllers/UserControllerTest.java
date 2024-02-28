@@ -6,12 +6,13 @@ import com.vinhonotas.cadastro.application.services.UserService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -95,8 +97,8 @@ class UserControllerTest {
     @Test
     @DisplayName("Deve retornar uma lista de usuários")
     void testGetAllUser() throws Exception {
-        when(userService.getAll()).thenReturn(java.util.List.of(userEntity));
-        when(userConverter.convertToOutputDTOList(any(java.util.List.class))).thenReturn(java.util.List.of(userOutputDTO));
+        when(userService.getAll()).thenReturn(List.of(userEntity));
+        when(userConverter.convertToOutputDTOList(any(List.class))).thenReturn(List.of(userOutputDTO));
         userConverter.convertToOutputDTOList(userService.getAll());
 
         mockMvc.perform(get("/api/v1/users")
@@ -285,10 +287,33 @@ class UserControllerTest {
 
     private UserInputDTO createUserIntputDTO() {
         return UserInputDTO.builder()
-                .person(person)
+                .person(createPersonInputDTO())
                 .enumProfile(EnumProfile.OENOPHILE)
                 .email("email@gmail.com")
                 .password("123456")
+                .build();
+    }
+
+    private PersonInputDTO createPersonInputDTO() {
+        return PersonInputDTO.builder()
+                .name("Usuario Teste")
+                .birthDate(LocalDate.of(1990, 10, 10))
+                .document("12345678900")
+                .address(createAddressInputDTO())
+                .build();
+    }
+
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
+                .addressDescription("Rua Teste")
+                .addressNumber(123)
+                .city("Cidade Teste")
+                .uf(Mockito.mock(StateInputDTO.class))
+                .complement("Complemento Teste")
+                .country(Mockito.mock(CountryInputDTO.class))
+                .district("Bairro Teste")
+                .phoneNumber("123456789")
+                .zipCode("12345678")
                 .build();
     }
 

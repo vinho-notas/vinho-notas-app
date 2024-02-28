@@ -3,6 +3,7 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,6 +25,9 @@ class UserConverterTest {
 
     @InjectMocks
     private UserConverter userConverter;
+
+    @Mock
+    private PersonConverter personConverter;
 
     private UserInputDTO userInputDTO;
     private UserEntity userEntity;
@@ -38,9 +43,9 @@ class UserConverterTest {
     @Test
     @DisplayName("Teste de conversão de UserInputDTO para UserEntity")
     void testToEntity() {
-        UserEntity user = assertDoesNotThrow(()-> userConverter.toEntity(userInputDTO));
+        UserEntity user = assertDoesNotThrow(()-> userConverter.convertToEntity(userInputDTO));
         assertNotNull(user);
-        assertEquals(userInputDTO.getPerson(), user.getPerson());
+        assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), user.getPerson());
         assertEquals(userInputDTO.getEnumProfile(), user.getEnumProfile());
         assertEquals(userInputDTO.getEmail(), user.getEmail());
         assertEquals(userInputDTO.getPassword(), user.getPassword());
@@ -51,9 +56,9 @@ class UserConverterTest {
     void testToEntityUpdate() {
         userInputDTO.setEmail("update@email.com");
 
-        UserEntity entity = assertDoesNotThrow(() -> userConverter.toEntityUpdate(userEntity, userEntity.getId(), userInputDTO));
+        UserEntity entity = assertDoesNotThrow(() -> userConverter.converteToEntityUpdate(userEntity, userEntity.getId(), userInputDTO));
         assertNotNull(userEntity);
-        assertEquals(userInputDTO.getPerson(), entity.getPerson());
+        assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), entity.getPerson());
         assertEquals(userInputDTO.getEnumProfile(), entity.getEnumProfile());
         assertEquals(userInputDTO.getEmail(), entity.getEmail());
         assertEquals(userInputDTO.getPassword(), entity.getPassword());
@@ -109,7 +114,7 @@ class UserConverterTest {
 
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
-                .person(Mockito.mock(PersonEntity.class))
+                .person(Mockito.mock(PersonInputDTO.class))
                 .enumProfile(EnumProfile.OENOPHILE)
                 .email("user@email.com")
                 .password("123456")

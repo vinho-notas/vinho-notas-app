@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
             throw new BadRequestException(MessagesConstants.PERSON_ALREADY_EXISTS);
         }
         try {
-            PersonEntity personEntity = personConverter.toEntity(personInputDTO);
+            PersonEntity personEntity = personConverter.convertToEntity(personInputDTO);
             return personRepository.save(personEntity);
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
@@ -67,7 +67,7 @@ public class PersonServiceImpl implements PersonService {
     public PersonEntity update(UUID id, PersonInputDTO personInputDTO) {
         try {
             PersonEntity personEntity = this.getById(id);
-            personRepository.save(personConverter.toEntityUpdate(personEntity, id, personInputDTO));
+            personRepository.save(personConverter.convertToEntityUpdate(personEntity, id, personInputDTO));
             return personRepository.findByName(personEntity.getName());
         } catch (Exception e) {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_PERSON_DATA);
