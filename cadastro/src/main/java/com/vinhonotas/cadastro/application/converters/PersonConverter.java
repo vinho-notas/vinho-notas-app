@@ -40,7 +40,7 @@ public class PersonConverter {
                 .name(personEntity.getName())
                 .document(personEntity.getDocument())
                 .birthDate(personEntity.getBirthDate())
-                .address(personEntity.getAddress())
+                .address(addressConverter.convertToOutputDTO(personEntity.getAddress()))
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class PersonConverter {
                 .name(update.getName() != null ? update.getName() : personOutputDTO.getName())
                 .document(update.getDocument() != null ? update.getDocument() : personOutputDTO.getDocument())
                 .birthDate(update.getBirthDate() != null ? update.getBirthDate() : personOutputDTO.getBirthDate())
-                .address(update.getAddress() != null ? update.getAddress() : personOutputDTO.getAddress())
+                .address(update.getAddress() != null ? addressConverter.convertToOutputDTO(update.getAddress()) : personOutputDTO.getAddress())
                 .build();
     }
 }

@@ -12,11 +12,15 @@ import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -242,7 +246,22 @@ class PersonControllerTest {
                 .name("Nome da pessoa")
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
-                .address(addressEntity)
+                .address(createAddressOutputDTO())
+                .build();
+    }
+
+    private AddressOutputDTO createAddressOutputDTO() {
+        return AddressOutputDTO.builder()
+                .id(UUID.fromString("987efc9e-f787-4e83-bc88-bf1159230930"))
+                .addressDescription("Descrição do endereço")
+                .addressNumber(123)
+                .complement("Complemento da pessoa")
+                .district("Bairro da pessoa")
+                .city("Cidade da pessoa")
+                .uf(Mockito.mock(StateOutputDTO.class))
+                .country(Mockito.mock(CountryOutputDTO.class))
+                .zipCode("12345678")
+                .phoneNumber("12345678910")
                 .build();
     }
 
