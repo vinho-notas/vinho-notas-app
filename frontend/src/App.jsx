@@ -12,6 +12,11 @@ import Footer from './components/footer/Footer';
 import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
 import ListWineTastedForm from './components/tasting/forms/ListWineTastedForm';
+import ListCountryComponent from './components/registration/forms/ListCountryComponent';
+import ListStateComponent from './components/registration/forms/ListStateComponent';
+import ListAddressComponent from './components/registration/forms/ListAddressComponent';
+import ListPersonComponent from './components/registration/forms/ListPersonComponent';
+import ListUserComponent from './components/registration/forms/ListUserComponent';
 
 function App() {
   return (
@@ -21,6 +26,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
+        <Route path="/countries" element={<ListCountryComponent />} />
+        <Route path="/states" element={<ListStateComponent />} />
+        <Route path="/persons" element={<ListPersonComponent />} />
+        <Route path="/users" element={<ListUserComponent />} />
+        <Route path="/address" element={<ListAddressComponent />} />
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-review" element={<WineReview />} />
         <Route path="/tasting" element={<Tasting />} />

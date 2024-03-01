@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/address")
 @Tag(name = "Endereços", description = "Operações relacionadas a endereços")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class AddressController {
 
     private final AddressService addressService;
