@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/persons")
 @Tag(name = "Pessoas", description = "Operações relacionadas a pessoas")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class PersonController {
 
     private final PersonService personService;
