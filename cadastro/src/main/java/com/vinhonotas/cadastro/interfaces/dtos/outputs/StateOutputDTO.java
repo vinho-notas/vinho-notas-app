@@ -13,5 +13,5 @@ public class StateOutputDTO {
     private UUID id;
     private String stateName;
     private String uf;
-    private CountryEntity country;
+    private CountryOutputDTO country;
 }
