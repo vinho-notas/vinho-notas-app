@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 import tastings from '../../../data/tasting_data_mock.json';
 
-const ListWineTastedForm = () => {
-    const [selectedTasting, setSelectedTasting] = useState(null);
+const ListWineTastedForm = () => {    
     const [expandedRows, setExpandedRows] = useState(null);
-    const [rowClick, setRowClick] = useState(true);
-
     const allowExpansion = (tasting) => {
         return tasting.tastingCards ? true : false;
     };
@@ -16,7 +13,7 @@ const ListWineTastedForm = () => {
     const rowExpansionTemplate = (tasting) => {
         return (
             <>
-            <div className="p-3">
+            <div className="card">
                 <h5><strong>Ficha de inspeção visual de {tasting.tastingCards.wineTasted} </strong></h5>
                 <DataTable value={[tasting.tastingCards]}>
                     <Column field="visualInspection.clarity" header="Claridade" sortable></Column>
@@ -29,7 +26,7 @@ const ListWineTastedForm = () => {
                 </DataTable>
             </div>
 
-            <div className="p-3">
+            <div className="card">
                 <h5><strong>Ficha de inspeção olfativa de {tasting.tastingCards.wineTasted} </strong></h5>
                 <DataTable value={[tasting.tastingCards]}>
                     <Column field="olfactoryInspection.intensity" header="Intensidade" sortable></Column>
@@ -51,7 +48,7 @@ const ListWineTastedForm = () => {
                 </DataTable>
             </div>
 
-            <div className="p-3">
+            <div className="card">
                 <h5><strong>Ficha de inspeção gustativa de {tasting.tastingCards.wineTasted} </strong></h5>
                 <DataTable value={[tasting.tastingCards]}>
                     <Column field="gustatoryInspection.body" header="Corpo" sortable></Column>
