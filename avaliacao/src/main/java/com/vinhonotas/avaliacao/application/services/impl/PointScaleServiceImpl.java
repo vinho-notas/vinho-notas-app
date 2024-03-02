@@ -8,6 +8,7 @@ import com.vinhonotas.avaliacao.infraestructure.PointScaleRepository;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
 import com.vinhonotas.avaliacao.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PointScaleServiceImpl implements PointScaleService {
 
     private final PointScaleRepository pointScaleRepository;
@@ -25,17 +27,21 @@ public class PointScaleServiceImpl implements PointScaleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PointScaleEntity create(PointScaleInputDTO pointScaleInputDTO) {
+        log.info("create :: Registrando a avaliação de: {}", pointScaleInputDTO.getWhatTasted());
         try {
             return pointScaleRepository.save(pointScaleConverter.toEntity(pointScaleInputDTO));
         } catch (Exception e) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_CREATE_POINT_SCALE, e);
             throw new BadRequestException(MessagesConstants.ERROR_CREATE_POINT_SCALE);
         }
     }
 
     @Override
     public List<PointScaleEntity> getAll() {
+        log.info("getAll :: Buscando todas as avaliações: {}");
         List<PointScaleEntity> list = pointScaleRepository.findAll();
         if (list.isEmpty()) {
+            log.error("getAll :: Ocorreu um erro ao buscar as avaliações: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
         }
         return list;
@@ -43,16 +49,19 @@ public class PointScaleServiceImpl implements PointScaleService {
 
     @Override
     public PointScaleEntity getById(UUID id) {
+        log.info("getById :: Buscando uma avaliação pelo id: {}", id);
         return pointScaleRepository.findById(id).orElseThrow(() -> new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PointScaleEntity update(UUID id, PointScaleInputDTO pointScaleInputDTO) {
+        log.info("update :: Atualizando a avaliação pelo id: {}", id);
         try {
             PointScaleEntity pointScale = this.getById(id);
             return pointScaleRepository.save(pointScaleConverter.toEntityUpdate(pointScaleInputDTO, id, pointScale));
         } catch (Exception e) {
+            log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_POINT_SCALE, e);
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_POINT_SCALE);
         }
     }
@@ -60,15 +69,18 @@ public class PointScaleServiceImpl implements PointScaleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
+        log.info("delete :: Deletando a avaliação pelo id: {}", id);
         Optional<PointScaleEntity> pointScale = pointScaleRepository.findById(id);
         if (pointScale.isEmpty()) {
+            log.error("delete :: Ocorreu um erro ao deletar a avaliação: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
         }
         try {
             pointScaleRepository.deleteById(id);
         } catch (Exception e) {
+            log.error("delete :: Ocorreu um erro: {}", MessagesConstants.ERROR_DELETE_POINT_SCALE, e);
             throw new BadRequestException(MessagesConstants.ERROR_DELETE_POINT_SCALE);
         }
-
     }
+
 }
