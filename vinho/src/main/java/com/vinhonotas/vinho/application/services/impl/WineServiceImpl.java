@@ -83,5 +83,5 @@ public class WineServiceImpl implements WineService {
             throw new BadRequestException(MessagesConstants.ERROR_DELETE_WINE);
         }
     }
-    
+
 }
