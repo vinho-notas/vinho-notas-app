@@ -27,7 +27,7 @@ public class PointScaleServiceImpl implements PointScaleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PointScaleEntity create(PointScaleInputDTO pointScaleInputDTO) {
-        log.info("create :: Registrando a avaliação de: {}", pointScaleInputDTO.getWhatTasted());
+        log.info("create :: Registrando uma avaliação com os dados: {}", pointScaleInputDTO.toString());
         try {
             return pointScaleRepository.save(pointScaleConverter.toEntity(pointScaleInputDTO));
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class PointScaleServiceImpl implements PointScaleService {
 
     @Override
     public List<PointScaleEntity> getAll() {
-        log.info("getAll :: Buscando todas as avaliações: {}");
+        log.info("getAll :: Listando todas as avaliações");
         List<PointScaleEntity> list = pointScaleRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar as avaliações: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
@@ -49,14 +49,14 @@ public class PointScaleServiceImpl implements PointScaleService {
 
     @Override
     public PointScaleEntity getById(UUID id) {
-        log.info("getById :: Buscando uma avaliação pelo id: {}", id);
+        log.info("getById :: Buscando uma avaliação pelo id: {}", id.toString());
         return pointScaleRepository.findById(id).orElseThrow(() -> new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PointScaleEntity update(UUID id, PointScaleInputDTO pointScaleInputDTO) {
-        log.info("update :: Atualizando a avaliação pelo id: {}", id);
+        log.info("update :: Atualizando a avaliação com os dados: {}", pointScaleInputDTO.toString());
         try {
             PointScaleEntity pointScale = this.getById(id);
             return pointScaleRepository.save(pointScaleConverter.toEntityUpdate(pointScaleInputDTO, id, pointScale));
@@ -69,7 +69,7 @@ public class PointScaleServiceImpl implements PointScaleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
-        log.info("delete :: Deletando a avaliação pelo id: {}", id);
+        log.info("delete :: Deletando a avaliação pelo id: {}", id.toString());
         Optional<PointScaleEntity> pointScale = pointScaleRepository.findById(id);
         if (pointScale.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a avaliação: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
