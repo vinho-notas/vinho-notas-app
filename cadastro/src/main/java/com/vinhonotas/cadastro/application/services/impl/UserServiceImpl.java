@@ -102,5 +102,5 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException(MessagesConstants.ERROR_DELETE_USER_DATA);
         }
     }
-    
+
 }
