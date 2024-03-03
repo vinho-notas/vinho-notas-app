@@ -14,7 +14,10 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
 class PointScaleRepositoryTest {
 
     @Autowired
@@ -116,10 +119,10 @@ class PointScaleRepositoryTest {
                         "como pimenta preta, e de ervas, como tomilho.")
                 .whatFlavors("Em boca, o vinho é seco, com acidez média, taninos médios, álcool médio, corpo médio, " +
                         "intensidade de sabor média, com sabores de frutas vermelhas maduras, como cereja e framboesa, " +
-                        "com notas de especiarias, como pimenta preta, e de ervas, como tomilho, e final médio.")
+                        "com notas de especiarias, como pimenta preta, e de ervas, como tomilho.")
                 .whatOpinion("Vinho de boa qualidade, com boa complexidade, equilibrado, com boa intensidade de sabor, " +
                         "com boa persistência, com boa tipicidade, com boa harmonização, com boa relação qualidade/preço, " +
-                        "com potencial de guarda de 3 anos, mas que pode ser consumido desde já.")
+                        "com potencial de guarda de 3 anos.")
                 .pointScale(EnumPointScale.VERYGOOD)
                 .build();
     }
