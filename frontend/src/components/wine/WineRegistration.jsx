@@ -1,8 +1,13 @@
 import { Form, Card, Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
+import EnumWineType from "../../utils/enums/EnumWineType";
+import EnumWineClassification from '../../utils/enums/EnumWineClassification';
 
 const WineRegistration = () => {
+    const wineType = Object.values(EnumWineType);
+    const wineClassification = Object.values(EnumWineClassification);
+
     return (
         <Card style={{ marginTop: 100 }}>
             <Card.Header as="h5">Cadastro de Vinho</Card.Header>
@@ -53,16 +58,9 @@ const WineRegistration = () => {
                             <Form.Label>Tipo de vinho</Form.Label>
                             <Form.Select aria-label="Default select example">
                                 <option>Selectione o tipo de vinho</option>
-                                <option value="REDWINE">Vinho Tinto</option>
-                                <option value="WHITEWINE">Vinho Branco</option>
-                                <option value="ROSEWINE">Vinho Rose</option>
-                                <option value="SPARKLING">Vinho Espumante</option>
-                                <option value="FORTIFIEDWINE">Vinho Fortificado</option>
-                                <option value="SWEETWINE">Vinho Doce</option>
-                                <option value="DESSERTWINE">Vinho de Sobremesa</option>
-                                <option value="VINTAGEWINE">Vinho de Safra</option>
-                                <option value="BLENDEDWINE">Vinho Assemblage</option>
-                                <option value="NATURALWINE">Vinho Orgânico</option>
+                                {Object.values(EnumWineType).map((type, index) => (
+                                    <option key={index} value={type}>{type}</option>
+                                ))}
                             </Form.Select>
                         </Form.Group>
 
@@ -70,13 +68,9 @@ const WineRegistration = () => {
                             <Form.Label>Classificação do vinho</Form.Label>
                             <Form.Select aria-label="Default select example">
                                 <option>Selectione a classificação do vinho</option>
-                                <option value="DRYWINE">Vinho Seco</option>
-                                <option value="MEDIUMDRYWINE">Vinho Meio Seco</option>
-                                <option value="DEMISECWINE">Vinho Demi Sec</option>
-                                <option value="SWEETWINE">Vinho de Doce</option>
-                                <option value="DESSERTWINE">Vinho de Sobremesa</option>
-                                <option value="LATEHARVESTWINE">Vinho de Colheita Tardia</option>
-                                <option value="ICEWINE">Vinho Gelado</option>
+                                {Object.values(EnumWineClassification).map((type, index) => (
+                                    <option key={index} value={type}>{type}</option>
+                                ))}
                             </Form.Select>
                         </Form.Group>
                     </Row>
