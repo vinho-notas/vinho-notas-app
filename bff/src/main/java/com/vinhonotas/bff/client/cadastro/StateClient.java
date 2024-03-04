@@ -1,7 +1,7 @@
 package com.vinhonotas.bff.client.cadastro;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
-import com.vinhonotas.bff.interfaces.dtos.outputs.StateOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

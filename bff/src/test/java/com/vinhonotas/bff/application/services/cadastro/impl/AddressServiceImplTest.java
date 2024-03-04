@@ -2,12 +2,12 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.AddressClient;
-import com.vinhonotas.bff.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.CountryInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.StateInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.AddressOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.StateOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.CountryInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.StateInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

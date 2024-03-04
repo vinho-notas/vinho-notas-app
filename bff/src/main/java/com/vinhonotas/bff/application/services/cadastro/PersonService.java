@@ -1,7 +1,7 @@
 package com.vinhonotas.bff.application.services.cadastro;
 
-import com.vinhonotas.bff.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 
 import java.util.List;
 

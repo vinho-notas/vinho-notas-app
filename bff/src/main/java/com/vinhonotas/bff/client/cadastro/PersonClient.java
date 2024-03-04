@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.client.cadastro;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
-import com.vinhonotas.bff.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;

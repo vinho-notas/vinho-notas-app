@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.client.cadastro.StateClient;
-import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.StateOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
