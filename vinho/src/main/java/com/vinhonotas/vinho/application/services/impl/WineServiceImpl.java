@@ -39,7 +39,7 @@ public class WineServiceImpl implements WineService {
     @Override
     public List<WineEntity> getAll() {
         log.info("getAll :: Listando todos os vinhos");
-        List<WineEntity> wineList = wineRepository.findAll();//TODO criar converter para o enum
+        List<WineEntity> wineList = wineRepository.findAll();
         if (wineList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar os vinhos: {} ", MessagesConstants.ERROR_WINE_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND);
