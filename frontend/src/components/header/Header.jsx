@@ -19,6 +19,7 @@ const Header = () => {
       items: [
         {label: 'Cadastrar Vinho', icon: 'pi pi-folder-open', url: '/wine' },
         { label: 'Avaliar vinho', icon: 'pi pi-folder-open', url: '/wine-review' },
+        { label: 'Listar vinhos', icon: 'pi pi-folder-open', url: '/wine-list' },
         { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' }
       ]    
     },
