@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.interfaces.controllers;
 
 import com.vinhonotas.bff.application.services.cadastro.AddressService;
-import com.vinhonotas.bff.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.AddressOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

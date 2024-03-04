@@ -1,17 +1,19 @@
-package com.vinhonotas.bff.interfaces.dtos.inputs;
+package com.vinhonotas.bff.interfaces.dtos.outputs.cadastro;
 
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Builder
-public class PersonInputDTO {
+public class PersonOutputDTO {
 
+    private UUID id;
     private String name;
     private String document;
     private LocalDate birthDate;
-    private AddressInputDTO address;
+    private AddressOutputDTO address;
 
 }

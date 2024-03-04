@@ -1,4 +1,4 @@
-package com.vinhonotas.bff.interfaces.dtos.inputs;
+package com.vinhonotas.bff.interfaces.dtos.inputs.cadastro;
 
 import lombok.Builder;
 import lombok.Data;

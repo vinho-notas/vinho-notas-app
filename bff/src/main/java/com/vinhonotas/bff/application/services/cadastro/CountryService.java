@@ -1,6 +1,6 @@
 package com.vinhonotas.bff.application.services.cadastro;
 
-import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.vinhonotas.bff.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.CountryService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
-import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

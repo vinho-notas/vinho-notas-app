@@ -1,7 +1,7 @@
 package com.vinhonotas.bff.interfaces.controllers;
 
 import com.vinhonotas.bff.application.services.cadastro.CountryService;
-import com.vinhonotas.bff.interfaces.dtos.outputs.CountryOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -2,10 +2,10 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.PersonClient;
-import com.vinhonotas.bff.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.AddressOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
