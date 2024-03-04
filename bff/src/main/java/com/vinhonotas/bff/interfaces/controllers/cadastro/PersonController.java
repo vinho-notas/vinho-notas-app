@@ -1,4 +1,4 @@
-package com.vinhonotas.bff.interfaces.controllers;
+package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
