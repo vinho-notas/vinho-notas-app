@@ -19,6 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/point-scales")
 @Tag(name = "Point Scales", description = "Operações relacionadas a avaliação de vinhos")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class PointScaleController {
 
     private final PointScaleService pointScaleService;
