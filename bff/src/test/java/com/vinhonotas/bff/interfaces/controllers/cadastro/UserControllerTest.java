@@ -1,9 +1,10 @@
-package com.vinhonotas.bff.interfaces.controllers;
+package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.domain.enums.EnumProfile;
+import com.vinhonotas.bff.interfaces.controllers.cadastro.UserController;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.*;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.*;
 import com.vinhonotas.bff.utils.MessagesConstants;

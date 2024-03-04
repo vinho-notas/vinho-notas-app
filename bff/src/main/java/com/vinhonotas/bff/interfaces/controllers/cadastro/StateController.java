@@ -1,4 +1,4 @@
-package com.vinhonotas.bff.interfaces.controllers;
+package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.StateService;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;

@@ -1,8 +1,9 @@
-package com.vinhonotas.bff.interfaces.controllers;
+package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
+import com.vinhonotas.bff.interfaces.controllers.cadastro.PersonController;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.CountryInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
