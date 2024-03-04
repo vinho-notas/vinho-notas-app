@@ -1,4 +1,4 @@
-package com.vinhonotas.bff.interfaces.dtos.outputs;
+package com.vinhonotas.bff.interfaces.dtos.outputs.cadastro;
 
 import com.vinhonotas.bff.domain.enums.EnumProfile;
 import lombok.Builder;

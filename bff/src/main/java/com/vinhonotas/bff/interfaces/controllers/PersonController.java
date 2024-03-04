@@ -1,8 +1,8 @@
 package com.vinhonotas.bff.interfaces.controllers;
 
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
-import com.vinhonotas.bff.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
