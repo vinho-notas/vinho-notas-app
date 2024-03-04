@@ -1,4 +1,4 @@
-package com.vinhonotas.bff.client.vinho;
+package com.vinhonotas.bff.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
