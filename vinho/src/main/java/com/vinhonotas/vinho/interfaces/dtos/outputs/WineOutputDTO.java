@@ -20,12 +20,12 @@ public class WineOutputDTO {
     private LocalDate purchaseDate;
     private EnumWineType wineType;
     private EnumWineClassification wineClassification;
-    private double alcoholContent;
+    private String alcoholContent;
     private int volumeMl;
     private String grape;
     private String winery;
-    private double serviceTemperature;
-    private int harvest;
+    private String serviceTemperature;
+    private String harvest;
     private String country;
     private String guardTime;
     private String region;
