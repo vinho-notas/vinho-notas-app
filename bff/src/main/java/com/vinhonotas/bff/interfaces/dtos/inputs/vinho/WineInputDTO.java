@@ -1,6 +1,6 @@
 package com.vinhonotas.bff.interfaces.dtos.inputs.vinho;
 
-import com.vinhonotas.bff.client.vinho.EnumWineClassification;
+import com.vinhonotas.bff.domain.enums.EnumWineClassification;
 import com.vinhonotas.bff.domain.enums.EnumWineType;
 import lombok.Builder;
 import lombok.Data;
