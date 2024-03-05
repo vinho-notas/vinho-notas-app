@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllPointScales } from "../../service/pointScale/PointScaleService";
+import { getAllPointScales } from "../../service/review/PointScaleService";
 
 const useListPointScaleComponentHook = () => {
     const [pointScales, setPointScales] = useState([]);
