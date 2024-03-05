@@ -52,8 +52,4 @@ public class OlfactoryInspectionEntity {
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
 
-    @OneToOne(mappedBy = "olfactoryInspection")
-    @JoinColumn(name = "tastingcard_id", nullable = false)
-    private TastingCardEntity tastingCard;
-
 }
