@@ -24,7 +24,6 @@ public class TastingCardConverter {
                 .gustatoryInspection(tastingCardInputDTO.getGustatoryInspection())
                 .opinion(tastingCardInputDTO.getOpinion())
                 .pointScale(tastingCardInputDTO.getPointScale())
-                .tasting(tastingCardInputDTO.getTasting())
                 .build();
     }
 
@@ -42,7 +41,6 @@ public class TastingCardConverter {
                 .gustatoryInspection(tastingCardInputDTO.getGustatoryInspection() != null ? tastingCardInputDTO.getGustatoryInspection() : tastingCardEntity.getGustatoryInspection())
                 .opinion(tastingCardInputDTO.getOpinion() != null ? tastingCardInputDTO.getOpinion() : tastingCardEntity.getOpinion())
                 .pointScale(tastingCardInputDTO.getPointScale() != null ? tastingCardInputDTO.getPointScale() : tastingCardEntity.getPointScale())
-                .tasting(tastingCardInputDTO.getTasting() != null ? tastingCardInputDTO.getTasting() : tastingCardEntity.getTasting())
                 .build();
     }
 

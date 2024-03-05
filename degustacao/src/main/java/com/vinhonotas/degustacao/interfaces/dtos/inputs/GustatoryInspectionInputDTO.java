@@ -22,6 +22,5 @@ public class GustatoryInspectionInputDTO {
     private EnumPersistenceType persistence;
     private EnumMaturityType maturity;
     private EnumTypicalityType typicality;
-    private TastingCardEntity tastingCard;
 
 }

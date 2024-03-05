@@ -57,6 +57,4 @@ public class VisualInspectionEntity {
     @Enumerated(EnumType.STRING)
     private EnumClassificationType classification;
 
-    @OneToOne(mappedBy = "visualInspection")
-    private TastingCardEntity tastingCard;
 }

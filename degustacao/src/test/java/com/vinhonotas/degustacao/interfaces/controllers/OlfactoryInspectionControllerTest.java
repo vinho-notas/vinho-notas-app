@@ -210,7 +210,6 @@ class OlfactoryInspectionControllerTest {
                 .quality(EnumQualityType.COMMON)
                 .aromas(new AromasEntity())
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(new TastingCardEntity())
                 .build();
     }
 
@@ -224,7 +223,6 @@ class OlfactoryInspectionControllerTest {
                 .quality(EnumQualityType.COMMON)
                 .aromas(Mockito.mock(AromasEntity.class))
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 

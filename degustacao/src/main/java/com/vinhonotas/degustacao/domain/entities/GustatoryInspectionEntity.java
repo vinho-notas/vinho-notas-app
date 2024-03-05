@@ -65,7 +65,4 @@ public class GustatoryInspectionEntity {
     @Enumerated(EnumType.STRING)
     EnumTypicalityType typicality;
 
-    @OneToOne(mappedBy = "gustatoryInspection")
-    private TastingCardEntity tastingCard;
-
 }

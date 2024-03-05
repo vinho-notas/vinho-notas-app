@@ -138,7 +138,6 @@ class GustatoryInspectionConverterTest {
                 .persistence(EnumPersistenceType.SHORT)
                 .maturity(EnumMaturityType.MATURE)
                 .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
@@ -173,7 +172,6 @@ class GustatoryInspectionConverterTest {
                 .persistence(EnumPersistenceType.SHORT)
                 .maturity(EnumMaturityType.MATURE)
                 .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 

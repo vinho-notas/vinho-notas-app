@@ -20,6 +20,5 @@ public class VisualInspectionInputDTO {
     private EnumWhiteColorType colorWhite;
     private EnumRoseColorType colorRose;
     private EnumClassificationType classification;
-    private TastingCardEntity tastingCard;
 
 }
