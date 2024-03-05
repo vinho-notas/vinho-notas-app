@@ -8,3 +8,6 @@ cadastro-api:
 
 vinho-api:
   url: http://localhost:8081/api/v1
+
+avaliacao-api:
+  url: http://localhost:8082/api/v1
