@@ -18,6 +18,7 @@ import ListAddressComponent from './components/registration/forms/ListAddressCom
 import ListPersonComponent from './components/registration/forms/ListPersonComponent';
 import ListUserComponent from './components/registration/forms/ListUserComponent';
 import ListWineComponent from './components/wine/forms/ListWineComponent';
+import ListPointScaleComponent from './components/review/ListPointScaleComponent';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-list" element={<ListWineComponent />} />
         <Route path="/wine-review" element={<WineReview />} />
+        <Route path="/wine-review-list" element={<ListPointScaleComponent />} />        
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/search-wine" element={<SearchWine />} />
