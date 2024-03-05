@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/visual-inspection")
 @Tag(name = "Visual Inspection", description = "Operações relacionadas a percepção visual na degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class VisualInspectionController {
 
     private final VisualInspectionService visualInspectionService;
