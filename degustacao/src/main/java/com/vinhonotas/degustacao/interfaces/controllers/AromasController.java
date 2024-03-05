@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/aromas")
 @Tag(name = "Aromas", description = "Operações relacionadas a percepção de Aromas dos vinhos")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class AromasController {
 
     private final AromasService aromasService;

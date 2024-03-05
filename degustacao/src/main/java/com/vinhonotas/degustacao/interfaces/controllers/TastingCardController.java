@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tasting-card")
 @Tag(name = "Tasting Card", description = "Operações relacionadas a ficha de degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class TastingCardController {
 
     private final TastingCardService tastingCardService;

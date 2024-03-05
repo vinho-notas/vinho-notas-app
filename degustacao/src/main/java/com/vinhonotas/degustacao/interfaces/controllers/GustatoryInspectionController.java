@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/gustatory-inspection")
 @Tag(name = "Gustatory Inspection", description = "Operações relacionadas a percepção gustativa na degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class GustatoryInspectionController {
 
     private final GustatoryInspectionService gustatoryInspectionService;

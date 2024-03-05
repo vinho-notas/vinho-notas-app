@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/olfactory-inspection")
 @Tag(name = "Olfactory Inspection", description = "Operações relacionadas a percepção olfativa na degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class OlfactoryInspectionController {
 
     private final OlfactoryInspectionService olfactoryInspectionService;
