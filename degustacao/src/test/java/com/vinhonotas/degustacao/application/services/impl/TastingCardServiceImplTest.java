@@ -233,7 +233,6 @@ class TastingCardServiceImplTest {
                 .gustatoryInspection(Mockito.mock(GustatoryInspectionEntity.class))
                 .opinion("Opinion about the wine")
                 .pointScale(EnumPointScale.CLASSIC)
-                .tasting(Mockito.mock(TastingEntity.class))
                 .build();
     }
 

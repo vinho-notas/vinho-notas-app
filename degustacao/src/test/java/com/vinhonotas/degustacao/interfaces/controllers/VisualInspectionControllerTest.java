@@ -214,7 +214,6 @@ class VisualInspectionControllerTest {
                 .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
                 .colorRose(EnumRoseColorType.BROWN)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(new TastingCardEntity())
                 .build();
     }
 
@@ -230,7 +229,6 @@ class VisualInspectionControllerTest {
                 .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
                 .colorRose(EnumRoseColorType.BROWN)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 

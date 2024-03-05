@@ -107,7 +107,6 @@ class OlfactoryInspectionRepositoryTest {
                 .persistence(EnumPersistenceType.PERSISTENT)
                 .quality(EnumQualityType.THIN)
                 .aromas(aromasEntity)
-                .tastingCard(tastingCardEntity)
                 .classification(EnumClassificationType.GOOD)
                 .build();
     }

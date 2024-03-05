@@ -64,7 +64,6 @@ class GustatoryInspectionServiceImplTest {
         assertEquals(entity.getPersistence(), result.getPersistence());
         assertEquals(entity.getMaturity(), result.getMaturity());
         assertEquals(entity.getTypicality(), result.getTypicality());
-        assertEquals(entity.getTastingCard(), result.getTastingCard());
     }
 
     @Test
@@ -95,7 +94,6 @@ class GustatoryInspectionServiceImplTest {
         assertEquals(entity.getPersistence(), list.get(0).getPersistence());
         assertEquals(entity.getMaturity(), list.get(0).getMaturity());
         assertEquals(entity.getTypicality(), list.get(0).getTypicality());
-        assertEquals(entity.getTastingCard(), list.get(0).getTastingCard());
     }
 
     @Test
@@ -125,7 +123,6 @@ class GustatoryInspectionServiceImplTest {
         assertEquals(entity.getPersistence(), result.getPersistence());
         assertEquals(entity.getMaturity(), result.getMaturity());
         assertEquals(entity.getTypicality(), result.getTypicality());
-        assertEquals(entity.getTastingCard(), result.getTastingCard());
     }
 
     @Test
@@ -202,7 +199,6 @@ class GustatoryInspectionServiceImplTest {
                 .persistence(EnumPersistenceType.SHORT)
                 .maturity(EnumMaturityType.MATURE)
                 .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
@@ -220,7 +216,6 @@ class GustatoryInspectionServiceImplTest {
                 .persistence(EnumPersistenceType.SHORT)
                 .maturity(EnumMaturityType.MATURE)
                 .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 

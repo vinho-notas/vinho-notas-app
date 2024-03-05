@@ -209,7 +209,6 @@ class TastingCardControllerTest {
                 .gustatoryInspection(new GustatoryInspectionEntity())
                 .opinion("Opinion about the wine")
                 .pointScale(EnumPointScale.CLASSIC)
-                .tasting(new TastingEntity())
                 .build();
     }
 

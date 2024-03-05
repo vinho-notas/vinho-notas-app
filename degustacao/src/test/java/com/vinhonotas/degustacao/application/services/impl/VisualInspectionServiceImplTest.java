@@ -60,7 +60,6 @@ class VisualInspectionServiceImplTest {
         assertEquals(entity.getViscosity(), result.getViscosity());
         assertEquals(entity.getTastingData(), result.getTastingData());
         assertEquals(entity.getWineTasted(), result.getWineTasted());
-        assertEquals(entity.getTastingCard(), result.getTastingCard());
         verify(converter).toEntity(inputDTO);
         verify(repository).save(entity);
     }
@@ -90,7 +89,6 @@ class VisualInspectionServiceImplTest {
         assertEquals(entity.getViscosity(), list.get(0).getViscosity());
         assertEquals(entity.getTastingData(), list.get(0).getTastingData());
         assertEquals(entity.getWineTasted(), list.get(0).getWineTasted());
-        assertEquals(entity.getTastingCard(), list.get(0).getTastingCard());
         verify(repository).findAll();
     }
 
@@ -117,7 +115,6 @@ class VisualInspectionServiceImplTest {
         assertEquals(entity.getViscosity(), result.getViscosity());
         assertEquals(entity.getTastingData(), result.getTastingData());
         assertEquals(entity.getWineTasted(), result.getWineTasted());
-        assertEquals(entity.getTastingCard(), result.getTastingCard());
         verify(repository).findById(entity.getId());
     }
 
@@ -190,7 +187,6 @@ class VisualInspectionServiceImplTest {
                 .viscosity(EnumViscosityType.VISCOUS)
                 .colorRed(EnumRedColorType.RUBY)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
@@ -204,7 +200,6 @@ class VisualInspectionServiceImplTest {
                 .viscosity(EnumViscosityType.VISCOUS)
                 .colorRed(EnumRedColorType.RUBY)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
