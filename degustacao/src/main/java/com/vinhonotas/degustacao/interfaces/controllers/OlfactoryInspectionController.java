@@ -38,13 +38,13 @@ public class OlfactoryInspectionController {
 
     @Operation(summary = "Retorna uma percepção olfativa cadastrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<OlfactoryInspectionOutputDTO> getOlfactoryInspectionById(@PathVariable String id) {
+    public ResponseEntity<OlfactoryInspectionOutputDTO> getOlfactoryInspectionById(@PathVariable ("id") String id) {
         return ResponseEntity.ok(olfactoryInspectionConverter.toOutputDTO(olfactoryInspectionService.getById(UUID.fromString(id))));
     }
 
     @Operation(summary = "Atualiza uma percepção olfativa cadastrada pelo id")
     @PutMapping("/{id}")
-    public ResponseEntity<OlfactoryInspectionOutputDTO> updateOlfactoryInspection(@PathVariable String id,
+    public ResponseEntity<OlfactoryInspectionOutputDTO> updateOlfactoryInspection(@PathVariable ("id") String id,
                                           @Valid @RequestBody OlfactoryInspectionInputDTO olfactoryInspectionInputDTO) {
         return ResponseEntity.ok(olfactoryInspectionConverter
                 .toOutputDTOUpdate(olfactoryInspectionService.update(UUID.fromString(id), olfactoryInspectionInputDTO),
@@ -55,7 +55,7 @@ public class OlfactoryInspectionController {
 
     @Operation(summary = "Deleta uma percepção olfativa cadastrada pelo id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOlfactoryInspection(@PathVariable String id) {
+    public ResponseEntity<Void> deleteOlfactoryInspection(@PathVariable ("id") String id) {
         olfactoryInspectionService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

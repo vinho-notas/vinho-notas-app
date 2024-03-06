@@ -19,12 +19,12 @@ public interface TastingClient {
     List<TastingOutputDTO> getAllTastings();
 
     @GetMapping("/tasting/{id}")
-    TastingOutputDTO getTastingById(@PathVariable String id);
+    TastingOutputDTO getTastingById(@PathVariable ("id") String id);
 
     @PutMapping("/tasting/{id}")
-    TastingOutputDTO updateTasting(@PathVariable String id, @Valid @RequestBody TastingInputDTO tastingInputDTO);
+    TastingOutputDTO updateTasting(@PathVariable ("id") String id, @Valid @RequestBody TastingInputDTO tastingInputDTO);
 
     @DeleteMapping("/tasting/{id}")
-    void deleteTasting(@PathVariable String id);
+    void deleteTasting(@PathVariable ("id") String id);
 
 }
