@@ -2,10 +2,13 @@ package com.vinhonotas.bff.interfaces.controllers.degustacao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.degustacao.TastingService;
+import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
+import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.domain.enums.EnumPointScale;
 import com.vinhonotas.bff.domain.enums.EnumTastingType;
 import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.*;
 import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.*;
+import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,11 +19,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,8 +64,119 @@ class TastingControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(outputDTO.getId().toString()))
                 .andExpect(jsonPath("$.tastingData").value(outputDTO.getTastingData().toString()))
-                .andExpect(jsonPath("$.tastingType").value(outputDTO.getTastingType().toString()));
-//                .andExpect(jsonPath("$.tastingCards").isArray());
+                .andExpect(jsonPath("$.tastingType").value(outputDTO.getTastingType().toString()))
+                .andExpect(jsonPath("$.tastingCards").isArray());
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro ao criar uma degustação")
+    void testCreateTastingThrowBadRequestException() throws Exception {
+        when(tastingService.createTasting(inputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING));
+
+        mockMvc.perform(post(URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDTO)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de degustações")
+    void testGetAllTastings() throws Exception {
+        when(tastingService.getAllTastings()).thenReturn(List.of(outputDTO));
+
+        mockMvc.perform(get(URL)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(outputDTO.getId().toString()))
+                .andExpect(jsonPath("$[0].tastingData").value(outputDTO.getTastingData().toString()))
+                .andExpect(jsonPath("$[0].tastingType").value(outputDTO.getTastingType().toString()))
+                .andExpect(jsonPath("$[0].tastingCards").isArray());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um erro ao buscar uma lista de degustações")
+    void testGetAllTastingsThrowBadRequestException() throws Exception {
+        when(tastingService.getAllTastings()).thenThrow(new NotFoundException(MessagesConstants.NOT_FOUND));
+
+        mockMvc.perform(get(URL)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma degustação pelo id")
+    void testGetTastingById() throws Exception {
+        when(tastingService.getTastingById(outputDTO.getId().toString())).thenReturn(outputDTO);
+
+        mockMvc.perform(get(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(outputDTO.getId().toString()))
+                .andExpect(jsonPath("$.tastingData").value(outputDTO.getTastingData().toString()))
+                .andExpect(jsonPath("$.tastingType").value(outputDTO.getTastingType().toString()))
+                .andExpect(jsonPath("$.tastingCards").isArray());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um erro ao buscar uma degustação pelo id")
+    void testGetTastingByIdThrowBadRequestException() throws Exception {
+        when(tastingService.getTastingById(outputDTO.getId().toString())).thenThrow(new NotFoundException(MessagesConstants.NOT_FOUND));
+
+        mockMvc.perform(get(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Deve atualizar uma degustação pelo id")
+    void testUpdateTasting() throws Exception {
+        when(tastingService.updateTasting(outputDTO.getId().toString(), inputDTO)).thenReturn(outputDTO);
+
+        mockMvc.perform(put(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDTO)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(outputDTO.getId().toString()))
+                .andExpect(jsonPath("$.tastingData").value(outputDTO.getTastingData().toString()))
+                .andExpect(jsonPath("$.tastingType").value(outputDTO.getTastingType().toString()))
+                .andExpect(jsonPath("$.tastingCards").isArray());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um erro ao atualizar uma degustação pelo id")
+    void testUpdateTastingThrowBadRequestException() throws Exception {
+        when(tastingService.updateTasting(outputDTO.getId().toString(), inputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
+
+        mockMvc.perform(put(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(inputDTO)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deve deletar uma degustação pelo id")
+    void testDeleteTasting() throws Exception {
+        mockMvc.perform(delete(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um erro ao deletar uma degustação pelo id")
+    void testDeleteTastingThrowBadRequestException() throws Exception {
+        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING)).when(tastingService).deleteTasting(outputDTO.getId().toString());
+        mockMvc.perform(delete(URL + "/" + outputDTO.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     private TastingInputDTO createTastingInputDTO() {
