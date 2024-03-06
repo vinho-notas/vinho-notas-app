@@ -38,13 +38,13 @@ public class GustatoryInspectionController {
 
     @Operation(summary = "Retorna uma percepção gustativa cadastrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<GustatoryInspectionOutputDTO> getGustatoryInspectionById(@PathVariable String id) {
+    public ResponseEntity<GustatoryInspectionOutputDTO> getGustatoryInspectionById(@PathVariable ("id") String id) {
         return ResponseEntity.ok(gustatoryInspectionConverter.toOutputDTO(gustatoryInspectionService.getById(UUID.fromString(id))));
     }
 
     @Operation(summary = "Atualiza uma percepção gustativa cadastrada pelo id")
     @PutMapping("/{id}")
-    public ResponseEntity<GustatoryInspectionOutputDTO> updateGustatoryInspection(@PathVariable String id,
+    public ResponseEntity<GustatoryInspectionOutputDTO> updateGustatoryInspection(@PathVariable ("id") String id,
                                           @Valid @RequestBody GustatoryInspectionInputDTO gustatoryInspectionInputDTO) {
         return ResponseEntity.ok(gustatoryInspectionConverter
                 .toOutputDTOUpdate(gustatoryInspectionService.update(UUID.fromString(id), gustatoryInspectionInputDTO),
@@ -55,7 +55,7 @@ public class GustatoryInspectionController {
 
     @Operation(summary = "Deleta uma percepção gustativa cadastrada pelo id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGustatoryInspection(@PathVariable String id) {
+    public ResponseEntity<Void> deleteGustatoryInspection(@PathVariable ("id") String id) {
         gustatoryInspectionService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }
