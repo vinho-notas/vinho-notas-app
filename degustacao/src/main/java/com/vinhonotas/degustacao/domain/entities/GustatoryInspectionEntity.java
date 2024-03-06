@@ -47,22 +47,22 @@ public class GustatoryInspectionEntity {
 
     @Column(name = "acidity")
     @Enumerated(EnumType.STRING)
-    EnumAcidityType acidity;
+    private EnumAcidityType acidity;
 
     @Column(name = "alcohol")
     @Enumerated(EnumType.STRING)
-    EnumAlcoholType alcohol;
+    private EnumAlcoholType alcohol;
 
     @Column(name = "persistence")
     @Enumerated(EnumType.STRING)
-    EnumPersistenceType persistence;
+    private EnumPersistenceType persistence;
 
     @Column(name = "maturity")
     @Enumerated(EnumType.STRING)
-    EnumMaturityType maturity;
+    private EnumMaturityType maturity;
 
     @Column(name = "typicality")
     @Enumerated(EnumType.STRING)
-    EnumTypicalityType typicality;
+    private EnumTypicalityType typicality;
 
 }
