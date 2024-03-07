@@ -56,7 +56,7 @@ public class TastingServiceImpl implements TastingService {
 
     @Override
     public TastingOutputDTO updateTasting(String id, TastingInputDTO tastingInputDTO) {
-        log.info("updateTasting :: Atualizando vinho com os dados: {}", tastingInputDTO.toString());
+        log.info("updateTasting :: Atualizando degustação com os dados: {}", tastingInputDTO.toString());
         try {
             return tastingClient.updateTasting(id, tastingInputDTO);
         } catch (Exception e) {
