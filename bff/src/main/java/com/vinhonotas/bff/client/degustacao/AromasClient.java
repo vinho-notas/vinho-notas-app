@@ -5,7 +5,6 @@ import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.AromasInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.AromasOutputDTO;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 public interface AromasClient {
 
     @PostMapping("/aromas")
-    public ResponseEntity<AromasOutputDTO> createAromas(@Valid @RequestBody AromasInputDTO aromasInputDTO);
+    AromasOutputDTO createAromas(@Valid @RequestBody AromasInputDTO aromasInputDTO);
 
     @GetMapping("/aromas")
     List<AromasOutputDTO> getAllAromas();
