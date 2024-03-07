@@ -22,7 +22,7 @@ public class OlfactoryInspectionServiceImpl implements OlfactoryInspectionServic
     private final OlfactoryInspectionClient olfactoryInspectionClient;
 
     @Override
-    public OlfactoryInspectionOutputDTO createOlafactoryInspection(OlfactoryInspectionInputDTO olfactoryInspectionInputDTO) {
+    public OlfactoryInspectionOutputDTO createOlfactoryInspection(OlfactoryInspectionInputDTO olfactoryInspectionInputDTO) {
         log.info("createOlafactoryInspection :: Registrando uma nova inspeção olfativa com os dados: {}", olfactoryInspectionInputDTO.toString());
         try {
             return olfactoryInspectionClient.createOlafactoryInspection(olfactoryInspectionInputDTO);

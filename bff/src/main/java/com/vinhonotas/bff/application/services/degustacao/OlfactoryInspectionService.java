@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OlfactoryInspectionService {
 
-    OlfactoryInspectionOutputDTO createOlafactoryInspection(OlfactoryInspectionInputDTO olfactoryInspectionInputDTO);
+    OlfactoryInspectionOutputDTO createOlfactoryInspection(OlfactoryInspectionInputDTO olfactoryInspectionInputDTO);
 
     List<OlfactoryInspectionOutputDTO> getAllOlfactoryInspections();
 

@@ -51,7 +51,7 @@ class OlfactoryInspectionServiceImplTest {
         when(olfactoryInspectionClient.createOlafactoryInspection(olfactoryInspectionInputDTO)).thenReturn(olfactoryInspectionOutputDTO);
 
         OlfactoryInspectionOutputDTO response = assertDoesNotThrow(() -> olfactoryInspectionService
-                .createOlafactoryInspection(olfactoryInspectionInputDTO));
+                .createOlfactoryInspection(olfactoryInspectionInputDTO));
 
         assertNotNull(response);
         assertEquals(olfactoryInspectionOutputDTO.getId(), response.getId());
@@ -72,7 +72,7 @@ class OlfactoryInspectionServiceImplTest {
                 .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING));
 
         Exception exception = assertThrows(Exception.class, () -> olfactoryInspectionService
-                .createOlafactoryInspection(olfactoryInspectionInputDTO));
+                .createOlfactoryInspection(olfactoryInspectionInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING, exception.getMessage());
         verify(olfactoryInspectionClient).createOlafactoryInspection(olfactoryInspectionInputDTO);
     }
