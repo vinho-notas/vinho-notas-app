@@ -19,6 +19,7 @@ import ListPersonComponent from './components/registration/forms/ListPersonCompo
 import ListUserComponent from './components/registration/forms/ListUserComponent';
 import ListWineComponent from './components/wine/forms/ListWineComponent';
 import ListPointScaleComponent from './components/review/ListPointScaleComponent';
+import ListTastingComponent from './components/tasting/forms/ListTastingComponent';
 
 function App() {
   return (
@@ -27,20 +28,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/countries" element={<ListCountryComponent />} />
-        <Route path="/states" element={<ListStateComponent />} />
-        <Route path="/persons" element={<ListPersonComponent />} />
+
+        <Route path="/registration" element={<Registration />} />        
         <Route path="/users" element={<ListUserComponent />} />
+        <Route path="/persons" element={<ListPersonComponent />} />
         <Route path="/address" element={<ListAddressComponent />} />
+        <Route path="/states" element={<ListStateComponent />} />
+        <Route path="/countries" element={<ListCountryComponent />} />
+        
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-list" element={<ListWineComponent />} />
         <Route path="/wine-review" element={<WineReview />} />
         <Route path="/wine-review-list" element={<ListPointScaleComponent />} />        
+        
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
+        <Route path="/tasting-list" element={<ListTastingComponent />} />
         <Route path="/search-wine" element={<SearchWine />} />
-        <Route path="/wine-tasted-list" element={<ListWineTastedForm />} />     
       </Routes>
       <Footer />
     </>
