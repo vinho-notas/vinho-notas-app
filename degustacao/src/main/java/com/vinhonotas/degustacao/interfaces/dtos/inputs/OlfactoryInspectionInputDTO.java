@@ -22,6 +22,5 @@ public class OlfactoryInspectionInputDTO {
     private EnumQualityType quality;
     private AromasEntity aromas;
     private EnumClassificationType classification;
-    private TastingCardEntity tastingCard;
 
 }

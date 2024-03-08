@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tasting-card")
 @Tag(name = "Tasting Card", description = "Operações relacionadas a ficha de degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class TastingCardController {
 
     private final TastingCardService tastingCardService;
@@ -37,13 +38,13 @@ public class TastingCardController {
 
     @Operation(summary = "Retorna uma ficha de degustação cadastrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<TastingCardOutputDTO> getTastingCardById(@PathVariable String id) {
+    public ResponseEntity<TastingCardOutputDTO> getTastingCardById(@PathVariable ("id") String id) {
         return ResponseEntity.ok(tastingCardConverter.toOutputDTO(tastingCardService.getById(UUID.fromString(id))));
     }
 
     @Operation(summary = "Atualiza uma ficha de degustação cadastrada pelo id")
     @PutMapping("/{id}")
-    public ResponseEntity<TastingCardOutputDTO> updateTastingCard(@PathVariable String id,
+    public ResponseEntity<TastingCardOutputDTO> updateTastingCard(@PathVariable ("id") String id,
                                           @Valid @RequestBody TastingCardInputDTO tastingCardInputDTO) {
         return ResponseEntity.ok(tastingCardConverter
                 .toOutputDTOUpdate(tastingCardService.update(UUID.fromString(id), tastingCardInputDTO),
@@ -54,7 +55,7 @@ public class TastingCardController {
 
     @Operation(summary = "Deleta uma ficha de degustação cadastrada pelo id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTastingCard(@PathVariable String id) {
+    public ResponseEntity<Void> deleteTastingCard(@PathVariable ("id") String id) {
         tastingCardService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

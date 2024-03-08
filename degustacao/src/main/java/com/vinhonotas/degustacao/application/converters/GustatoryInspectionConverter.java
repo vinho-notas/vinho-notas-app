@@ -24,7 +24,6 @@ public class GustatoryInspectionConverter {
                 .persistence(gustatoryInspectionInputDTO.getPersistence())
                 .maturity(gustatoryInspectionInputDTO.getMaturity())
                 .typicality(gustatoryInspectionInputDTO.getTypicality())
-                .tastingCard(gustatoryInspectionInputDTO.getTastingCard())
                 .build();
     }
 
@@ -43,7 +42,6 @@ public class GustatoryInspectionConverter {
                 .persistence(gustatoryInspectionInputDTO.getPersistence() != null ? gustatoryInspectionInputDTO.getPersistence() : gustatoryInspectionEntity.getPersistence())
                 .maturity(gustatoryInspectionInputDTO.getMaturity() != null ? gustatoryInspectionInputDTO.getMaturity() : gustatoryInspectionEntity.getMaturity())
                 .typicality(gustatoryInspectionInputDTO.getTypicality() != null ? gustatoryInspectionInputDTO.getTypicality() : gustatoryInspectionEntity.getTypicality())
-                .tastingCard(gustatoryInspectionInputDTO.getTastingCard() != null ? gustatoryInspectionInputDTO.getTastingCard() : gustatoryInspectionEntity.getTastingCard())
                 .build();
     }
 
@@ -61,7 +59,6 @@ public class GustatoryInspectionConverter {
                 .persistence(gustatoryInspectionEntity.getPersistence())
                 .maturity(gustatoryInspectionEntity.getMaturity())
                 .typicality(gustatoryInspectionEntity.getTypicality())
-                .tastingCard(gustatoryInspectionEntity.getTastingCard())
                 .build();
     }
 
@@ -88,7 +85,6 @@ public class GustatoryInspectionConverter {
                 .persistence(gustatoryInspectionOutputDTO.getPersistence() != null ? gustatoryInspectionOutputDTO.getPersistence() : gustatoryInspectionEntity.getPersistence())
                 .maturity(gustatoryInspectionOutputDTO.getMaturity() != null ? gustatoryInspectionOutputDTO.getMaturity() : gustatoryInspectionEntity.getMaturity())
                 .typicality(gustatoryInspectionOutputDTO.getTypicality() != null ? gustatoryInspectionOutputDTO.getTypicality() : gustatoryInspectionEntity.getTypicality())
-                .tastingCard(gustatoryInspectionOutputDTO.getTastingCard() != null ? gustatoryInspectionOutputDTO.getTastingCard() : gustatoryInspectionEntity.getTastingCard())
                 .build();
     }
 

@@ -41,16 +41,16 @@ public class TastingCardEntity {
     @Column(name = "region")
     private String region;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "visualinspection_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "visualinspection_id", nullable = false)
     private VisualInspectionEntity visualInspection;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "olfactoryinspection_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "olfactoryinspection_id", nullable = false)
     private OlfactoryInspectionEntity olfactoryInspection;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "gustatoryinspection_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "gustatoryinspection_id", nullable = false)
     private GustatoryInspectionEntity gustatoryInspection;
 
     @Column(name = "opinion")

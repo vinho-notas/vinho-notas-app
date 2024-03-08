@@ -32,8 +32,8 @@ const Header = () => {
       label: 'Degustação', icon: 'pi pi-folder-open',
       items: [
         { label: 'Registrar degustação', icon: 'pi pi-folder-open', url: '/tasting' },
-        { label: 'Ficha de degustação', icon: 'pi pi-folder-open', url: '/tasting-card' },
-        { label: 'Listar degustação', icon: 'pi pi-folder-open', url: '/wine-tasted-list' }
+        { label: 'Ficha de degustação', icon: 'pi pi-folder-open', url: '/tasting-card' },        
+        { label: 'Listar fichas de degustação', icon: 'pi pi-folder-open', url: '/tasting-list' }
       ]
     }
   ];

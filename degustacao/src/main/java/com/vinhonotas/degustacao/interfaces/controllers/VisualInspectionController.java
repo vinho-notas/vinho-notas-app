@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/visual-inspection")
 @Tag(name = "Visual Inspection", description = "Operações relacionadas a percepção visual na degustação do vinho")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class VisualInspectionController {
 
     private final VisualInspectionService visualInspectionService;
@@ -37,13 +38,13 @@ public class VisualInspectionController {
 
     @Operation(summary = "Retorna uma percepção visual cadastrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<VisualInspectionOutputDTO> getVisualInspectionById(@PathVariable String id) {
+    public ResponseEntity<VisualInspectionOutputDTO> getVisualInspectionById(@PathVariable ("id") String id) {
         return ResponseEntity.ok(visualInspectionConverter.toOutputDTO(visualInspectionService.getById(UUID.fromString(id))));
     }
 
     @Operation(summary = "Atualiza uma percepção visual cadastrada pelo id")
     @PutMapping("/{id}")
-    public ResponseEntity<VisualInspectionOutputDTO> updateVisualInspection(@PathVariable String id,
+    public ResponseEntity<VisualInspectionOutputDTO> updateVisualInspection(@PathVariable ("id") String id,
                                           @Valid @RequestBody VisualInspectionInputDTO visualInspectionInputDTO) {
         return ResponseEntity.ok(visualInspectionConverter
                 .toOutputDTOUpdate(visualInspectionService.update(UUID.fromString(id), visualInspectionInputDTO),
@@ -54,7 +55,7 @@ public class VisualInspectionController {
 
     @Operation(summary = "Deleta uma percepção visual cadastrada pelo id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVisualInspection(@PathVariable String id) {
+    public ResponseEntity<Void> deleteVisualInspection(@PathVariable ("id") String id) {
         visualInspectionService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

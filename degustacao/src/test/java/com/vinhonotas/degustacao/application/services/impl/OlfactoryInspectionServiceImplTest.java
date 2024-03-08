@@ -66,7 +66,6 @@ class OlfactoryInspectionServiceImplTest {
         assertEquals(olfactoryInspectionEntity.getQuality(), entity.getQuality());
         assertEquals(olfactoryInspectionEntity.getAromas(), entity.getAromas());
         assertEquals(olfactoryInspectionEntity.getClassification(), entity.getClassification());
-        assertEquals(olfactoryInspectionEntity.getTastingCard(), entity.getTastingCard());
     }
 
     @Test
@@ -95,7 +94,6 @@ class OlfactoryInspectionServiceImplTest {
         assertEquals(olfactoryInspectionEntity.getQuality(), list.get(0).getQuality());
         assertEquals(olfactoryInspectionEntity.getAromas(), list.get(0).getAromas());
         assertEquals(olfactoryInspectionEntity.getClassification(), list.get(0).getClassification());
-        assertEquals(olfactoryInspectionEntity.getTastingCard(), list.get(0).getTastingCard());
     }
 
     @Test
@@ -122,7 +120,6 @@ class OlfactoryInspectionServiceImplTest {
         assertEquals(olfactoryInspectionEntity.getQuality(), entity.getQuality());
         assertEquals(olfactoryInspectionEntity.getAromas(), entity.getAromas());
         assertEquals(olfactoryInspectionEntity.getClassification(), entity.getClassification());
-        assertEquals(olfactoryInspectionEntity.getTastingCard(), entity.getTastingCard());
     }
 
     @Test
@@ -191,7 +188,6 @@ class OlfactoryInspectionServiceImplTest {
                 .quality(EnumQualityType.COMMON)
                 .aromas(Mockito.mock(AromasEntity.class))
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
@@ -205,7 +201,6 @@ class OlfactoryInspectionServiceImplTest {
                 .quality(EnumQualityType.COMMON)
                 .aromas(Mockito.mock(AromasEntity.class))
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 }

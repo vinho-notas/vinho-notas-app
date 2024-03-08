@@ -25,6 +25,5 @@ public class TastingCardInputDTO {
     private GustatoryInspectionEntity gustatoryInspection;
     private String opinion;
     private EnumPointScale pointScale;
-    private TastingEntity tasting;
 
 }
