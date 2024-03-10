@@ -8,11 +8,16 @@ import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -214,9 +219,26 @@ class AddressControllerTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(state)
-                .country(country)
+                .uf(createStateOutputDTO())
+                .country(createCountryOutputDTO())
                 .phoneNumber("00000000000")
+                .build();
+    }
+
+    private CountryOutputDTO createCountryOutputDTO() {
+        return CountryOutputDTO.builder()
+                .id(UUID.fromString("e2adc688-5e7f-4edf-ae5e-7b6dcbb65e99"))
+                .countryName("Brasil")
+                .continentName("América do Sul")
+                .build();
+    }
+
+    private StateOutputDTO createStateOutputDTO() {
+        return StateOutputDTO.builder()
+                .id(UUID.fromString("1557c128-235d-4dff-800c-4b4b1a0693f3"))
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryOutputDTO())
                 .build();
     }
 
@@ -228,9 +250,24 @@ class AddressControllerTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(state)
-                .country(country)
+                .uf(createStateInputDTO())
+                .country(createCountryInputDTO())
                 .phoneNumber("00000000000")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

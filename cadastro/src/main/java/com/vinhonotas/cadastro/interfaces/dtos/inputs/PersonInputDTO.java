@@ -13,5 +13,6 @@ public class PersonInputDTO {
     private String name;
     private String document;
     private LocalDate birthDate;
-    private AddressEntity address;
+    private AddressInputDTO address;
+
 }

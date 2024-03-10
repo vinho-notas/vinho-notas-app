@@ -5,7 +5,7 @@ import com.vinhonotas.cadastro.application.services.exceptions.BadRequestExcepti
 import com.vinhonotas.cadastro.domain.entities.*;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com sucesso")
     void testCreateSuccess() {
-        when(userConverter.toEntity(inputDTO)).thenReturn(entity);
+        when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
 
         UserEntity entity = assertDoesNotThrow(() -> userService.create(inputDTO));
@@ -54,19 +54,19 @@ class UserServiceImplTest {
         assertEquals("João", entity.getPerson().getName());
         assertEquals("email@email.com", entity.getEmail());
         assertEquals("123456", entity.getPassword());
-        verify(userConverter, times(1)).toEntity(inputDTO);
+        verify(userConverter, times(1)).convertToEntity(inputDTO);
         verify(userRepository, times(1)).save(entity);
     }
 
     @Test
     @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
-        when(userConverter.toEntity(inputDTO)).thenReturn(entity);
+        when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenThrow(BadRequestException.class);
 
         Exception exception = assertThrows(Exception.class, () -> userService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_USER, exception.getMessage());
-        verify(userConverter, times(1)).toEntity(inputDTO);
+        verify(userConverter, times(1)).convertToEntity(inputDTO);
         verify(userRepository, times(1)).save(entity);
     }
 
@@ -135,7 +135,7 @@ class UserServiceImplTest {
     @DisplayName("Deve atualizar um usuário")
     void testUpdate() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
-        when(userConverter.toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
+        when(userConverter.converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
         when(userRepository.findByPersonName("João")).thenReturn(entity);
 
@@ -146,7 +146,7 @@ class UserServiceImplTest {
         assertEquals("email@email.com", entity.getEmail());
         assertEquals("123456", entity.getPassword());
         verify(userRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(userConverter, times(1)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(userConverter, times(1)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(userRepository, times(1)).save(entity);
         verify(userRepository, times(1)).findByPersonName("João");
     }
@@ -159,7 +159,7 @@ class UserServiceImplTest {
         Exception exception = assertThrows(Exception.class, () -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_USER_DATA, exception.getMessage());
         verify(userRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(userConverter, times(0)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(userConverter, times(0)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(userRepository, times(0)).save(entity);
     }
 
@@ -191,10 +191,19 @@ class UserServiceImplTest {
 
     private UserInputDTO createInputDTO() {
         return UserInputDTO.builder()
-                .person(createPerson())
+                .person(createPersonInputDTO())
                 .enumProfile(EnumProfile.OENOPHILE)
                 .email("email@email.com")
                 .password("123456")
+                .build();
+    }
+
+    private PersonInputDTO createPersonInputDTO() {
+        return PersonInputDTO.builder()
+                .name("João")
+                .document("12345678900")
+                .birthDate(LocalDate.of(1990, 1, 1))
+                .address(createAddressInputDTO())
                 .build();
     }
 
@@ -222,8 +231,8 @@ class UserServiceImplTest {
                 .build();
     }
 
-    private AddressEntity createAddressInputDTO() {
-        return AddressEntity.builder()
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
                 .addressDescription("Rua 3")
                 .addressNumber(456)
                 .complement("Complemento 1")
@@ -245,8 +254,8 @@ class UserServiceImplTest {
                 .build();
     }
 
-    private StateEntity createUfInputDTO() {
-        return StateEntity.builder()
+    private StateInputDTO createUfInputDTO() {
+        return StateInputDTO.builder()
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(createCountryInputDTO())
@@ -261,8 +270,8 @@ class UserServiceImplTest {
                 .build();
     }
 
-    private CountryEntity createCountryInputDTO() {
-        return CountryEntity.builder()
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();

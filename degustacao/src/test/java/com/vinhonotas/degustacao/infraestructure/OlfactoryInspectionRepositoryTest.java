@@ -19,7 +19,10 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
 class OlfactoryInspectionRepositoryTest {
 
     @Autowired
@@ -104,7 +107,6 @@ class OlfactoryInspectionRepositoryTest {
                 .persistence(EnumPersistenceType.PERSISTENT)
                 .quality(EnumQualityType.THIN)
                 .aromas(aromasEntity)
-                .tastingCard(tastingCardEntity)
                 .classification(EnumClassificationType.GOOD)
                 .build();
     }

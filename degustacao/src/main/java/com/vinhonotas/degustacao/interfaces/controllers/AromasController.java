@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/aromas")
 @Tag(name = "Aromas", description = "Operações relacionadas a percepção de Aromas dos vinhos")
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class AromasController {
 
     private final AromasService aromasService;
@@ -37,19 +38,19 @@ public class AromasController {
 
     @Operation(summary = "Retorna um aroma pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<AromasOutputDTO> getAromasById(@PathVariable String id) {
+    public ResponseEntity<AromasOutputDTO> getAromasById(@PathVariable ("id") String id) {
         return ResponseEntity.ok(aromasConverter.toOutputDTO(aromasService.getById(UUID.fromString(id))));
     }
 
     @Operation(summary = "Atualiza um aroma pelo id")
     @PutMapping("/{id}")
-    public ResponseEntity<AromasOutputDTO> updateAromas(@PathVariable String id, @Valid @RequestBody AromasInputDTO aromasInputDTO) {
+    public ResponseEntity<AromasOutputDTO> updateAromas(@PathVariable ("id") String id, @Valid @RequestBody AromasInputDTO aromasInputDTO) {
         return ResponseEntity.ok(aromasConverter.toOutputDTO(aromasService.update(UUID.fromString(id), aromasInputDTO)));
     }
 
     @Operation(summary = "Deleta um aroma pelo id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAromas(@PathVariable String id) {
+    public ResponseEntity<Void> deleteAromas(@PathVariable ("id") String id) {
         aromasService.delete(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }

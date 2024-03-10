@@ -10,5 +10,6 @@ public class StateInputDTO {
 
     private String stateName;
     private String uf;
-    private CountryEntity country;
+    private CountryInputDTO country;
+
 }

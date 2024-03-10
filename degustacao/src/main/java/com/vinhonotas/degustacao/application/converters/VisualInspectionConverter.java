@@ -22,7 +22,6 @@ public class VisualInspectionConverter {
                 .colorWhite(visualInspectionInputDTO.getColorWhite())
                 .colorRose(visualInspectionInputDTO.getColorRose())
                 .classification(visualInspectionInputDTO.getClassification())
-                .tastingCard(visualInspectionInputDTO.getTastingCard())
                 .build();
     }
 
@@ -38,7 +37,6 @@ public class VisualInspectionConverter {
                 .colorWhite(visualInspectionInputDTO.getColorWhite() != null ? visualInspectionInputDTO.getColorWhite() : visualInspectionEntity.getColorWhite())
                 .colorRose(visualInspectionInputDTO.getColorRose() != null ? visualInspectionInputDTO.getColorRose() : visualInspectionEntity.getColorRose())
                 .classification(visualInspectionInputDTO.getClassification() != null ? visualInspectionInputDTO.getClassification() : visualInspectionEntity.getClassification())
-                .tastingCard(visualInspectionInputDTO.getTastingCard() != null ? visualInspectionInputDTO.getTastingCard() : visualInspectionEntity.getTastingCard())
                 .build();
     }
     public VisualInspectionOutputDTO toOutputDTO(VisualInspectionEntity visualInspectionEntity){
@@ -53,7 +51,6 @@ public class VisualInspectionConverter {
                 .colorWhite(visualInspectionEntity.getColorWhite())
                 .colorRose(visualInspectionEntity.getColorRose())
                 .classification(visualInspectionEntity.getClassification())
-                .tastingCard(visualInspectionEntity.getTastingCard())
                 .build();
     }
 
@@ -77,7 +74,6 @@ public class VisualInspectionConverter {
                 .colorWhite(visualInspectionOutputDTO.getColorWhite() != null ? visualInspectionOutputDTO.getColorWhite() : visualInspectionEntity.getColorWhite())
                 .colorRose(visualInspectionOutputDTO.getColorRose() != null ? visualInspectionOutputDTO.getColorRose() : visualInspectionEntity.getColorRose())
                 .classification(visualInspectionOutputDTO.getClassification() != null ? visualInspectionOutputDTO.getClassification() : visualInspectionEntity.getClassification())
-                .tastingCard(visualInspectionOutputDTO.getTastingCard() != null ? visualInspectionOutputDTO.getTastingCard() : visualInspectionEntity.getTastingCard())
                 .build();
     }
 

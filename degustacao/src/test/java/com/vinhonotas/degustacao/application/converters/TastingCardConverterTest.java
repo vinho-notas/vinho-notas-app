@@ -52,7 +52,6 @@ class TastingCardConverterTest {
         assertEquals(tastingCardInputDTO.getGustatoryInspection(), entity.getGustatoryInspection());
         assertEquals(tastingCardInputDTO.getOpinion(), entity.getOpinion());
         assertEquals(tastingCardInputDTO.getPointScale(), entity.getPointScale());
-        assertEquals(tastingCardInputDTO.getTasting(), entity.getTasting());
     }
 
     @Test
@@ -158,7 +157,6 @@ class TastingCardConverterTest {
                 .gustatoryInspection(Mockito.mock(GustatoryInspectionEntity.class))
                 .opinion("Opinion about the wine")
                 .pointScale(EnumPointScale.CLASSIC)
-                .tasting(Mockito.mock(TastingEntity.class))
                 .build();
     }
 

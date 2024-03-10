@@ -5,7 +5,6 @@ import com.vinhonotas.degustacao.domain.enums.EnumBodyType;
 import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
 import com.vinhonotas.degustacao.domain.enums.EnumSweetnessType;
 import com.vinhonotas.degustacao.domain.enums.EnumTanninType;
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,10 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@Log4j2
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
 class GustatoryInspectionRepositoryTest {
 
     @Autowired

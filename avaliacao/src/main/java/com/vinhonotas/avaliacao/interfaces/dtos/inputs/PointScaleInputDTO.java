@@ -15,4 +15,5 @@ public class PointScaleInputDTO {
     private String whatFlavors;
     private String whatOpinion;
     private EnumPointScale pointScale;
+
 }

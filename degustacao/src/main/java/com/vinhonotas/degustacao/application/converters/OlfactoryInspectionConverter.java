@@ -20,7 +20,6 @@ public class OlfactoryInspectionConverter {
                 .quality(olfactoryInspectionInputDTO.getQuality())
                 .aromas(olfactoryInspectionInputDTO.getAromas())
                 .classification(olfactoryInspectionInputDTO.getClassification())
-                .tastingCard(olfactoryInspectionInputDTO.getTastingCard())
                 .build();
     }
 
@@ -35,7 +34,6 @@ public class OlfactoryInspectionConverter {
                 .quality(olfactoryInspectionInputDTO.getQuality() != null ? olfactoryInspectionInputDTO.getQuality() : olfactoryInspectionEntity.getQuality())
                 .aromas(olfactoryInspectionInputDTO.getAromas() != null ? olfactoryInspectionInputDTO.getAromas() : olfactoryInspectionEntity.getAromas())
                 .classification(olfactoryInspectionInputDTO.getClassification() != null ? olfactoryInspectionInputDTO.getClassification() : olfactoryInspectionEntity.getClassification())
-                .tastingCard(olfactoryInspectionInputDTO.getTastingCard() != null ? olfactoryInspectionInputDTO.getTastingCard() : olfactoryInspectionEntity.getTastingCard())
                 .build();
     }
 
@@ -49,7 +47,6 @@ public class OlfactoryInspectionConverter {
                 .quality(olfactoryInspectionEntity.getQuality())
                 .aromas(olfactoryInspectionEntity.getAromas())
                 .classification(olfactoryInspectionEntity.getClassification())
-                .tastingCard(olfactoryInspectionEntity.getTastingCard())
                 .build();
     }
 
@@ -71,7 +68,6 @@ public class OlfactoryInspectionConverter {
                 .quality(olfactoryInspectionOutputDTO.getQuality() != null ? olfactoryInspectionOutputDTO.getQuality() : olfactoryInspectionEntity.getQuality())
                 .aromas(olfactoryInspectionOutputDTO.getAromas() != null ? olfactoryInspectionOutputDTO.getAromas() : olfactoryInspectionEntity.getAromas())
                 .classification(olfactoryInspectionOutputDTO.getClassification() != null ? olfactoryInspectionOutputDTO.getClassification() : olfactoryInspectionEntity.getClassification())
-                .tastingCard(olfactoryInspectionOutputDTO.getTastingCard() != null ? olfactoryInspectionOutputDTO.getTastingCard() : olfactoryInspectionEntity.getTastingCard())
                 .build();
     }
 

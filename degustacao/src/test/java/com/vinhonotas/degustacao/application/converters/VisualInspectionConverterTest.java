@@ -132,7 +132,6 @@ class VisualInspectionConverterTest {
                 .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
                 .colorRose(EnumRoseColorType.BROWN)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 
@@ -163,7 +162,6 @@ class VisualInspectionConverterTest {
                 .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
                 .colorRose(EnumRoseColorType.BROWN)
                 .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
                 .build();
     }
 

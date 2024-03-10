@@ -16,7 +16,10 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop"
+})
 class WineRepositoryTest {
 
     @Autowired
@@ -110,12 +113,12 @@ class WineRepositoryTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.WHITEWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Tempranillo Blanco (80.00%), Verdejo (20.00%)")
                 .winery("Bodegas D. Mateos")
-                .serviceTemperature(9.0)
-                .harvest(2021)
+                .serviceTemperature("9.0")
+                .harvest("2021")
                 .country("Espanha")
                 .guardTime("15 anos")
                 .region("La Rioja")
@@ -133,12 +136,12 @@ class WineRepositoryTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.REDWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
