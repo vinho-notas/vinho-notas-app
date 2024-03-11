@@ -9,12 +9,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumQualityType {
+public enum EnumQualityType implements EnumCode {
 
     VERY_THIN("Muito fino"),
     THIN("Fino"),
     COMMON("Comum"),
     RUDE("Grosseiro");
 
-    private final String description;
+    private final String code;
+
 }

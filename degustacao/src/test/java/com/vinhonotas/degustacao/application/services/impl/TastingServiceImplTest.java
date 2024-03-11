@@ -6,6 +6,7 @@ import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
 import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import com.vinhonotas.degustacao.infraestructure.TastingRepository;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -187,8 +188,8 @@ class TastingServiceImplTest {
     private TastingInputDTO createTastingInputDTO() {
         return TastingInputDTO.builder()
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
-                .tastingCards(Set.of(Mockito.mock(TastingCardEntity.class)))
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
+                .tastingCards(Set.of(TastingCardInputDTO.builder().build()))
                 .build();
     }
 

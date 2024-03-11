@@ -7,6 +7,7 @@ import com.vinhonotas.degustacao.application.services.exceptions.BadRequestExcep
 import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
 import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -192,8 +193,8 @@ class TastingControllerTest {
     private TastingInputDTO createTastingInputDTO() {
         return TastingInputDTO.builder()
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
-                .tastingCards(Set.of(new TastingCardEntity()))
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
+                .tastingCards(Set.of(TastingCardInputDTO.builder().build()))
                 .build();
     }
 

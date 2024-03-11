@@ -207,13 +207,13 @@ class VisualInspectionControllerTest {
         return VisualInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .clarity(EnumClarityType.VERY_CLEAR)
-                .brightness(EnumBrightnessType.VERY_BRIGHT)
-                .viscosity(EnumViscosityType.SLIPPERY)
-                .colorRed(EnumRedColorType.RUBY)
-                .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
-                .colorRose(EnumRoseColorType.BROWN)
-                .classification(EnumClassificationType.LITTLE)
+                .clarity(EnumClarityType.VERY_CLEAR.getCode())
+                .brightness(EnumBrightnessType.VERY_BRIGHT.getCode())
+                .viscosity(EnumViscosityType.SLIPPERY.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.STRAW_YELLOW.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

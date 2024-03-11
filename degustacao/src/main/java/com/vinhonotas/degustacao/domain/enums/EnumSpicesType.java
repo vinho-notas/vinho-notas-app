@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumSpicesType {
+public enum EnumSpicesType implements EnumCode {
 
 
     LICORICE("Alcaçuz"),
@@ -27,5 +27,6 @@ public enum EnumSpicesType {
     SAGE("Sálvia"),
     THYME("Tomilho");
 
-    private final String description;
+    private final String code;
+
 }

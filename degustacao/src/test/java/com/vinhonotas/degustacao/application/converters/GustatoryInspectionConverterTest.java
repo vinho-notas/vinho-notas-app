@@ -5,6 +5,7 @@ import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.GustatoryInspectionOutputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,22 +45,22 @@ class GustatoryInspectionConverterTest {
         assertNotNull(entity);
         assertEquals(gustatoryInspectionInputDTO.getTastingData(), entity.getTastingData());
         assertEquals(gustatoryInspectionInputDTO.getWineTasted(), entity.getWineTasted());
-        assertEquals(gustatoryInspectionInputDTO.getBody(), entity.getBody());
-        assertEquals(gustatoryInspectionInputDTO.getSweetness(), entity.getSweetness());
-        assertEquals(gustatoryInspectionInputDTO.getTannin(), entity.getTannin());
-        assertEquals(gustatoryInspectionInputDTO.getClassification(), entity.getClassification());
-        assertEquals(gustatoryInspectionInputDTO.getAcidity(), entity.getAcidity());
-        assertEquals(gustatoryInspectionInputDTO.getAlcohol(), entity.getAlcohol());
-        assertEquals(gustatoryInspectionInputDTO.getPersistence(), entity.getPersistence());
-        assertEquals(gustatoryInspectionInputDTO.getMaturity(), entity.getMaturity());
-        assertEquals(gustatoryInspectionInputDTO.getTypicality(), entity.getTypicality());
+        assertEquals(gustatoryInspectionInputDTO.getBody(), EnumConverter.toString(entity.getBody()));
+        assertEquals(gustatoryInspectionInputDTO.getSweetness(), EnumConverter.toString(entity.getSweetness()));
+        assertEquals(gustatoryInspectionInputDTO.getTannin(), EnumConverter.toString(entity.getTannin()));
+        assertEquals(gustatoryInspectionInputDTO.getClassification(), EnumConverter.toString(entity.getClassification()));
+        assertEquals(gustatoryInspectionInputDTO.getAcidity(), EnumConverter.toString(entity.getAcidity()));
+        assertEquals(gustatoryInspectionInputDTO.getAlcohol(), EnumConverter.toString(entity.getAlcohol()));
+        assertEquals(gustatoryInspectionInputDTO.getPersistence(), EnumConverter.toString(entity.getPersistence()));
+        assertEquals(gustatoryInspectionInputDTO.getMaturity(), EnumConverter.toString(entity.getMaturity()));
+        assertEquals(gustatoryInspectionInputDTO.getTypicality(), EnumConverter.toString(entity.getTypicality()));
     }
 
     @Test
     @DisplayName("Deve converter para entidade com atualização")
     void testToEntityUpdate() {
-        gustatoryInspectionInputDTO.setAcidity(EnumAcidityType.VERY_ACIDIC);
-        gustatoryInspectionInputDTO.setBody(EnumBodyType.LITTLE_BODY);
+        gustatoryInspectionInputDTO.setAcidity(EnumAcidityType.VERY_ACIDIC.getCode());
+        gustatoryInspectionInputDTO.setBody(EnumBodyType.LITTLE_BODY.getCode());
 
         GustatoryInspectionEntity entity = assertDoesNotThrow(() -> gustatoryInspectionConverter
                 .toEntityUpdate(gustatoryInspectionInputDTO, gustatoryInspectionEntity.getId(), gustatoryInspectionEntity));
@@ -163,15 +164,15 @@ class GustatoryInspectionConverterTest {
         return GustatoryInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .body(EnumBodyType.FULL_BODIED)
-                .sweetness(EnumSweetnessType.VERY_DRY)
-                .tannin(EnumTanninType.LITTLE_TANIC)
-                .classification(EnumClassificationType.LITTLE)
-                .acidity(EnumAcidityType.LITTLE_ACID)
-                .alcohol(EnumAlcoholType.LOW)
-                .persistence(EnumPersistenceType.SHORT)
-                .maturity(EnumMaturityType.MATURE)
-                .typicality(EnumTypicalityType.NOT_TYPICAL)
+                .body(EnumBodyType.FULL_BODIED.getCode())
+                .sweetness(EnumSweetnessType.VERY_DRY.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .persistence(EnumPersistenceType.SHORT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.NOT_TYPICAL.getCode())
                 .build();
     }
 

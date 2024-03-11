@@ -9,12 +9,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumTypicalityType {
+public enum EnumTypicalityType implements EnumCode {
 
     VERY_TYPICAL("Muito típico"),
     TYPICAL("Típico"),
     NOT_TYPICAL("Pouco típico"),
     ATYPICAL("Atípico");
 
-    private final String description;
+    private final String code;
+
 }

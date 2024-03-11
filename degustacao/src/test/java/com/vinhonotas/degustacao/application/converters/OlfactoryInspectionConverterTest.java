@@ -7,13 +7,16 @@ import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
 import com.vinhonotas.degustacao.domain.enums.EnumIntensityType;
 import com.vinhonotas.degustacao.domain.enums.EnumPersistenceType;
 import com.vinhonotas.degustacao.domain.enums.EnumQualityType;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.AromasInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.OlfactoryInspectionOutputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,6 +31,8 @@ class OlfactoryInspectionConverterTest {
 
     @InjectMocks
     private OlfactoryInspectionConverter olfactoryInspectionConverter;
+    @Mock
+    private AromasConverter aromasConverter;
 
     private OlfactoryInspectionInputDTO olfactoryInspectionInputDTO;
     private OlfactoryInspectionOutputDTO olfactoryInspectionOutputDTO;
@@ -48,18 +53,18 @@ class OlfactoryInspectionConverterTest {
         assertNotNull(entity);
         assertEquals(olfactoryInspectionInputDTO.getTastingData(), entity.getTastingData());
         assertEquals(olfactoryInspectionInputDTO.getWineTasted(), entity.getWineTasted());
-        assertEquals(olfactoryInspectionInputDTO.getIntensity(), entity.getIntensity());
-        assertEquals(olfactoryInspectionInputDTO.getPersistence(), entity.getPersistence());
-        assertEquals(olfactoryInspectionInputDTO.getQuality(), entity.getQuality());
-        assertEquals(olfactoryInspectionInputDTO.getAromas(), entity.getAromas());
-        assertEquals(olfactoryInspectionInputDTO.getClassification(), entity.getClassification());
+        assertEquals(olfactoryInspectionInputDTO.getIntensity(), EnumConverter.toString(entity.getIntensity()));
+        assertEquals(olfactoryInspectionInputDTO.getPersistence(), EnumConverter.toString(entity.getPersistence()));
+        assertEquals(olfactoryInspectionInputDTO.getQuality(), EnumConverter.toString(entity.getQuality()));
+        assertEquals(aromasConverter.toEntity(olfactoryInspectionInputDTO.getAromas()), entity.getAromas());
+        assertEquals(olfactoryInspectionInputDTO.getClassification(), EnumConverter.toString(entity.getClassification()));
     }
 
     @Test
     @DisplayName("Deve converter para entidade de atualização")
     void testToEntityUpdate() {
         olfactoryInspectionInputDTO.setWineTasted("Wine Tasted Updated");
-        olfactoryInspectionInputDTO.setQuality(EnumQualityType.RUDE);
+        olfactoryInspectionInputDTO.setQuality(EnumQualityType.RUDE.getCode());
 
         OlfactoryInspectionEntity entity = assertDoesNotThrow(() -> olfactoryInspectionConverter.toEntityUpdate(
                 olfactoryInspectionInputDTO, olfactoryInspectionEntity.getId(), olfactoryInspectionEntity));
@@ -149,11 +154,11 @@ class OlfactoryInspectionConverterTest {
         return OlfactoryInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
-                .aromas(new AromasEntity())
-                .classification(EnumClassificationType.LITTLE)
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .aromas(AromasInputDTO.builder().build())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

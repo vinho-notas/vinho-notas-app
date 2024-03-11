@@ -1,30 +1,39 @@
 package com.vinhonotas.degustacao.application.converters;
 
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
+import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingOutputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class TastingConverter {
 
-    public TastingEntity toEntity(TastingInputDTO tastingInputDTO) {
-        return TastingEntity.builder()
-                .tastingData(tastingInputDTO.getTastingData())
-                .tastingType(tastingInputDTO.getTastingType())
-                .tastingCards(tastingInputDTO.getTastingCards())
-                .build();
-    }
+private final TastingCardConverter tastingCardConverter;
 
     public TastingEntity toEntityUpdate(TastingInputDTO tastingInputDTO, UUID id, TastingEntity tastingEntity) {
         return TastingEntity.builder()
                 .id(id)
-                .tastingData(tastingInputDTO.getTastingData() != null ? tastingInputDTO.getTastingData() : tastingEntity.getTastingData())
-                .tastingType(tastingInputDTO.getTastingType() != null ? tastingInputDTO.getTastingType() : tastingEntity.getTastingType())
-                .tastingCards(tastingInputDTO.getTastingCards() != null ? tastingInputDTO.getTastingCards() : tastingEntity.getTastingCards())
+                .tastingData(tastingInputDTO.getTastingData() != null ? tastingInputDTO.getTastingData() : tastingEntity
+                        .getTastingData())
+                .tastingType(tastingInputDTO.getTastingType() != null ? EnumConverter.fromString(tastingInputDTO
+                        .getTastingType(), EnumTastingType.class) : tastingEntity.getTastingType())
+                .tastingCards(tastingInputDTO.getTastingCards() != null ? tastingCardConverter
+                        .toEntitySet(tastingInputDTO.getTastingCards()) : tastingEntity.getTastingCards())
+                .build();
+    }
+
+    public TastingEntity toEntity(TastingInputDTO tastingInputDTO) {
+        return TastingEntity.builder()
+                .tastingData(tastingInputDTO.getTastingData())
+                .tastingType(EnumConverter.fromString(tastingInputDTO.getTastingType(), EnumTastingType.class))
+                .tastingCards(tastingCardConverter.toEntitySet(tastingInputDTO.getTastingCards()))
                 .build();
     }
 

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumWhiteColorType {
+public enum EnumWhiteColorType implements EnumCode {
 
     STRAW_YELLOW("Amarelo palha"),
     GREENISH_REFLECTIONS("Amarelo palha com reflexos esverdeados"),
@@ -17,5 +17,6 @@ public enum EnumWhiteColorType {
     GOLDEN("Dourado"),
     AMBER("Âmbar");
 
-    private final String description;
+    private final String code;
+
 }
