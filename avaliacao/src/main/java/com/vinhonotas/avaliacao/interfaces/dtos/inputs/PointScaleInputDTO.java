@@ -1,6 +1,5 @@
 package com.vinhonotas.avaliacao.interfaces.dtos.inputs;
 
-import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +13,6 @@ public class PointScaleInputDTO {
     private String whatAromas;
     private String whatFlavors;
     private String whatOpinion;
-    private EnumPointScale pointScale;
+    private String pointScale;
 
 }
