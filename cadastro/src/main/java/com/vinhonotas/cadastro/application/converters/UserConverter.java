@@ -1,8 +1,10 @@
 package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
+import com.vinhonotas.cadastro.utils.EnumConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +20,7 @@ public class UserConverter {
     public UserEntity convertToEntity(UserInputDTO userInputDTO) {
         return UserEntity.builder()
                 .person(personConverter.convertToEntity(userInputDTO.getPerson()))
-                .enumProfile(userInputDTO.getEnumProfile())
+                .enumProfile(EnumConverter.fromString(userInputDTO.getEnumProfile(), EnumProfile.class))
                 .email(userInputDTO.getEmail())
                 .password(userInputDTO.getPassword())
                 .build();
@@ -28,7 +30,8 @@ public class UserConverter {
         return UserEntity.builder()
                 .id(id)
                 .person(userInputDTO.getPerson() != null ? personConverter.convertToEntity(userInputDTO.getPerson()) : entity.getPerson())
-                .enumProfile(userInputDTO.getEnumProfile() != null ? userInputDTO.getEnumProfile() : entity.getEnumProfile())
+                .enumProfile(userInputDTO.getEnumProfile() != null ? EnumConverter.fromString(userInputDTO
+                        .getEnumProfile(), EnumProfile.class) : entity.getEnumProfile())
                 .email(userInputDTO.getEmail() != null ? userInputDTO.getEmail() : entity.getEmail())
                 .password(userInputDTO.getPassword() != null ? userInputDTO.getPassword() : entity.getPassword())
                 .build();

@@ -1,7 +1,5 @@
 package com.vinhonotas.cadastro.interfaces.dtos.inputs;
 
-import com.vinhonotas.cadastro.domain.entities.PersonEntity;
-import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +8,7 @@ import lombok.Data;
 public class UserInputDTO {
 
     private PersonInputDTO person;
-    private EnumProfile enumProfile;
+    private String enumProfile;
     private String email;
     private String password;
 

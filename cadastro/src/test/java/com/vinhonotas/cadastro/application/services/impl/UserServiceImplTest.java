@@ -192,7 +192,7 @@ class UserServiceImplTest {
     private UserInputDTO createInputDTO() {
         return UserInputDTO.builder()
                 .person(createPersonInputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@email.com")
                 .password("123456")
                 .build();
