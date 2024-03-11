@@ -194,7 +194,7 @@ class WineServiceImplTest {
                 .wineType(EnumWineType.REDWINE.getCode())
                 .wineClassification(EnumWineClassification.DRYWINE.getCode())
                 .alcoholContent("12.5")
-                .volumeMl(750)
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
                 .serviceTemperature("17.0")

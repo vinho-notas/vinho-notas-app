@@ -1,7 +1,9 @@
 package com.vinhonotas.vinho.utils;
 
 import com.vinhonotas.vinho.domain.enums.EnumCode;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class EnumConverter {
 
     public static <T extends Enum<T> & EnumCode> T fromString(String value, Class<T> enumType) {
