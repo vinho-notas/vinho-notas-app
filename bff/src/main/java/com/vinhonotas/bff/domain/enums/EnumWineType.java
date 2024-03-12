@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumWineType {
+public enum EnumWineType implements EnumCode {
 
     REDWINE("Vinho Tinto"),
     WHITEWINE("Vinho Branco"),

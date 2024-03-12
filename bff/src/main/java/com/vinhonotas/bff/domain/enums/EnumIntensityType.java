@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumIntensityType {
+public enum EnumIntensityType implements EnumCode {
 
     VERY_INTENSE("Muito intenso"),
     INTENSE("Intenso"),
     LITTLE_INTENSE("Pouco intenso"),
     WEAK("Fraco");
 
-    private final String description;
+    private final String code;
 
 }

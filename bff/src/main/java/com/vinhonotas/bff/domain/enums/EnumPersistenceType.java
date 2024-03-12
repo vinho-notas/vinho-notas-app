@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumPersistenceType {
+public enum EnumPersistenceType implements EnumCode {
 
     VERY_PERSISTENT("Muito persistente"),
     PERSISTENT("Persistente"),
     LITTLE("Pouco persistente"),
     SHORT("Curto");
 
-    private final String description;
+    private final String code;
 }

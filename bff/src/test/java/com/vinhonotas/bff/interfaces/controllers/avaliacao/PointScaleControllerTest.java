@@ -204,7 +204,7 @@ class PointScaleControllerTest {
                 .whatAromas("Aroma de pimentão vermelho maduro.")
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
-                .pointScale(EnumPointScale.OUTSTANDING)
+                .pointScale(EnumPointScale.OUTSTANDING.getCode())
                 .build();
     }
 

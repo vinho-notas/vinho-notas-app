@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumBodyType {
+public enum EnumBodyType implements EnumCode {
 
     FULL_BODIED("Encorpado"),
     MEDIUM_BODY("Médio corpo"),
     LITTLE_BODY("Pouco corpo"),
     LIGHT("Leve");
 
-    private final String description;
+    private final String code;
 
 }

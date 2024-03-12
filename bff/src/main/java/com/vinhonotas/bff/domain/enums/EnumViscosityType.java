@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumViscosityType {
+public enum EnumViscosityType implements EnumCode {
 
     VERY_VISCOUS("Muito viscoso"),
     VISCOUS("Viscoso"),
     LITTLE_VISCOUS("Pouco viscoso"),
     SLIPPERY("Escorregadio");
 
-    private final String description;
+    private final String code;
 
 }

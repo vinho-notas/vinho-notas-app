@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumAcidityType {
+public enum EnumAcidityType implements EnumCode {
 
     VERY_ACIDIC("Muito ácido"),
     ADEQUATE("Adequado"),
     LITTLE_ACID("Pouco ácido"),
     INSUFFICIENT("Insuficiente");
 
-    private final String description;
+    private final String code;
 
 }

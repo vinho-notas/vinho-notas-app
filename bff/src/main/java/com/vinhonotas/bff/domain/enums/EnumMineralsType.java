@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumMineralsType {
+public enum EnumMineralsType implements EnumCode {
 
     PETROLEUM("Petróleo"),
     CHALK("Giz"),
     WET_STONE("Pedra molhada"),
     EARTH("Terra");
 
-    private final String description;
+    private final String code;
 
 }

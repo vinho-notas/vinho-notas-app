@@ -12,7 +12,7 @@ import java.util.Set;
 public class TastingInputDTO {
 
     private LocalDate tastingData;
-    private EnumTastingType tastingType;
+    private String tastingType;
     private Set<TastingCardInputDTO> tastingCards;
 
 }

@@ -20,6 +20,6 @@ public class TastingCardInputDTO {
     private OlfactoryInspectionInputDTO olfactoryInspection;
     private GustatoryInspectionInputDTO gustatoryInspection;
     private String opinion;
-    private EnumPointScale pointScale;
+    private String pointScale;
 
 }
