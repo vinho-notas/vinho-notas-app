@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumClassificationType {
+public enum EnumClassificationType implements EnumCode {
 
     LITTLE("Baixa"),
     MEDIUM("Média"),
     GOOD("Boa"),
     EXCELLENT("Excelente");
 
-    private final String description;
+    private final String code;
 
 }

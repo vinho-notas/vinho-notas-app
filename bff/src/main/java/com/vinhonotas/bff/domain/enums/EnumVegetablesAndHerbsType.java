@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumVegetablesAndHerbsType {
+public enum EnumVegetablesAndHerbsType implements EnumCode {
 
     HAY("Feno"),
     LEAF("Folha"),
@@ -13,6 +13,6 @@ public enum EnumVegetablesAndHerbsType {
     GRAM("Grama"),
     MINT("Hortelã");
 
-    private final String description;
+    private final String code;
 
 }

@@ -44,7 +44,6 @@ class UserControllerTest {
     @MockBean
     private UserConverter userConverter;
 
-    private CountryEntity country;
     private AddressOutputDTO address;
     private PersonOutputDTO person;
     private UserEntity userEntity;
@@ -53,7 +52,6 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        country = createCountry();
         address = createAddress();
         person = createPerson();
         userEntity = createUserEntity();
@@ -232,14 +230,6 @@ class UserControllerTest {
                         .andExpect(status().isBadRequest());
     }
 
-    private CountryEntity createCountry() {
-        return CountryEntity.builder()
-                .id(UUID.fromString("76c1ed02-c7c1-46f9-af05-01e77983f2c3"))
-                .countryName("Brasil")
-                .continentName("America do Sul")
-                .build();
-    }
-
     private AddressOutputDTO createAddress() {
         return AddressOutputDTO.builder()
                 .id(UUID.fromString("c775e102-04e2-4e61-9f32-d78c1713ef03"))
@@ -303,7 +293,7 @@ class UserControllerTest {
     private UserInputDTO createUserIntputDTO() {
         return UserInputDTO.builder()
                 .person(createPersonInputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();

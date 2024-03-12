@@ -11,6 +11,7 @@ import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
 import com.vinhonotas.degustacao.domain.enums.EnumIntensityType;
 import com.vinhonotas.degustacao.domain.enums.EnumPersistenceType;
 import com.vinhonotas.degustacao.domain.enums.EnumQualityType;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.AromasInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.OlfactoryInspectionOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -205,11 +206,11 @@ class OlfactoryInspectionControllerTest {
         return OlfactoryInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
-                .aromas(new AromasEntity())
-                .classification(EnumClassificationType.LITTLE)
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .aromas(AromasInputDTO.builder().build())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

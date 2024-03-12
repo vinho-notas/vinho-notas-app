@@ -205,7 +205,7 @@ class TastingCardServiceImplTest {
                 .olfactoryInspection(Mockito.mock(OlfactoryInspectionInputDTO.class))
                 .gustatoryInspection(Mockito.mock(GustatoryInspectionInputDTO.class))
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.getCode())
                 .build();
     }
 

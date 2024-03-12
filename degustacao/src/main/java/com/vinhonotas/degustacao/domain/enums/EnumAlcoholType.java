@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumAlcoholType {
+public enum EnumAlcoholType implements EnumCode {
 
     HIGH("Alto"),
     MEDIUM("Médio"),
@@ -17,5 +17,6 @@ public enum EnumAlcoholType {
     VERY_LOW("Muito baixo");
 
 
-    private final String description;
+    private final String code;
+
 }

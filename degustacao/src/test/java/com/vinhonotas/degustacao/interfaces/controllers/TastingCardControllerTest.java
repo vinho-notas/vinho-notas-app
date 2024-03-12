@@ -6,7 +6,10 @@ import com.vinhonotas.degustacao.application.services.TastingCardService;
 import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.*;
 import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -204,11 +207,11 @@ class TastingCardControllerTest {
                 .grapes("Grapes")
                 .country("Chile")
                 .region("Vale Central")
-                .visualInspection(new VisualInspectionEntity())
-                .olfactoryInspection(new OlfactoryInspectionEntity())
-                .gustatoryInspection(new GustatoryInspectionEntity())
+                .visualInspection(VisualInspectionInputDTO.builder().build())
+                .olfactoryInspection(OlfactoryInspectionInputDTO.builder().build())
+                .gustatoryInspection(GustatoryInspectionInputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.getCode())
                 .build();
     }
 

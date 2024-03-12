@@ -19,7 +19,7 @@ public class WineInputDTO {
     private String wineType;
     private String wineClassification;
     private String alcoholContent;
-    private int volumeMl;
+    private String volumeMl;
     private String grape;
     private String winery;
     private String serviceTemperature;

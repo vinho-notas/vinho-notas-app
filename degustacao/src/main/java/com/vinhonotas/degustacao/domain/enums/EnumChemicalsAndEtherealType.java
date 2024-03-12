@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumChemicalsAndEtherealType {
+public enum EnumChemicalsAndEtherealType implements EnumCode {
 
     ACETONE("Acetona"),
     SULFUR("Enxofre");
 
-    private final String description;
+    private final String code;
+
 }

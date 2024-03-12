@@ -2,13 +2,17 @@ package com.vinhonotas.degustacao.application.converters;
 
 import com.vinhonotas.degustacao.domain.entities.*;
 import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,6 +27,13 @@ class TastingCardConverterTest {
 
     @InjectMocks
     private TastingCardConverter tastingCardConverter;
+
+    @Mock
+    private VisualInspectionConverter visualInspectionConverter;
+    @Mock
+    private OlfactoryInspectionConverter olfactoryInspectionConverter;
+    @Mock
+    private GustatoryInspectionConverter gustatoryInspectionConverter;
 
     private TastingCardEntity tastingCardEntity;
     private TastingCardInputDTO tastingCardInputDTO;
@@ -47,18 +58,18 @@ class TastingCardConverterTest {
         assertEquals(tastingCardInputDTO.getGrapes(), entity.getGrapes());
         assertEquals(tastingCardInputDTO.getCountry(), entity.getCountry());
         assertEquals(tastingCardInputDTO.getRegion(), entity.getRegion());
-        assertEquals(tastingCardInputDTO.getVisualInspection(), entity.getVisualInspection());
-        assertEquals(tastingCardInputDTO.getOlfactoryInspection(), entity.getOlfactoryInspection());
-        assertEquals(tastingCardInputDTO.getGustatoryInspection(), entity.getGustatoryInspection());
+        assertEquals(visualInspectionConverter.toEntity(tastingCardInputDTO.getVisualInspection()), entity.getVisualInspection());
+        assertEquals(olfactoryInspectionConverter.toEntity(tastingCardInputDTO.getOlfactoryInspection()), entity.getOlfactoryInspection());
+        assertEquals(gustatoryInspectionConverter.toEntity(tastingCardInputDTO.getGustatoryInspection()), entity.getGustatoryInspection());
         assertEquals(tastingCardInputDTO.getOpinion(), entity.getOpinion());
-        assertEquals(tastingCardInputDTO.getPointScale(), entity.getPointScale());
+        assertEquals(tastingCardInputDTO.getPointScale(), entity.getPointScale().getCode());
     }
 
     @Test
     @DisplayName("Deve converter para uma entidade de atualização")
     void testToEntityUpdate() {
         tastingCardInputDTO.setCountry("Argentina");
-        tastingCardInputDTO.setPointScale(EnumPointScale.VERYGOOD);
+        tastingCardInputDTO.setPointScale(EnumPointScale.VERYGOOD.getCode());
 
         TastingCardEntity entity = assertDoesNotThrow(() -> tastingCardConverter.toEntityUpdate(tastingCardInputDTO,
                 tastingCardEntity.getId(), tastingCardEntity));
@@ -152,11 +163,11 @@ class TastingCardConverterTest {
                 .grapes("Grapes")
                 .country("Chile")
                 .region("Vale Central")
-                .visualInspection(Mockito.mock(VisualInspectionEntity.class))
-                .olfactoryInspection(Mockito.mock(OlfactoryInspectionEntity.class))
-                .gustatoryInspection(Mockito.mock(GustatoryInspectionEntity.class))
+                .visualInspection(VisualInspectionInputDTO.builder().build())
+                .olfactoryInspection(OlfactoryInspectionInputDTO.builder().build())
+                .gustatoryInspection(GustatoryInspectionInputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.getCode())
                 .build();
     }
 

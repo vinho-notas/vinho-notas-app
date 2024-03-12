@@ -7,6 +7,7 @@ import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
+import com.vinhonotas.cadastro.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class UserConverterTest {
         UserEntity user = assertDoesNotThrow(()-> userConverter.convertToEntity(userInputDTO));
         assertNotNull(user);
         assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), user.getPerson());
-        assertEquals(userInputDTO.getEnumProfile(), user.getEnumProfile());
+        assertEquals(userInputDTO.getEnumProfile(), EnumConverter.toString(user.getEnumProfile()));
         assertEquals(userInputDTO.getEmail(), user.getEmail());
         assertEquals(userInputDTO.getPassword(), user.getPassword());
     }
@@ -61,7 +62,7 @@ class UserConverterTest {
         UserEntity entity = assertDoesNotThrow(() -> userConverter.converteToEntityUpdate(userEntity, userEntity.getId(), userInputDTO));
         assertNotNull(userEntity);
         assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), entity.getPerson());
-        assertEquals(userInputDTO.getEnumProfile(), entity.getEnumProfile());
+        assertEquals(userInputDTO.getEnumProfile(), EnumConverter.toString(entity.getEnumProfile()));
         assertEquals(userInputDTO.getEmail(), entity.getEmail());
         assertEquals(userInputDTO.getPassword(), entity.getPassword());
     }
@@ -118,7 +119,7 @@ class UserConverterTest {
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
                 .person(Mockito.mock(PersonInputDTO.class))
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
                 .build();

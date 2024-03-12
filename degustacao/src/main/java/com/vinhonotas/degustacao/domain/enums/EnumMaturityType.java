@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumMaturityType {
+public enum EnumMaturityType implements EnumCode {
 
     YOUNG("Jovem"),
     READY("Pronto"),
@@ -17,5 +17,6 @@ public enum EnumMaturityType {
     OLD("Velho");
 
 
-    private final String description;
+    private final String code;
+
 }

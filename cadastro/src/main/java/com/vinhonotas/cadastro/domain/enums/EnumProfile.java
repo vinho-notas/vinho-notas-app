@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumProfile {
+public enum EnumProfile implements EnumCode {
     OENOPHILE("Enófilo"),
     SOMMELIER("Sommelier"),
     PARTNER("Parceiro");

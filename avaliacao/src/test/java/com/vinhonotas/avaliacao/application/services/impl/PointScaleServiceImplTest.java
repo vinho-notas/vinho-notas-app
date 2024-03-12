@@ -115,7 +115,7 @@ class PointScaleServiceImplTest {
     @Test
     @DisplayName("Deve atualizar um PointScaleEntity")
     void testUpdate() {
-        pointScaleInputDTOOne.setPointScale(EnumPointScale.OUTSTANDING);
+        pointScaleInputDTOOne.setPointScale(EnumPointScale.OUTSTANDING.getCode());
 
         when(pointScaleRepository.findById(pointScaleOne.getId())).thenReturn(Optional.of(pointScaleOne));
         when(pointScaleConverter.toEntityUpdate(pointScaleInputDTOOne, pointScaleOne.getId(), pointScaleOne)).thenReturn(pointScaleOne);
@@ -176,7 +176,7 @@ class PointScaleServiceImplTest {
                 .whatOpinion("Vinho de boa qualidade, com boa complexidade, equilibrado, com boa intensidade de sabor, " +
                         "com boa persistência, com boa tipicidade, com boa harmonização, com boa relação qualidade/preço, " +
                         "com potencial de guarda de 3 anos, mas que pode ser consumido desde já.")
-                .pointScale(EnumPointScale.VERYGOOD)
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
                 .build();
     }
 

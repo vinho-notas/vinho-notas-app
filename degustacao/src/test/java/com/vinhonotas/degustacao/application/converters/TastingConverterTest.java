@@ -3,13 +3,16 @@ package com.vinhonotas.degustacao.application.converters;
 import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
 import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingOutputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -25,6 +28,9 @@ class TastingConverterTest {
 
     @InjectMocks
     private TastingConverter tastingConverter;
+
+    @Mock
+    private TastingCardConverter tastingCardConverter;
 
     private TastingEntity tastingEntity;
     private TastingInputDTO tastingInputDTO;
@@ -44,21 +50,21 @@ class TastingConverterTest {
 
         assertNotNull(tasting);
         assertEquals(tastingInputDTO.getTastingData(), tasting.getTastingData());
-        assertEquals(tastingInputDTO.getTastingType(), tasting.getTastingType());
-        assertEquals(tastingInputDTO.getTastingCards(), tasting.getTastingCards());
+        assertEquals(tastingInputDTO.getTastingType(), EnumConverter.toString(tasting.getTastingType()));
+        assertEquals(tastingCardConverter.toEntitySet(tastingInputDTO.getTastingCards()), tasting.getTastingCards());
     }
 
     @Test
     @DisplayName("Deve converter para uma entidade de atualização")
     void toEntityUpdate() {
         tastingInputDTO.setTastingData(LocalDate.now().minusDays(1));
-        tastingInputDTO.setTastingType(EnumTastingType.VERTICAL);
+        tastingInputDTO.setTastingType(EnumTastingType.VERTICAL.getCode());
         TastingEntity tasting = assertDoesNotThrow(() -> tastingConverter.toEntityUpdate(tastingInputDTO, tastingEntity.getId(), tastingEntity));
 
         assertNotNull(tasting);
         assertEquals(LocalDate.now().minusDays(1), tasting.getTastingData());
         assertEquals(EnumTastingType.VERTICAL, tasting.getTastingType());
-        assertEquals(tastingInputDTO.getTastingCards(), tasting.getTastingCards());
+        assertEquals(tastingCardConverter.toEntitySet(tastingInputDTO.getTastingCards()), tasting.getTastingCards());
     }
 
     @Test
@@ -111,8 +117,8 @@ class TastingConverterTest {
     private TastingInputDTO createTastingInputDTO() {
         return TastingInputDTO.builder()
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
-                .tastingCards(Set.of(Mockito.mock(TastingCardEntity.class)))
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
+                .tastingCards(Set.of(TastingCardInputDTO.builder().build()))
                 .build();
     }
 

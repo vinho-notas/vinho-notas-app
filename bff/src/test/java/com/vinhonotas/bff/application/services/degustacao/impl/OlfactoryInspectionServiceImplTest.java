@@ -195,11 +195,11 @@ class OlfactoryInspectionServiceImplTest {
         return OlfactoryInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
                 .aromas(Mockito.mock(AromasInputDTO.class))
-                .classification(EnumClassificationType.LITTLE)
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

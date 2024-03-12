@@ -165,7 +165,7 @@ class TastingServiceImplTest {
     private TastingInputDTO createTastingInputDTO() {
         return TastingInputDTO.builder()
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
                 .tastingCards(Set.of(Mockito.mock(TastingCardInputDTO.class)))
                 .build();
     }

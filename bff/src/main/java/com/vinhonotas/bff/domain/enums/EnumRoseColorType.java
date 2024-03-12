@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumRoseColorType {
+public enum EnumRoseColorType implements EnumCode {
 
     LIGHT_RUBY("Rubi claro"),
     PINKISH("Rosado"),
     SALMON("Salmão"),
     BROWN("Castanho");
 
-    private final String description;
+    private final String code;
 
 }

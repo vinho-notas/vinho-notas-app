@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumTastingType {
+public enum EnumTastingType implements EnumCode {
 
     VERTICAL("Degustação Vertical"),
     HORIZONTAL("Degustação Horizontal"),
@@ -14,5 +14,6 @@ public enum EnumTastingType {
     PAIRING("Degustação de Harmonização"),
     COMPARATIVE("Degustação Comparativa");
 
-    private final String description;
+    private final String code;
+
 }

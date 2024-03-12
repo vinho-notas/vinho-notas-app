@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumEmpireumaticsType {
+public enum EnumEmpireumaticsType implements EnumCode {
 
     ROASTING("Torrefação"),
     TOASTED("Tostado"),
@@ -15,6 +15,6 @@ public enum EnumEmpireumaticsType {
     CHOCOLATE("Chocolate"),
     CARAMEL("Caramelo");
 
-    private final String description;
+    private final String code;
 
 }
