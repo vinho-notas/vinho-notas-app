@@ -7,6 +7,7 @@ import com.vinhonotas.degustacao.interfaces.dtos.outputs.VisualInspectionOutputD
 import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,10 @@ public class VisualInspectionConverter {
                 .colorWhite(EnumConverter.fromString(visualInspectionInputDTO.getColorWhite(), EnumWhiteColorType.class))
                 .colorRose(EnumConverter.fromString(visualInspectionInputDTO.getColorRose(), EnumRoseColorType.class))
                 .classification(EnumConverter.fromString(visualInspectionInputDTO.getClassification(), EnumClassificationType.class))
+                .userreg(visualInspectionInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(visualInspectionInputDTO.getUseralt())
+                .dthalt(visualInspectionInputDTO.getDthalt())
                 .build();
     }
 
@@ -49,6 +54,13 @@ public class VisualInspectionConverter {
                 .classification(visualInspectionInputDTO.getClassification() != null ? EnumConverter.fromString(
                         visualInspectionInputDTO.getClassification(), EnumClassificationType.class) : visualInspectionEntity
                         .getClassification())
+                .userreg(visualInspectionInputDTO.getUserreg() != null ? visualInspectionInputDTO.getUserreg() :
+                        visualInspectionEntity.getUserreg())
+                .dthreg(visualInspectionInputDTO.getDthreg() != null ? visualInspectionInputDTO.getDthreg() :
+                        visualInspectionEntity.getDthreg())
+                .useralt(visualInspectionInputDTO.getUseralt() != null ? visualInspectionInputDTO.getUseralt() :
+                        visualInspectionEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
     public VisualInspectionOutputDTO toOutputDTO(VisualInspectionEntity visualInspectionEntity){
