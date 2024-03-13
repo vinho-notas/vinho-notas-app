@@ -1,9 +1,9 @@
 package com.vinhonotas.cadastro.interfaces.dtos.inputs;
 
-import com.vinhonotas.cadastro.domain.entities.CountryEntity;
-import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -18,5 +18,9 @@ public class AddressInputDTO {
     private StateInputDTO uf;
     private CountryInputDTO country;
     private String phoneNumber;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

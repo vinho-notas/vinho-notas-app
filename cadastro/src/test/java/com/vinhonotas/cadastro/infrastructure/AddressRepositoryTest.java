@@ -9,11 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:testdb",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
 })
 class AddressRepositoryTest {
 
@@ -130,6 +134,10 @@ class AddressRepositoryTest {
         return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -144,6 +152,10 @@ class AddressRepositoryTest {
                 .uf(pr)
                 .country(brasil)
                 .phoneNumber("(41) 99999-9999")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -158,6 +170,10 @@ class AddressRepositoryTest {
                 .uf(sc)
                 .country(brasil)
                 .phoneNumber("(47) 99999-9999")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -166,6 +182,10 @@ class AddressRepositoryTest {
                 .stateName("Paraná")
                 .uf("PR")
                 .country(brasil)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -174,6 +194,10 @@ class AddressRepositoryTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(brasil)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
