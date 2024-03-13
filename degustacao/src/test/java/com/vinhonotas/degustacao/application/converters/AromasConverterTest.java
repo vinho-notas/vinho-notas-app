@@ -88,18 +88,18 @@ class AromasConverterTest {
         assertEquals(aromasEntity.getId(), outputDTO.getId());
         assertEquals(aromasEntity.getTastingData(), outputDTO.getTastingData());
         assertEquals(aromasEntity.getWineTasted(), outputDTO.getWineTasted());
-        assertEquals(aromasEntity.getFruity(), outputDTO.getFruity());
-        assertEquals(aromasEntity.getDryFruits(), outputDTO.getDryFruits());
-        assertEquals(aromasEntity.getFlorals(), outputDTO.getFlorals());
-        assertEquals(aromasEntity.getVegetablesAndHerbs(), outputDTO.getVegetablesAndHerbs());
-        assertEquals(aromasEntity.getMinerals(), outputDTO.getMinerals());
-        assertEquals(aromasEntity.getSpices(), outputDTO.getSpices());
-        assertEquals(aromasEntity.getAnimals(), outputDTO.getAnimals());
-        assertEquals(aromasEntity.getEmpireumatics(), outputDTO.getEmpireumatics());
-        assertEquals(aromasEntity.getWood(), outputDTO.getWood());
-        assertEquals(aromasEntity.getChemicals(), outputDTO.getChemicals());
-        assertEquals(aromasEntity.getLacteal(), outputDTO.getLacteal());
-        assertEquals(aromasEntity.getSweets(), outputDTO.getSweets());
+        assertEquals(aromasEntity.getFruity().getCode(), outputDTO.getFruity());
+        assertEquals(aromasEntity.getDryFruits().getCode(), outputDTO.getDryFruits());
+        assertEquals(aromasEntity.getFlorals().getCode(), outputDTO.getFlorals());
+        assertEquals(aromasEntity.getVegetablesAndHerbs().getCode(), outputDTO.getVegetablesAndHerbs());
+        assertEquals(aromasEntity.getMinerals().getCode(), outputDTO.getMinerals());
+        assertEquals(aromasEntity.getSpices().getCode(), outputDTO.getSpices());
+        assertEquals(aromasEntity.getAnimals().getCode(), outputDTO.getAnimals());
+        assertEquals(aromasEntity.getEmpireumatics().getCode(), outputDTO.getEmpireumatics());
+        assertEquals(aromasEntity.getWood().getCode(), outputDTO.getWood());
+        assertEquals(aromasEntity.getChemicals().getCode(), outputDTO.getChemicals());
+        assertEquals(aromasEntity.getLacteal().getCode(), outputDTO.getLacteal());
+        assertEquals(aromasEntity.getSweets().getCode(), outputDTO.getSweets());
     }
 
     @Test
@@ -112,18 +112,18 @@ class AromasConverterTest {
         assertEquals(aromasEntity.getId(), list.get(0).getId());
         assertEquals(aromasEntity.getTastingData(), list.get(0).getTastingData());
         assertEquals(aromasEntity.getWineTasted(), list.get(0).getWineTasted());
-        assertEquals(aromasEntity.getFruity(), list.get(0).getFruity());
-        assertEquals(aromasEntity.getDryFruits(), list.get(0).getDryFruits());
-        assertEquals(aromasEntity.getFlorals(), list.get(0).getFlorals());
-        assertEquals(aromasEntity.getVegetablesAndHerbs(), list.get(0).getVegetablesAndHerbs());
-        assertEquals(aromasEntity.getMinerals(), list.get(0).getMinerals());
-        assertEquals(aromasEntity.getSpices(), list.get(0).getSpices());
-        assertEquals(aromasEntity.getAnimals(), list.get(0).getAnimals());
-        assertEquals(aromasEntity.getEmpireumatics(), list.get(0).getEmpireumatics());
-        assertEquals(aromasEntity.getWood(), list.get(0).getWood());
-        assertEquals(aromasEntity.getChemicals(), list.get(0).getChemicals());
-        assertEquals(aromasEntity.getLacteal(), list.get(0).getLacteal());
-        assertEquals(aromasEntity.getSweets(), list.get(0).getSweets());
+        assertEquals(aromasEntity.getFruity().getCode(), list.get(0).getFruity());
+        assertEquals(aromasEntity.getDryFruits().getCode(), list.get(0).getDryFruits());
+        assertEquals(aromasEntity.getFlorals().getCode(), list.get(0).getFlorals());
+        assertEquals(aromasEntity.getVegetablesAndHerbs().getCode(), list.get(0).getVegetablesAndHerbs());
+        assertEquals(aromasEntity.getMinerals().getCode(), list.get(0).getMinerals());
+        assertEquals(aromasEntity.getSpices().getCode(), list.get(0).getSpices());
+        assertEquals(aromasEntity.getAnimals().getCode(), list.get(0).getAnimals());
+        assertEquals(aromasEntity.getEmpireumatics().getCode(), list.get(0).getEmpireumatics());
+        assertEquals(aromasEntity.getWood().getCode(), list.get(0).getWood());
+        assertEquals(aromasEntity.getChemicals().getCode(), list.get(0).getChemicals());
+        assertEquals(aromasEntity.getLacteal().getCode(), list.get(0).getLacteal());
+        assertEquals(aromasEntity.getSweets().getCode(), list.get(0).getSweets());
     }
 
     @Test
@@ -135,18 +135,18 @@ class AromasConverterTest {
         assertEquals(aromasEntity.getId(), outputDTO.getId());
         assertEquals(aromasEntity.getTastingData(), outputDTO.getTastingData());
         assertEquals(aromasEntity.getWineTasted(), outputDTO.getWineTasted());
-        assertEquals(aromasEntity.getFruity(), outputDTO.getFruity());
-        assertEquals(aromasEntity.getDryFruits(), outputDTO.getDryFruits());
-        assertEquals(aromasEntity.getFlorals(), outputDTO.getFlorals());
-        assertEquals(aromasEntity.getVegetablesAndHerbs(), outputDTO.getVegetablesAndHerbs());
-        assertEquals(aromasEntity.getMinerals(), outputDTO.getMinerals());
-        assertEquals(aromasEntity.getSpices(), outputDTO.getSpices());
-        assertEquals(aromasEntity.getAnimals(), outputDTO.getAnimals());
-        assertEquals(aromasEntity.getEmpireumatics(), outputDTO.getEmpireumatics());
-        assertEquals(aromasEntity.getWood(), outputDTO.getWood());
-        assertEquals(aromasEntity.getChemicals(), outputDTO.getChemicals());
-        assertEquals(aromasEntity.getLacteal(), outputDTO.getLacteal());
-        assertEquals(aromasEntity.getSweets(), outputDTO.getSweets());
+        assertEquals(aromasEntity.getFruity().getCode(), outputDTO.getFruity());
+        assertEquals(aromasEntity.getDryFruits().getCode(), outputDTO.getDryFruits());
+        assertEquals(aromasEntity.getFlorals().getCode(), outputDTO.getFlorals());
+        assertEquals(aromasEntity.getVegetablesAndHerbs().getCode(), outputDTO.getVegetablesAndHerbs());
+        assertEquals(aromasEntity.getMinerals().getCode(), outputDTO.getMinerals());
+        assertEquals(aromasEntity.getSpices().getCode(), outputDTO.getSpices());
+        assertEquals(aromasEntity.getAnimals().getCode(), outputDTO.getAnimals());
+        assertEquals(aromasEntity.getEmpireumatics().getCode(), outputDTO.getEmpireumatics());
+        assertEquals(aromasEntity.getWood().getCode(), outputDTO.getWood());
+        assertEquals(aromasEntity.getChemicals().getCode(), outputDTO.getChemicals());
+        assertEquals(aromasEntity.getLacteal().getCode(), outputDTO.getLacteal());
+        assertEquals(aromasEntity.getSweets().getCode(), outputDTO.getSweets());
     }
 
     private AromasEntity createAromasEntity() {
@@ -174,18 +174,18 @@ class AromasConverterTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .fruity(EnumFruityType.RASPBERRY)
-                .dryFruits(EnumDryFruitsType.BRUNETTE)
-                .florals(EnumFloralsType.CLOVE)
-                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL)
-                .minerals(EnumMineralsType.EARTH)
-                .spices(EnumSpicesType.INDIAN_CLOVE)
-                .animals(EnumAnimalsType.LEATHER)
-                .empireumatics(EnumEmpireumaticsType.CARAMEL)
-                .wood(EnumWoodType.SAWDUST)
-                .chemicals(EnumChemicalsAndEtherealType.ACETONE)
-                .lacteal(EnumLactealType.BUTTER)
-                .sweets(EnumSweetsType.BULLET)
+                .fruity(EnumFruityType.RASPBERRY.getCode())
+                .dryFruits(EnumDryFruitsType.BRUNETTE.getCode())
+                .florals(EnumFloralsType.CLOVE.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.EARTH.getCode())
+                .spices(EnumSpicesType.INDIAN_CLOVE.getCode())
+                .animals(EnumAnimalsType.LEATHER.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
                 .build();
     }
 

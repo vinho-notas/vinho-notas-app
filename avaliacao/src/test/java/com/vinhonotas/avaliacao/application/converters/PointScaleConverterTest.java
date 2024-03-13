@@ -79,7 +79,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), dtoUpdated.getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), dtoUpdated.getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), dtoUpdated.getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), dtoUpdated.getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), dtoUpdated.getPointScale());
     }
 
     @Test
@@ -95,7 +95,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), outputList.get(0).getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), outputList.get(0).getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), outputList.get(0).getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), outputList.get(0).getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), outputList.get(0).getPointScale());
     }
 
     @Test
@@ -110,7 +110,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), dtoUpdated.getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), dtoUpdated.getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), dtoUpdated.getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), dtoUpdated.getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), dtoUpdated.getPointScale());
     }
 
     private PointScaleOutputDTO createPointScaleOutputDTO() {
@@ -123,7 +123,7 @@ class PointScaleConverterTest {
                 .whatAromas("Aroma de pimentão vermelho maduro.")
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
-                .pointScale(EnumPointScale.OUTSTANDING)
+                .pointScale(EnumPointScale.OUTSTANDING.getCode())
                 .build();
     }
 

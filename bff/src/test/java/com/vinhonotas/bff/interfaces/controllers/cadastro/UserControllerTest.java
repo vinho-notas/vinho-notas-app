@@ -59,7 +59,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -88,7 +88,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$[0].person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$[0].person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$[0].enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$[0].enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$[0].email").value("email@gmail.com"))
                 .andExpect(jsonPath("$[0].password").value("123456"));
     }
@@ -116,7 +116,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -144,7 +144,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -173,7 +173,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -260,7 +260,7 @@ class UserControllerTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .person(createPersonOutputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();

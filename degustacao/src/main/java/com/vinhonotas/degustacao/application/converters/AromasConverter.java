@@ -80,18 +80,18 @@ public class AromasConverter {
                 .id(aromasEntity.getId())
                 .tastingData(aromasEntity.getTastingData())
                 .wineTasted(aromasEntity.getWineTasted())
-                .fruity(aromasEntity.getFruity())
-                .dryFruits(aromasEntity.getDryFruits())
-                .florals(aromasEntity.getFlorals())
-                .vegetablesAndHerbs(aromasEntity.getVegetablesAndHerbs())
-                .minerals(aromasEntity.getMinerals())
-                .spices(aromasEntity.getSpices())
-                .animals(aromasEntity.getAnimals())
-                .empireumatics(aromasEntity.getEmpireumatics())
-                .wood(aromasEntity.getWood())
-                .chemicals(aromasEntity.getChemicals())
-                .lacteal(aromasEntity.getLacteal())
-                .sweets(aromasEntity.getSweets())
+                .fruity(EnumConverter.toString(aromasEntity.getFruity()))
+                .dryFruits(EnumConverter.toString(aromasEntity.getDryFruits()))
+                .florals(EnumConverter.toString(aromasEntity.getFlorals()))
+                .vegetablesAndHerbs(EnumConverter.toString(aromasEntity.getVegetablesAndHerbs()))
+                .minerals(EnumConverter.toString(aromasEntity.getMinerals()))
+                .spices(EnumConverter.toString(aromasEntity.getSpices()))
+                .animals(EnumConverter.toString(aromasEntity.getAnimals()))
+                .empireumatics(EnumConverter.toString(aromasEntity.getEmpireumatics()))
+                .wood(EnumConverter.toString(aromasEntity.getWood()))
+                .chemicals(EnumConverter.toString(aromasEntity.getChemicals()))
+                .lacteal(EnumConverter.toString(aromasEntity.getLacteal()))
+                .sweets(EnumConverter.toString(aromasEntity.getSweets()))
                 .build();
     }
 
@@ -105,21 +105,34 @@ public class AromasConverter {
     public AromasOutputDTO toOutputDTOUpdate(AromasEntity aromasEntity, UUID id, AromasOutputDTO aromasOutputDTO) {
         return AromasOutputDTO.builder()
                 .id(id)
-                .tastingData(aromasOutputDTO.getTastingData() != null ? aromasOutputDTO.getTastingData() : aromasEntity.getTastingData())
-                .wineTasted(aromasOutputDTO.getWineTasted() != null ? aromasOutputDTO.getWineTasted() : aromasEntity.getWineTasted())
-                .fruity(aromasOutputDTO.getFruity() != null ? aromasOutputDTO.getFruity() : aromasEntity.getFruity())
-                .dryFruits(aromasOutputDTO.getDryFruits() != null ? aromasOutputDTO.getDryFruits() : aromasEntity.getDryFruits())
-                .florals(aromasOutputDTO.getFlorals() != null ? aromasOutputDTO.getFlorals() : aromasEntity.getFlorals())
+                .tastingData(aromasOutputDTO.getTastingData() != null ? aromasOutputDTO.getTastingData() :
+                        aromasEntity.getTastingData())
+                .wineTasted(aromasOutputDTO.getWineTasted() != null ? aromasOutputDTO.getWineTasted() :
+                        aromasEntity.getWineTasted())
+                .fruity(aromasOutputDTO.getFruity() != null ? aromasOutputDTO.getFruity() : EnumConverter
+                        .toString(aromasEntity.getFruity()))
+                .dryFruits(aromasOutputDTO.getDryFruits() != null ? aromasOutputDTO.getDryFruits() : EnumConverter
+                        .toString(aromasEntity.getDryFruits()))
+                .florals(aromasOutputDTO.getFlorals() != null ? aromasOutputDTO.getFlorals() : EnumConverter
+                        .toString(aromasEntity.getFlorals()))
                 .vegetablesAndHerbs(aromasOutputDTO.getVegetablesAndHerbs() != null ? aromasOutputDTO.getVegetablesAndHerbs() :
-                        aromasEntity.getVegetablesAndHerbs())
-                .minerals(aromasOutputDTO.getMinerals() != null ? aromasOutputDTO.getMinerals() : aromasEntity.getMinerals())
-                .spices(aromasOutputDTO.getSpices() != null ? aromasOutputDTO.getSpices() : aromasEntity.getSpices())
-                .animals(aromasOutputDTO.getAnimals() != null ? aromasOutputDTO.getAnimals() : aromasEntity.getAnimals())
-                .empireumatics(aromasOutputDTO.getEmpireumatics() != null ? aromasOutputDTO.getEmpireumatics() : aromasEntity.getEmpireumatics())
-                .wood(aromasOutputDTO.getWood() != null ? aromasOutputDTO.getWood() : aromasEntity.getWood())
-                .chemicals(aromasOutputDTO.getChemicals() != null ? aromasOutputDTO.getChemicals() : aromasEntity.getChemicals())
-                .lacteal(aromasOutputDTO.getLacteal() != null ? aromasOutputDTO.getLacteal() : aromasEntity.getLacteal())
-                .sweets(aromasOutputDTO.getSweets() != null ? aromasOutputDTO.getSweets() : aromasEntity.getSweets())
+                        EnumConverter.toString(aromasEntity.getVegetablesAndHerbs()))
+                .minerals(aromasOutputDTO.getMinerals() != null ? aromasOutputDTO.getMinerals() : EnumConverter
+                        .toString(aromasEntity.getMinerals()))
+                .spices(aromasOutputDTO.getSpices() != null ? aromasOutputDTO.getSpices() : EnumConverter.toString(
+                        aromasEntity.getSpices()))
+                .animals(aromasOutputDTO.getAnimals() != null ? aromasOutputDTO.getAnimals() : EnumConverter.toString(
+                        aromasEntity.getAnimals()))
+                .empireumatics(aromasOutputDTO.getEmpireumatics() != null ? aromasOutputDTO.getEmpireumatics() :
+                        EnumConverter.toString(aromasEntity.getEmpireumatics()))
+                .wood(aromasOutputDTO.getWood() != null ? aromasOutputDTO.getWood() : EnumConverter.toString(
+                        aromasEntity.getWood()))
+                .chemicals(aromasOutputDTO.getChemicals() != null ? aromasOutputDTO.getChemicals() : EnumConverter.toString(
+                        aromasEntity.getChemicals()))
+                .lacteal(aromasOutputDTO.getLacteal() != null ? aromasOutputDTO.getLacteal() : EnumConverter.toString(
+                        aromasEntity.getLacteal()))
+                .sweets(aromasOutputDTO.getSweets() != null ? aromasOutputDTO.getSweets() : EnumConverter.toString(
+                        aromasEntity.getSweets()))
                 .build();
     }
 }

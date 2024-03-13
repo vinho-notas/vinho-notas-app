@@ -208,7 +208,7 @@ class UserServiceImplTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
                 .person(createPersonOutputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
                 .build();

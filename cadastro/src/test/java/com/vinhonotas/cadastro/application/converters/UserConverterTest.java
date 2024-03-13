@@ -74,7 +74,7 @@ class UserConverterTest {
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.getEmail());
         assertEquals(userEntity.getPassword(), userOutput.getPassword());
     }
@@ -86,7 +86,7 @@ class UserConverterTest {
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.get(0).getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.get(0).getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.get(0).getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.get(0).getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.get(0).getEmail());
         assertEquals(userEntity.getPassword(), userOutput.get(0).getPassword());
     }
@@ -101,7 +101,7 @@ class UserConverterTest {
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.getEmail());
         assertEquals("456789", userOutput.getPassword());
     }
@@ -129,7 +129,7 @@ class UserConverterTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
                 .person(Mockito.mock(PersonOutputDTO.class))
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
                 .build();

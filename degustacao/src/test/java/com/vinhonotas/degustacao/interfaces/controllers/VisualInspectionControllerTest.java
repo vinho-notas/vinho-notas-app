@@ -4,16 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.degustacao.application.converters.VisualInspectionConverter;
 import com.vinhonotas.degustacao.application.services.VisualInspectionService;
 import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.VisualInspectionOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -192,14 +191,14 @@ class VisualInspectionControllerTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .clarity(EnumClarityType.VERY_CLEAR)
-                .brightness(EnumBrightnessType.VERY_BRIGHT)
-                .viscosity(EnumViscosityType.SLIPPERY)
-                .colorRed(EnumRedColorType.RUBY)
-                .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
-                .colorRose(EnumRoseColorType.BROWN)
-                .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
+                .clarity(EnumClarityType.VERY_CLEAR.getCode())
+                .brightness(EnumBrightnessType.VERY_BRIGHT.getCode())
+                .viscosity(EnumViscosityType.SLIPPERY.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.STRAW_YELLOW.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .tastingCard(TastingCardOutputDTO.builder().build())
                 .build();
     }
 

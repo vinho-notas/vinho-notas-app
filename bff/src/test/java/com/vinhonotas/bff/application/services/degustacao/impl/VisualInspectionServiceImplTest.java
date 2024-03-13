@@ -198,13 +198,13 @@ class VisualInspectionServiceImplTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .clarity(EnumClarityType.VERY_CLEAR)
-                .brightness(EnumBrightnessType.VERY_BRIGHT)
-                .viscosity(EnumViscosityType.SLIPPERY)
-                .colorRed(EnumRedColorType.RUBY)
-                .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
-                .colorRose(EnumRoseColorType.BROWN)
-                .classification(EnumClassificationType.LITTLE)
+                .clarity(EnumClarityType.VERY_CLEAR.getCode())
+                .brightness(EnumBrightnessType.VERY_BRIGHT.getCode())
+                .viscosity(EnumViscosityType.SLIPPERY.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.STRAW_YELLOW.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

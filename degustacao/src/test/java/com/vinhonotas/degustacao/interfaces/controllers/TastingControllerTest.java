@@ -9,6 +9,7 @@ import com.vinhonotas.degustacao.domain.entities.TastingEntity;
 import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,8 +87,8 @@ class TastingControllerTest {
     @Test
     @DisplayName("Deve retornar uma lista com todas as degustações cadastradas")
     void testGetAllTasting() throws Exception {
-        when(tastingService.getAll()).thenReturn(List.of(entity));
-        when(tastingConverter.toOutputDTOList(List.of(entity))).thenReturn(List.of(outputDTO));
+        when(tastingService.getAll()).thenReturn(Set.of(entity));
+        when(tastingConverter.toOutputDTOList(Set.of(entity))).thenReturn(Set.of(outputDTO));
 
         mockMvc.perform(get("/api/v1/tasting")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -185,8 +186,8 @@ class TastingControllerTest {
         return TastingOutputDTO.builder()
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
-                .tastingCards(Set.of(Mockito.mock(TastingCardEntity.class)))
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
+                .tastingCards(Set.of(TastingCardOutputDTO.builder().build()))
                 .build();
     }
 

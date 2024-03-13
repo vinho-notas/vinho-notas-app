@@ -71,11 +71,11 @@ public class OlfactoryInspectionConverter {
                 .id(olfactoryInspectionEntity.getId())
                 .tastingData(olfactoryInspectionEntity.getTastingData())
                 .wineTasted(olfactoryInspectionEntity.getWineTasted())
-                .intensity(olfactoryInspectionEntity.getIntensity())
-                .persistence(olfactoryInspectionEntity.getPersistence())
-                .quality(olfactoryInspectionEntity.getQuality())
-                .aromas(olfactoryInspectionEntity.getAromas())
-                .classification(olfactoryInspectionEntity.getClassification())
+                .intensity(EnumConverter.toString(olfactoryInspectionEntity.getIntensity()))
+                .persistence(EnumConverter.toString(olfactoryInspectionEntity.getPersistence()))
+                .quality(EnumConverter.toString(olfactoryInspectionEntity.getQuality()))
+                .aromas(aromasConverter.toOutputDTO(olfactoryInspectionEntity.getAromas()))
+                .classification(EnumConverter.toString(olfactoryInspectionEntity.getClassification()))
                 .build();
     }
 
@@ -95,15 +95,15 @@ public class OlfactoryInspectionConverter {
                 .wineTasted(olfactoryInspectionOutputDTO.getWineTasted() != null ? olfactoryInspectionOutputDTO
                         .getWineTasted() : olfactoryInspectionEntity.getWineTasted())
                 .intensity(olfactoryInspectionOutputDTO.getIntensity() != null ? olfactoryInspectionOutputDTO
-                        .getIntensity() : olfactoryInspectionEntity.getIntensity())
+                        .getIntensity() : EnumConverter.toString(olfactoryInspectionEntity.getIntensity()))
                 .persistence(olfactoryInspectionOutputDTO.getPersistence() != null ? olfactoryInspectionOutputDTO
-                        .getPersistence() : olfactoryInspectionEntity.getPersistence())
+                        .getPersistence() : EnumConverter.toString(olfactoryInspectionEntity.getPersistence()))
                 .quality(olfactoryInspectionOutputDTO.getQuality() != null ? olfactoryInspectionOutputDTO.getQuality() :
-                        olfactoryInspectionEntity.getQuality())
+                        EnumConverter.toString(olfactoryInspectionEntity.getQuality()))
                 .aromas(olfactoryInspectionOutputDTO.getAromas() != null ? olfactoryInspectionOutputDTO.getAromas() :
-                        olfactoryInspectionEntity.getAromas())
+                        aromasConverter.toOutputDTO(olfactoryInspectionEntity.getAromas()))
                 .classification(olfactoryInspectionOutputDTO.getClassification() != null ? olfactoryInspectionOutputDTO
-                        .getClassification() : olfactoryInspectionEntity.getClassification())
+                        .getClassification() : EnumConverter.toString(olfactoryInspectionEntity.getClassification()))
                 .build();
     }
 

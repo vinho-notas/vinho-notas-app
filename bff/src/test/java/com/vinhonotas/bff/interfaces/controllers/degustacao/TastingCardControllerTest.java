@@ -184,7 +184,7 @@ class TastingCardControllerTest {
                 .olfactoryInspection(OlfactoryInspectionOutputDTO.builder().build())
                 .gustatoryInspection(GustatoryInspectionOutputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.name())
                 .build();
     }
 

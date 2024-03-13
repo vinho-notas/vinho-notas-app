@@ -1,7 +1,5 @@
 package com.vinhonotas.bff.interfaces.dtos.outputs.vinho;
 
-import com.vinhonotas.bff.domain.enums.EnumWineClassification;
-import com.vinhonotas.bff.domain.enums.EnumWineType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,14 +16,14 @@ public class WineOutputDTO {
     private BigDecimal price;
     private String purchaseLocation;
     private LocalDate purchaseDate;
-    private EnumWineType wineType;
-    private EnumWineClassification wineClassification;
-    private double alcoholContent;
-    private int volumeMl;
+    private String wineType;
+    private String wineClassification;
+    private String alcoholContent;
+    private String volumeMl;
     private String grape;
     private String winery;
-    private double serviceTemperature;
-    private int harvest;
+    private String serviceTemperature;
+    private String harvest;
     private String country;
     private String guardTime;
     private String region;

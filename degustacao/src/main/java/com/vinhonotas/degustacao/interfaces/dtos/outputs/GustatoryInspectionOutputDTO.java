@@ -1,7 +1,5 @@
 package com.vinhonotas.degustacao.interfaces.dtos.outputs;
 
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
-import com.vinhonotas.degustacao.domain.enums.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,15 +13,15 @@ public class GustatoryInspectionOutputDTO {
     private UUID id;
     private LocalDate tastingData;
     private String wineTasted;
-    private EnumBodyType body;
-    private EnumSweetnessType sweetness;
-    private EnumTanninType tannin;
-    private EnumClassificationType classification;
-    private EnumAcidityType acidity;
-    private EnumAlcoholType alcohol;
-    private EnumPersistenceType persistence;
-    private EnumMaturityType maturity;
-    private EnumTypicalityType typicality;
-    private TastingCardEntity tastingCard;
+    private String body;
+    private String sweetness;
+    private String tannin;
+    private String classification;
+    private String acidity;
+    private String alcohol;
+    private String persistence;
+    private String maturity;
+    private String typicality;
+    private TastingCardOutputDTO tastingCard;
 
 }
