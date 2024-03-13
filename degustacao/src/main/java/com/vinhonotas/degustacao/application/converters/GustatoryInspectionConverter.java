@@ -7,6 +7,7 @@ import com.vinhonotas.degustacao.interfaces.dtos.outputs.GustatoryInspectionOutp
 import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,10 @@ public class GustatoryInspectionConverter {
                 .persistence(EnumConverter.fromString(gustatoryInspectionInputDTO.getPersistence(), EnumPersistenceType.class))
                 .maturity(EnumConverter.fromString(gustatoryInspectionInputDTO.getMaturity(), EnumMaturityType.class))
                 .typicality(EnumConverter.fromString(gustatoryInspectionInputDTO.getTypicality(), EnumTypicalityType.class))
+                .userreg(gustatoryInspectionInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(gustatoryInspectionInputDTO.getUseralt())
+                .dthalt(gustatoryInspectionInputDTO.getDthalt())
                 .build();
     }
 
@@ -56,6 +61,13 @@ public class GustatoryInspectionConverter {
                         gustatoryInspectionInputDTO.getMaturity(), EnumMaturityType.class) : gustatoryInspectionEntity.getMaturity())
                 .typicality(gustatoryInspectionInputDTO.getTypicality() != null ? EnumConverter.fromString(
                         gustatoryInspectionInputDTO.getTypicality(), EnumTypicalityType.class) : gustatoryInspectionEntity.getTypicality())
+                .userreg(gustatoryInspectionInputDTO.getUserreg() != null ? gustatoryInspectionInputDTO.getUserreg() :
+                        gustatoryInspectionEntity.getUserreg())
+                .dthreg(gustatoryInspectionInputDTO.getDthreg() != null ? gustatoryInspectionInputDTO.getDthreg() :
+                        gustatoryInspectionEntity.getDthreg())
+                .useralt(gustatoryInspectionInputDTO.getUseralt() != null ? gustatoryInspectionInputDTO.getUseralt() :
+                        gustatoryInspectionEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
@@ -101,7 +113,6 @@ public class GustatoryInspectionConverter {
                 .classification(gustatoryInspectionOutputDTO.getClassification() != null ? gustatoryInspectionOutputDTO
                         .getClassification() : gustatoryInspectionEntity.getClassification())
                 .acidity(gustatoryInspectionOutputDTO.getAcidity() != null ? gustatoryInspectionOutputDTO.getAcidity() :
-
                         gustatoryInspectionEntity.getAcidity())
                 .alcohol(gustatoryInspectionOutputDTO.getAlcohol() != null ? gustatoryInspectionOutputDTO.getAlcohol() :
                         gustatoryInspectionEntity.getAlcohol())
