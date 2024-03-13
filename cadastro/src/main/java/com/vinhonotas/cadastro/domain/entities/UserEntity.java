@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,14 +22,31 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
     private PersonEntity person;
+
     @Column(name = "enumprofile")
     @Enumerated(EnumType.STRING)
     private EnumProfile enumProfile;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
+
 }

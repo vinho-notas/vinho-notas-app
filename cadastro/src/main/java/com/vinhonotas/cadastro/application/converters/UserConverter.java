@@ -8,6 +8,7 @@ import com.vinhonotas.cadastro.utils.EnumConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,17 +24,25 @@ public class UserConverter {
                 .enumProfile(EnumConverter.fromString(userInputDTO.getEnumProfile(), EnumProfile.class))
                 .email(userInputDTO.getEmail())
                 .password(userInputDTO.getPassword())
+                .userreg(userInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(userInputDTO.getUseralt())
+                .dthalt(userInputDTO.getDthalt())
                 .build();
     }
 
     public UserEntity converteToEntityUpdate(UserEntity entity, UUID id, UserInputDTO userInputDTO) {
         return UserEntity.builder()
                 .id(id)
-                .person(userInputDTO.getPerson() != null ? personConverter.convertToEntity(userInputDTO.getPerson()) : entity.getPerson())
+                .person(userInputDTO.getPerson() != null ? personConverter.convertToEntity(userInputDTO.getPerson()) :
+                        entity.getPerson())
                 .enumProfile(userInputDTO.getEnumProfile() != null ? EnumConverter.fromString(userInputDTO
                         .getEnumProfile(), EnumProfile.class) : entity.getEnumProfile())
                 .email(userInputDTO.getEmail() != null ? userInputDTO.getEmail() : entity.getEmail())
                 .password(userInputDTO.getPassword() != null ? userInputDTO.getPassword() : entity.getPassword())
+                .dthreg(userInputDTO.getDthreg() != null ? userInputDTO.getDthreg() : entity.getDthreg())
+                .useralt(userInputDTO.getUseralt() != null ? userInputDTO.getUseralt() : entity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
@@ -63,4 +72,5 @@ public class UserConverter {
                 .map(this::convertToOutputDTO)
                 .toList();
     }
+
 }
