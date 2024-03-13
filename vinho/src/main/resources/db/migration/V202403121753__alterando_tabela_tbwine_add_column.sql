@@ -1,5 +1,4 @@
--- alter table vinho.tbwine
--- add column dthreg timestamp default CURRENT_TIMESTAMP not null,
--- add column userreg varchar(30) null,
--- add column dthalt timestamp null,
--- add column useralt varchar(30) null;
+ALTER TABLE vinho.tbwine ADD COLUMN dthreg TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE vinho.tbwine ADD COLUMN userreg VARCHAR(30) null;
+ALTER TABLE vinho.tbwine ADD COLUMN dthalt TIMESTAMP null;
+ALTER TABLE vinho.tbwine ADD COLUMN useralt VARCHAR(30) null;
