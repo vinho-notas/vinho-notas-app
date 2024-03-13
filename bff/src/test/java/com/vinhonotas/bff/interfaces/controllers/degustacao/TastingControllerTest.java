@@ -207,7 +207,7 @@ class TastingControllerTest {
         return TastingOutputDTO.builder()
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
                 .tastingCards(Set.of(createTastingCardOutputDTO()))
                 .build();
     }
@@ -225,7 +225,7 @@ class TastingControllerTest {
                 .olfactoryInspection(OlfactoryInspectionOutputDTO.builder().build())
                 .gustatoryInspection(GustatoryInspectionOutputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.name())
                 .build();
     }
 

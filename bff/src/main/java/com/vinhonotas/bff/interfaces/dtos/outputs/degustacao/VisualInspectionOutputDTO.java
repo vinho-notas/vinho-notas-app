@@ -1,6 +1,5 @@
 package com.vinhonotas.bff.interfaces.dtos.outputs.degustacao;
 
-import com.vinhonotas.bff.domain.enums.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,13 +13,13 @@ public class VisualInspectionOutputDTO {
     private UUID id;
     private LocalDate tastingData;
     private String wineTasted;
-    private EnumClarityType clarity;
-    private EnumBrightnessType brightness;
-    private EnumViscosityType viscosity;
-    private EnumRedColorType colorRed;
-    private EnumWhiteColorType colorWhite;
-    private EnumRoseColorType colorRose;
-    private EnumClassificationType classification;
+    private String clarity;
+    private String brightness;
+    private String viscosity;
+    private String colorRed;
+    private String colorWhite;
+    private String colorRose;
+    private String classification;
     private TastingCardOutputDTO tastingCard;
 
 }

@@ -14,7 +14,7 @@ public class TastingOutputDTO {
 
     private UUID id;
     private LocalDate tastingData;
-    private EnumTastingType tastingType;
+    private String tastingType;
     private Set<TastingCardOutputDTO> tastingCards;
 
 }

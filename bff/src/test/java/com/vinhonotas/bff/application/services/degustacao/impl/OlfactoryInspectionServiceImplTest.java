@@ -208,11 +208,11 @@ class OlfactoryInspectionServiceImplTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
                 .aromas(Mockito.mock(AromasOutputDTO.class))
-                .classification(EnumClassificationType.LITTLE)
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 
