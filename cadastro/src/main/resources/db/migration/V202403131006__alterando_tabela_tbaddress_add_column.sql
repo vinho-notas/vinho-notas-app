@@ -1,0 +1,4 @@
+ALTER TABLE cadastro.tbaddress ADD COLUMN dthreg TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL;
+ALTER TABLE cadastro.tbaddress ADD COLUMN userreg VARCHAR(30) NULL;
+ALTER TABLE cadastro.tbaddress ADD COLUMN dthalt TIMESTAMP NULL;
+ALTER TABLE cadastro.tbaddress ADD COLUMN useralt VARCHAR(30) NULL ;

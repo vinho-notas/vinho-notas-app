@@ -3,6 +3,8 @@ package com.vinhonotas.bff.interfaces.dtos.inputs.avaliacao;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class PointScaleInputDTO {
@@ -14,5 +16,9 @@ public class PointScaleInputDTO {
     private String whatFlavors;
     private String whatOpinion;
     private String pointScale;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

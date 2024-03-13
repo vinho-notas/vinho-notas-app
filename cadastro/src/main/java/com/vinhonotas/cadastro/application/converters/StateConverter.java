@@ -6,6 +6,7 @@ import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,10 @@ public class StateConverter {
                 .stateName(stateInputDTO.getStateName())
                 .uf(stateInputDTO.getUf())
                 .country(countryConverter.convertToEntity(stateInputDTO.getCountry()))
+                .userreg(stateInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(stateInputDTO.getUseralt())
+                .dthalt(stateInputDTO.getDthalt())
                 .build();
     }
 
@@ -30,6 +35,10 @@ public class StateConverter {
                 .uf(stateInputDTO.getUf() != null ? stateInputDTO.getUf() : entity.getUf())
                 .country(stateInputDTO.getCountry() != null ?
                         countryConverter.convertToEntity(stateInputDTO.getCountry()) : entity.getCountry())
+                .userreg(stateInputDTO.getUserreg() != null ? stateInputDTO.getUserreg() : entity.getUserreg())
+                .dthreg(stateInputDTO.getDthreg() != null ? stateInputDTO.getDthreg() : entity.getDthreg())
+                .useralt(stateInputDTO.getUseralt() != null ? stateInputDTO.getUseralt() : entity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

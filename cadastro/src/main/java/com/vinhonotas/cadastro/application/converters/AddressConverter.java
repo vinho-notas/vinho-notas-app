@@ -6,6 +6,7 @@ import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,21 +28,35 @@ public class AddressConverter {
                 .uf(stateConverter.convertToEntity(addressInputDTO.getUf()))
                 .country(countryConverter.convertToEntity(addressInputDTO.getCountry()))
                 .phoneNumber(addressInputDTO.getPhoneNumber())
+                .userreg(addressInputDTO.getUserreg())
+                .dthreg(addressInputDTO.getDthreg())
+                .useralt(addressInputDTO.getUseralt())
+                .dthalt(addressInputDTO.getDthalt())
                 .build();
     }
 
     public AddressEntity convertToEntityUpdate(AddressEntity entity, UUID id, AddressInputDTO addressInputDTO) {
         return AddressEntity.builder()
                 .id(id)
-                .addressDescription(addressInputDTO.getAddressDescription() != null ? addressInputDTO.getAddressDescription() : entity.getAddressDescription())
-                .addressNumber(addressInputDTO.getAddressNumber() != 0 ? addressInputDTO.getAddressNumber() : entity.getAddressNumber())
-                .complement(addressInputDTO.getComplement() != null ? addressInputDTO.getComplement() : entity.getComplement())
+                .addressDescription(addressInputDTO.getAddressDescription() != null ? addressInputDTO
+                        .getAddressDescription() : entity.getAddressDescription())
+                .addressNumber(addressInputDTO.getAddressNumber() != 0 ? addressInputDTO.getAddressNumber() : entity
+                        .getAddressNumber())
+                .complement(addressInputDTO.getComplement() != null ? addressInputDTO.getComplement() : entity
+                        .getComplement())
                 .district(addressInputDTO.getDistrict() != null ? addressInputDTO.getDistrict() : entity.getDistrict())
                 .zipCode(addressInputDTO.getZipCode() != null ? addressInputDTO.getZipCode() : entity.getZipCode())
                 .city(addressInputDTO.getCity() != null ? addressInputDTO.getCity() : entity.getCity())
-                .uf(addressInputDTO.getUf() != null ? stateConverter.convertToEntity(addressInputDTO.getUf()) : entity.getUf())
-                .country(addressInputDTO.getCountry() != null ? countryConverter.convertToEntity(addressInputDTO.getCountry()) : entity.getCountry())
-                .phoneNumber(addressInputDTO.getPhoneNumber() != null ? addressInputDTO.getPhoneNumber() : entity.getPhoneNumber())
+                .uf(addressInputDTO.getUf() != null ? stateConverter.convertToEntity(addressInputDTO.getUf()) : entity
+                        .getUf())
+                .country(addressInputDTO.getCountry() != null ? countryConverter.convertToEntity(addressInputDTO
+                        .getCountry()) : entity.getCountry())
+                .phoneNumber(addressInputDTO.getPhoneNumber() != null ? addressInputDTO.getPhoneNumber() : entity
+                        .getPhoneNumber())
+                .userreg(addressInputDTO.getUserreg() != null ? addressInputDTO.getUserreg() : entity.getUserreg())
+                .dthreg(addressInputDTO.getDthreg() != null ? addressInputDTO.getDthreg() : entity.getDthreg())
+                .useralt(addressInputDTO.getUseralt() != null ? addressInputDTO.getUseralt() : entity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

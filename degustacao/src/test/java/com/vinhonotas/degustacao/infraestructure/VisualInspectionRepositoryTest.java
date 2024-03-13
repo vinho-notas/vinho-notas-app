@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:testdb",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
 })
 class VisualInspectionRepositoryTest {
 
@@ -117,6 +120,10 @@ class VisualInspectionRepositoryTest {
                 .viscosity(EnumViscosityType.LITTLE_VISCOUS)
                 .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
                 .classification(EnumClassificationType.GOOD)
+                .userreg("userreg")
+                .dthreg(LocalDateTime.now())
+                .useralt("userupd")
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
@@ -130,6 +137,10 @@ class VisualInspectionRepositoryTest {
                 .viscosity(EnumViscosityType.SLIPPERY)
                 .colorRed(EnumRedColorType.VIOLET)
                 .classification(EnumClassificationType.EXCELLENT)
+                .userreg("userreg")
+                .dthreg(LocalDateTime.now())
+                .useralt("userupd")
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

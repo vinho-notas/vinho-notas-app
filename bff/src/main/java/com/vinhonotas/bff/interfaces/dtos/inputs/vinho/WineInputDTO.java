@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -27,5 +28,9 @@ public class WineInputDTO {
     private String region;
     private String maturation;
     private String harmonization;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

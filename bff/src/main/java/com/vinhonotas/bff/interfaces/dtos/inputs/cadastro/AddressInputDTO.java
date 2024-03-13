@@ -3,6 +3,8 @@ package com.vinhonotas.bff.interfaces.dtos.inputs.cadastro;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class AddressInputDTO {
@@ -16,5 +18,9 @@ public class AddressInputDTO {
     private StateInputDTO uf;
     private CountryInputDTO country;
     private String phoneNumber;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

@@ -11,6 +11,7 @@ import com.vinhonotas.degustacao.utils.EnumConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,10 @@ public class OlfactoryInspectionConverter {
                 .quality(EnumConverter.fromString(olfactoryInspectionInputDTO.getQuality(), EnumQualityType.class))
                 .aromas(aromasConverter.toEntity(olfactoryInspectionInputDTO.getAromas()))
                 .classification(EnumConverter.fromString(olfactoryInspectionInputDTO.getClassification(), EnumClassificationType.class))
+                .userreg(olfactoryInspectionInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(olfactoryInspectionInputDTO.getUseralt())
+                .dthalt(olfactoryInspectionInputDTO.getDthalt())
                 .build();
     }
 
@@ -51,6 +56,13 @@ public class OlfactoryInspectionConverter {
                 .classification(olfactoryInspectionInputDTO.getClassification() != null ? EnumConverter.fromString(
                         olfactoryInspectionInputDTO.getClassification(), EnumClassificationType.class) :
                         olfactoryInspectionEntity.getClassification())
+                .userreg(olfactoryInspectionEntity.getUserreg() != null ? olfactoryInspectionEntity.getUserreg() :
+                        olfactoryInspectionInputDTO.getUserreg())
+                .dthreg(olfactoryInspectionEntity.getDthreg() != null ? olfactoryInspectionEntity.getDthreg() :
+                        olfactoryInspectionInputDTO.getDthreg())
+                .useralt(olfactoryInspectionInputDTO.getUseralt() != null ? olfactoryInspectionInputDTO.getUseralt() :
+                        olfactoryInspectionEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

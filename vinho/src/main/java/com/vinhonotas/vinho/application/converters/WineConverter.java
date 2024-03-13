@@ -8,6 +8,7 @@ import com.vinhonotas.vinho.interfaces.dtos.outputs.WineOutputDTO;
 import com.vinhonotas.vinho.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +34,10 @@ public class WineConverter {
                 .region(wineInputDTO.getRegion())
                 .maturation(wineInputDTO.getMaturation())
                 .harmonization(wineInputDTO.getHarmonization())
+                .userreg(wineInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(wineInputDTO.getUseralt())
+                .dthalt(wineInputDTO.getDthalt())
                 .build();
     }
 
@@ -56,6 +61,10 @@ public class WineConverter {
                 .region(wineInputDTO.getRegion() != null ? wineInputDTO.getRegion() : wineSaved.getRegion())
                 .maturation(wineInputDTO.getMaturation() != null ? wineInputDTO.getMaturation() : wineSaved.getMaturation())
                 .harmonization(wineInputDTO.getHarmonization() != null ? wineInputDTO.getHarmonization() : wineSaved.getHarmonization())
+                .userreg(wineInputDTO.getUserreg() != null ? wineInputDTO.getUserreg() : wineSaved.getUserreg())
+                .dthreg(wineInputDTO.getDthreg() != null ? wineInputDTO.getDthreg() : wineSaved.getDthreg())
+                .useralt(wineInputDTO.getUseralt() != null ? wineInputDTO.getUseralt() : wineSaved.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

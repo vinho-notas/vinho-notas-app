@@ -6,6 +6,7 @@ import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,10 @@ public class PersonConverter {
                 .document(personInputDTO.getDocument())
                 .birthDate(personInputDTO.getBirthDate())
                 .address(addressConverter.convertToEntity(personInputDTO.getAddress()))
+                .userreg(personInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(personInputDTO.getUseralt())
+                .dthalt(personInputDTO.getDthalt())
                 .build();
     }
 
@@ -30,7 +35,12 @@ public class PersonConverter {
                 .name(personInputDTO.getName() != null ? personInputDTO.getName() : entity.getName())
                 .document(personInputDTO.getDocument() != null ? personInputDTO.getDocument() : entity.getDocument())
                 .birthDate(personInputDTO.getBirthDate() != null ? personInputDTO.getBirthDate() : entity.getBirthDate())
-                .address(personInputDTO.getAddress() != null ? addressConverter.convertToEntity(personInputDTO.getAddress()) : entity.getAddress())
+                .address(personInputDTO.getAddress() != null ? addressConverter.convertToEntity(personInputDTO
+                        .getAddress()) : entity.getAddress())
+                .userreg(personInputDTO.getUserreg() != null ? personInputDTO.getUserreg() : entity.getUserreg())
+                .dthreg(personInputDTO.getDthreg() != null ? personInputDTO.getDthreg() : entity.getDthreg())
+                .useralt(personInputDTO.getUseralt() != null ? personInputDTO.getUseralt() : entity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

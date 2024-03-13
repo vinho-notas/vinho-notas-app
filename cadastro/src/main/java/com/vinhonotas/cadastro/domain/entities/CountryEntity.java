@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,8 +21,23 @@ public class CountryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @Column(name = "countryname")
     private String countryName;
+
     @Column(name = "continentname")
     private String continentName;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
+
 }

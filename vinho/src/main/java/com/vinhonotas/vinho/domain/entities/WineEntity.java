@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -77,5 +78,17 @@ public class WineEntity {
 
     @Column(name = "harmonization")
     private String harmonization;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
 
 }
