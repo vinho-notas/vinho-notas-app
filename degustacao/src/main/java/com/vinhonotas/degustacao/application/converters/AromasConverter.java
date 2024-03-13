@@ -7,6 +7,7 @@ import com.vinhonotas.degustacao.interfaces.dtos.outputs.AromasOutputDTO;
 import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,10 @@ public class AromasConverter {
                 .chemicals(EnumConverter.fromString(aromasInputDTO.getChemicals(), EnumChemicalsAndEtherealType.class))
                 .lacteal(EnumConverter.fromString(aromasInputDTO.getLacteal(), EnumLactealType.class))
                 .sweets(EnumConverter.fromString(aromasInputDTO.getSweets(), EnumSweetsType.class))
+                .userreg(aromasInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(aromasInputDTO.getUseralt())
+                .dthalt(aromasInputDTO.getDthalt())
                 .build();
     }
 
@@ -63,6 +68,10 @@ public class AromasConverter {
                         EnumLactealType.class) : aromasEntity.getLacteal())
                 .sweets(aromasInputDTO.getSweets() != null ? EnumConverter.fromString(aromasInputDTO.getSweets(),
                         EnumSweetsType.class) : aromasEntity.getSweets())
+                .userreg(aromasInputDTO.getUserreg() != null ? aromasInputDTO.getUserreg() : aromasEntity.getUserreg())
+                .dthreg(aromasInputDTO.getDthreg() != null ? aromasInputDTO.getDthreg() : aromasEntity.getDthreg())
+                .useralt(aromasInputDTO.getUseralt() != null ? aromasInputDTO.getUseralt() : aromasEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
