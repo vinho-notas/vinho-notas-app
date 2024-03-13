@@ -8,6 +8,7 @@ import com.vinhonotas.degustacao.utils.EnumConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -34,6 +35,10 @@ public class TastingCardConverter {
                 .gustatoryInspection(gustatoryInspectionConverter.toEntity(tastingCardInputDTO.getGustatoryInspection()))
                 .opinion(tastingCardInputDTO.getOpinion())
                 .pointScale(EnumConverter.fromString(tastingCardInputDTO.getPointScale(), EnumPointScale.class))
+                .userreg(tastingCardInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(tastingCardInputDTO.getUseralt())
+                .dthalt(tastingCardInputDTO.getDthalt())
                 .build();
     }
 
@@ -55,6 +60,10 @@ public class TastingCardConverter {
                 .opinion(tastingCardInputDTO.getOpinion() != null ? tastingCardInputDTO.getOpinion() : tastingCardEntity.getOpinion())
                 .pointScale(tastingCardInputDTO.getPointScale() != null ? EnumConverter.fromString(tastingCardInputDTO
                         .getPointScale(), EnumPointScale.class) : tastingCardEntity.getPointScale())
+                .userreg(tastingCardInputDTO.getUserreg() != null ? tastingCardInputDTO.getUserreg() : tastingCardEntity.getUserreg())
+                .dthreg(tastingCardInputDTO.getDthreg() != null ? tastingCardInputDTO.getDthreg() : tastingCardEntity.getDthreg())
+                .useralt(tastingCardInputDTO.getUseralt() != null ? tastingCardInputDTO.getUseralt() : tastingCardEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -20,5 +21,9 @@ public class TastingCardInputDTO {
     private GustatoryInspectionInputDTO gustatoryInspection;
     private String opinion;
     private String pointScale;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -63,5 +64,17 @@ public class TastingCardEntity {
     @ManyToOne
     @JoinColumn(name = "tasting_id", insertable = false, updatable = false)
     private TastingEntity tasting;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
 
 }
