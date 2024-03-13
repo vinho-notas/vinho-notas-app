@@ -130,7 +130,7 @@ class PointScaleControllerTest {
     @Test
     @DisplayName("Deve atualizar uma avaliação de vinho pelo id")
     void testUpdatePointScale() throws Exception {
-        pointScaleOutputDTO.setPointScale(EnumPointScale.NOTRECOMMENDED);
+        pointScaleOutputDTO.setPointScale(EnumPointScale.NOTRECOMMENDED.getCode());
 
         when(pointScaleService.update(UUID.fromString("ea1cd995-e8d4-4cb7-b446-ca1a233aacba"), pointScaleInputDTO)).thenReturn(pointScaleEntity);
         when(pointScaleConverter.toOutputDTO(pointScaleEntity)).thenReturn(pointScaleOutputDTO);
@@ -143,7 +143,7 @@ class PointScaleControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("ea1cd995-e8d4-4cb7-b446-ca1a233aacba"))
-                .andExpect(jsonPath("$.pointScale").value(EnumPointScale.NOTRECOMMENDED.toString()));
+                .andExpect(jsonPath("$.pointScale").value(EnumPointScale.NOTRECOMMENDED.getCode()));
     }
 
     @Test
@@ -203,7 +203,7 @@ class PointScaleControllerTest {
                 .whatAromas("Aroma de pimentão vermelho maduro.")
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
-                .pointScale(EnumPointScale.OUTSTANDING)
+                .pointScale(EnumPointScale.OUTSTANDING.getCode())
                 .build();
     }
 

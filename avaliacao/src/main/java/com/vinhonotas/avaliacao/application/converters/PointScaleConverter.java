@@ -57,7 +57,7 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleEntity.getWhatAromas())
                 .whatFlavors(pointScaleEntity.getWhatFlavors())
                 .whatOpinion(pointScaleEntity.getWhatOpinion())
-                .pointScale(pointScaleEntity.getPointScale())
+                .pointScale(EnumConverter.toString(pointScaleEntity.getPointScale()))
                 .build();
     }
 
@@ -76,7 +76,8 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleEntity.getWhatAromas() != null ? pointScaleEntity.getWhatAromas() : pointScaleOutputDTO.getWhatAromas())
                 .whatFlavors(pointScaleEntity.getWhatFlavors() != null ? pointScaleEntity.getWhatFlavors() : pointScaleOutputDTO.getWhatFlavors())
                 .whatOpinion(pointScaleEntity.getWhatOpinion() != null ? pointScaleEntity.getWhatOpinion() : pointScaleOutputDTO.getWhatOpinion())
-                .pointScale(pointScaleEntity.getPointScale() != null ? pointScaleEntity.getPointScale() : pointScaleOutputDTO.getPointScale())
+                .pointScale(pointScaleEntity.getPointScale() != null ? EnumConverter.toString(pointScaleEntity.getPointScale()) :
+                        pointScaleOutputDTO.getPointScale())
                 .build();
     }
 }
