@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +32,7 @@ public class TastingCardController {
 
     @Operation(summary = "Retorna uma lista com todas as fichas de degustação cadastradas")
     @GetMapping
-    public ResponseEntity<List<TastingCardOutputDTO>> getAllTastingCards() {
+    public ResponseEntity<Set<TastingCardOutputDTO>> getAllTastingCards() {
         return ResponseEntity.ok(tastingCardConverter.toOutputDTOList(tastingCardService.getAll()));
     }
 

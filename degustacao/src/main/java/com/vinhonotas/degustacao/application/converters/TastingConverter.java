@@ -9,8 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -27,7 +28,6 @@ private final TastingCardConverter tastingCardConverter;
                         .getTastingType(), EnumTastingType.class) : tastingEntity.getTastingType())
                 .tastingCards(tastingInputDTO.getTastingCards() != null ? tastingCardConverter
                         .toEntitySet(tastingInputDTO.getTastingCards()) : tastingEntity.getTastingCards())
-
                 .userreg(tastingInputDTO.getUserreg() != null ? tastingInputDTO.getUserreg() : tastingEntity.getUserreg())
                 .dthreg(tastingInputDTO.getDthreg() != null ? tastingInputDTO.getDthreg() : tastingEntity.getDthreg())
                 .useralt(tastingInputDTO.getUseralt() != null ? tastingInputDTO.getUseralt() : tastingEntity.getUseralt())
@@ -51,24 +51,27 @@ private final TastingCardConverter tastingCardConverter;
         return TastingOutputDTO.builder()
                 .id(tastingEntity.getId())
                 .tastingData(tastingEntity.getTastingData())
-                .tastingType(tastingEntity.getTastingType())
-                .tastingCards(tastingEntity.getTastingCards())
+                .tastingType(EnumConverter.toString(tastingEntity.getTastingType()))
+                .tastingCards(tastingCardConverter.toOutputDTOList(tastingEntity.getTastingCards()))
                 .build();
     }
 
-    public List<TastingOutputDTO> toOutputDTOList(List<TastingEntity> tastingEntityList) {
+    public Set<TastingOutputDTO> toOutputDTOList(Set<TastingEntity> tastingEntityList) {
         return tastingEntityList
                 .stream()
                 .map(this::toOutputDTO)
-                .toList();
+                .collect(Collectors.toSet());
     }
 
     public TastingOutputDTO toOutputDTOUpdate(TastingEntity tastingEntity, UUID id, TastingOutputDTO tastingOutputDTO) {
         return TastingOutputDTO.builder()
                 .id(id)
-                .tastingData(tastingOutputDTO.getTastingData() != null ? tastingOutputDTO.getTastingData() : tastingEntity.getTastingData())
-                .tastingType(tastingOutputDTO.getTastingType() != null ? tastingOutputDTO.getTastingType() : tastingEntity.getTastingType())
-                .tastingCards(tastingOutputDTO.getTastingCards() != null ? tastingOutputDTO.getTastingCards() : tastingEntity.getTastingCards())
+                .tastingData(tastingOutputDTO.getTastingData() != null ? tastingOutputDTO.getTastingData() :
+                        tastingEntity.getTastingData())
+                .tastingType(tastingOutputDTO.getTastingType() != null ? tastingOutputDTO.getTastingType() :
+                        EnumConverter.toString(tastingEntity.getTastingType()))
+                .tastingCards(tastingOutputDTO.getTastingCards() != null ? tastingOutputDTO.getTastingCards() :
+                        tastingCardConverter.toOutputDTOList(tastingEntity.getTastingCards()))
                 .build();
     }
 

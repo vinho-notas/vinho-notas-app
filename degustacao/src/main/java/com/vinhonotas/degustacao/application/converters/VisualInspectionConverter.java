@@ -68,13 +68,13 @@ public class VisualInspectionConverter {
                 .id(visualInspectionEntity.getId())
                 .tastingData(visualInspectionEntity.getTastingData())
                 .wineTasted(visualInspectionEntity.getWineTasted())
-                .clarity(visualInspectionEntity.getClarity())
-                .brightness(visualInspectionEntity.getBrightness())
-                .viscosity(visualInspectionEntity.getViscosity())
-                .colorRed(visualInspectionEntity.getColorRed())
-                .colorWhite(visualInspectionEntity.getColorWhite())
-                .colorRose(visualInspectionEntity.getColorRose())
-                .classification(visualInspectionEntity.getClassification())
+                .clarity(EnumConverter.toString(visualInspectionEntity.getClarity()))
+                .brightness(EnumConverter.toString(visualInspectionEntity.getBrightness()))
+                .viscosity(EnumConverter.toString(visualInspectionEntity.getViscosity()))
+                .colorRed(EnumConverter.toString(visualInspectionEntity.getColorRed()))
+                .colorWhite(EnumConverter.toString(visualInspectionEntity.getColorWhite()))
+                .colorRose(EnumConverter.toString(visualInspectionEntity.getColorRose()))
+                .classification(EnumConverter.toString(visualInspectionEntity.getClassification()))
                 .build();
     }
 
@@ -94,19 +94,19 @@ public class VisualInspectionConverter {
                 .wineTasted(visualInspectionOutputDTO.getWineTasted() != null ? visualInspectionOutputDTO.getWineTasted() :
                         visualInspectionEntity.getWineTasted())
                 .clarity(visualInspectionOutputDTO.getClarity() != null ? visualInspectionOutputDTO.getClarity() :
-                        visualInspectionEntity.getClarity())
+                        EnumConverter.toString(visualInspectionEntity.getClarity()))
                 .brightness(visualInspectionOutputDTO.getBrightness() != null ? visualInspectionOutputDTO.getBrightness() :
-                        visualInspectionEntity.getBrightness())
+                        EnumConverter.toString(visualInspectionEntity.getBrightness()))
                 .viscosity(visualInspectionOutputDTO.getViscosity() != null ? visualInspectionOutputDTO.getViscosity() :
-                        visualInspectionEntity.getViscosity())
+                        EnumConverter.toString(visualInspectionEntity.getViscosity()))
                 .colorRed(visualInspectionOutputDTO.getColorRed() != null ? visualInspectionOutputDTO.getColorRed() :
-                        visualInspectionEntity.getColorRed())
+                        EnumConverter.toString(visualInspectionEntity.getColorRed()))
                 .colorWhite(visualInspectionOutputDTO.getColorWhite() != null ? visualInspectionOutputDTO.getColorWhite() :
-                        visualInspectionEntity.getColorWhite())
+                        EnumConverter.toString(visualInspectionEntity.getColorWhite()))
                 .colorRose(visualInspectionOutputDTO.getColorRose() != null ? visualInspectionOutputDTO.getColorRose() :
-                        visualInspectionEntity.getColorRose())
+                        EnumConverter.toString(visualInspectionEntity.getColorRose()))
                 .classification(visualInspectionOutputDTO.getClassification() != null ? visualInspectionOutputDTO.getClassification() :
-                        visualInspectionEntity.getClassification())
+                        EnumConverter.toString(visualInspectionEntity.getClassification()))
                 .build();
     }
 

@@ -1,9 +1,9 @@
 package com.vinhonotas.degustacao.application.converters;
 
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.VisualInspectionOutputDTO;
 import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -78,13 +77,13 @@ class VisualInspectionConverterTest {
         assertEquals(visualInspectionEntity.getId(), dto.getId());
         assertEquals(visualInspectionEntity.getTastingData(), dto.getTastingData());
         assertEquals(visualInspectionEntity.getWineTasted(), dto.getWineTasted());
-        assertEquals(visualInspectionEntity.getClarity(), dto.getClarity());
-        assertEquals(visualInspectionEntity.getBrightness(), dto.getBrightness());
-        assertEquals(visualInspectionEntity.getViscosity(), dto.getViscosity());
-        assertEquals(visualInspectionEntity.getColorRed(), dto.getColorRed());
-        assertEquals(visualInspectionEntity.getColorWhite(), dto.getColorWhite());
-        assertEquals(visualInspectionEntity.getColorRose(), dto.getColorRose());
-        assertEquals(visualInspectionEntity.getClassification(), dto.getClassification());
+        assertEquals(visualInspectionEntity.getClarity().getCode(), dto.getClarity());
+        assertEquals(visualInspectionEntity.getBrightness().getCode(), dto.getBrightness());
+        assertEquals(visualInspectionEntity.getViscosity().getCode(), dto.getViscosity());
+        assertEquals(visualInspectionEntity.getColorRed().getCode(), dto.getColorRed());
+        assertEquals(visualInspectionEntity.getColorWhite().getCode(), dto.getColorWhite());
+        assertEquals(visualInspectionEntity.getColorRose().getCode(), dto.getColorRose());
+        assertEquals(visualInspectionEntity.getClassification().getCode(), dto.getClassification());
     }
 
     @Test
@@ -97,28 +96,28 @@ class VisualInspectionConverterTest {
         assertEquals(visualInspectionEntity.getId(), list.get(0).getId());
         assertEquals(visualInspectionEntity.getTastingData(), list.get(0).getTastingData());
         assertEquals(visualInspectionEntity.getWineTasted(), list.get(0).getWineTasted());
-        assertEquals(visualInspectionEntity.getClarity(), list.get(0).getClarity());
-        assertEquals(visualInspectionEntity.getBrightness(), list.get(0).getBrightness());
-        assertEquals(visualInspectionEntity.getViscosity(), list.get(0).getViscosity());
-        assertEquals(visualInspectionEntity.getColorRed(), list.get(0).getColorRed());
-        assertEquals(visualInspectionEntity.getColorWhite(), list.get(0).getColorWhite());
-        assertEquals(visualInspectionEntity.getColorRose(), list.get(0).getColorRose());
-        assertEquals(visualInspectionEntity.getClassification(), list.get(0).getClassification());
+        assertEquals(visualInspectionEntity.getClarity().getCode(), list.get(0).getClarity());
+        assertEquals(visualInspectionEntity.getBrightness().getCode(), list.get(0).getBrightness());
+        assertEquals(visualInspectionEntity.getViscosity().getCode(), list.get(0).getViscosity());
+        assertEquals(visualInspectionEntity.getColorRed().getCode(), list.get(0).getColorRed());
+        assertEquals(visualInspectionEntity.getColorWhite().getCode(), list.get(0).getColorWhite());
+        assertEquals(visualInspectionEntity.getColorRose().getCode(), list.get(0).getColorRose());
+        assertEquals(visualInspectionEntity.getClassification().getCode(), list.get(0).getClassification());
     }
 
     @Test
     @DisplayName("Deve converter em um DTO de saída para atualização")
     void testToOutputDTOUpdate() {
-        visualInspectionOutputDTO.setBrightness(EnumBrightnessType.OPAQUE);
-        visualInspectionOutputDTO.setViscosity(EnumViscosityType.VISCOUS);
+        visualInspectionOutputDTO.setBrightness(EnumBrightnessType.OPAQUE.getCode());
+        visualInspectionOutputDTO.setViscosity(EnumViscosityType.VISCOUS.getCode());
 
         VisualInspectionOutputDTO dto = assertDoesNotThrow(() -> visualInspectionConverter.toOutputDTOUpdate(visualInspectionEntity,
                 visualInspectionEntity.getId(), visualInspectionOutputDTO));
 
         assertNotNull(dto);
         assertEquals(visualInspectionEntity.getId(), dto.getId());
-        assertEquals(EnumBrightnessType.OPAQUE, dto.getBrightness());
-        assertEquals(EnumViscosityType.VISCOUS, dto.getViscosity());
+        assertEquals(EnumBrightnessType.OPAQUE.getCode(), dto.getBrightness());
+        assertEquals(EnumViscosityType.VISCOUS.getCode(), dto.getViscosity());
     }
 
     private VisualInspectionEntity createVisualInspectionEntity() {
@@ -141,14 +140,14 @@ class VisualInspectionConverterTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .clarity(EnumClarityType.VERY_CLEAR)
-                .brightness(EnumBrightnessType.VERY_BRIGHT)
-                .viscosity(EnumViscosityType.SLIPPERY)
-                .colorRed(EnumRedColorType.RUBY)
-                .colorWhite(EnumWhiteColorType.STRAW_YELLOW)
-                .colorRose(EnumRoseColorType.BROWN)
-                .classification(EnumClassificationType.LITTLE)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
+                .clarity(EnumClarityType.VERY_CLEAR.getCode())
+                .brightness(EnumBrightnessType.VERY_BRIGHT.getCode())
+                .viscosity(EnumViscosityType.SLIPPERY.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.STRAW_YELLOW.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .tastingCard(TastingCardOutputDTO.builder().build())
                 .build();
     }
 

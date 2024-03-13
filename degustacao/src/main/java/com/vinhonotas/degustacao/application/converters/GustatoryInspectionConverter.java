@@ -76,15 +76,15 @@ public class GustatoryInspectionConverter {
                 .id(gustatoryInspectionEntity.getId())
                 .tastingData(gustatoryInspectionEntity.getTastingData())
                 .wineTasted(gustatoryInspectionEntity.getWineTasted())
-                .body(gustatoryInspectionEntity.getBody())
-                .sweetness(gustatoryInspectionEntity.getSweetness())
-                .tannin(gustatoryInspectionEntity.getTannin())
-                .classification(gustatoryInspectionEntity.getClassification())
-                .acidity(gustatoryInspectionEntity.getAcidity())
-                .alcohol(gustatoryInspectionEntity.getAlcohol())
-                .persistence(gustatoryInspectionEntity.getPersistence())
-                .maturity(gustatoryInspectionEntity.getMaturity())
-                .typicality(gustatoryInspectionEntity.getTypicality())
+                .body(EnumConverter.toString(gustatoryInspectionEntity.getBody()))
+                .sweetness(EnumConverter.toString(gustatoryInspectionEntity.getSweetness()))
+                .tannin(EnumConverter.toString(gustatoryInspectionEntity.getTannin()))
+                .classification(EnumConverter.toString(gustatoryInspectionEntity.getClassification()))
+                .acidity(EnumConverter.toString(gustatoryInspectionEntity.getAcidity()))
+                .alcohol(EnumConverter.toString(gustatoryInspectionEntity.getAlcohol()))
+                .persistence(EnumConverter.toString(gustatoryInspectionEntity.getPersistence()))
+                .maturity(EnumConverter.toString(gustatoryInspectionEntity.getMaturity()))
+                .typicality(EnumConverter.toString(gustatoryInspectionEntity.getTypicality()))
                 .build();
     }
 
@@ -105,23 +105,23 @@ public class GustatoryInspectionConverter {
                 .wineTasted(gustatoryInspectionOutputDTO.getWineTasted() != null ? gustatoryInspectionOutputDTO
                         .getWineTasted() : gustatoryInspectionEntity.getWineTasted())
                 .body(gustatoryInspectionOutputDTO.getBody() != null ? gustatoryInspectionOutputDTO.getBody() :
-                        gustatoryInspectionEntity.getBody())
+                        EnumConverter.toString(gustatoryInspectionEntity.getBody()))
                 .sweetness(gustatoryInspectionOutputDTO.getSweetness() != null ? gustatoryInspectionOutputDTO.getSweetness() :
-                        gustatoryInspectionEntity.getSweetness())
+                        EnumConverter.toString(gustatoryInspectionEntity.getSweetness()))
                 .tannin(gustatoryInspectionOutputDTO.getTannin() != null ? gustatoryInspectionOutputDTO.getTannin() :
-                        gustatoryInspectionEntity.getTannin())
+                        EnumConverter.toString(gustatoryInspectionEntity.getTannin()))
                 .classification(gustatoryInspectionOutputDTO.getClassification() != null ? gustatoryInspectionOutputDTO
-                        .getClassification() : gustatoryInspectionEntity.getClassification())
+                        .getClassification() : EnumConverter.toString(gustatoryInspectionEntity.getClassification()))
                 .acidity(gustatoryInspectionOutputDTO.getAcidity() != null ? gustatoryInspectionOutputDTO.getAcidity() :
-                        gustatoryInspectionEntity.getAcidity())
+                        EnumConverter.toString(gustatoryInspectionEntity.getAcidity()))
                 .alcohol(gustatoryInspectionOutputDTO.getAlcohol() != null ? gustatoryInspectionOutputDTO.getAlcohol() :
-                        gustatoryInspectionEntity.getAlcohol())
+                        EnumConverter.toString(gustatoryInspectionEntity.getAlcohol()))
                 .persistence(gustatoryInspectionOutputDTO.getPersistence() != null ? gustatoryInspectionOutputDTO
-                        .getPersistence() : gustatoryInspectionEntity.getPersistence())
+                        .getPersistence() : EnumConverter.toString(gustatoryInspectionEntity.getPersistence()))
                 .maturity(gustatoryInspectionOutputDTO.getMaturity() != null ? gustatoryInspectionOutputDTO.getMaturity() :
-                        gustatoryInspectionEntity.getMaturity())
+                        EnumConverter.toString(gustatoryInspectionEntity.getMaturity()))
                 .typicality(gustatoryInspectionOutputDTO.getTypicality() != null ? gustatoryInspectionOutputDTO
-                        .getTypicality() : gustatoryInspectionEntity.getTypicality())
+                        .getTypicality() : EnumConverter.toString(gustatoryInspectionEntity.getTypicality()))
                 .build();
     }
 

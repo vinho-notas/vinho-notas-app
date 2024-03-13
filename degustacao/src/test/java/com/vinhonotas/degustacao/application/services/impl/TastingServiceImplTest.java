@@ -81,12 +81,12 @@ class TastingServiceImplTest {
     void testGetAll() {
         when(repository.findAll()).thenReturn(List.of(entity));
 
-        List<TastingEntity> result = assertDoesNotThrow(() -> service.getAll());
+        var result = assertDoesNotThrow(() -> service.getAll());
         assertNotNull(result);
         assertFalse(result.isEmpty());
-        assertEquals(entity.getTastingData(), result.get(0).getTastingData());
-        assertEquals(entity.getTastingType(), result.get(0).getTastingType());
-        assertEquals(entity.getTastingCards(), result.get(0).getTastingCards());
+        assertEquals(entity.getTastingData(), result.stream().toList().get(0).getTastingData());
+        assertEquals(entity.getTastingType(), result.stream().toList().get(0).getTastingType());
+        assertEquals(entity.getTastingCards(), result.stream().toList().get(0).getTastingCards());
         verify(repository).findAll();
     }
 

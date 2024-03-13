@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,14 +36,14 @@ public class TastingServiceImpl implements TastingService {
     }
 
     @Override
-    public List<TastingEntity> getAll() {
+    public Set<TastingEntity> getAll() {
         log.info("getAll :: Listando todas as degustações");
-        List<TastingEntity> list = tastingRepository.findAll();
+        var list = tastingRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as degustações: {} ", MessagesConstants.TASTING_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.TASTING_NOT_FOUND);
         }
-        return list;
+        return new HashSet<>(list);
     }
 
     @Override

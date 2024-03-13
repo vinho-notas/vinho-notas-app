@@ -5,15 +5,14 @@ import com.vinhonotas.degustacao.application.converters.GustatoryInspectionConve
 import com.vinhonotas.degustacao.application.services.GustatoryInspectionService;
 import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.GustatoryInspectionEntity;
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.GustatoryInspectionOutputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -185,16 +184,16 @@ class GustatoryInspectionControllerTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .body(EnumBodyType.FULL_BODIED)
-                .sweetness(EnumSweetnessType.VERY_DRY)
-                .tannin(EnumTanninType.LITTLE_TANIC)
-                .classification(EnumClassificationType.LITTLE)
-                .acidity(EnumAcidityType.LITTLE_ACID)
-                .alcohol(EnumAlcoholType.LOW)
-                .persistence(EnumPersistenceType.SHORT)
-                .maturity(EnumMaturityType.MATURE)
-                .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
+                .body(EnumBodyType.FULL_BODIED.getCode())
+                .sweetness(EnumSweetnessType.VERY_DRY.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .persistence(EnumPersistenceType.SHORT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.NOT_TYPICAL.getCode())
+                .tastingCard(TastingCardOutputDTO.builder().build())
                 .build();
     }
 

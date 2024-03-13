@@ -91,23 +91,23 @@ class TastingCardServiceImplTest {
     void testGetAll() {
         when(tastingCardRepository.findAll()).thenReturn(List.of(entity));
 
-        List<TastingCardEntity> result = assertDoesNotThrow(() -> tastingCardService.getAll());
+        var result = assertDoesNotThrow(() -> tastingCardService.getAll());
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
-        assertEquals(entity.getTastingData(), result.get(0).getTastingData());
-        assertEquals(entity.getWineTasted(), result.get(0).getWineTasted());
-        assertEquals(entity.getHarvest(), result.get(0).getHarvest());
-        assertEquals(entity.getGrapes(), result.get(0).getGrapes());
-        assertEquals(entity.getCountry(), result.get(0).getCountry());
-        assertEquals(entity.getRegion(), result.get(0).getRegion());
-        assertEquals(entity.getVisualInspection(), result.get(0).getVisualInspection());
-        assertEquals(entity.getOlfactoryInspection(), result.get(0).getOlfactoryInspection());
-        assertEquals(entity.getGustatoryInspection(), result.get(0).getGustatoryInspection());
-        assertEquals(entity.getOpinion(), result.get(0).getOpinion());
-        assertEquals(entity.getPointScale(), result.get(0).getPointScale());
-        assertEquals(entity.getTasting(), result.get(0).getTasting());
+        assertEquals(entity.getTastingData(), result.stream().toList().get(0).getTastingData());
+        assertEquals(entity.getWineTasted(), result.stream().toList().get(0).getWineTasted());
+        assertEquals(entity.getHarvest(), result.stream().toList().get(0).getHarvest());
+        assertEquals(entity.getGrapes(), result.stream().toList().get(0).getGrapes());
+        assertEquals(entity.getCountry(), result.stream().toList().get(0).getCountry());
+        assertEquals(entity.getRegion(), result.stream().toList().get(0).getRegion());
+        assertEquals(entity.getVisualInspection(), result.stream().toList().get(0).getVisualInspection());
+        assertEquals(entity.getOlfactoryInspection(), result.stream().toList().get(0).getOlfactoryInspection());
+        assertEquals(entity.getGustatoryInspection(), result.stream().toList().get(0).getGustatoryInspection());
+        assertEquals(entity.getOpinion(), result.stream().toList().get(0).getOpinion());
+        assertEquals(entity.getPointScale(), result.stream().toList().get(0).getPointScale());
+        assertEquals(entity.getTasting(), result.stream().toList().get(0).getTasting());
 
         verify(tastingCardRepository, times(1)).findAll();
     }

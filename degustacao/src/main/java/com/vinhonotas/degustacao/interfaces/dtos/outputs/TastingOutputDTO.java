@@ -1,7 +1,5 @@
 package com.vinhonotas.degustacao.interfaces.dtos.outputs;
 
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
-import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +13,7 @@ public class TastingOutputDTO {
 
     private UUID id;
     private LocalDate tastingData;
-    private EnumTastingType tastingType;
-    private Set<TastingCardEntity> tastingCards;
+    private String tastingType;
+    private Set<TastingCardOutputDTO> tastingCards;
 
 }

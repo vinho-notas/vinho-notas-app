@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +33,7 @@ public class TastingController {
 
     @Operation(summary = "Retorna uma lista com todas as degustações cadastradas")
     @GetMapping
-    public ResponseEntity<List<TastingOutputDTO>> getAllTastings() {
+    public ResponseEntity<Set<TastingOutputDTO>> getAllTastings() {
         return ResponseEntity.ok(tastingConverter.toOutputDTOList(tastingService.getAll()));
     }
 

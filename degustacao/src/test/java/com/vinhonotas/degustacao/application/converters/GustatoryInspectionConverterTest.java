@@ -1,17 +1,16 @@
 package com.vinhonotas.degustacao.application.converters;
 
 import com.vinhonotas.degustacao.domain.entities.GustatoryInspectionEntity;
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.GustatoryInspectionOutputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -79,15 +78,15 @@ class GustatoryInspectionConverterTest {
         assertEquals(gustatoryInspectionEntity.getId(), outputDTO.getId());
         assertEquals(gustatoryInspectionEntity.getTastingData(), outputDTO.getTastingData());
         assertEquals(gustatoryInspectionEntity.getWineTasted(), outputDTO.getWineTasted());
-        assertEquals(gustatoryInspectionEntity.getBody(), outputDTO.getBody());
-        assertEquals(gustatoryInspectionEntity.getSweetness(), outputDTO.getSweetness());
-        assertEquals(gustatoryInspectionEntity.getTannin(), outputDTO.getTannin());
-        assertEquals(gustatoryInspectionEntity.getClassification(), outputDTO.getClassification());
-        assertEquals(gustatoryInspectionEntity.getAcidity(), outputDTO.getAcidity());
-        assertEquals(gustatoryInspectionEntity.getAlcohol(), outputDTO.getAlcohol());
-        assertEquals(gustatoryInspectionEntity.getPersistence(), outputDTO.getPersistence());
-        assertEquals(gustatoryInspectionEntity.getMaturity(), outputDTO.getMaturity());
-        assertEquals(gustatoryInspectionEntity.getTypicality(), outputDTO.getTypicality());
+        assertEquals(gustatoryInspectionEntity.getBody().getCode(), outputDTO.getBody());
+        assertEquals(gustatoryInspectionEntity.getSweetness().getCode(), outputDTO.getSweetness());
+        assertEquals(gustatoryInspectionEntity.getTannin().getCode(), outputDTO.getTannin());
+        assertEquals(gustatoryInspectionEntity.getClassification().getCode(), outputDTO.getClassification());
+        assertEquals(gustatoryInspectionEntity.getAcidity().getCode(), outputDTO.getAcidity());
+        assertEquals(gustatoryInspectionEntity.getAlcohol().getCode(), outputDTO.getAlcohol());
+        assertEquals(gustatoryInspectionEntity.getPersistence().getCode(), outputDTO.getPersistence());
+        assertEquals(gustatoryInspectionEntity.getMaturity().getCode(), outputDTO.getMaturity());
+        assertEquals(gustatoryInspectionEntity.getTypicality().getCode(), outputDTO.getTypicality());
     }
 
     @Test
@@ -100,29 +99,29 @@ class GustatoryInspectionConverterTest {
         assertEquals(gustatoryInspectionEntity.getId(), list.get(0).getId());
         assertEquals(gustatoryInspectionEntity.getTastingData(), list.get(0).getTastingData());
         assertEquals(gustatoryInspectionEntity.getWineTasted(), list.get(0).getWineTasted());
-        assertEquals(gustatoryInspectionEntity.getBody(), list.get(0).getBody());
-        assertEquals(gustatoryInspectionEntity.getSweetness(), list.get(0).getSweetness());
-        assertEquals(gustatoryInspectionEntity.getTannin(), list.get(0).getTannin());
-        assertEquals(gustatoryInspectionEntity.getClassification(), list.get(0).getClassification());
-        assertEquals(gustatoryInspectionEntity.getAcidity(), list.get(0).getAcidity());
-        assertEquals(gustatoryInspectionEntity.getAlcohol(), list.get(0).getAlcohol());
-        assertEquals(gustatoryInspectionEntity.getPersistence(), list.get(0).getPersistence());
-        assertEquals(gustatoryInspectionEntity.getMaturity(), list.get(0).getMaturity());
-        assertEquals(gustatoryInspectionEntity.getTypicality(), list.get(0).getTypicality());
+        assertEquals(gustatoryInspectionEntity.getBody().getCode(), list.get(0).getBody());
+        assertEquals(gustatoryInspectionEntity.getSweetness().getCode(), list.get(0).getSweetness());
+        assertEquals(gustatoryInspectionEntity.getTannin().getCode(), list.get(0).getTannin());
+        assertEquals(gustatoryInspectionEntity.getClassification().getCode(), list.get(0).getClassification());
+        assertEquals(gustatoryInspectionEntity.getAcidity().getCode(), list.get(0).getAcidity());
+        assertEquals(gustatoryInspectionEntity.getAlcohol().getCode(), list.get(0).getAlcohol());
+        assertEquals(gustatoryInspectionEntity.getPersistence().getCode(), list.get(0).getPersistence());
+        assertEquals(gustatoryInspectionEntity.getMaturity().getCode(), list.get(0).getMaturity());
+        assertEquals(gustatoryInspectionEntity.getTypicality().getCode(), list.get(0).getTypicality());
     }
 
     @Test
     @DisplayName("Deve converter para saída com atualização")
     void testToOutputDTOUpdate() {
-        gustatoryInspectionOutputDTO.setAcidity(EnumAcidityType.VERY_ACIDIC);
-        gustatoryInspectionOutputDTO.setBody(EnumBodyType.LITTLE_BODY);
+        gustatoryInspectionOutputDTO.setAcidity(EnumAcidityType.VERY_ACIDIC.getCode());
+        gustatoryInspectionOutputDTO.setBody(EnumBodyType.LITTLE_BODY.getCode());
 
         GustatoryInspectionOutputDTO outputDTO = assertDoesNotThrow(() -> gustatoryInspectionConverter
                 .toOutputDTOUpdate(gustatoryInspectionEntity, gustatoryInspectionEntity.getId(), gustatoryInspectionOutputDTO));
 
         assertNotNull(outputDTO);
-        assertEquals(EnumBodyType.LITTLE_BODY, outputDTO.getBody());
-        assertEquals(EnumAcidityType.VERY_ACIDIC, outputDTO.getAcidity());
+        assertEquals(EnumBodyType.LITTLE_BODY.getCode(), outputDTO.getBody());
+        assertEquals(EnumAcidityType.VERY_ACIDIC.getCode(), outputDTO.getAcidity());
     }
 
     private GustatoryInspectionEntity createGustatoryInspectionEntity() {
@@ -147,16 +146,16 @@ class GustatoryInspectionConverterTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .body(EnumBodyType.FULL_BODIED)
-                .sweetness(EnumSweetnessType.VERY_DRY)
-                .tannin(EnumTanninType.LITTLE_TANIC)
-                .classification(EnumClassificationType.LITTLE)
-                .acidity(EnumAcidityType.LITTLE_ACID)
-                .alcohol(EnumAlcoholType.LOW)
-                .persistence(EnumPersistenceType.SHORT)
-                .maturity(EnumMaturityType.MATURE)
-                .typicality(EnumTypicalityType.NOT_TYPICAL)
-                .tastingCard(Mockito.mock(TastingCardEntity.class))
+                .body(EnumBodyType.FULL_BODIED.getCode())
+                .sweetness(EnumSweetnessType.VERY_DRY.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .persistence(EnumPersistenceType.SHORT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.NOT_TYPICAL.getCode())
+                .tastingCard(TastingCardOutputDTO.builder().build())
                 .build();
     }
 

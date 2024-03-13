@@ -1,10 +1,5 @@
 package com.vinhonotas.degustacao.interfaces.dtos.outputs;
 
-import com.vinhonotas.degustacao.domain.entities.GustatoryInspectionEntity;
-import com.vinhonotas.degustacao.domain.entities.OlfactoryInspectionEntity;
-import com.vinhonotas.degustacao.domain.entities.TastingEntity;
-import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
-import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,11 +17,11 @@ public class TastingCardOutputDTO {
     private String grapes;
     private String country;
     private String region;
-    private VisualInspectionEntity visualInspection;
-    private OlfactoryInspectionEntity olfactoryInspection;
-    private GustatoryInspectionEntity gustatoryInspection;
+    private VisualInspectionOutputDTO visualInspection;
+    private OlfactoryInspectionOutputDTO olfactoryInspection;
+    private GustatoryInspectionOutputDTO gustatoryInspection;
     private String opinion;
-    private EnumPointScale pointScale;
-    private TastingEntity tasting;
+    private String pointScale;
+    private TastingOutputDTO tasting;
 
 }
