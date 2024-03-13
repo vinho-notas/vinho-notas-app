@@ -50,7 +50,7 @@ public class UserConverter {
         return UserOutputDTO.builder()
                 .id(userEntity.getId())
                 .person(personConverter.convertToOutputDTO(userEntity.getPerson()))
-                .enumProfile(userEntity.getEnumProfile())
+                .enumProfile(EnumConverter.toString(userEntity.getEnumProfile()))
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())
                 .build();
@@ -61,7 +61,8 @@ public class UserConverter {
                 .id(uuid)
                 .person(personConverter.convertToOutputDTO(update.getPerson()) != null ?
                         personConverter.convertToOutputDTO(update.getPerson()) : userOutputDTO.getPerson())
-                .enumProfile(update.getEnumProfile() != null ? update.getEnumProfile() : userOutputDTO.getEnumProfile())
+                .enumProfile(update.getEnumProfile() != null ? EnumConverter.toString(update.getEnumProfile()) :
+                        userOutputDTO.getEnumProfile())
                 .email(update.getEmail() != null ? update.getEmail() : userOutputDTO.getEmail())
                 .password(update.getPassword() != null ? update.getPassword() : userOutputDTO.getPassword())
                 .build();
