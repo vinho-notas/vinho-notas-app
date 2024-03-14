@@ -1,10 +1,7 @@
-import WineList from "./WineList"
-
-
 const SearchWine = () => {
     return (
         <>            
-            <WineList />
+           <div>Nada por aqui</div>
         </>
     )
 }
