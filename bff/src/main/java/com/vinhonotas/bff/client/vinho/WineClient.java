@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "wine", url = "$(vinho-api.url)", configuration = FeignConfig.class)
+@FeignClient(name = "wine", url = "${vinho-api.url}", configuration = FeignConfig.class)
 public interface WineClient {
 
-    @PostMapping("/wine")
+    @PostMapping("/wines")
     WineOutputDTO createWine(@Valid @RequestBody WineInputDTO wineInputDTO);
 
-    @GetMapping("/wine")
+    @GetMapping("/wines")
     List<WineOutputDTO> getAllWines();
 
-    @GetMapping("/wine/{id}")
+    @GetMapping("/wines/{id}")
     WineOutputDTO getWineById(@PathVariable("id") String id);
 
-    @PutMapping("/wine/{id}")
+    @PutMapping("/wines/{id}")
     WineOutputDTO updateWine(@PathVariable("id") String id, @Valid @RequestBody WineInputDTO wineInputDTO);
 
-    @DeleteMapping("/wine/{id}")
+    @DeleteMapping("/wines/{id}")
     void deleteWine(@PathVariable("id") String id);
 
 }
