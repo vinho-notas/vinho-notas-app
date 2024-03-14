@@ -82,6 +82,10 @@ const ListWineComponent = () => {
         }
     };
 
+    const onNewClick = () => {
+        navigate('/wine');
+    };
+
     useEffect(() => {
         setLoading(false);
     }, []);
@@ -243,7 +247,7 @@ const ListWineComponent = () => {
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={''} raised />
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
                     <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
                 </div>
