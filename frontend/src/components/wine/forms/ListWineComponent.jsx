@@ -9,13 +9,14 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import useListWineComponentHook from '../../../hooks/wine/useListWineComponentHook';
-import { updateWine } from '../../../service/wine/WineService';
+import { updateWine, deleteWine } from '../../../service/wine/WineService';
 
 const ListWineComponent = () => {
     const { wines, navigate, fetchWines } = useListWineComponentHook();
     const [selectedWines, setSelectedWines] = useState(null);
     const [editingWine, setEditingWine] = useState(null);
     const [visibleDialog, setVisibleDialog] = useState(false);
+    const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -55,6 +56,26 @@ const ListWineComponent = () => {
         try {
             await updateWine(editingWine.id, editingWine);
             setVisibleDialog(false);
+            await fetchWines();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onDeleteClick = async () => {
+        if (selectedWines && selectedWines.length > 0) {
+            setVisibleDeleteDialog(true);
+        } else {
+            alert('Selecione um vinho para excluir.');
+        }
+    };
+
+    const confirmDeleteWines = async () => {
+        try {
+            const wineIds = selectedWines.map((wine) => wine.id);
+            await deleteWine(wineIds);
+            setVisibleDeleteDialog(false);
+            setSelectedWines(null);
             await fetchWines();
         } catch (error) {
             console.log(error);
@@ -134,7 +155,17 @@ const ListWineComponent = () => {
 
     const leftToolbarTemplate = () => {
         return (
-            <>
+            <>               
+                <Dialog visible={visibleDeleteDialog} onHide={() => setVisibleDeleteDialog(false)} header="Excluir Vinhos" modal>
+                    <div className="p-dialog-content">
+                        <p>Deseja realmente excluir os vinhos selecionados?</p>
+                    </div>
+                    <div className="p-dialog-footer">
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={() => setVisibleDeleteDialog(false)} />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-danger" onClick={confirmDeleteWines} />
+                    </div>
+                </Dialog>
+
                 <Dialog visible={visibleDialog} onHide={() => setVisibleDialog(false)} header="Editar Vinho" modal>
                     <div className="p-fluid">
                         <div className="p-field">
@@ -214,7 +245,7 @@ const ListWineComponent = () => {
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={''} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={''} disabled={''} raised />
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
                 </div>
             </>
         );
@@ -228,7 +259,7 @@ const ListWineComponent = () => {
 
     return (
         <>
-            <Card style={{ marginTop: 10 }} title="Lista de Vinhos" >              
+            <Card style={{ marginTop: 10 }} title="Lista de Vinhos" >
                 <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
                 <DataTable
                     value={wines}
