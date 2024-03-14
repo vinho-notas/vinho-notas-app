@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "tasting", url = "$(degustacao-api.url)", configuration = FeignConfig.class)
+@FeignClient(name = "tasting", url = "${degustacao-api.url}", configuration = FeignConfig.class)
 public interface TastingClient {
 
     @PostMapping("/tasting")
