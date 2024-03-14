@@ -19,7 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/wines")
 @Tag(name = "Vinhos", description = "Operações relacionadas a vinhos")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class WineController {
 
     private final WineService wineService;
