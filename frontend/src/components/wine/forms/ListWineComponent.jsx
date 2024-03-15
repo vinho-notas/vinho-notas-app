@@ -17,6 +17,7 @@ const ListWineComponent = () => {
     const [editingWine, setEditingWine] = useState(null);
     const [visibleDialog, setVisibleDialog] = useState(false);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
+    const [visiblePointScaleDialog, setVisiblePointScaleDialog] = useState(false);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -84,6 +85,10 @@ const ListWineComponent = () => {
 
     const onNewClick = () => {
         navigate('/wine');
+    };
+
+    const onNewPointScale = () => {
+            navigate('/wine-review');        
     };
 
     useEffect(() => {
@@ -159,7 +164,7 @@ const ListWineComponent = () => {
 
     const leftToolbarTemplate = () => {
         return (
-            <>               
+            <>
                 <Dialog visible={visibleDeleteDialog} onHide={() => setVisibleDeleteDialog(false)} header="Excluir Vinhos" modal>
                     <div className="p-dialog-content">
                         <p>Deseja realmente excluir os vinhos selecionados?</p>
@@ -250,6 +255,7 @@ const ListWineComponent = () => {
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
                     <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
+                    <Button rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
                 </div>
             </>
         );
