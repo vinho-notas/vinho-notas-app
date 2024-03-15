@@ -17,7 +17,11 @@ const ListWineComponent = () => {
     const [editingWine, setEditingWine] = useState(null);
     const [visibleDialog, setVisibleDialog] = useState(false);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
-    const [visiblePointScaleDialog, setVisiblePointScaleDialog] = useState(false);
+
+    const [visibleReviewDialog, setVisibleReviewDialog] = useState(false); 
+    const [reviewingWine, setReviewingWine] = useState(null); 
+
+    const [wineReview, setWineReview] = useState(null);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -88,8 +92,18 @@ const ListWineComponent = () => {
     };
 
     const onNewPointScale = () => {
-            navigate('/wine-review');        
+
+        navigate('/wine-review');
     };
+
+    const onReviewClick = () => {
+        if (selectedWines && selectedWines.length === 1) {
+            setWineReview(selectedWines[0]);
+            setVisibleReviewDialog(true); // Abrir o modal de revisão, não o modal de edição
+        } else {
+            alert('Selecione um vinho para avaliar.');
+        }
+    };    
 
     useEffect(() => {
         setLoading(false);
@@ -165,6 +179,19 @@ const ListWineComponent = () => {
     const leftToolbarTemplate = () => {
         return (
             <>
+               <Dialog visible={visibleReviewDialog} onHide={() => setVisibleReviewDialog(false)} header="Id do Vinho" modal>
+                    <div className="p-fluid">
+                        <div className="p-field">
+                            <label htmlFor="id">id</label>
+                            <InputText id="id" value={wineReview?.id || ''} onChange={(e) => setWineReview({ ...wineReview, id: e.target.value })} />
+                        </div>
+                    </div>
+
+                    <div className="p-d-flex p-jc-between">
+                        <Button label="Fechar" icon="pi pi-times" className="p-button-text" onClick={() => setVisibleReviewDialog(false)} />
+                    </div>
+                </Dialog>
+
                 <Dialog visible={visibleDeleteDialog} onHide={() => setVisibleDeleteDialog(false)} header="Excluir Vinhos" modal>
                     <div className="p-dialog-content">
                         <p>Deseja realmente excluir os vinhos selecionados?</p>
@@ -176,7 +203,8 @@ const ListWineComponent = () => {
                 </Dialog>
 
                 <Dialog visible={visibleDialog} onHide={() => setVisibleDialog(false)} header="Editar Vinho" modal>
-                    <div className="p-fluid">
+                    <div className="p-fluid">                   
+
                         <div className="p-field">
                             <label htmlFor="name">Nome</label>
                             <InputText id="name" value={editingWine?.name || ''} onChange={(e) => setEditingWine({ ...editingWine, name: e.target.value })} />
@@ -251,11 +279,15 @@ const ListWineComponent = () => {
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} />
                     </div>
                 </Dialog>
+
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
                     <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
                     <Button rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
+
+                    <Button rounded label="onReviewClick" icon="pi pi-pencil" severity="secondary" onClick={onReviewClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
+
                 </div>
             </>
         );
