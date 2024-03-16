@@ -35,22 +35,10 @@ const WineReview = () => {
     };
 
 
-    switch (step) {
+    switch (step) {        
         case 1:
             return (
-                <Card style={{ marginTop: 100 }}>
-                    <Card.Header as="h5">Avaliação de Vinho</Card.Header>
-                    <SearchWineForm
-                        nextStep={nextStep}
-                        handleFormData={handleInputData}
-                        values={formData}
-                    />
-                </Card>
-            );
-
-        case 2:
-            return (
-                <Card style={{ marginTop: 100 }}>
+                <Card style={{ marginTop: 10 }}>
                     <Card.Header as="h5">Avaliação de Vinho</Card.Header>
                     <WineReviewForm
                         prevStep={prevStep}
@@ -62,9 +50,9 @@ const WineReview = () => {
                 </Card>
             );
 
-        case 3:
+        case 2:
             return (
-                <Card style={{ marginTop: 100 }}>
+                <Card style={{ marginTop: 10 }}>
                     <Card.Header as="h5">Avaliação de Vinho</Card.Header>
                     <WineReviewFinal
                         values={formData}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_REVIEW_URL}/point-scales`;
+const API_URL = `${import.meta.env.VITE_API_BFF_URL}/point-scales`;
 
 export const createPointScale = (pointScale) => {
     return axios.post(API_URL, pointScale);

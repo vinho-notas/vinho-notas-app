@@ -1,23 +1,29 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'primereact/card';
-import { useState, useEffect, useRef } from 'react';
-import { FilterMatchMode } from 'primereact/api';
-import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { MultiSelect } from 'primereact/multiselect';
+import { Dropdown } from 'primereact/dropdown';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { InputText } from 'primereact/inputtext';
+import { FilterMatchMode } from 'primereact/api';
 import useListWineComponentHook from '../../../hooks/wine/useListWineComponentHook';
 import { updateWine, deleteWine } from '../../../service/wine/WineService';
+import { createPointScale } from '../../../service/review/PointScaleService';
+import EnumPointScale from '../../../utils/enums/EnumPointScale';
 
 const ListWineComponent = () => {
+
+    // Hooks
     const { wines, navigate, fetchWines } = useListWineComponentHook();
     const [selectedWines, setSelectedWines] = useState(null);
     const [editingWine, setEditingWine] = useState(null);
-    const [visibleDialog, setVisibleDialog] = useState(false);
+    const [visibleEditDialog, setVisibleEditDialog] = useState(false);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
-
+    const [visibleReviewDialog, setVisibleReviewDialog] = useState(false);
+    const [wineReview, setWineReview] = useState(null);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -42,23 +48,50 @@ const ListWineComponent = () => {
     const [loading, setLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const dt = useRef(null);
+    const [visibleColumns, setVisibleColumns] = useState([]);
 
+    // Constants
+    const pointScale = Object.values(EnumPointScale);
+    const columns = [
+        { field: 'name', header: 'Vinho' },
+        { field: 'price', header: 'Preço de compra' },
+        { field: 'purchaseLocation', header: 'Local de compra' },
+        { field: 'purchaseDate', header: 'Data de compra' },
+        { field: 'wineType', header: 'Tipo' },
+        { field: 'wineClassification', header: 'Classificação' },
+        { field: 'alcoholContent', header: 'Graduação Alcoólica' },
+        { field: 'volumeMl', header: 'Volume em ML' },
+        { field: 'grape', header: 'Uvas' },
+        { field: 'winery', header: 'Produtor' },
+        { field: 'serviceTemperature', header: 'Temperatura de serviço' },
+        { field: 'harvest', header: 'Safra' },
+        { field: 'guardTime', header: 'Tempo de guarda' },
+        { field: 'country', header: 'País' },
+        { field: 'region', header: 'Região' },
+        { field: 'maturation', header: 'Maturação' },
+        { field: 'harmonization', header: 'Harmonização' }
+    ]
+
+    //handlers
     const onEditClick = () => {
         if (selectedWines && selectedWines.length === 1) {
             setEditingWine(selectedWines[0]);
-            setVisibleDialog(true);
+            setVisibleEditDialog(true);
         } else {
             alert('Selecione um vinho para editar.');
         }
     };
 
-    const saveEditedWine = async () => {
-        try {
-            await updateWine(editingWine.id, editingWine);
-            setVisibleDialog(false);
-            await fetchWines();
-        } catch (error) {
-            console.log(error);
+    const onNewPointScale = () => {
+        if (selectedWines && selectedWines.length === 1) {
+            const selectedWine = selectedWines[0];
+            setWineReview({
+                ...wineReview,
+                whatTasted: selectedWine.name
+            });
+            setVisibleReviewDialog(true);
+        } else {
+            alert('Selecione um vinho para avaliar.');
         }
     };
 
@@ -86,9 +119,27 @@ const ListWineComponent = () => {
         navigate('/wine');
     };
 
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+    const saveEditedWine = async () => {
+        try {
+            await updateWine(editingWine.id, editingWine);
+            setVisibleEditDialog(false);
+            await fetchWines();
+            navigate('/wine-list');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const savePointScale = async () => {
+        try {
+            await createPointScale(wineReview);
+            setVisibleReviewDialog(false);
+            setSelectedWines(null);
+            await fetchWines();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
@@ -98,41 +149,6 @@ const ListWineComponent = () => {
         setGlobalFilterValue(value);
     };
 
-    const renderHeader = () => {
-        return (
-            <>
-                <div className="flex justify-content-end">
-                    <MultiSelect value={visibleColumns} options={columns} optionLabel="header" onChange={onColumnToggle} className="w-full sm:w-20rem" display="chip" />
-                    <span className="p-input-icon-left">
-                        <i className="pi pi-search" />
-                        <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-                    </span>
-                </div>
-            </>
-        );
-    };
-
-    const columns = [
-        { field: 'name', header: 'Vinho' },
-        { field: 'price', header: 'Preço de compra' },
-        { field: 'purchaseLocation', header: 'Local de compra' },
-        { field: 'purchaseDate', header: 'Data de compra' },
-        { field: 'wineType', header: 'Tipo' },
-        { field: 'wineClassification', header: 'Classificação' },
-        { field: 'alcoholContent', header: 'Graduação Alcoólica' },
-        { field: 'volumeMl', header: 'Volume em ML' },
-        { field: 'grape', header: 'Uvas' },
-        { field: 'winery', header: 'Produtor' },
-        { field: 'serviceTemperature', header: 'Temperatura de serviço' },
-        { field: 'harvest', header: 'Safra' },
-        { field: 'guardTime', header: 'Tempo de guarda' },
-        { field: 'country', header: 'País' },
-        { field: 'region', header: 'Região' },
-        { field: 'maturation', header: 'Maturação' },
-        { field: 'harmonization', header: 'Harmonização' }
-    ]
-
-    const [visibleColumns, setVisibleColumns] = useState(columns);
     const onColumnToggle = (event) => {
         let selectedColumns = event.value;
         let orderedSelectedColumns = columns.filter((col) => selectedColumns.some((sCol) => sCol.field === col.field));
@@ -159,18 +175,18 @@ const ListWineComponent = () => {
 
     const leftToolbarTemplate = () => {
         return (
-            <>               
+            <>
                 <Dialog visible={visibleDeleteDialog} onHide={() => setVisibleDeleteDialog(false)} header="Excluir Vinhos" modal>
                     <div className="p-dialog-content">
                         <p>Deseja realmente excluir os vinhos selecionados?</p>
                     </div>
-                    <div className="p-dialog-footer">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={() => setVisibleDeleteDialog(false)} />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-danger" onClick={confirmDeleteWines} />
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleDeleteDialog(false)} />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteWines} />
                     </div>
                 </Dialog>
 
-                <Dialog visible={visibleDialog} onHide={() => setVisibleDialog(false)} header="Editar Vinho" modal>
+                <Dialog visible={visibleEditDialog} onHide={() => setVisibleEditDialog(false)} header="Editar Vinho" modal>
                     <div className="p-fluid">
                         <div className="p-field">
                             <label htmlFor="name">Nome</label>
@@ -241,15 +257,56 @@ const ListWineComponent = () => {
                             <InputText id="harmonization" value={editingWine?.harmonization || ''} onChange={(e) => setEditingWine({ ...editingWine, harmonization: e.target.value })} />
                         </div>
                     </div>
-                    <div className="p-d-flex p-jc-between">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleDialog(false)} />
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} />
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} />
                     </div>
                 </Dialog>
+
+                <Dialog visible={visibleReviewDialog} onHide={() => setVisibleReviewDialog(false)} header="Avaliar Vinho" modal>
+                    <div className="p-fluid">
+                        <div className="p-field">
+                            <label htmlFor="whatTasted">O que degustou?</label>
+                            <InputText id="whatTasted" value={wineReview?.whatTasted || ''} onChange={(e) => setWineReview({ ...wineReview, whatTasted: e.target.value })} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="whenTasted">Quando degustou?</label>
+                            <InputText id="whenTasted" value={wineReview?.whenTasted || ''} onChange={(e) => setWineReview({ ...wineReview, whenTasted: e.target.value })} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="whatSaw">Aspectos visuais</label>
+                            <InputText id="whatSaw" value={wineReview?.whatSaw || ''} onChange={(e) => setWineReview({ ...wineReview, whatSaw: e.target.value })} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="whatAromas">Aromas</label>
+                            <InputText id="whatAromas" value={wineReview?.whatAromas || ''} onChange={(e) => setWineReview({ ...wineReview, whatAromas: e.target.value })} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="whatFlavors">Sabores</label>
+                            <InputText id="whatFlavors" value={wineReview?.whatFlavors || ''} onChange={(e) => setWineReview({ ...wineReview, whatFlavors: e.target.value })} />
+                        </div>
+                        <div className="p-field">
+                            <label htmlFor="whatOpinion">Opinião</label>
+                            <InputText id="whatOpinion" value={wineReview?.whatOpinion || ''} onChange={(e) => setWineReview({ ...wineReview, whatOpinion: e.target.value })} />
+                        </div>
+
+                        <div className="p-field">
+                            <label htmlFor="pointScale">Avaliação final</label>
+                            <Dropdown id="pointScale" value={wineReview?.pointScale || ''} options={pointScale} onChange={(e) => setWineReview({ ...wineReview, pointScale: e.target.value })} placeholder="Selecione uma avaliação" />
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} />
+                    </div>
+                </Dialog>
+
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
                     <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
+                    <Button rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
+
                 </div>
             </>
         );
@@ -259,7 +316,31 @@ const ListWineComponent = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
     };
 
+    const renderHeader = () => {
+        return (
+            <>
+                <div className="flex justify-content-end">
+                    <MultiSelect value={visibleColumns} options={columns} optionLabel="header" onChange={onColumnToggle} className="w-full sm:w-20rem" display="chip" />
+                    <span className="p-input-icon-left">
+                        <i className="pi pi-search" />
+                        <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                    </span>
+                </div>
+            </>
+        );
+    };
+
     const header = renderHeader();
+
+    // Effects
+
+    useEffect(() => {
+        setLoading(false);
+        setVisibleColumns(columns);
+    }, []);
+
+    // Render
+
 
     return (
         <>
