@@ -9,7 +9,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import useListPointScaleComponentHook from '../../hooks/review/usePointScaleComponentHook';
-import { updatePointScale } from '../../service/review/PointScaleService';
+import { deletePointScale, updatePointScale } from '../../service/review/PointScaleService';
 import EnumPointScale from '../../utils/enums/EnumPointScale';
 
 const ListPointScaleComponent = () => {
@@ -19,6 +19,7 @@ const ListPointScaleComponent = () => {
     const [selectedPointScales, setSelectedPointScales] = useState(null);
     const [editingPointScales, setEditingPointScales] = useState(null);
     const [visibleEditDialog, setVisibleEditDialog] = useState(false);
+    const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const dt = useRef(null);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -63,6 +64,26 @@ const ListPointScaleComponent = () => {
         }
     };
 
+    const onDeleteClick = async () => {
+        if (selectedPointScales && selectedPointScales.length > 0) {
+            setVisibleDeleteDialog(true);
+        } else {
+            alert('Selecione um vinho para excluir.');
+        }
+    };
+
+    const confirmDeletePointScales = async () => {
+        try {
+            const pointScalesIds = selectedPointScales.map(scale => scale.id);
+            await deletePointScale(pointScalesIds);
+            setVisibleDeleteDialog(false);
+            setSelectedPointScales(null);
+            await fetchPointScales();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const saveEditedPointScale = async () => {
         try {
             await updatePointScale(editingPointScales.id, editingPointScales);
@@ -77,7 +98,7 @@ const ListPointScaleComponent = () => {
 
     const leftToolbarTemplate = () => {
         return (
-            <>
+            <>            
                 <Dialog visible={visibleEditDialog} onHide={() => setVisibleEditDialog(false)} header="Editar avaliação" modal>
                     <div className="p-fluid">
                         <div className="p-field">
@@ -121,16 +142,26 @@ const ListPointScaleComponent = () => {
                             <Dropdown id="pointScale" value={editingPointScales?.pointScale || ''} options={pointScale} onChange={(e) => setEditingPointScales({ ...editingPointScales, pointScale: e.target.value })} />                     
                         </div>
                     </div>
-                    <div className="flex justify-content-end gap-2 mt-4">
+                    <div className="flex flex-wrap gap-2 mt-4">
                         <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
                         <Button label="Salvar" icon="pi pi-check" onClick={saveEditedPointScale} className="p-button-success" />
                     </div>
 
 
                 </Dialog>
+                <Dialog visible={visibleDeleteDialog} onHide={() => setVisibleDeleteDialog(false)} header="Excluir avaliações" modal>
+                    <div className="flex justify-content-center">
+                        <p>Tem certeza que deseja excluir as avaliações selecionadas?</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
+                        <Button label="Confirmar" icon="pi pi-check" onClick={confirmDeletePointScales} className="p-button-success" />
+                    </div>
+                </Dialog>
+
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPointScales || selectedPointScales.length !== 1} raised />
-
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPointScales || selectedPointScales.length === 0} raised />
                 </div>
             </>
         )
