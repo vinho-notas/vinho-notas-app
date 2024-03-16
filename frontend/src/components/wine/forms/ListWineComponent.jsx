@@ -257,7 +257,7 @@ const ListWineComponent = () => {
                             <InputText id="harmonization" value={editingWine?.harmonization || ''} onChange={(e) => setEditingWine({ ...editingWine, harmonization: e.target.value })} />
                         </div>
                     </div>
-                    <div className="p-d-flex p-jc-between">
+                    <div className="flex justify-content-end gap-2 mt-4">
                         <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} />
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} />
                     </div>
@@ -291,11 +291,11 @@ const ListWineComponent = () => {
                         </div>
 
                         <div className="p-field">
-                            <label htmlFor="pointScale">Escala de Pontos</label>
-                            <Dropdown id="pointScale" value={wineReview?.pointScale || ''} options={pointScale} onChange={(e) => setWineReview({ ...wineReview, pointScale: e.target.value })} placeholder="Selecione a escala de pontos" />
+                            <label htmlFor="pointScale">Avaliação final</label>
+                            <Dropdown id="pointScale" value={wineReview?.pointScale || ''} options={pointScale} onChange={(e) => setWineReview({ ...wineReview, pointScale: e.target.value })} placeholder="Selecione uma avaliação" />
                         </div>
                     </div>
-                    <div className="p-d-flex p-jc-between">
+                    <div className="flex justify-content-end gap-2 mt-4">
                         <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} />
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} />
                     </div>
