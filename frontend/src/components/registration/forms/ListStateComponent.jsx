@@ -3,6 +3,7 @@ import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
+import { Card } from 'primereact/card';
 import useLIstStateComponentHook from '../../../hooks/registration/useLIstStateComponentHook';
 
 const ListStateComponent = () => {
@@ -44,8 +45,7 @@ const ListStateComponent = () => {
     const header = renderHeader();
 
     return (
-        <div className='card'>
-            <h5><strong>Estados</strong></h5>
+        <Card style={{ marginTop: 10 }} title="Lista de estados">
             <DataTable
                 value={state}
                 paginator
@@ -56,23 +56,14 @@ const ListStateComponent = () => {
                 filters={filters}
                 globalFilterFields={['stateName', 'uf']}
                 header={header}
+                resizableColumns
+                showGridlines
                 emptyMessage="Nenhum estado encontrado."
             >
-                <Column
-                    field="stateName"
-                    header="Estado"
-                    sortable
-                    filterField='stateName'
-                ></Column>
-                <Column
-                    field="uf"
-                    header="UF"
-                    sortable
-                    filterField='uf'
-                ></Column>
+                <Column field="stateName" header="Estado" sortable filterField='stateName'></Column>
+                <Column field="uf" header="UF" sortable filterField='uf'></Column>
             </DataTable>
-
-        </div>
+        </Card>
     )
 }
 
