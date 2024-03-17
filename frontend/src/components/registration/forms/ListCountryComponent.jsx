@@ -3,6 +3,7 @@ import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
 import useListCountryComponentHook from '../../../hooks/registration/useListCountryComponentHook'
 
 const ListCountryComponent = () => {
@@ -43,7 +44,7 @@ const ListCountryComponent = () => {
   const header = renderHeader();
 
   return (
-    <div className='card'>
+    <Card style={{ marginTop: 10 }} title="Lista de países" >
       <h5><strong>Países</strong></h5>
       <DataTable
         value={country}
@@ -54,23 +55,15 @@ const ListCountryComponent = () => {
         filters={filters}
         globalFilterFields={['countryName', 'continentName']}
         header={header}
+        resizableColumns
+        showGridlines
         tableStyle={{ minWidth: '50rem' }}
         emptyMessage="Nenhum país encontrado."
       >
-        <Column
-          field="countryName"
-          header="País"
-          sortable
-          filterField='countryName'
-        ></Column>
-        <Column
-          field="continentName"
-          header="Continente"
-          sortable
-          filterField='continentName'
-        ></Column>
+        <Column field="countryName" header="País" sortable filterField='countryName'></Column>
+        <Column field="continentName" header="Continente" sortable filterField='continentName'></Column>
       </DataTable>
-    </div>
+    </Card>
   )
 }
 
