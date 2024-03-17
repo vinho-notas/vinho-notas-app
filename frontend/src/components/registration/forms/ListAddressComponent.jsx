@@ -6,11 +6,15 @@ import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
   const { address } = useListAddressComponentHook();
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [visibleEditDialog, setVisibleEditDialog] = useState(false);
+  const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
   const dt = useRef(null);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -43,10 +47,35 @@ const ListAddressComponent = () => {
 
   const exportCSV = () => {
     dt.current.exportCSV();
+  };
+
+  const onEditClick = () => {
+    if (selectedAddress && selectedAddress.length === 1) {
+        setEditingAddress(selectedAddress[0]);
+        setVisibleEditDialog(true);
+    } else {
+        alert('Selecione um vinho para editar.');
+    }
+};
+
+const onDeleteClick = async () => {
+  if (selectedAddress && selectedAddress.length > 0) {
+      setVisibleDeleteDialog(true);
+  } else {
+      alert('Selecione um vinho para excluir.');
+  }
 };
 
   const leftToolbarTemplate = () => {
+    return (
+      <>
+        <div className="flex flex-wrap gap-2">
+          <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedAddress || selectedAddress.length !== 1} raised />
+          <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedAddress || selectedAddress.length === 0} raised />
+        </div>
+      </>
 
+    );
   };
 
   const rightToolbarTemplate = () => {
@@ -55,16 +84,16 @@ const ListAddressComponent = () => {
 
   const onSelectionChange = (e) => {
     setSelectedAddress(e.value);
-};
+  };
 
-const onSelectAllChange = (e) => {
+  const onSelectAllChange = (e) => {
     const _selectedAddress = e.checked ? address.map(scale => scale) : null;
     if (_selectedAddress) {
-        setSelectedAddress(_selectedAddress);
+      setSelectedAddress(_selectedAddress);
     } else {
-        setSelectedAddress(null);
+      setSelectedAddress(null);
     }
-};
+  };
 
   useEffect(() => {
     setLoading(false);
@@ -114,9 +143,9 @@ const onSelectAllChange = (e) => {
         ref={dt}
       >
         <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
-                {visibleColumns.map((col) => (
-                    <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
-                ))}
+        {visibleColumns.map((col) => (
+          <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+        ))}
       </DataTable>
     </Card>
   )
