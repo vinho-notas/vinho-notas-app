@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { Toolbar } from 'primereact/toolbar';
+import { Button } from 'primereact/button';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
   const { address } = useListAddressComponentHook();
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const dt = useRef(null);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     addressDescription: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -21,11 +26,49 @@ const ListAddressComponent = () => {
   });
 
   const [loading, setLoading] = useState(true);
-
   const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  const columns = [
+    { field: 'addressDescription', header: 'Descrição', sortable: true, filterField: 'addressDescription' },
+    { field: 'addressNumber', header: 'Número', sortable: true, filterField: 'addressNumber' },
+    { field: 'complement', header: 'Complemento', sortable: true, filterField: 'complement' },
+    { field: 'district', header: 'Bairro', sortable: true, filterField: 'district' },
+    { field: 'zipCode', header: 'CEP', sortable: true, filterField: 'zipCode' },
+    { field: 'city', header: 'Cidade', sortable: true, filterField: 'city' },
+    { field: 'uf.stateName', header: 'Estado', sortable: true, filterField: 'uf.stateName' },
+    { field: 'country.countryName', header: 'País', sortable: true, filterField: 'country.countryName' }
+  ];
+
+  const [visibleColumns, setVisibleColumns] = useState([]);
+
+  const exportCSV = () => {
+    dt.current.exportCSV();
+};
+
+  const leftToolbarTemplate = () => {
+
+  };
+
+  const rightToolbarTemplate = () => {
+    return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+  }
+
+  const onSelectionChange = (e) => {
+    setSelectedAddress(e.value);
+};
+
+const onSelectAllChange = (e) => {
+    const _selectedAddress = e.checked ? address.map(scale => scale) : null;
+    if (_selectedAddress) {
+        setSelectedAddress(_selectedAddress);
+    } else {
+        setSelectedAddress(null);
+    }
+};
 
   useEffect(() => {
     setLoading(false);
+    setVisibleColumns(columns);
   }, []);
 
   const onGlobalFilterChange = (e) => {
@@ -50,8 +93,8 @@ const ListAddressComponent = () => {
   const header = renderHeader();
 
   return (
-    <div className='card'>
-      <h5><strong>Endereços</strong></h5>
+    <Card style={{ marginTop: 10 }} title="Lista de endereços">
+      <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
       <DataTable
         value={address}
         paginator
@@ -61,59 +104,21 @@ const ListAddressComponent = () => {
         filters={filters}
         globalFilterFields={['addressDescription', 'addressNumber', 'complement', 'district', 'zipCode', 'city', 'uf.stateName', 'country.countryName', 'phoneNumber']}
         header={header}
+        showGridlines
+        selectionMode="multiple"
+        selection={selectedAddress}
+        onSelectionChange={onSelectionChange}
+        onSelectAll={onSelectAllChange}
         tableStyle={{ minWidth: '50rem' }}
         emptyMessage="Nenhum endereço encontrado."
+        ref={dt}
       >
-        <Column
-          field='addressDescription'
-          header='Descrição'
-          sortable
-          filterField='addressDescription'
-        ></Column>
-        <Column
-          field='addressNumber'
-          header='Número'
-          sortable
-          filterField='addressNumber'
-        ></Column>
-        <Column
-          field='complement'
-          header='Complemento'
-          sortable
-          filterField='complement'
-        ></Column>
-        <Column
-          field='district'
-          header='Bairro'
-          sortable
-          filterField='district'
-        ></Column>
-        <Column
-          field='zipCode'
-          header='CEP'
-          sortable
-          filterField='zipCode'
-        ></Column>
-        <Column
-          field='city'
-          header='Cidade'
-          sortable
-          filterField='city'
-        ></Column>
-        <Column
-          field='uf.stateName'
-          header='Estado'
-          sortable
-          filterField='uf.stateName'
-        ></Column>
-        <Column
-          field='country.countryName'
-          header='País'
-          sortable
-          filterField='country.countryName'
-        ></Column>
+        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
+                {visibleColumns.map((col) => (
+                    <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+                ))}
       </DataTable>
-    </div>
+    </Card>
   )
 }
 
