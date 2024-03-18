@@ -112,6 +112,7 @@ class StateConverterTest {
 
     private StateInputDTO createStateInputDTO() {
         return StateInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(createCountryInputDTO())
