@@ -48,6 +48,8 @@ public class MessagesConstants {
 
     //CONTROLLER
     public static final String INVALID_FIELDS = "A requisição possui campos inválidos, verifique";
+    public static final String COUNTRY_NOT_FOUND_WITH_ID = "País não encontrado com o id: ";
+    public static final String STATE_NOT_FOUND_WITH_ID = "Estado não encontrado com o id: ";
 
     private MessagesConstants() {
     }
