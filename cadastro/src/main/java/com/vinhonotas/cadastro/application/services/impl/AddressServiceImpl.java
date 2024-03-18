@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,28 +39,33 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity create(AddressInputDTO addressInputDTO) {
         log.info("create :: Registrando um endereço com os dados: {}", addressInputDTO.toString());
         try {
-            StateEntity state = stateRepository.findByUf(addressInputDTO.getUf().getUf());
-            if (Objects.nonNull(state)) {
-                addressInputDTO.setUf(stateConverter.convertToInputDTO(state));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_NOT_FOUND_WITH_NAME + addressInputDTO.getUf().getUf());
-                throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + addressInputDTO.getUf().getUf());
-            }
-
-            CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName());
-            if (Objects.nonNull(country)) {
-                addressInputDTO.setCountry(countryConverter.convertToInputDTO(country));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
-                throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
-            }
+            StateEntity state = getStateEntity(addressInputDTO);
+            CountryEntity country = getCountryEntity(addressInputDTO);
 
             AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
+            addressEntity.setUf(state);
+            addressEntity.setCountry(country);
+            log.info("Endereço a ser salvo: {}", addressEntity.toString());
+
             return addressRepository.save(addressEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
         }
+    }
+
+    private CountryEntity getCountryEntity(AddressInputDTO addressInputDTO) {
+        CountryEntity country = countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))
+                .orElseThrow(() -> new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_ID + addressInputDTO.getCountry().getId()));
+        log.info("País encontrado: {}", country.toString());
+        return country;
+    }
+
+    private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
+        StateEntity state = stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))
+                .orElseThrow(() -> new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_ID + addressInputDTO.getUf().getId()));
+        log.info("Estado encontrado: {}", state.toString());
+        return state;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class CountryConverter {
                 .countryName(countryInputDTO.getCountryName())
                 .continentName(countryInputDTO.getContinentName())
                 .userreg(countryInputDTO.getUserreg())
-                .dthreg(countryInputDTO.getDthreg())
+                .dthreg(LocalDateTime.now())
                 .useralt(countryInputDTO.getUseralt())
                 .dthalt(countryInputDTO.getDthalt())
                 .build();

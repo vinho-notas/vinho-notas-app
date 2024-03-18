@@ -29,7 +29,7 @@ public class AddressConverter {
                 .country(countryConverter.convertToEntity(addressInputDTO.getCountry()))
                 .phoneNumber(addressInputDTO.getPhoneNumber())
                 .userreg(addressInputDTO.getUserreg())
-                .dthreg(addressInputDTO.getDthreg())
+                .dthreg(LocalDateTime.now())
                 .useralt(addressInputDTO.getUseralt())
                 .dthalt(addressInputDTO.getDthalt())
                 .build();

@@ -59,17 +59,15 @@ class AddressServiceImplTest {
         addressEntity = createAddressEntity();
     }
 
-
-
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
+        when(countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))).thenReturn(Optional.of(brasilEntity));
+        when(stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))).thenReturn(Optional.of(createSaoPauloEntity()));
         when(addressConverter.convertToEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
-        when(stateRepository.findByUf(addressInputDTO.getUf().getUf())).thenReturn(createSaoPauloEntity());
-        when(countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName())).thenReturn(brasilEntity);
-        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.create(addressInputDTO));
 
+        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.create(addressInputDTO));
         assertNotNull(address);
         assertEquals(addressEntity.getId(), address.getId());
         assertEquals(addressEntity.getAddressDescription(), address.getAddressDescription());
@@ -232,6 +230,7 @@ class AddressServiceImplTest {
 
     private CountryInputDTO createCountryInputDTO() {
         return CountryInputDTO.builder()
+                .id("d0d7f9e0-0b7e-4b1e-8b7a-8b8b8b8b8b8b")
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
@@ -239,6 +238,7 @@ class AddressServiceImplTest {
 
     private StateInputDTO createStateInputDTO() {
         return StateInputDTO.builder()
+                .id("d0d7f9e0-0b7e-4b1e-8b7a-7b7b7b7b7b7b")
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(createCountryInputDTO())
@@ -247,6 +247,7 @@ class AddressServiceImplTest {
 
     private StateEntity createSaoPauloEntity() {
         return StateEntity.builder()
+                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-7b7b7b7b7b7b"))
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(brasilEntity)
@@ -255,6 +256,7 @@ class AddressServiceImplTest {
 
     private CountryEntity createBrasilEntity() {
         return CountryEntity.builder()
+                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-8b8b8b8b8b8b"))
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
