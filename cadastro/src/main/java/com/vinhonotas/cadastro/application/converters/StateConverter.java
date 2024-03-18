@@ -18,6 +18,7 @@ public class StateConverter {
 
     public StateEntity convertToEntity(StateInputDTO stateInputDTO) {
         return StateEntity.builder()
+                .id(UUID.fromString(stateInputDTO.getId()))
                 .stateName(stateInputDTO.getStateName())
                 .uf(stateInputDTO.getUf())
                 .country(countryConverter.convertToEntity(stateInputDTO.getCountry()))

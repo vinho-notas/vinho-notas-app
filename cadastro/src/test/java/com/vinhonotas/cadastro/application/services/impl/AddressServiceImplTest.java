@@ -147,6 +147,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço")
     void testUpdateSucesso() {
+        when(stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))).thenReturn(Optional.of(createSaoPauloEntity()));
+        when(countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))).thenReturn(Optional.of(brasilEntity));
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
         when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
@@ -171,15 +173,12 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço com erro")
     void testUpdateErro() {
-        when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
-        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
-        when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
-
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
+
         assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
-        verify(addressRepository, times(1)).findById(addressEntity.getId());
-        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
-        verify(addressRepository, times(1)).save(addressEntity);
+        verify(addressRepository, times(0)).findById(addressEntity.getId());
+        verify(addressConverter, times(0)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressRepository, times(0)).save(addressEntity);
     }
 
     @Test
@@ -247,7 +246,7 @@ class AddressServiceImplTest {
 
     private StateEntity createSaoPauloEntity() {
         return StateEntity.builder()
-                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-7b7b7b7b7b7b"))
+                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b9b9b9b9b9b"))
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(brasilEntity)

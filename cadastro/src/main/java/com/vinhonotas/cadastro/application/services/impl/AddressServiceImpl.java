@@ -55,6 +55,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private CountryEntity getCountryEntity(AddressInputDTO addressInputDTO) {
+        log.info("Buscando país pelo id: {}", addressInputDTO.getCountry().getId());
         CountryEntity country = countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))
                 .orElseThrow(() -> new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_ID + addressInputDTO.getCountry().getId()));
         log.info("País encontrado: {}", country.toString());
@@ -62,6 +63,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
+        log.info("Buscando estado pelo id: {}", addressInputDTO.getUf().getId());
         StateEntity state = stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))
                 .orElseThrow(() -> new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_ID + addressInputDTO.getUf().getId()));
         log.info("Estado encontrado: {}", state.toString());
@@ -91,7 +93,14 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity update(UUID id, AddressInputDTO addressInputDTO) {
         log.info("update :: Atualizando endereço com os dados: {}", addressInputDTO.toString());
         try {
+            StateEntity state = getStateEntity(addressInputDTO);
+            CountryEntity country = getCountryEntity(addressInputDTO);
+
             AddressEntity addressEntity = this.getById(id);
+            addressEntity.setUf(state);
+            addressEntity.setCountry(country);
+            log.info("Endereço a ser atualizado: {}", addressEntity.toString());
+
             return addressRepository.save(addressConverter.convertToEntityUpdate(addressEntity, id, addressInputDTO));
         } catch (Exception e) {
             log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, e);
@@ -104,6 +113,7 @@ public class AddressServiceImpl implements AddressService {
     public void delete(UUID id) {
         log.info("delete :: Deletando endereço com o id: {}", id.toString());
         Optional<AddressEntity> address = addressRepository.findById(id);
+        log.info("Endereço encontrado: {}", address.toString());
         if (address.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o endereço: {}", MessagesConstants.ADDRESS_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);

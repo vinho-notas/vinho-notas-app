@@ -14,6 +14,7 @@ public class CountryConverter {
 
     public CountryEntity convertToEntity(CountryInputDTO countryInputDTO) {
         return CountryEntity.builder()
+                .id(UUID.fromString(countryInputDTO.getId()))
                 .countryName(countryInputDTO.getCountryName())
                 .continentName(countryInputDTO.getContinentName())
                 .userreg(countryInputDTO.getUserreg())
