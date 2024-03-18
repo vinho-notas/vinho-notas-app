@@ -7,7 +7,7 @@ import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { updateAddress } from '../../../service/registration/AddressService';
+import { updateAddress, deleteAddress } from '../../../service/registration/AddressService';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
@@ -78,6 +78,18 @@ const ListAddressComponent = () => {
     }
   };
 
+  const confirmDeleteAddress = async () => {
+    try {
+      const addressIds = selectedAddress.map(address => address.id);
+      await deleteAddress(addressIds);
+      setVisibleDeleteDialog(false);
+      setSelectedAddress(null);
+      await fetchAddress();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const leftToolbarTemplate = () => {
     return (
       <>
@@ -142,6 +154,17 @@ const ListAddressComponent = () => {
           </div>
 
         </Dialog>
+
+        <Dialog header="Excluir Endereço" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
+          <div className="p-fluid">
+            <p>Você deseja excluir o(s) endereço(s) selecionado(s)?</p>
+          </div>
+          <div className="flex flex-wrap gap-2 mt-4">
+            <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
+            <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteAddress} />
+          </div>
+        </Dialog>
+
         <div className="flex flex-wrap gap-2">
           <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedAddress || selectedAddress.length !== 1} raised />
           <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedAddress || selectedAddress.length === 0} raised />

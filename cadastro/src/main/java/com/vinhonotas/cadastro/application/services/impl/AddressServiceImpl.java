@@ -134,6 +134,7 @@ public class AddressServiceImpl implements AddressService {
     public void delete(UUID id) {
         log.info("delete :: Deletando endereço com o id: {}", id.toString());
         Optional<AddressEntity> address = addressRepository.findById(id);
+        log.info("Endereço encontrado: {}", address.toString());
         if (address.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o endereço: {}", MessagesConstants.ADDRESS_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);
