@@ -64,7 +64,7 @@ public class AddressServiceImpl implements AddressService {
 
     private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
         log.info("Buscando estado pelo id: {}", addressInputDTO.getUf().getId());
-        StateEntity state = stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))//TODO: Verificar o id está vindo nulo aqui
+        StateEntity state = stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))
                 .orElseThrow(() -> new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_ID + addressInputDTO.getUf().getId()));
         log.info("Estado encontrado: {}", state.toString());
         return state;
@@ -107,27 +107,6 @@ public class AddressServiceImpl implements AddressService {
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
         }
     }
-
-
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public AddressEntity update(UUID id, AddressInputDTO addressInputDTO) {
-//        log.info("update :: Atualizando endereço com os dados: {}", addressInputDTO.toString());
-//        try {
-//            StateEntity state = getStateEntity(addressInputDTO);
-//            CountryEntity country = getCountryEntity(addressInputDTO);
-//
-//            AddressEntity addressEntity = this.getById(id);
-//            addressEntity.setUf(state);
-//            addressEntity.setCountry(country);
-//            log.info("Endereço a ser atualizado: {}", addressEntity.toString());
-//
-//            return addressRepository.save(addressConverter.convertToEntityUpdate(addressEntity, id, addressInputDTO));
-//        } catch (Exception e) {
-//            log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, e);
-//            throw new BadRequestException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);
-//        }
-//    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
