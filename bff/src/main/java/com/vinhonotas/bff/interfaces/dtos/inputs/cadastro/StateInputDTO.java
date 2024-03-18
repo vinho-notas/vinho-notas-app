@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class StateInputDTO {
 
+    private String id;
     private String stateName;
     private String uf;
     private CountryInputDTO country;
