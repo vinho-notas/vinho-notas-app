@@ -96,11 +96,18 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException(MessagesConstants.USER_NOT_FOUND);
         }
         try {
+            log.info("Deletando usuário com os seguintes dados: {}", user.toString());
             userRepository.deleteById(id);
         } catch (Exception e) {
             log.error("delete :: Ocorreu um erro: {}", MessagesConstants.ERROR_DELETE_USER_DATA, e);
             throw new BadRequestException(MessagesConstants.ERROR_DELETE_USER_DATA);
         }
+    }
+
+    @Override
+    public UserEntity getByPersonId(UUID id) {
+        log.info("getByPersonId :: Buscando usuário pelo id da pessoa: {}", id.toString());
+        return userRepository.findByPersonId(id);
     }
 
 }

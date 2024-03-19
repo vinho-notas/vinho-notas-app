@@ -4,10 +4,7 @@ import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
-import com.vinhonotas.cadastro.domain.entities.AddressEntity;
-import com.vinhonotas.cadastro.domain.entities.CountryEntity;
-import com.vinhonotas.cadastro.domain.entities.PersonEntity;
-import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.domain.entities.*;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -32,6 +29,7 @@ public class PersonServiceImpl implements PersonService {
     private final StateServiceImpl stateService;
     private final CountryServiceImpl countryService;
     private final CountryConverter countryConverter;
+    private final UserServiceImpl userService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -173,6 +171,14 @@ public class PersonServiceImpl implements PersonService {
             log.error("delete :: Ocorreu um erro: {}", MessagesConstants.PERSON_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND);
         }
+
+        log.info("Buscando um usuário com o personId: {}", person.get().getId());
+        UserEntity user = userService.getByPersonId(person.get().getId());
+        if (Objects.nonNull(user)) {
+            log.info("Deletando a seguinte pessoa: {}", person.toString());
+            userService.delete(user.getId());
+        }
+
         try {
             personRepository.deleteById(id);
         } catch (Exception e) {

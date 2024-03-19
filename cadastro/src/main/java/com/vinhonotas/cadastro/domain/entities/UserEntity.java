@@ -23,7 +23,7 @@ public class UserEntity {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "person_id", nullable = false)
     private PersonEntity person;
 
