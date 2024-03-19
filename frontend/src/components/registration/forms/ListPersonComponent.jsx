@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { Toolbar } from 'primereact/toolbar';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import useListPersonComponentHook from '../../../hooks/registration/useListPersonComponentHook';
+import { createPerson, updatePerson, deletePerson } from '../../../service/registration/PersonService';
 
 const ListPersonComponent = () => {
     const { persons } = useListPersonComponentHook();
+    const dt = useRef(null);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -15,18 +21,35 @@ const ListPersonComponent = () => {
         birthDate: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
 
-    const [loading, setLoading] = useState(true);
+    const columns = [
+        { field: 'name', header: 'Nome', sortable: true, filterField: 'name' },
+        { field: 'document', header: 'Documento', sortable: true, filterField: 'document' },
+        { field: 'birthDate', header: 'Data de Nascimento', sortable: true, filterField: 'birthDate' }
+    ];
 
+    const [visibleColumns, setVisibleColumns] = useState([]);
+    
+    const exportCSV = () => {
+        dt.current.exportCSV();
+      };
+    
+      const [loading, setLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-
     const [expandedRows, setExpandedRows] = useState(null);
 
     const allowExpansion = (persons) => {
         return persons.address ? true : false;
     };
 
+    const rightToolbarTemplate = () => {
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+      }
+
+      const leftToolbarTemplate = () => {};
+
     useEffect(() => {
         setLoading(false);
+        setVisibleColumns(columns);
     }, []);
 
     const onGlobalFilterChange = (e) => {
@@ -72,13 +95,14 @@ const ListPersonComponent = () => {
     };
 
     return (
-        <div className='card'>
-            <h5><strong>Pessoas</strong></h5>
+        <Card style={{ marginTop: 10 }} title="Lista de pessoas">  
+         <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>         
             <DataTable
                 value={persons}
                 expandedRows={expandedRows}
                 onRowToggle={(e) => setExpandedRows(e.data)}
                 rowExpansionTemplate={rowExpansionTemplate}
+
                 paginator
                 rows={10}
                 rowsPerPageOptions={[10, 20, 30, 50]}
@@ -86,30 +110,24 @@ const ListPersonComponent = () => {
                 filters={filters}
                 globalFilterFields={['name', 'document', 'birthDate']}
                 header={header}
+                showGridlines
+                selectionMode="multiple"
+        //         selection={selectedAddress}
+        // onSelectionChange={onSelectionChange}
+        // onSelectAll={onSelectAllChange}
+
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
+                ref={dt}
             >
-                <Column expander={allowExpansion} style={{ width: '5rem' }} />
-                <Column
-                    field='name'
-                    header='Nome'
-                    sortable
-                    filterField='name'
-                />
-                <Column
-                    field='document'
-                    header='Documento'
-                    sortable
-                    filterField='document'
-                />
-                <Column
-                    field='birthDate'
-                    header='Data de Nascimento'
-                    sortable
-                    filterField='birthDate'
-                />
+                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
+        {visibleColumns.map((col) => (
+          <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+        ))}
             </DataTable>
-        </div>
+        </Card>
+        
+        
     )
 }
 
