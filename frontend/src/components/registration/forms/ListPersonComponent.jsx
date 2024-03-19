@@ -45,7 +45,16 @@ const ListPersonComponent = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
       }
 
-      const leftToolbarTemplate = () => {};
+      const leftToolbarTemplate = () => {
+        return (
+            <>
+            <div className="flex flex-wrap gap-2">
+            <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={''} raised />
+            </div>
+            </>
+
+        );
+      };
 
     useEffect(() => {
         setLoading(false);
