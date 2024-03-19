@@ -12,6 +12,7 @@ import { createPerson, updatePerson, deletePerson } from '../../../service/regis
 
 const ListPersonComponent = () => {
     const { persons, navigate, fetchPersons } = useListPersonComponentHook();
+    const [selectedPerson, setSelectedPerson] = useState(null);
     const dt = useRef(null);
 
     const [filters, setFilters] = useState({
@@ -28,12 +29,12 @@ const ListPersonComponent = () => {
     ];
 
     const [visibleColumns, setVisibleColumns] = useState([]);
-    
+
     const exportCSV = () => {
         dt.current.exportCSV();
-      };
-    
-      const [loading, setLoading] = useState(true);
+    };
+
+    const [loading, setLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [expandedRows, setExpandedRows] = useState(null);
 
@@ -47,18 +48,19 @@ const ListPersonComponent = () => {
 
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
-      }
+    }
 
-      const leftToolbarTemplate = () => {
+    const leftToolbarTemplate = () => {
         return (
             <>
-            <div className="flex flex-wrap gap-2">
-            <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-            </div>
+                <div className="flex flex-wrap gap-2">
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={''} disabled={!selectedPerson || selectedPerson.length !== 1} raised />                    
+                </div>
             </>
 
         );
-      };
+    };
 
     useEffect(() => {
         setLoading(false);
@@ -108,14 +110,14 @@ const ListPersonComponent = () => {
     };
 
     return (
-        <Card style={{ marginTop: 10 }} title="Lista de pessoas">  
-         <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>         
+        <Card style={{ marginTop: 10 }} title="Lista de pessoas">
+            <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
             <DataTable
                 value={persons}
                 expandedRows={expandedRows}
                 onRowToggle={(e) => setExpandedRows(e.data)}
                 rowExpansionTemplate={rowExpansionTemplate}
-                resizableColumns 
+                resizableColumns
                 columnResizeMode="expand"
                 paginator
                 rows={10}
@@ -126,23 +128,23 @@ const ListPersonComponent = () => {
                 header={header}
                 showGridlines
                 selectionMode="multiple"
-        //         selection={selectedAddress}
-        // onSelectionChange={onSelectionChange}
-        // onSelectAll={onSelectAllChange}
+                selection={selectedPerson}
 
+                // onSelectionChange={onSelectionChange}
+                // onSelectAll={onSelectAllChange}
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
                 ref={dt}
             >
                 <Column expander={allowExpansion} style={{ width: '5rem' }} />
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
-        {visibleColumns.map((col) => (
-          <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
-        ))}
+                {visibleColumns.map((col) => (
+                    <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+                ))}
             </DataTable>
         </Card>
-        
-        
+
+
     )
 }
 
