@@ -55,7 +55,7 @@ const ListAddressComponent = () => {
       setEditingAddress(selectedAddress[0]);
       setVisibleEditDialog(true);
     } else {
-      alert('Selecione um vinho para editar.');
+      alert('Selecione um endereço para editar.');
     }
   };
 

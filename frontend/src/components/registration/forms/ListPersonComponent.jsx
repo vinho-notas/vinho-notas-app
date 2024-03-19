@@ -13,6 +13,8 @@ import { createPerson, updatePerson, deletePerson } from '../../../service/regis
 const ListPersonComponent = () => {
     const { persons, navigate, fetchPersons } = useListPersonComponentHook();
     const [selectedPerson, setSelectedPerson] = useState(null);
+    const [editingPerson, setEditingPerson] = useState(null);
+    const [visibleEditDialog, setVisibleEditDialog] = useState(false);
     const dt = useRef(null);
 
     const [filters, setFilters] = useState({
@@ -42,9 +44,31 @@ const ListPersonComponent = () => {
         return persons.address ? true : false;
     };
 
+    const onSelectionChange = (e) => {
+        setSelectedPerson(e.value);
+    };
+
+    const onSelectAllChange = (e) => {
+        const _selectedPerson = e.checked ? persons.map(scale => scale) : null;
+    if (_selectedPerson) {
+      setSelectedPerson(_selectedPerson);
+    } else {
+      setSelectedPerson(null);
+    }
+    };
+
     const onNewClick = () => {
         navigate('/registration');
     };
+
+    const onEditClick = () => {
+        if (selectedPerson && selectedPerson.length === 1) {
+          setEditingPerson(selectedPerson[0]);
+          setVisibleEditDialog(true);
+        } else {
+          alert('Selecione uma pessoa para editar.');
+        }
+      };
 
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
@@ -55,7 +79,7 @@ const ListPersonComponent = () => {
             <>
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={''} disabled={!selectedPerson || selectedPerson.length !== 1} raised />                    
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised />                    
                 </div>
             </>
 
@@ -130,8 +154,8 @@ const ListPersonComponent = () => {
                 selectionMode="multiple"
                 selection={selectedPerson}
 
-                // onSelectionChange={onSelectionChange}
-                // onSelectAll={onSelectAllChange}
+                onSelectionChange={onSelectionChange}
+                onSelectAll={onSelectAllChange}
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
                 ref={dt}
