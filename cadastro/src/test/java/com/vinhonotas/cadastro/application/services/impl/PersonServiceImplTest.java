@@ -1,5 +1,6 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
@@ -37,19 +38,31 @@ class PersonServiceImplTest {
     private PersonRepository personRepository;
     @Mock
     private PersonConverter personConverter;
+    @Mock
+    private StateServiceImpl stateService;
+    @Mock
+    private CountryServiceImpl countryService;
+    @Mock
+    private CountryConverter countryConverter;
 
     private PersonInputDTO inputDTO;
     private PersonEntity entity;
+    private StateEntity state;
+    private AddressEntity address;
 
     @BeforeEach
     void setUp() {
         inputDTO = createInputDTO();
         entity = createEntity();
+        state = createStateEntity();
+        address = createAddressEntity();
     }
 
     @Test
     @DisplayName("Teste de criação de pessoa com sucesso")
     void testCreateSuccess() {
+        when(stateService.getByUf(inputDTO.getAddress().getUf().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry().getCountryName())).thenReturn(createCountry());
         when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
 
@@ -66,6 +79,8 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
+        when(stateService.getByUf(inputDTO.getAddress().getUf().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry().getCountryName())).thenReturn(createCountry());
         when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenThrow(BadRequestException.class);
 
@@ -262,9 +277,18 @@ class PersonServiceImplTest {
 
     private CountryInputDTO createCountryInputDTO() {
         return CountryInputDTO.builder()
+                .id("2cb051aa-5beb-4678-82cb-af44490c16af")
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
     }
 
+    private StateEntity createStateEntity() {
+        return StateEntity.builder()
+                .id(UUID.fromString("f941c810-c380-4b35-8430-cc5a3dc28b1a"))
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountry())
+                .build();
+    }
 }

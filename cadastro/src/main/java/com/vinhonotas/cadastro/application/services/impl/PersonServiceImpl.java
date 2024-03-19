@@ -1,9 +1,12 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
+import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -24,22 +27,54 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
     private final PersonConverter personConverter;
+    private final StateServiceImpl stateService;
+    private final CountryServiceImpl countryService;
+    private final CountryConverter countryConverter;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PersonEntity create(PersonInputDTO personInputDTO) {
         log.info("create :: Registrando uma pessoa com os dados: {}", personInputDTO.toString());
-        PersonEntity person = personRepository.findByDocument(personInputDTO.getDocument());
-        if (Objects.nonNull(person)) {
-            log.error("create :: Ocorreu um erro: {}", MessagesConstants.PERSON_ALREADY_EXISTS);
-            throw new BadRequestException(MessagesConstants.PERSON_ALREADY_EXISTS);
-        }
+        existsPersonByDocument(personInputDTO);
         try {
+            existsStateByUf(personInputDTO);
+            existsCountryByCountryName(personInputDTO);
             PersonEntity personEntity = personConverter.convertToEntity(personInputDTO);
+            log.info("Salvando pessoa no banco com os dados: {}", personEntity.toString());
             return personRepository.save(personEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_PERSON, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
+        }
+    }
+
+    private void existsCountryByCountryName(PersonInputDTO personInputDTO) {
+        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry().getCountryName());
+        if (Objects.isNull(country)) {
+            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry().getCountryName());
+        }
+        log.info("Salvando um país com os dados: {}", country.toString());
+        personInputDTO.getAddress().setCountry(countryConverter.convertToInputDTO(country));
+        personInputDTO.getAddress().getUf().setCountry(countryConverter.convertToInputDTO(country));
+    }
+
+    private void existsStateByUf(PersonInputDTO personInputDTO) {
+        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf().getUf());
+        if (Objects.isNull(state)) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_NOT_FOUND);
+            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
+        } else {
+            log.info("Salvando um estado com os dados: {}", state.toString());
+            personInputDTO.getAddress().getUf().setId(state.getId().toString());
+            personInputDTO.getAddress().getUf().setStateName(state.getStateName());
+        }
+    }
+
+    private void existsPersonByDocument(PersonInputDTO personInputDTO) {
+        PersonEntity person = personRepository.findByDocument(personInputDTO.getDocument());
+        if (Objects.nonNull(person)) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.PERSON_ALREADY_EXISTS + person.toString());
+            throw new BadRequestException(MessagesConstants.PERSON_ALREADY_EXISTS);
         }
     }
 
