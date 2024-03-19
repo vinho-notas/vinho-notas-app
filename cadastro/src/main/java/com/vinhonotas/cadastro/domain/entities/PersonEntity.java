@@ -32,7 +32,7 @@ public class PersonEntity {
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private AddressEntity address;
 

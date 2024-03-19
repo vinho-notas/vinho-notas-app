@@ -34,24 +34,32 @@ public class StateServiceImpl implements StateService {
     @Transactional(rollbackFor = Exception.class)
     public StateEntity create(StateInputDTO stateInputDTO) {
         log.info("create :: Registrando um estado com os dados: {}", stateInputDTO.toString());
-        StateEntity state = stateRepository.findByStateName(stateInputDTO.getStateName());
-        if (Objects.nonNull(state)) {
-            log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_ALREADY_EXISTS);
-            throw new BadRequestException(MessagesConstants.STATE_ALREADY_EXISTS);
-        }
+        existsStateByName(stateInputDTO);
         try {
-            CountryEntity country = countryRepository.findByCountryName(stateInputDTO.getCountry().getCountryName());
-            if (Objects.nonNull(country)) {
-                stateInputDTO.setCountry(countryConverter.convertToInputDTO(country));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
-                throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
-            }
+            existsCountryByName(stateInputDTO);
             StateEntity stateEntity = stateConverter.convertToEntity(stateInputDTO);
             return stateRepository.save(stateEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_STATE, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_STATE);
+        }
+    }
+
+    private void existsCountryByName(StateInputDTO stateInputDTO) {
+        CountryEntity country = countryRepository.findByCountryName(stateInputDTO.getCountry().getCountryName());
+        if (Objects.nonNull(country)) {
+            stateInputDTO.setCountry(countryConverter.convertToInputDTO(country));
+        } else {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
+            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
+        }
+    }
+
+    private void existsStateByName(StateInputDTO stateInputDTO) {
+        StateEntity state = stateRepository.findByStateName(stateInputDTO.getStateName());
+        if (Objects.nonNull(state)) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_ALREADY_EXISTS);
+            throw new BadRequestException(MessagesConstants.STATE_ALREADY_EXISTS);
         }
     }
 

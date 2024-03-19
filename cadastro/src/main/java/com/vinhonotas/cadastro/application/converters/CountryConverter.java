@@ -60,6 +60,7 @@ public class CountryConverter {
 
     public CountryInputDTO convertToInputDTO(CountryEntity country) {
         return CountryInputDTO.builder()
+                .id(country.getId().toString())
                 .countryName(country.getCountryName())
                 .continentName(country.getContinentName())
                 .build();

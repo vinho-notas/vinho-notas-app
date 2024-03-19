@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_CADASTRO_URL}/persons`;
+const API_URL = `${import.meta.env.VITE_API_BFF_URL}/persons`;
 
 export const createPerson = (person) => {
     return axios.post(API_URL, person);
