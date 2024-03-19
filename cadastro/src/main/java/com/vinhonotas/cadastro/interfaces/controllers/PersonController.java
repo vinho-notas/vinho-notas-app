@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
+import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/persons")
 @Tag(name = "Pessoas", description = "Operações relacionadas a pessoas")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class PersonController {
 
     private final PersonService personService;
@@ -51,13 +51,9 @@ public class PersonController {
     @Operation(summary = "Atualiza uma pessoa")
     @PutMapping("/{id}")
     public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody PersonInputDTO personInputDTO) {
-        return ResponseEntity.ok(
-                personConverter.convertToOutputDTOUpdate(
-                        personService.update(UUID.fromString(id),
-                        personInputDTO),
-                        UUID.fromString(id),
-                        personConverter.convertToOutputDTO(
-                                personService.update(UUID.fromString(id), personInputDTO))));
+        UUID personId = UUID.fromString(id);
+        PersonEntity updatedPerson = personService.update(personId, personInputDTO);
+        return ResponseEntity.ok(personConverter.convertToOutputDTO(updatedPerson));
     }
 
     @Operation(summary = "Deleta uma pessoa")

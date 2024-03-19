@@ -14,4 +14,5 @@ public interface UserService {
     UserEntity getByName(String name);
     UserEntity update(UUID id, UserInputDTO userInputDTO);
     void delete(UUID id);
+    UserEntity getByPersonId(UUID id);
 }

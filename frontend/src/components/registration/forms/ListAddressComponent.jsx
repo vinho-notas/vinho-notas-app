@@ -55,7 +55,7 @@ const ListAddressComponent = () => {
       setEditingAddress(selectedAddress[0]);
       setVisibleEditDialog(true);
     } else {
-      alert('Selecione um vinho para editar.');
+      alert('Selecione um endereço para editar.');
     }
   };
 
@@ -227,6 +227,8 @@ const ListAddressComponent = () => {
         rowsPerPageOptions={[10, 20, 30, 50]}
         loading={loading}
         filters={filters}
+        resizableColumns 
+        columnResizeMode="expand"
         globalFilterFields={['addressDescription', 'addressNumber', 'complement', 'district', 'zipCode', 'city', 'uf.stateName', 'country.countryName', 'phoneNumber']}
         header={header}
         showGridlines

@@ -180,9 +180,7 @@ class PersonControllerTest {
     void testUpdatePerson() throws Exception {
         personOutputDTO.setName("Nome da pessoa atualizado");
         when(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO)).thenReturn(personEntity);
-        when(personConverter.convertToOutputDTOUpdate(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO),
-                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personConverter.convertToOutputDTO(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO))))
-                .thenReturn(personOutputDTO);
+        when(personConverter.convertToOutputDTO(personEntity)).thenReturn(personOutputDTO);
 
         mockMvc.perform(put("/api/v1/persons/{id}", "123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON)
