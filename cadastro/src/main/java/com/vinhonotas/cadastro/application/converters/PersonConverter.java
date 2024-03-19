@@ -59,14 +59,4 @@ public class PersonConverter {
                 .map(this::convertToOutputDTO)
                 .toList();
     }
-
-    public PersonOutputDTO convertToOutputDTOUpdate(PersonEntity update, UUID uuid, PersonOutputDTO personOutputDTO) {
-        return PersonOutputDTO.builder()
-                .id(uuid)
-                .name(update.getName() != null ? update.getName() : personOutputDTO.getName())
-                .document(update.getDocument() != null ? update.getDocument() : personOutputDTO.getDocument())
-                .birthDate(update.getBirthDate() != null ? update.getBirthDate() : personOutputDTO.getBirthDate())
-                .address(update.getAddress() != null ? addressConverter.convertToOutputDTO(update.getAddress()) : personOutputDTO.getAddress())
-                .build();
-    }
 }

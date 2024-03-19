@@ -96,19 +96,6 @@ class PersonConverterTest {
         assertEquals(addressConverter.convertToOutputDTO(personEntity.getAddress()), personOutput.get(0).getAddress());
     }
 
-    @Test
-    @DisplayName("Teste de conversão de PersonEntity para PersonOutputDTOUpdate")
-    void testConvertToOutputDTOUpdate() {
-        personEntity.setName("Mauricio");
-        PersonOutputDTO personOutput = assertDoesNotThrow(() -> personConverter.convertToOutputDTOUpdate(personEntity, personEntity.getId(), personOutputDTO));
-        assertNotNull(personOutput);
-        assertEquals(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"), personOutput.getId());
-        assertEquals("Mauricio", personOutput.getName());
-        assertEquals("123456789", personOutput.getDocument());
-        assertEquals(LocalDate.of(1995, 10, 10), personOutput.getBirthDate());
-        assertEquals(addressConverter.convertToOutputDTO(personEntity.getAddress()), personOutput.getAddress());
-    }
-
     private PersonOutputDTO createPersonOutputDTO() {
         return PersonOutputDTO.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))

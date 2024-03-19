@@ -4,6 +4,7 @@ import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -112,14 +114,55 @@ public class PersonServiceImpl implements PersonService {
     public PersonEntity update(UUID id, PersonInputDTO personInputDTO) {
         log.info("update :: Atualizando pessoa com os dados: {}", personInputDTO.toString());
         try {
-            PersonEntity personEntity = this.getById(id);
-            personRepository.save(personConverter.convertToEntityUpdate(personEntity, id, personInputDTO));
-            return personRepository.findByName(personEntity.getName());
+            PersonEntity existingPerson = getById(id);
+            updatePersonData(personInputDTO, existingPerson);
+            updatePersonAddress(personInputDTO, existingPerson);
+            updateAuditingInfo(existingPerson);
+
+            PersonEntity updatedPerson = personRepository.save(existingPerson);
+            log.info("Pessoa atualizada com sucesso: {}", updatedPerson.toString());
+
+            return updatedPerson;
         } catch (Exception e) {
-            log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_PERSON_DATA, e);
+            log.error("update :: Ocorreu um erro ao atualizar a pessoa: {}", e.getMessage());
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_PERSON_DATA);
         }
     }
+
+    private static void updateAuditingInfo(PersonEntity existingPerson) {
+        existingPerson.setDthalt(LocalDateTime.now());
+        existingPerson.setUseralt("usuario");
+    }
+
+    private void updatePersonAddress(PersonInputDTO personInputDTO, PersonEntity existingPerson) {
+        AddressEntity address = existingPerson.getAddress();
+        address.setAddressDescription(personInputDTO.getAddress().getAddressDescription());
+        address.setAddressNumber(personInputDTO.getAddress().getAddressNumber());
+        address.setComplement(personInputDTO.getAddress().getComplement());
+        address.setDistrict(personInputDTO.getAddress().getDistrict());
+        address.setZipCode(personInputDTO.getAddress().getZipCode());
+        address.setCity(personInputDTO.getAddress().getCity());
+        address.setPhoneNumber(personInputDTO.getAddress().getPhoneNumber());
+
+        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf().getUf());
+        if (state == null) {
+            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
+        }
+        address.setUf(state);
+
+        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry().getCountryName());
+        if (country == null) {
+            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry().getCountryName());
+        }
+        address.setCountry(country);
+    }
+
+    private static void updatePersonData(PersonInputDTO personInputDTO, PersonEntity existingPerson) {
+        existingPerson.setName(personInputDTO.getName());
+        existingPerson.setDocument(personInputDTO.getDocument());
+        existingPerson.setBirthDate(personInputDTO.getBirthDate());
+    }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
