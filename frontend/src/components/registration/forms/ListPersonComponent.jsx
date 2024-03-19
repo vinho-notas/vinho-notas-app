@@ -11,7 +11,7 @@ import useListPersonComponentHook from '../../../hooks/registration/useListPerso
 import { createPerson, updatePerson, deletePerson } from '../../../service/registration/PersonService';
 
 const ListPersonComponent = () => {
-    const { persons } = useListPersonComponentHook();
+    const { persons, navigate, fetchPersons } = useListPersonComponentHook();
     const dt = useRef(null);
 
     const [filters, setFilters] = useState({
@@ -41,6 +41,10 @@ const ListPersonComponent = () => {
         return persons.address ? true : false;
     };
 
+    const onNewClick = () => {
+        navigate('/registration');
+    };
+
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
       }
@@ -49,7 +53,7 @@ const ListPersonComponent = () => {
         return (
             <>
             <div className="flex flex-wrap gap-2">
-            <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={''} raised />
+            <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
             </div>
             </>
 
