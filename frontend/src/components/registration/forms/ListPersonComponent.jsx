@@ -102,7 +102,8 @@ const ListPersonComponent = () => {
                 expandedRows={expandedRows}
                 onRowToggle={(e) => setExpandedRows(e.data)}
                 rowExpansionTemplate={rowExpansionTemplate}
-
+                resizableColumns 
+                columnResizeMode="expand"
                 paginator
                 rows={10}
                 rowsPerPageOptions={[10, 20, 30, 50]}
@@ -120,6 +121,7 @@ const ListPersonComponent = () => {
                 emptyMessage="Nenhum registro encontrado"
                 ref={dt}
             >
+                <Column expander={allowExpansion} style={{ width: '5rem' }} />
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
         {visibleColumns.map((col) => (
           <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
