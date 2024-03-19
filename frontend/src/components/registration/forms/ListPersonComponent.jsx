@@ -8,13 +8,14 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import useListPersonComponentHook from '../../../hooks/registration/useListPersonComponentHook';
-import { createPerson, updatePerson, deletePerson } from '../../../service/registration/PersonService';
+import { updatePerson, deletePerson } from '../../../service/registration/PersonService';
 
 const ListPersonComponent = () => {
     const { persons, navigate, fetchPersons } = useListPersonComponentHook();
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [editingPerson, setEditingPerson] = useState(null);
     const [visibleEditDialog, setVisibleEditDialog] = useState(false);
+    const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const dt = useRef(null);
 
     const [filters, setFilters] = useState({
@@ -81,6 +82,26 @@ const ListPersonComponent = () => {
         }
     };
 
+    const onDeleteClick = () => {
+        if (selectedPerson && selectedPerson.length > 0) {
+            setVisibleDeleteDialog(true);
+        } else {
+            alert('Selecione uma pessoa para excluir.');
+        }
+    };
+
+    const confirmDeletePerson = async () => {
+        try {
+            const personIds = selectedPerson.map(person => person.id);
+            await deletePerson(personIds);
+            setVisibleDeleteDialog(false);
+            setSelectedPerson(null);
+            await fetchPersons();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
     }
@@ -101,24 +122,30 @@ const ListPersonComponent = () => {
                             <InputText id="document" value={editingPerson?.document} onChange={(e) => setEditingPerson({ ...editingPerson, document: e.target.value })} />
                         </div>
                     </div>
-
                     <div className="p-fluid">
                         <label htmlFor="birthDate" className="p-col-12 p-md-2">Data de Nascimento</label>
                         <div className="p-col-12 p-md-10">
                             <InputText id="birthDate" value={editingPerson?.birthDate} onChange={(e) => setEditingPerson({ ...editingPerson, birthDate: e.target.value })} />
                         </div>
                     </div>
-
                     <div className="flex flex-wrap gap-2 mt-4">
                         <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} />
-
                     </div>
-
+                </Dialog>
+                <Dialog header="Excluir Pessoa" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
+                    <div className="p-fluid">
+                        <h5>Você deseja excluir a(s) pessoa(s) selecionada(s)?</h5>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeletePerson} />
+                    </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised />
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPerson || selectedPerson.length === 0} raised />
                 </div>
             </>
 
@@ -192,13 +219,11 @@ const ListPersonComponent = () => {
                 showGridlines
                 selectionMode="multiple"
                 selection={selectedPerson}
-
                 onSelectionChange={onSelectionChange}
                 onSelectAll={onSelectAllChange}
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
-                ref={dt}
-            >
+                ref={dt}            >
                 <Column expander={allowExpansion} style={{ width: '5rem' }} />
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
                 {visibleColumns.map((col) => (
@@ -206,8 +231,6 @@ const ListPersonComponent = () => {
                 ))}
             </DataTable>
         </Card>
-
-
     )
 }
 

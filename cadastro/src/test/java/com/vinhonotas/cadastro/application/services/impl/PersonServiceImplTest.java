@@ -44,6 +44,8 @@ class PersonServiceImplTest {
     private CountryServiceImpl countryService;
     @Mock
     private CountryConverter countryConverter;
+    @Mock
+    private UserServiceImpl userService;
 
     private PersonInputDTO inputDTO;
     private PersonEntity entity;
