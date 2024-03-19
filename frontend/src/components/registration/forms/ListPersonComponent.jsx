@@ -50,11 +50,11 @@ const ListPersonComponent = () => {
 
     const onSelectAllChange = (e) => {
         const _selectedPerson = e.checked ? persons.map(scale => scale) : null;
-    if (_selectedPerson) {
-      setSelectedPerson(_selectedPerson);
-    } else {
-      setSelectedPerson(null);
-    }
+        if (_selectedPerson) {
+            setSelectedPerson(_selectedPerson);
+        } else {
+            setSelectedPerson(null);
+        }
     };
 
     const onNewClick = () => {
@@ -63,12 +63,23 @@ const ListPersonComponent = () => {
 
     const onEditClick = () => {
         if (selectedPerson && selectedPerson.length === 1) {
-          setEditingPerson(selectedPerson[0]);
-          setVisibleEditDialog(true);
+            setEditingPerson(selectedPerson[0]);
+            setVisibleEditDialog(true);
         } else {
-          alert('Selecione uma pessoa para editar.');
+            alert('Selecione uma pessoa para editar.');
         }
-      };
+    };
+
+    const saveEditedPerson = async () => {
+        try {
+            await updatePerson(editingPerson.id, editingPerson);
+            setVisibleEditDialog(false);
+            await fetchPersons();
+            navigate("/persons")
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
@@ -77,9 +88,37 @@ const ListPersonComponent = () => {
     const leftToolbarTemplate = () => {
         return (
             <>
+                <Dialog header="Editar Pessoa" visible={visibleEditDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleEditDialog(false)}>
+                    <div className="p-fluid">
+                        <label htmlFor="name" className="p-col-12 p-md-2">Nome</label>
+                        <div className="p-col-12 p-md-10">
+                            <InputText id="name" value={editingPerson?.name} onChange={(e) => setEditingPerson({ ...editingPerson, name: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="p-fluid">
+                        <label htmlFor="document" className="p-col-12 p-md-2">Documento</label>
+                        <div className="p-col-12 p-md-10">
+                            <InputText id="document" value={editingPerson?.document} onChange={(e) => setEditingPerson({ ...editingPerson, document: e.target.value })} />
+                        </div>
+                    </div>
+
+                    <div className="p-fluid">
+                        <label htmlFor="birthDate" className="p-col-12 p-md-2">Data de Nascimento</label>
+                        <div className="p-col-12 p-md-10">
+                            <InputText id="birthDate" value={editingPerson?.birthDate} onChange={(e) => setEditingPerson({ ...editingPerson, birthDate: e.target.value })} />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} />
+
+                    </div>
+
+                </Dialog>
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised />                    
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised />
                 </div>
             </>
 
