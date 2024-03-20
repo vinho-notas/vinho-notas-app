@@ -22,8 +22,28 @@ const ListUserComponent = () => {
         email: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
 
+    const columns = [
+        { field: 'person.name', header: 'Nome' },
+        { field: 'enumProfile', header: 'Perfil' },
+        { field: 'email', header: 'Email' }
+    ];
+
     const [loading, setLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+    const [visibleColumns, setVisibleColumns] = useState([]);
+
+    const onSelectionChange = (e) => {
+        setSelectedUser(e.value);
+    };
+
+    const onSelectAllChange = (e) => {
+        const _selectedUser = e.checked ? users.map(scale => scale) : null;
+        if (_selectedUser) {
+            setSelectedUser(_selectedUser);
+        } else {
+            setSelectedUser(null);
+        }
+    };
 
     const exportCSV = () => {
         dt.current.exportCSV();
@@ -47,6 +67,7 @@ const ListUserComponent = () => {
 
     useEffect(() => {
         setLoading(false);
+        setVisibleColumns(columns);
     }, []);
 
     const onGlobalFilterChange = (e) => {
@@ -87,15 +108,16 @@ const ListUserComponent = () => {
                 showGridlines
                 tableStyle={{ width: '50rem' }}
                 selectionMode="multiple"
-                // selection={selectedPerson}
-                // onSelectionChange={onSelectionChange}
-                // onSelectAll={onSelectAllChange}
+                selection={selectedUser}
+                onSelectionChange={onSelectionChange}
+                onSelectAll={onSelectAllChange}
                 emptyMessage="Nenhum registro encontrado"
                 ref={dt}
             >
-                <Column field='person.name' header='Nome' sortable filterField='person.name' />
-                <Column field='enumProfile' header='Perfil' sortable filterField='enumProfile' />
-                <Column field='email' header='Email' sortable filterField='email' />
+                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
+                {visibleColumns.map((col) => (
+                    <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+                ))}
             </DataTable>
         </Card>
     )
