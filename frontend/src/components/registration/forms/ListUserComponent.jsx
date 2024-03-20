@@ -7,9 +7,10 @@ import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import useListUserComponentHook from '../../../hooks/registration/useListUserComponentHook';
-// import EnumProfile from '../../../utils/enums/EnumProfile';
-import { updateUser } from '../../../service/registration/UserService';
+import EnumProfile from '../../../utils/enums/EnumProfile';
+import { updateUser, deleteUser } from '../../../service/registration/UserService';
 
 const ListUserComponent = () => {
     const { users, navigate, fetchUsers } = useListUserComponentHook();
@@ -17,6 +18,8 @@ const ListUserComponent = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [visibleEditDialog, setVisibleEditDialog] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
+    const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
+    const profile = Object.values(EnumProfile);
 
 
     const [filters, setFilters] = useState({
@@ -69,6 +72,26 @@ const ListUserComponent = () => {
         }
     };
 
+    const onDeleteClick = () => {
+        if (selectedUser && selectedUser.length > 0) {
+            setVisibleDeleteDialog(true);
+        } else {
+            alert('Selecione um usuário para excluir.');
+        }
+    };
+
+    const confirmDeleteUser = async () => {
+        try {
+            const userIds = selectedUser.map(user => user.id);
+            await deleteUser(userIds);
+            setVisibleDeleteDialog(false);
+            setSelectedUser(null);
+            await fetchUsers();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const exportCSV = () => {
         dt.current.exportCSV();
     };
@@ -91,19 +114,26 @@ const ListUserComponent = () => {
                     </div>
                     <div className='p-fluid'>
                         <label htmlFor="enumProfile" className="p-col-12 p-md-2">Perfil</label>
-                        <div className="p-col-12 p-md-10">
-                            <InputText id="enumProfile" value={editingUser?.enumProfile} onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.target.value })} />
-                        </div>
+                        <Dropdown id="pointScale" value={editingUser?.profile || ''} options={profile} onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.target.value })} placeholder="Selecione um perfil" />
                     </div>
                     <div className="flex justify-content-end gap-2">
                         <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
                         <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedUser} />
                     </div>
-
+                </Dialog>
+                <Dialog header="Excluir Usuário" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
+                    <div className="p-fluid">
+                        <h5>Você deseja excluir o(s) usuário(s) selecionado(s)?</h5>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteUser} />
+                    </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
                         raised />
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
                 </div>
             </>
         )
@@ -171,7 +201,4 @@ const ListUserComponent = () => {
     )
 }
 
-export default ListUserComponent
-{/* {Object.values(EnumProfile).map((type, index) => (
-  <option key={index} value={type}>{type}</option>
-))} */}
+export default ListUserComponent;
