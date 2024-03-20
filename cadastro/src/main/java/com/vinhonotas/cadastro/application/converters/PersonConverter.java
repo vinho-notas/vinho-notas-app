@@ -60,4 +60,18 @@ public class PersonConverter {
                 .map(this::convertToOutputDTO)
                 .toList();
     }
+
+    public PersonInputDTO convertToInputDTO(PersonEntity person) {
+        return PersonInputDTO.builder()
+                .id(person.getId().toString())
+                .name(person.getName())
+                .document(person.getDocument())
+                .birthDate(person.getBirthDate())
+                .address(addressConverter.convertToInputDTO(person.getAddress()))
+                .userreg(person.getUserreg())
+                .dthreg(person.getDthreg())
+                .useralt(person.getUseralt())
+                .dthalt(person.getDthalt())
+                .build();
+    }
 }
