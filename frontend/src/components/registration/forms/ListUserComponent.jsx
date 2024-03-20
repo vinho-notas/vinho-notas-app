@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { Toolbar } from 'primereact/toolbar';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import useListUserComponentHook from '../../../hooks/registration/useListUserComponentHook';
-import EnumProfile from '../../../utils/enums/EnumProfile';
+// import EnumProfile from '../../../utils/enums/EnumProfile';
+import { updateUser } from '../../../service/registration/UserService';
 
 const ListUserComponent = () => {
     const { users } = useListUserComponentHook();
-    const profile = Object.values(EnumProfile);    
-
+    const dt = useRef(null);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         'person.name': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -18,8 +22,19 @@ const ListUserComponent = () => {
     });
 
     const [loading, setLoading] = useState(true);
-
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+    const exportCSV = () => {
+        dt.current.exportCSV();
+    };
+
+    const leftToolbarTemplate = () => {
+
+    };
+
+    const rightToolbarTemplate = () => {
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;        
+    };
 
     useEffect(() => {
         setLoading(false);
@@ -46,11 +61,13 @@ const ListUserComponent = () => {
 
     const header = renderHeader();
 
-  return (
-    <div className='card'>
-        <h5><strong>Usuários</strong></h5>
-        <DataTable
+    return (
+        <Card style={{ marginTop: 10 }} title="Lista de usuários">                    
+         <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
+            <DataTable
                 value={users}
+                resizableColumns
+                columnResizeMode="expand"
                 paginator
                 rows={10}
                 rowsPerPageOptions={[10, 20, 30, 50]}
@@ -58,35 +75,24 @@ const ListUserComponent = () => {
                 filters={filters}
                 globalFilterFields={['person.name', 'enumProfile', 'email']}
                 header={header}
+                showGridlines
                 tableStyle={{ width: '50rem' }}
+                selectionMode="multiple"
+                // selection={selectedPerson}
+                // onSelectionChange={onSelectionChange}
+                // onSelectAll={onSelectAllChange}
                 emptyMessage="Nenhum registro encontrado"
-            >                
-                <Column
-                    field='person.name'
-                    header='Nome'
-                    sortable
-                    filterField='person.name'
-                />
-                <Column
-                    field='enumProfile'
-                    header='Perfil'
-                    sortable
-                    filterField='enumProfile'
-                />
-                {Object.values(EnumProfile).map((type, index) => (
-                  <option key={index} value={type}>{type}</option>
-                ))}
-
-                <Column
-                    field='email'
-                    header='Email'
-                    sortable
-                    filterField='email'
-                />
-
+                ref={dt}     
+            >
+                <Column field='person.name' header='Nome' sortable filterField='person.name' />
+                <Column field='enumProfile' header='Perfil' sortable filterField='enumProfile' />
+                <Column field='email' header='Email' sortable filterField='email' />
             </DataTable>
-    </div>
-  )
+        </Card>        
+    )
 }
 
 export default ListUserComponent
+{/* {Object.values(EnumProfile).map((type, index) => (
+  <option key={index} value={type}>{type}</option>
+))} */}
