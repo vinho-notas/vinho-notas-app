@@ -14,6 +14,7 @@ import { updateUser } from '../../../service/registration/UserService';
 const ListUserComponent = () => {
     const { users } = useListUserComponentHook();
     const dt = useRef(null);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         'person.name': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -29,11 +30,19 @@ const ListUserComponent = () => {
     };
 
     const leftToolbarTemplate = () => {
+        return (
+            <>
+                <div className="flex flex-wrap gap-2">
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={'onEditClick'} disabled={!selectedUser || selectedUser.length !== 1} raised />
+                </div>
+            </>
+
+        )
 
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;        
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
     };
 
     useEffect(() => {
@@ -62,8 +71,8 @@ const ListUserComponent = () => {
     const header = renderHeader();
 
     return (
-        <Card style={{ marginTop: 10 }} title="Lista de usuários">                    
-         <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
+        <Card style={{ marginTop: 10 }} title="Lista de usuários">
+            <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
             <DataTable
                 value={users}
                 resizableColumns
@@ -82,13 +91,13 @@ const ListUserComponent = () => {
                 // onSelectionChange={onSelectionChange}
                 // onSelectAll={onSelectAllChange}
                 emptyMessage="Nenhum registro encontrado"
-                ref={dt}     
+                ref={dt}
             >
                 <Column field='person.name' header='Nome' sortable filterField='person.name' />
                 <Column field='enumProfile' header='Perfil' sortable filterField='enumProfile' />
                 <Column field='email' header='Email' sortable filterField='email' />
             </DataTable>
-        </Card>        
+        </Card>
     )
 }
 
