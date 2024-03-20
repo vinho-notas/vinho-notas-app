@@ -70,6 +70,7 @@ public class StateConverter {
 
     public StateInputDTO convertToInputDTO(StateEntity state) {
         return StateInputDTO.builder()
+                .id(state.getId().toString())
                 .stateName(state.getStateName())
                 .uf(state.getUf())
                 .country(countryConverter.convertToInputDTO(state.getCountry()))

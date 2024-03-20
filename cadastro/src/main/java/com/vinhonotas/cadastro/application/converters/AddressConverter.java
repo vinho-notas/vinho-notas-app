@@ -95,4 +95,22 @@ public class AddressConverter {
                 .phoneNumber(addressOutputDTO.getPhoneNumber() != null ? addressOutputDTO.getPhoneNumber() : addressEntity.getPhoneNumber())
                 .build();
     }
+
+    public AddressInputDTO convertToInputDTO(AddressEntity address) {
+        return AddressInputDTO.builder()
+                .addressDescription(address.getAddressDescription())
+                .addressNumber(address.getAddressNumber())
+                .complement(address.getComplement())
+                .district(address.getDistrict())
+                .zipCode(address.getZipCode())
+                .city(address.getCity())
+                .uf(stateConverter.convertToInputDTO(address.getUf()))
+                .country(countryConverter.convertToInputDTO(address.getCountry()))
+                .phoneNumber(address.getPhoneNumber())
+                .userreg(address.getUserreg())
+                .dthreg(address.getDthreg())
+                .useralt(address.getUseralt())
+                .dthalt(address.getDthalt())
+                .build();
+    }
 }

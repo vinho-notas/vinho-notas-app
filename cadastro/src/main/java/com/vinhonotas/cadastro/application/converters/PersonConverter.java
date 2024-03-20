@@ -18,6 +18,7 @@ public class PersonConverter {
 
     public PersonEntity convertToEntity(PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
+                .id(UUID.fromString(personInputDTO.getId()))
                 .name(personInputDTO.getName())
                 .document(personInputDTO.getDocument())
                 .birthDate(personInputDTO.getBirthDate())
@@ -58,5 +59,19 @@ public class PersonConverter {
         return all.stream()
                 .map(this::convertToOutputDTO)
                 .toList();
+    }
+
+    public PersonInputDTO convertToInputDTO(PersonEntity person) {
+        return PersonInputDTO.builder()
+                .id(person.getId().toString())
+                .name(person.getName())
+                .document(person.getDocument())
+                .birthDate(person.getBirthDate())
+                .address(addressConverter.convertToInputDTO(person.getAddress()))
+                .userreg(person.getUserreg())
+                .dthreg(person.getDthreg())
+                .useralt(person.getUseralt())
+                .dthalt(person.getDthalt())
+                .build();
     }
 }
