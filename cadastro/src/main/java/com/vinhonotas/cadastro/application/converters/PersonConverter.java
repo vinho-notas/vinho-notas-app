@@ -18,6 +18,7 @@ public class PersonConverter {
 
     public PersonEntity convertToEntity(PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
+                .id(UUID.fromString(personInputDTO.getId()))
                 .name(personInputDTO.getName())
                 .document(personInputDTO.getDocument())
                 .birthDate(personInputDTO.getBirthDate())
