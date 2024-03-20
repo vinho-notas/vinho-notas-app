@@ -1,9 +1,12 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.converters.UserConverter;
 import com.vinhonotas.cadastro.application.services.UserService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -24,22 +27,33 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
+    private final PersonRepository personRepository;
+    private final PersonConverter personConverter;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity create(UserInputDTO userInputDTO) {
         log.info("create :: Registrando um usuário com os dados: {}", userInputDTO.toString());
-        UserEntity person = userRepository.findByPersonDocument(userInputDTO.getPerson().getDocument());
-        if (Objects.nonNull(person)) {
-            log.error("create :: Ocorreu um erro: {}", MessagesConstants.USER_ALREADY_EXISTS);
-            throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
-        }
+        existsUser(userInputDTO);
         try {
             UserEntity userEntity = userConverter.convertToEntity(userInputDTO);
             return userRepository.save(userEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_USER, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_USER);
+        }
+    }
+
+    private void existsUser(UserInputDTO userInputDTO) {
+        log.info("existsUser :: Verificando se o usuário já existe com os dados: {}", userInputDTO.toString());
+        PersonEntity person = personRepository.findById(UUID.fromString(userInputDTO.getPerson().getId())).orElseThrow();
+        log.info("Pessoa encontrada: {}", person.toString());
+        userInputDTO.setPerson(personConverter.convertToInputDTO(person));
+
+        UserEntity user = userRepository.findByPersonDocument(userInputDTO.getPerson().getDocument());
+        if (Objects.nonNull(user)) {
+            log.error("existsUser :: Já existe um usuário com os dados: {}", userInputDTO.toString());
+            throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
         }
     }
 

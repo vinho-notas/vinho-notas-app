@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PersonInputDTO {
 
+    private String id;
     private String name;
     private String document;
     private LocalDate birthDate;
