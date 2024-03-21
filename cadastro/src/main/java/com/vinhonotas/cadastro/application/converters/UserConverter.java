@@ -1,7 +1,9 @@
 package com.vinhonotas.cadastro.application.converters;
 
+import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
+import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
 import com.vinhonotas.cadastro.utils.EnumConverter;
@@ -17,10 +19,12 @@ import java.util.UUID;
 public class UserConverter {
 
     private final PersonConverter personConverter;
+    private final PersonRepository personRepository;
 
     public UserEntity convertToEntity(UserInputDTO userInputDTO) {
+        PersonEntity personEntity = personRepository.findById(UUID.fromString(userInputDTO.getPersonId())).orElseThrow();
         return UserEntity.builder()
-                .person(personConverter.convertToEntity(userInputDTO.getPerson()))
+                .person(personEntity)
                 .enumProfile(EnumConverter.fromString(userInputDTO.getEnumProfile(), EnumProfile.class))
                 .email(userInputDTO.getEmail())
                 .password(userInputDTO.getPassword())
@@ -32,10 +36,10 @@ public class UserConverter {
     }
 
     public UserEntity converteToEntityUpdate(UserEntity entity, UUID id, UserInputDTO userInputDTO) {
+        PersonEntity personEntity = personRepository.findById(UUID.fromString(userInputDTO.getPersonId())).orElseThrow();
         return UserEntity.builder()
                 .id(id)
-                .person(userInputDTO.getPerson() != null ? personConverter.convertToEntity(userInputDTO.getPerson()) :
-                        entity.getPerson())
+                .person(entity.getPerson() != null ? entity.getPerson() : personEntity)
                 .enumProfile(userInputDTO.getEnumProfile() != null ? EnumConverter.fromString(userInputDTO
                         .getEnumProfile(), EnumProfile.class) : entity.getEnumProfile())
                 .email(userInputDTO.getEmail() != null ? userInputDTO.getEmail() : entity.getEmail())

@@ -6,7 +6,8 @@ const Header = () => {
     { label: 'Login', icon: 'pi pi-user', url: '/login' },
     { label: 'Cadastro', icon: 'pi pi-user-plus', 
       items: [
-        { label: 'Cadastrar pessoa e usuário', icon: 'pi pi-user-plus', url: '/registration' },
+        { label: 'Cadastrar usuário', icon: 'pi pi-user-plus', url: '/user-registration' },
+        { label: 'Cadastrar pessoa', icon: 'pi pi-user-plus', url: '/registration' },
         { label: 'Lista de usuários', icon: 'pi pi-users', url: '/users' },
         { label: 'Lista de pessoas', icon: 'pi pi-users', url: '/persons' },
         { label: 'Lista de endereços', icon: 'pi pi-folder-open', url: '/address' },
