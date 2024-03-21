@@ -62,8 +62,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
-        when(countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))).thenReturn(Optional.of(brasilEntity));
-        when(stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))).thenReturn(Optional.of(createSaoPauloEntity()));
+        when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
+        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
         when(addressConverter.convertToEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
 
@@ -147,8 +147,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço")
     void testUpdateSucesso() {
-        when(stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))).thenReturn(Optional.of(createSaoPauloEntity()));
-        when(countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))).thenReturn(Optional.of(brasilEntity));
+        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
+        when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
         when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
@@ -221,8 +221,8 @@ class AddressServiceImplTest {
                 .district("Centro")
                 .zipCode("00000-000")
                 .city("São Paulo")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("11999999999")
                 .build();
     }

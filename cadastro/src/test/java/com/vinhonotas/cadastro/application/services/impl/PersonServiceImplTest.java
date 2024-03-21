@@ -63,8 +63,9 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com sucesso")
     void testCreateSuccess() {
-        when(stateService.getByUf(inputDTO.getAddress().getUf().getUf())).thenReturn(state);
-        when(countryService.getByName(inputDTO.getAddress().getCountry().getCountryName())).thenReturn(createCountry());
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
+        when(countryConverter.convertToInputDTO(createCountry())).thenReturn(createCountryInputDTO());
         when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
 
@@ -81,8 +82,9 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
-        when(stateService.getByUf(inputDTO.getAddress().getUf().getUf())).thenReturn(state);
-        when(countryService.getByName(inputDTO.getAddress().getCountry().getCountryName())).thenReturn(createCountry());
+        when(countryConverter.convertToInputDTO(createCountry())).thenReturn(createCountryInputDTO());
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
         when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenThrow(BadRequestException.class);
 
@@ -159,8 +161,8 @@ class PersonServiceImplTest {
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdate() {
         when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
-        when(stateService.getByUf(inputDTO.getAddress().getUf().getUf())).thenReturn(state);
-        when(countryService.getByName(inputDTO.getAddress().getCountry().getCountryName())).thenReturn(createCountry());
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
         when(personRepository.save(entity)).thenReturn(entity);
 
         PersonEntity entity = assertDoesNotThrow(() -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
@@ -244,8 +246,8 @@ class PersonServiceImplTest {
                 .district("Bairro 1")
                 .zipCode("99999999")
                 .city("Cidade 1")
-                .uf(createUfInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("47999999999")
                 .build();
     }

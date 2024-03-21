@@ -49,24 +49,22 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void existsCountryByCountryName(PersonInputDTO personInputDTO) {
-        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry().getCountryName());
+        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry());
         if (Objects.isNull(country)) {
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry().getCountryName());
+            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry());
         }
         log.info("Salvando um país com os dados: {}", country.toString());
-        personInputDTO.getAddress().setCountry(countryConverter.convertToInputDTO(country));
-        personInputDTO.getAddress().getUf().setCountry(countryConverter.convertToInputDTO(country));
+        personInputDTO.getAddress().setCountry(countryConverter.convertToInputDTO(country).getCountryName());
     }
 
     private void existsStateByUf(PersonInputDTO personInputDTO) {
-        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf().getUf());
+        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf());
         if (Objects.isNull(state)) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
         } else {
             log.info("Salvando um estado com os dados: {}", state.toString());
-            personInputDTO.getAddress().getUf().setId(state.getId().toString());
-            personInputDTO.getAddress().getUf().setStateName(state.getStateName());
+            personInputDTO.getAddress().setUf(state.getUf());
         }
     }
 
@@ -142,15 +140,15 @@ public class PersonServiceImpl implements PersonService {
         address.setCity(personInputDTO.getAddress().getCity());
         address.setPhoneNumber(personInputDTO.getAddress().getPhoneNumber());
 
-        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf().getUf());
+        StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf());
         if (state == null) {
             throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
         }
         address.setUf(state);
 
-        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry().getCountryName());
+        CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry());
         if (country == null) {
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry().getCountryName());
+            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry());
         }
         address.setCountry(country);
     }
