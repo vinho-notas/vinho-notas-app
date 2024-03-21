@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     private void existsUser(UserInputDTO userInputDTO) {
         log.info("existsUser :: Verificando se o usuário já existe com os dados: {}", userInputDTO.toString());
-        PersonEntity person = personRepository.findById(UUID.fromString(userInputDTO.getPerson().getId())).orElseThrow();
+        PersonEntity person = personRepository.findByName(userInputDTO.getPerson().getName());
         log.info("Pessoa encontrada: {}", person.toString());
         userInputDTO.setPerson(personConverter.convertToInputDTO(person));
 

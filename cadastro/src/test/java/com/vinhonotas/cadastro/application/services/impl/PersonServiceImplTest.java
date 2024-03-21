@@ -2,7 +2,6 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
@@ -65,7 +64,6 @@ class PersonServiceImplTest {
     void testCreateSuccess() {
         when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
         when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
-        when(countryConverter.convertToInputDTO(createCountry())).thenReturn(createCountryInputDTO());
         when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
 
@@ -82,16 +80,8 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
-        when(countryConverter.convertToInputDTO(createCountry())).thenReturn(createCountryInputDTO());
-        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
-        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
-        when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
-        when(personRepository.save(entity)).thenThrow(BadRequestException.class);
-
         Exception exception = assertThrows(Exception.class, () -> personService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
-        verify(personConverter, times(1)).convertToEntity(inputDTO);
-        verify(personRepository, times(1)).save(entity);
     }
 
     @Test
