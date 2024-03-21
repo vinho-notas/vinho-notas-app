@@ -232,27 +232,12 @@ class UserControllerTest {
                 .addressDescription("Rua Teste")
                 .addressNumber(123)
                 .city("Cidade Teste")
-                .uf(createStateInputDTO())
+                .uf("SC")
                 .complement("Complemento Teste")
-                .country(createCountryInputDTO())
+                .country("Brasil")
                 .district("Bairro Teste")
                 .phoneNumber("123456789")
                 .zipCode("12345678")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(createCountryInputDTO())
-                .build();
-    }
-
-    private CountryInputDTO createCountryInputDTO() {
-        return CountryInputDTO.builder()
-                .countryName("Brasil")
-                .continentName("América do Sul")
                 .build();
     }
 

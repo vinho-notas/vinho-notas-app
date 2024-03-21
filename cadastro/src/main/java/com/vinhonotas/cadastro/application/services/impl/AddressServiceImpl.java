@@ -55,17 +55,15 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private CountryEntity getCountryEntity(AddressInputDTO addressInputDTO) {
-        log.info("Buscando país pelo id: {}", addressInputDTO.getCountry().getId());
-        CountryEntity country = countryRepository.findById(UUID.fromString(addressInputDTO.getCountry().getId()))
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_ID + addressInputDTO.getCountry().getId()));
+        log.info("Buscando país pelo nome: {}", addressInputDTO.getCountry());
+        CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry());
         log.info("País encontrado: {}", country.toString());
         return country;
     }
 
     private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
-        log.info("Buscando estado pelo id: {}", addressInputDTO.getUf().getId());
-        StateEntity state = stateRepository.findById(UUID.fromString(addressInputDTO.getUf().getId()))
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_ID + addressInputDTO.getUf().getId()));
+        log.info("Buscando estado pela UF: {}", addressInputDTO.getUf());
+        StateEntity state = stateRepository.findByUf(addressInputDTO.getUf());
         log.info("Estado encontrado: {}", state.toString());
         return state;
     }

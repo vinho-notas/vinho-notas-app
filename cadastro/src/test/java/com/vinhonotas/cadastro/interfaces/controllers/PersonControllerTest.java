@@ -311,8 +311,8 @@ class PersonControllerTest {
                 .complement("Complemento da pessoa")
                 .district("Bairro da pessoa")
                 .city("Cidade da pessoa")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .zipCode("12345678")
                 .phoneNumber("12345678910")
                 .build();
