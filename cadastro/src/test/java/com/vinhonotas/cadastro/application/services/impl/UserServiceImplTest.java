@@ -253,8 +253,8 @@ class UserServiceImplTest {
                 .district("Bairro 1")
                 .zipCode("99999999")
                 .city("Cidade 1")
-                .uf(createUfInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("47999999999")
                 .build();
     }

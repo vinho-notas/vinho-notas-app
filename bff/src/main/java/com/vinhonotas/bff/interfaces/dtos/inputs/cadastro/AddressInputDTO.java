@@ -15,8 +15,8 @@ public class AddressInputDTO {
     private String district;
     private String zipCode;
     private String city;
-    private StateInputDTO uf;
-    private CountryInputDTO country;
+    private String uf;
+    private String country;
     private String phoneNumber;
     private LocalDateTime dthreg;
     private String userreg;

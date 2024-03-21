@@ -5,9 +5,7 @@ import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
@@ -164,8 +162,8 @@ class PersonConverterTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(Mockito.mock(StateInputDTO.class))
-                .country(Mockito.mock(CountryInputDTO.class))
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("00000000000")
                 .build();
     }
