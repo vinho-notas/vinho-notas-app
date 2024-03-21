@@ -2,6 +2,7 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
 import com.vinhonotas.cadastro.application.services.AddressService;
+import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/address")
 @Tag(name = "Endereços", description = "Operações relacionadas a endereços")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class AddressController {
 
     private final AddressService addressService;
@@ -45,8 +45,10 @@ public class AddressController {
     @Operation(summary = "Atualiza um endereço")
     @PutMapping("/{id}")
     public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody AddressInputDTO addressInputDTO) {
-        return ResponseEntity.ok(addressConverter.convertToOutputDTOUpdate(addressService.update(UUID.fromString(id),
-                addressInputDTO), UUID.fromString(id), addressConverter.convertToOutputDTO(addressService.update(UUID.fromString(id), addressInputDTO))));
+        AddressEntity addressUpdated = addressService.update(UUID.fromString(id), addressInputDTO);
+        AddressOutputDTO addressOutputDTO = addressConverter.convertToOutputDTO(addressUpdated);
+
+        return ResponseEntity.ok(addressConverter.convertToOutputDTOUpdate(addressUpdated, UUID.fromString(id), addressOutputDTO));
     }
 
     @Operation(summary = "Deleta um endereço")

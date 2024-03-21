@@ -39,16 +39,16 @@ public class AddressEntity {
     @Column(name = "city")
     private String city;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id", nullable = false)
-    private StateEntity uf;
-
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private CountryEntity country;
-
     @Column(name = "phonenumber")
     private String phoneNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "state_id")
+    private StateEntity uf;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private CountryEntity country;
 
     @Column(name = "dthreg")
     private LocalDateTime dthreg;

@@ -18,6 +18,7 @@ public class PersonConverter {
 
     public PersonEntity convertToEntity(PersonInputDTO personInputDTO) {
         return PersonEntity.builder()
+                .id(personInputDTO.getId() != null ? UUID.fromString(personInputDTO.getId()): null)
                 .name(personInputDTO.getName())
                 .document(personInputDTO.getDocument())
                 .birthDate(personInputDTO.getBirthDate())
@@ -60,13 +61,17 @@ public class PersonConverter {
                 .toList();
     }
 
-    public PersonOutputDTO convertToOutputDTOUpdate(PersonEntity update, UUID uuid, PersonOutputDTO personOutputDTO) {
-        return PersonOutputDTO.builder()
-                .id(uuid)
-                .name(update.getName() != null ? update.getName() : personOutputDTO.getName())
-                .document(update.getDocument() != null ? update.getDocument() : personOutputDTO.getDocument())
-                .birthDate(update.getBirthDate() != null ? update.getBirthDate() : personOutputDTO.getBirthDate())
-                .address(update.getAddress() != null ? addressConverter.convertToOutputDTO(update.getAddress()) : personOutputDTO.getAddress())
+    public PersonInputDTO convertToInputDTO(PersonEntity person) {
+        return PersonInputDTO.builder()
+                .id(person.getId().toString())
+                .name(person.getName())
+                .document(person.getDocument())
+                .birthDate(person.getBirthDate())
+                .address(addressConverter.convertToInputDTO(person.getAddress()))
+                .userreg(person.getUserreg())
+                .dthreg(person.getDthreg())
+                .useralt(person.getUseralt())
+                .dthalt(person.getDthalt())
                 .build();
     }
 }

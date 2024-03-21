@@ -1,6 +1,10 @@
 package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
+import com.vinhonotas.cadastro.domain.entities.CountryEntity;
+import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.infrastructure.CountryRepository;
+import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +20,12 @@ public class AddressConverter {
 
     private final StateConverter stateConverter;
     private final CountryConverter countryConverter;
+    private final StateRepository stateRepository;
+    private final CountryRepository countryRepository;
 
     public AddressEntity convertToEntity(AddressInputDTO addressInputDTO) {
+        StateEntity state = stateRepository.findByUf(addressInputDTO.getUf());
+        CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry());
         return AddressEntity.builder()
                 .addressDescription(addressInputDTO.getAddressDescription())
                 .addressNumber(addressInputDTO.getAddressNumber())
@@ -25,11 +33,11 @@ public class AddressConverter {
                 .district(addressInputDTO.getDistrict())
                 .zipCode(addressInputDTO.getZipCode())
                 .city(addressInputDTO.getCity())
-                .uf(stateConverter.convertToEntity(addressInputDTO.getUf()))
-                .country(countryConverter.convertToEntity(addressInputDTO.getCountry()))
+                .uf(state)
+                .country(country)
                 .phoneNumber(addressInputDTO.getPhoneNumber())
                 .userreg(addressInputDTO.getUserreg())
-                .dthreg(addressInputDTO.getDthreg())
+                .dthreg(LocalDateTime.now())
                 .useralt(addressInputDTO.getUseralt())
                 .dthalt(addressInputDTO.getDthalt())
                 .build();
@@ -47,10 +55,8 @@ public class AddressConverter {
                 .district(addressInputDTO.getDistrict() != null ? addressInputDTO.getDistrict() : entity.getDistrict())
                 .zipCode(addressInputDTO.getZipCode() != null ? addressInputDTO.getZipCode() : entity.getZipCode())
                 .city(addressInputDTO.getCity() != null ? addressInputDTO.getCity() : entity.getCity())
-                .uf(addressInputDTO.getUf() != null ? stateConverter.convertToEntity(addressInputDTO.getUf()) : entity
-                        .getUf())
-                .country(addressInputDTO.getCountry() != null ? countryConverter.convertToEntity(addressInputDTO
-                        .getCountry()) : entity.getCountry())
+                .uf(entity.getUf())
+                .country(entity.getCountry())
                 .phoneNumber(addressInputDTO.getPhoneNumber() != null ? addressInputDTO.getPhoneNumber() : entity
                         .getPhoneNumber())
                 .userreg(addressInputDTO.getUserreg() != null ? addressInputDTO.getUserreg() : entity.getUserreg())
@@ -93,6 +99,24 @@ public class AddressConverter {
                 .uf(addressOutputDTO.getUf() != null ? addressOutputDTO.getUf() : stateConverter.convertToOutputDTO(addressEntity.getUf()))
                 .country(addressOutputDTO.getCountry() != null ? addressOutputDTO.getCountry() : countryConverter.convertToOutputDTO(addressEntity.getCountry()))
                 .phoneNumber(addressOutputDTO.getPhoneNumber() != null ? addressOutputDTO.getPhoneNumber() : addressEntity.getPhoneNumber())
+                .build();
+    }
+
+    public AddressInputDTO convertToInputDTO(AddressEntity address) {
+        return AddressInputDTO.builder()
+                .addressDescription(address.getAddressDescription())
+                .addressNumber(address.getAddressNumber())
+                .complement(address.getComplement())
+                .district(address.getDistrict())
+                .zipCode(address.getZipCode())
+                .city(address.getCity())
+                .uf(address.getUf().getUf())
+                .country(address.getCountry().getCountryName())
+                .phoneNumber(address.getPhoneNumber())
+                .userreg(address.getUserreg())
+                .dthreg(address.getDthreg())
+                .useralt(address.getUseralt())
+                .dthalt(address.getDthalt())
                 .build();
     }
 }

@@ -31,7 +31,7 @@ const StepThree = ({ nextStep, handleFormData, prevStep, values }) => {
 
     return (
         <>
-            <Card style={{ marginTop: 100 }}>
+            <Card style={{ marginTop: 10 }}>
                 <Card.Body>
                     <Form onSubmit={submitFormData}>
 

@@ -18,7 +18,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/states")
 @Tag(name = "Estados", description = "Operações relacionadas a estados")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class StateController {
 
     private final StateService stateService;

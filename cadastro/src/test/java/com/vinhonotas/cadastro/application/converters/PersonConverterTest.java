@@ -5,9 +5,7 @@ import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
@@ -96,19 +94,6 @@ class PersonConverterTest {
         assertEquals(addressConverter.convertToOutputDTO(personEntity.getAddress()), personOutput.get(0).getAddress());
     }
 
-    @Test
-    @DisplayName("Teste de conversão de PersonEntity para PersonOutputDTOUpdate")
-    void testConvertToOutputDTOUpdate() {
-        personEntity.setName("Mauricio");
-        PersonOutputDTO personOutput = assertDoesNotThrow(() -> personConverter.convertToOutputDTOUpdate(personEntity, personEntity.getId(), personOutputDTO));
-        assertNotNull(personOutput);
-        assertEquals(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"), personOutput.getId());
-        assertEquals("Mauricio", personOutput.getName());
-        assertEquals("123456789", personOutput.getDocument());
-        assertEquals(LocalDate.of(1995, 10, 10), personOutput.getBirthDate());
-        assertEquals(addressConverter.convertToOutputDTO(personEntity.getAddress()), personOutput.getAddress());
-    }
-
     private PersonOutputDTO createPersonOutputDTO() {
         return PersonOutputDTO.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
@@ -161,6 +146,7 @@ class PersonConverterTest {
 
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .name("Vinicius")
                 .document("123456789")
                 .birthDate(LocalDate.of(1995, 10, 10))
@@ -176,8 +162,8 @@ class PersonConverterTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(Mockito.mock(StateInputDTO.class))
-                .country(Mockito.mock(CountryInputDTO.class))
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("00000000000")
                 .build();
     }

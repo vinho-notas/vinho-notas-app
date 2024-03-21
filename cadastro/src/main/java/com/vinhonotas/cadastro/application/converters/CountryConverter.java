@@ -14,10 +14,11 @@ public class CountryConverter {
 
     public CountryEntity convertToEntity(CountryInputDTO countryInputDTO) {
         return CountryEntity.builder()
+                .id(UUID.fromString(countryInputDTO.getId()))
                 .countryName(countryInputDTO.getCountryName())
                 .continentName(countryInputDTO.getContinentName())
                 .userreg(countryInputDTO.getUserreg())
-                .dthreg(countryInputDTO.getDthreg())
+                .dthreg(LocalDateTime.now())
                 .useralt(countryInputDTO.getUseralt())
                 .dthalt(countryInputDTO.getDthalt())
                 .build();
@@ -59,6 +60,7 @@ public class CountryConverter {
 
     public CountryInputDTO convertToInputDTO(CountryEntity country) {
         return CountryInputDTO.builder()
+                .id(country.getId().toString())
                 .countryName(country.getCountryName())
                 .continentName(country.getContinentName())
                 .build();

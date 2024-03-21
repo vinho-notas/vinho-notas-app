@@ -28,8 +28,8 @@ public class StateEntity {
     @Column(name = "uf")
     private String uf;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
     private CountryEntity country;
 
     @Column(name = "dthreg")

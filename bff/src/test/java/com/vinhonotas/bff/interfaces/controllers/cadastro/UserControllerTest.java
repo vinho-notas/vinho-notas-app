@@ -211,7 +211,7 @@ class UserControllerTest {
 
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
+                .personId(createPersonInputDTO().getId())
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
@@ -220,6 +220,7 @@ class UserControllerTest {
 
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .name("Usuario Teste")
                 .birthDate(LocalDate.of(1990, 10, 10))
                 .document("12345678900")
@@ -232,27 +233,12 @@ class UserControllerTest {
                 .addressDescription("Rua Teste")
                 .addressNumber(123)
                 .city("Cidade Teste")
-                .uf(createStateInputDTO())
+                .uf("SC")
                 .complement("Complemento Teste")
-                .country(createCountryInputDTO())
+                .country("Brasil")
                 .district("Bairro Teste")
                 .phoneNumber("123456789")
                 .zipCode("12345678")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(createCountryInputDTO())
-                .build();
-    }
-
-    private CountryInputDTO createCountryInputDTO() {
-        return CountryInputDTO.builder()
-                .countryName("Brasil")
-                .continentName("América do Sul")
                 .build();
     }
 

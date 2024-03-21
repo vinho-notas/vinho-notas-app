@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,28 +39,33 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity create(AddressInputDTO addressInputDTO) {
         log.info("create :: Registrando um endereço com os dados: {}", addressInputDTO.toString());
         try {
-            StateEntity state = stateRepository.findByUf(addressInputDTO.getUf().getUf());
-            if (Objects.nonNull(state)) {
-                addressInputDTO.setUf(stateConverter.convertToInputDTO(state));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_NOT_FOUND_WITH_NAME + addressInputDTO.getUf().getUf());
-                throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + addressInputDTO.getUf().getUf());
-            }
-
-            CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName());
-            if (Objects.nonNull(country)) {
-                addressInputDTO.setCountry(countryConverter.convertToInputDTO(country));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
-                throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + addressInputDTO.getCountry().getCountryName());
-            }
+            StateEntity state = getStateEntity(addressInputDTO);
+            CountryEntity country = getCountryEntity(addressInputDTO);
 
             AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
+            addressEntity.setUf(state);
+            addressEntity.setCountry(country);
+            log.info("Endereço a ser salvo: {}", addressEntity.toString());
+
             return addressRepository.save(addressEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
         }
+    }
+
+    private CountryEntity getCountryEntity(AddressInputDTO addressInputDTO) {
+        log.info("Buscando país pelo nome: {}", addressInputDTO.getCountry());
+        CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry());
+        log.info("País encontrado: {}", country.toString());
+        return country;
+    }
+
+    private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
+        log.info("Buscando estado pela UF: {}", addressInputDTO.getUf());
+        StateEntity state = stateRepository.findByUf(addressInputDTO.getUf());
+        log.info("Estado encontrado: {}", state.toString());
+        return state;
     }
 
     @Override
@@ -87,7 +91,14 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity update(UUID id, AddressInputDTO addressInputDTO) {
         log.info("update :: Atualizando endereço com os dados: {}", addressInputDTO.toString());
         try {
+            StateEntity state = getStateEntity(addressInputDTO);
+            CountryEntity country = getCountryEntity(addressInputDTO);
+
             AddressEntity addressEntity = this.getById(id);
+            addressEntity.setUf(state);
+            addressEntity.setCountry(country);
+            log.info("Endereço a ser atualizado: {}", addressEntity.toString());
+
             return addressRepository.save(addressConverter.convertToEntityUpdate(addressEntity, id, addressInputDTO));
         } catch (Exception e) {
             log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, e);
@@ -100,6 +111,7 @@ public class AddressServiceImpl implements AddressService {
     public void delete(UUID id) {
         log.info("delete :: Deletando endereço com o id: {}", id.toString());
         Optional<AddressEntity> address = addressRepository.findById(id);
+        log.info("Endereço encontrado: {}", address.toString());
         if (address.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o endereço: {}", MessagesConstants.ADDRESS_NOT_FOUND);
             throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);

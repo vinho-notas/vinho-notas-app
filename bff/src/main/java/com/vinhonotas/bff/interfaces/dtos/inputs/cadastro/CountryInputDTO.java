@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CountryInputDTO {
 
+    private String id;
     private String countryName;
     private String continentName;
     private LocalDateTime dthreg;

@@ -9,7 +9,7 @@ const Final = ({ values }) => {
 
   return (
     <>        
-        <Card style={{ marginTop: 100, textAlign: "left" }}>
+        <Card style={{ marginTop: 10, textAlign: "left" }}>
             <Card.Body>
                 <p><strong>Nome completo:</strong> {name}{" "}</p>
                 <p><strong>CPF:</strong> {document}{" "}</p>

@@ -292,7 +292,7 @@ class UserControllerTest {
 
     private UserInputDTO createUserIntputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
+                .personId(createPersonInputDTO().getId())
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
@@ -313,9 +313,9 @@ class UserControllerTest {
                 .addressDescription("Rua Teste")
                 .addressNumber(123)
                 .city("Cidade Teste")
-                .uf(Mockito.mock(StateInputDTO.class))
+                .uf("SC")
                 .complement("Complemento Teste")
-                .country(Mockito.mock(CountryInputDTO.class))
+                .country("Brasil")
                 .district("Bairro Teste")
                 .phoneNumber("123456789")
                 .zipCode("12345678")

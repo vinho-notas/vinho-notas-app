@@ -3,11 +3,8 @@ package com.vinhonotas.bff.interfaces.controllers.cadastro;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
-import com.vinhonotas.bff.interfaces.controllers.cadastro.PersonController;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.CountryInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.StateInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
@@ -232,25 +229,10 @@ class PersonControllerTest {
                 .complement("Complemento da pessoa")
                 .district("Bairro da pessoa")
                 .city("Cidade da pessoa")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .zipCode("12345678")
                 .phoneNumber("12345678910")
-                .build();
-    }
-
-    private CountryInputDTO createCountryInputDTO() {
-        return CountryInputDTO.builder()
-                .countryName("Brasil")
-                .continentName("América do Sul")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("Nome do estado")
-                .uf("UF")
-                .country(createCountryInputDTO())
                 .build();
     }
 
