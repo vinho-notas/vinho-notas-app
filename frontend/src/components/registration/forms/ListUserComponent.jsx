@@ -52,6 +52,10 @@ const ListUserComponent = () => {
         }
     };
 
+    const onNewClick = () => {
+        navigate('/user-registration');
+    };
+
     const onEditClick = () => {
         if (selectedUser && selectedUser.length === 1) {
             setEditingUser(selectedUser[0]);
@@ -131,6 +135,7 @@ const ListUserComponent = () => {
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
+                <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
                         raised />
                     <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
