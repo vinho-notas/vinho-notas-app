@@ -31,7 +31,7 @@ const StepOne = ({ nextStep, handleFormData, values }) => {
 
     return (
         <div>
-            <Card style={{ marginTop: 100 }}>
+            <Card style={{ marginTop: 10 }}>
                 <Card.Body>
                     <Form onSubmit={submitFormData}>
                         <Form.Group as={Row} className='mb-3'>

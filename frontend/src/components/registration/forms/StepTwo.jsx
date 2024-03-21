@@ -42,7 +42,7 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
 
     return (
         <>
-            <Card style={{ marginTop: 100 }}>
+            <Card style={{ marginTop: 10 }}>
                 <Card.Body>
                     <Form onSubmit={submitFormData}>
 
