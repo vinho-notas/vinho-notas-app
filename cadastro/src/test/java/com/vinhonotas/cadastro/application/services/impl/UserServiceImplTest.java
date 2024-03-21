@@ -51,9 +51,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com sucesso")
     void testCreateSuccess() {
-        when(personRepository.findByName(inputDTO.getPerson().getName())).thenReturn(createPerson());
-        when(userRepository.findByPersonDocument(inputDTO.getPerson().getDocument())).thenReturn(null);
-        when(personConverter.convertToInputDTO(createPerson())).thenReturn(createPersonInputDTO());
+        when(personRepository.findById(UUID.fromString(inputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPerson()));
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
 
@@ -70,9 +68,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
-        when(personRepository.findByName(inputDTO.getPerson().getName())).thenReturn(createPerson());
-        when(userRepository.findByPersonDocument(inputDTO.getPerson().getDocument())).thenReturn(null);
-        when(personConverter.convertToInputDTO(createPerson())).thenReturn(createPersonInputDTO());
+        when(personRepository.findById(UUID.fromString(inputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPerson()));
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenThrow(BadRequestException.class);
 
@@ -203,7 +199,7 @@ class UserServiceImplTest {
 
     private UserInputDTO createInputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
+                .personId(createPersonInputDTO().getId())
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@email.com")
                 .password("123456")

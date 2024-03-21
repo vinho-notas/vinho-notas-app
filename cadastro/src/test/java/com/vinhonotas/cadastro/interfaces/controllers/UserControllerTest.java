@@ -292,7 +292,7 @@ class UserControllerTest {
 
     private UserInputDTO createUserIntputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
+                .personId(createPersonInputDTO().getId())
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")

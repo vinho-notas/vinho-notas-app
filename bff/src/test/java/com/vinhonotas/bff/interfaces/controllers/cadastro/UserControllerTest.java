@@ -211,7 +211,7 @@ class UserControllerTest {
 
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
+                .personId(createPersonInputDTO().getId())
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
@@ -220,6 +220,7 @@ class UserControllerTest {
 
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .name("Usuario Teste")
                 .birthDate(LocalDate.of(1990, 10, 10))
                 .document("12345678900")

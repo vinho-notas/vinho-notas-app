@@ -28,7 +28,7 @@ const usePersonComponentHook = () => {
             name,
             document,
             birthDate,
-            address, // Aqui estamos passando o estado do endereço diretamente
+            address,
             dthreg,
             userreg,
             dthalt,

@@ -4,10 +4,10 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
-import useLIstStateComponentHook from '../../../hooks/registration/useLIstStateComponentHook';
+import useListStateComponentHook from '../../../hooks/registration/useListStateComponentHook';
 
 const ListStateComponent = () => {
-    const { state } = useLIstStateComponentHook();
+    const { state } = useListStateComponentHook();
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
