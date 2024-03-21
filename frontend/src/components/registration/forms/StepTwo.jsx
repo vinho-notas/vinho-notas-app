@@ -25,7 +25,6 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
         const newErrors = {
             addressDescription: validator.isEmpty(values.addressDescription),
             addressNumber: validator.isEmpty(values.addressNumber),
-            complement: validator.isEmpty(values.complement),
             district: validator.isEmpty(values.district),
             zipCode: validator.isEmpty(values.zipCode),
             city: validator.isEmpty(values.city),
@@ -43,7 +42,7 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
 
     return (
         <>
-            <Card style={{ marginTop: 100 }}>
+            <Card style={{ marginTop: 10 }}>
                 <Card.Body>
                     <Form onSubmit={submitFormData}>
 
@@ -65,16 +64,12 @@ const StepTwo = ({ nextStep, handleFormData, values, prevStep }) => {
                         <Form.Group as={Row} className='mb-3'>
                             <Form.Label as={Row}>Complemento</Form.Label>
                             <Form.Control
-                                style={{ border: errors.complement ? '2px solid red' : '' }}
                                 name='complement'
                                 defaultValue={values.complement}
                                 type='text'
                                 placeholder="Informe o complemento"
                                 onChange={handleFormData('complement')}
                             />
-                            {errors.complement && (
-                                <Form.Text style={{ color: 'red' }}>Este campo é obrigatório</Form.Text>
-                            )}
                         </Form.Group>
 
                         <Form.Group as={Row} className='mb-3'>

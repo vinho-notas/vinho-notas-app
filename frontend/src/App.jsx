@@ -4,7 +4,6 @@ import Login from './components/login/Login';
 import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import Registration from './components/registration/Registration';
 import Wine from './components/wine/Wine';
 import WineReview from './components/wine/WineReview';
 import Footer from './components/footer/Footer';
@@ -18,6 +17,7 @@ import ListUserComponent from './components/registration/forms/ListUserComponent
 import ListWineComponent from './components/wine/forms/ListWineComponent';
 import ListPointScaleComponent from './components/review/ListPointScaleComponent';
 import ListTastingComponent from './components/tasting/forms/ListTastingComponent';
+import PersonRegistration from './components/registration/PersonRegistration';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/registration" element={<Registration />} />        
+        <Route path="/registration" element={<PersonRegistration />} />        
         <Route path="/users" element={<ListUserComponent />} />
         <Route path="/persons" element={<ListPersonComponent />} />
         <Route path="/address" element={<ListAddressComponent />} />

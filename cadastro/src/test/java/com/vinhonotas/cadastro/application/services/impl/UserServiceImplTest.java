@@ -51,7 +51,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com sucesso")
     void testCreateSuccess() {
-        when(personRepository.findById(UUID.fromString(inputDTO.getPerson().getId()))).thenReturn(Optional.of(createPerson()));
+        when(personRepository.findByName(inputDTO.getPerson().getName())).thenReturn(createPerson());
         when(userRepository.findByPersonDocument(inputDTO.getPerson().getDocument())).thenReturn(null);
         when(personConverter.convertToInputDTO(createPerson())).thenReturn(createPersonInputDTO());
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
@@ -70,7 +70,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
-        when(personRepository.findById(UUID.fromString(inputDTO.getPerson().getId()))).thenReturn(Optional.of(createPerson()));
+        when(personRepository.findByName(inputDTO.getPerson().getName())).thenReturn(createPerson());
         when(userRepository.findByPersonDocument(inputDTO.getPerson().getDocument())).thenReturn(null);
         when(personConverter.convertToInputDTO(createPerson())).thenReturn(createPersonInputDTO());
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);

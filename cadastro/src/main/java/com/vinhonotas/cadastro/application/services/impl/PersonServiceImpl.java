@@ -54,7 +54,7 @@ public class PersonServiceImpl implements PersonService {
             throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry());
         }
         log.info("Salvando um país com os dados: {}", country.toString());
-        personInputDTO.getAddress().setCountry(countryConverter.convertToInputDTO(country).getCountryName());
+        personInputDTO.getAddress().setCountry(country.getCountryName());
     }
 
     private void existsStateByUf(PersonInputDTO personInputDTO) {
