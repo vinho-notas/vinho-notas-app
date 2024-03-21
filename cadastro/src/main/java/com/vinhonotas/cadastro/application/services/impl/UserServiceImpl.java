@@ -1,6 +1,5 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
-import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.converters.UserConverter;
 import com.vinhonotas.cadastro.application.services.UserService;
 import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
@@ -28,8 +27,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
     private final PersonRepository personRepository;
-    private final PersonConverter personConverter;
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity create(UserInputDTO userInputDTO) {
@@ -45,14 +42,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private void existsUser(UserInputDTO userInputDTO) {
-        log.info("existsUser :: Verificando se o usuário já existe com os dados: {}", userInputDTO.toString());
-        PersonEntity person = personRepository.findByName(userInputDTO.getPerson().getName());
-        log.info("Pessoa encontrada: {}", person.toString());
-        userInputDTO.setPerson(personConverter.convertToInputDTO(person));
+        log.info("existsUser :: Verificando se o usuário já existe com o dados: {}", userInputDTO.toString());
+        PersonEntity person = personRepository.findById(UUID.fromString(userInputDTO.getPersonId())).orElseThrow();
+        log.info("Pessoa encontrada: {}", person);
+        UserEntity user = userRepository.findByPersonDocument(person.getDocument());
 
-        UserEntity user = userRepository.findByPersonDocument(userInputDTO.getPerson().getDocument());
         if (Objects.nonNull(user)) {
-            log.error("existsUser :: Já existe um usuário com os dados: {}", userInputDTO.toString());
+            log.error("existsUser :: Já existe um usuário com os dados: {}", user);
             throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
         }
     }

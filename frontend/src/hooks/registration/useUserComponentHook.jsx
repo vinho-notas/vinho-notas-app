@@ -4,23 +4,8 @@ import { createUser } from '../../service/registration/UserService';
 
 const useUserComponentHook = () => {
     const navigate = useNavigate();
-    const [person, setPerson] = useState({
-        id: '',
-        name: '',
-        document: '',
-        birthDate: '',
-        address: {
-            addressDescription: '',
-            addressNumber: '',
-            complement: '',
-            district: '',
-            zipCode: '',
-            city: '',
-            uf: '',
-            country: '',
-            phoneNumber: ''
-        }
-    });
+    const [personId, setPersonId] = useState('');
+    const [person, setPerson] = useState('');
     const [enumProfile, setEnumProfile] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,20 +14,9 @@ const useUserComponentHook = () => {
     const [dthalt, setDthalt] = useState('');
     const [useralt, setUseralt] = useState('');
 
-    const saveUser = async () => {
-        const user = {
-            person,
-            enumProfile,
-            email,
-            password,
-            dthreg,
-            userreg,
-            dthalt,
-            useralt
-        };
-
+    const saveUser = async (userData) => {
         try {
-            await createUser(user);
+            await createUser(userData);
             navigate('/registration');
         } catch (error) {
             console.log(error);
@@ -50,7 +24,7 @@ const useUserComponentHook = () => {
     };
 
     return {
-        person, setPerson,
+        personId, setPersonId,
         enumProfile, setEnumProfile,
         email, setEmail,
         password, setPassword,
@@ -58,6 +32,7 @@ const useUserComponentHook = () => {
         userreg, setUserreg,
         dthalt, setDthalt,
         useralt, setUseralt,
+        person, setPerson,
         saveUser
     };
 }

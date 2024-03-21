@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserInputDTO {
 
-    private PersonInputDTO person;
+    private String personId;
     private String enumProfile;
     private String email;
     private String password;

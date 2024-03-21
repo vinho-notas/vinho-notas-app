@@ -18,6 +18,7 @@ import ListWineComponent from './components/wine/forms/ListWineComponent';
 import ListPointScaleComponent from './components/review/ListPointScaleComponent';
 import ListTastingComponent from './components/tasting/forms/ListTastingComponent';
 import PersonRegistration from './components/registration/PersonRegistration';
+import UserRegistration from './components/registration/UserRegistration';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/registration" element={<PersonRegistration />} />        
+        <Route path="/registration" element={<PersonRegistration />} />   
+        <Route path="/user-registration" element={<UserRegistration />} />     
         <Route path="/users" element={<ListUserComponent />} />
         <Route path="/persons" element={<ListPersonComponent />} />
         <Route path="/address" element={<ListAddressComponent />} />
