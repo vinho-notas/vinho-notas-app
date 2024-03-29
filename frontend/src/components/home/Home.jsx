@@ -6,6 +6,10 @@ const Home = () => {
       <hr className="my-4"></hr>
       <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
       <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur reiciendis nostrum, ut hic architecto quaerat quos sequi soluta laudantium rem numquam commodi in voluptatem non corporis modi, sit iure labore!
+
+         </p>
     </div>
   );
 };
