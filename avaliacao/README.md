@@ -5,12 +5,12 @@ Este é um serviço baseado em Java para gerenciar o micro serviço de avaliaç�
 ## Estrutura do Projeto
 
 O projeto é estruturado em vários pacotes:
-- `com.vinhonotas.vinho.domain`: Contém as regras de negócio.
-- `com.vinhonotas.vinho.application`: Contém classes de serviços para as regras de negócio.
-- `com.vinhonotas.vinho.interfaces`: Contém classes de controle para manipulação de solicitações HTTP.
-- `com.vinhonotas.vinho.infrastructure`: Contém classes de repositório para acesso a dados.-
-- `com.vinhonotas.vinho.configuration`: Contém classes de configuração.
-- `com.vinhonotas.vinho.utils`: Contém classes utilitárias.
+- `com.vinhonotas.avaliacao.domain`: Contém as regras de negócio.
+- `com.vinhonotas.avaliacao.application`: Contém classes de serviços para as regras de negócio.
+- `com.vinhonotas.avaliacao.interfaces`: Contém classes de controle para manipulação de solicitações HTTP.
+- `com.vinhonotas.avaliacao.infrastructure`: Contém classes de repositório para acesso a dados.-
+- `com.vinhonotas.avaliacao.configuration`: Contém classes de configuração.
+- `com.vinhonotas.avaliacao.utils`: Contém classes utilitárias.
 
 ## Configuração
 
