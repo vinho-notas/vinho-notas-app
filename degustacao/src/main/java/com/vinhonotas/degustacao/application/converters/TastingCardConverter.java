@@ -20,7 +20,6 @@ public class TastingCardConverter {
     private final VisualInspectionConverter visualInspectionConverter;
     private final OlfactoryInspectionConverter olfactoryInspectionConverter;
     private final GustatoryInspectionConverter gustatoryInspectionConverter;
-    private final TastingConverter tastingConverter;
 
     public TastingCardEntity toEntity(TastingCardInputDTO tastingCardInputDTO) {
         return TastingCardEntity.builder()
@@ -81,7 +80,6 @@ public class TastingCardConverter {
                 .gustatoryInspection(gustatoryInspectionConverter.toOutputDTO(tastingCardEntity.getGustatoryInspection()))
                 .opinion(tastingCardEntity.getOpinion())
                 .pointScale(EnumConverter.toString(tastingCardEntity.getPointScale()))
-                .tasting(tastingConverter.toOutputDTO(tastingCardEntity.getTasting()))
                 .build();
     }
 
@@ -117,8 +115,6 @@ public class TastingCardConverter {
                 .opinion(tastingCardOutputDTO.getOpinion() != null ? tastingCardOutputDTO.getOpinion() : tastingCardEntity.getOpinion())
                 .pointScale(tastingCardOutputDTO.getPointScale() != null ? tastingCardOutputDTO.getPointScale() :
                         EnumConverter.toString(tastingCardEntity.getPointScale()))
-                .tasting(tastingCardOutputDTO.getTasting() != null ? tastingCardOutputDTO.getTasting() : tastingConverter
-                        .toOutputDTO(tastingCardEntity.getTasting()))
                 .build();
     }
 

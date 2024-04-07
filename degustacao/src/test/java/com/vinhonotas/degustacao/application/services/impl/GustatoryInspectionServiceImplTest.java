@@ -1,8 +1,8 @@
 package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.GustatoryInspectionConverter;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.GustatoryInspectionEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.infraestructure.GustatoryInspectionRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;

@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.TastingConverter;
 import com.vinhonotas.degustacao.application.services.TastingService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.TastingNotFoundException;
 import com.vinhonotas.degustacao.infraestructure.TastingRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -12,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +45,7 @@ public class TastingServiceImpl implements TastingService {
         var list = tastingRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as degustações: {} ", MessagesConstants.TASTING_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.TASTING_NOT_FOUND);
+            throw new TastingNotFoundException(MessagesConstants.TASTING_NOT_FOUND);
         }
         return new HashSet<>(list);
     }
@@ -50,7 +54,7 @@ public class TastingServiceImpl implements TastingService {
     public TastingEntity getById(UUID id) {
         log.info("getById :: Buscando degustação pelo id: {}", id);
         return tastingRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.TASTING_NOT_FOUND));
+                .orElseThrow(() -> new TastingNotFoundException(MessagesConstants.TASTING_NOT_FOUND));
     }
 
     @Override
@@ -73,7 +77,7 @@ public class TastingServiceImpl implements TastingService {
         Optional<TastingEntity> opt = tastingRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a degustação: {} ", MessagesConstants.TASTING_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.TASTING_NOT_FOUND);
+            throw new TastingNotFoundException(MessagesConstants.TASTING_NOT_FOUND);
         }
         try {
             tastingRepository.deleteById(id);

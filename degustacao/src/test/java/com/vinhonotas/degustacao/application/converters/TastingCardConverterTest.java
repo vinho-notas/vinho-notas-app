@@ -92,7 +92,6 @@ class TastingCardConverterTest {
                 .thenReturn(OlfactoryInspectionOutputDTO.builder().build());
         when(gustatoryInspectionConverter.toOutputDTO(Mockito.any(GustatoryInspectionEntity.class)))
                 .thenReturn(GustatoryInspectionOutputDTO.builder().build());
-        when(tastingConverter.toOutputDTO(Mockito.any(TastingEntity.class))).thenReturn(TastingOutputDTO.builder().build());
 
         TastingCardOutputDTO outputDTO = assertDoesNotThrow(() -> tastingCardConverter.toOutputDTO(tastingCardEntity));
 
@@ -112,7 +111,6 @@ class TastingCardConverterTest {
                 outputDTO.getGustatoryInspection());
         assertEquals(tastingCardEntity.getOpinion(), outputDTO.getOpinion());
         assertEquals(EnumConverter.toString(tastingCardEntity.getPointScale()), outputDTO.getPointScale());
-        assertEquals(tastingConverter.toOutputDTO(tastingCardEntity.getTasting()), outputDTO.getTasting());
     }
 
     @Test
@@ -124,7 +122,6 @@ class TastingCardConverterTest {
                 .thenReturn(OlfactoryInspectionOutputDTO.builder().build());
         when(gustatoryInspectionConverter.toOutputDTO(Mockito.any(GustatoryInspectionEntity.class)))
                 .thenReturn(GustatoryInspectionOutputDTO.builder().build());
-        when(tastingConverter.toOutputDTO(Mockito.any(TastingEntity.class))).thenReturn(TastingOutputDTO.builder().build());
 
         var list = assertDoesNotThrow(() -> tastingCardConverter.toOutputDTOList(Set.of(tastingCardEntity)));
 
@@ -145,8 +142,7 @@ class TastingCardConverterTest {
                 list.stream().toList().get(0).getGustatoryInspection());
         assertEquals(tastingCardEntity.getOpinion(), list.stream().toList().get(0).getOpinion());
         assertEquals(EnumConverter.toString(tastingCardEntity.getPointScale()), list.stream().toList().get(0).getPointScale());
-        assertEquals(tastingConverter.toOutputDTO(tastingCardEntity.getTasting()),
-                list.stream().toList().get(0).getTasting());
+                list.stream().toList().get(0).getTasting();
     }
 
     @Test

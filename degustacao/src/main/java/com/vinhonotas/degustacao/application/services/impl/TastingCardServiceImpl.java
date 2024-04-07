@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.TastingCardConverter;
 import com.vinhonotas.degustacao.application.services.TastingCardService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.TastingCardNotFoundException;
 import com.vinhonotas.degustacao.infraestructure.TastingCardRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -12,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +45,7 @@ public class TastingCardServiceImpl implements TastingCardService {
         var list = tastingCardRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as fichas de degustações: {} ", MessagesConstants.TASTING_CARD_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.TASTING_CARD_NOT_FOUND);
+            throw new TastingCardNotFoundException(MessagesConstants.TASTING_CARD_NOT_FOUND);
         }
         return new HashSet<>(list);
     }
@@ -50,7 +54,7 @@ public class TastingCardServiceImpl implements TastingCardService {
     public TastingCardEntity getById(UUID id) {
         log.info("getById :: Buscando ficha de degustação pelo id: {}", id);
         return tastingCardRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.TASTING_CARD_NOT_FOUND));
+                .orElseThrow(() -> new TastingCardNotFoundException(MessagesConstants.TASTING_CARD_NOT_FOUND));
     }
 
     @Override
@@ -73,7 +77,7 @@ public class TastingCardServiceImpl implements TastingCardService {
         Optional<TastingCardEntity> opt = tastingCardRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a ficha de degustação: {} ", MessagesConstants.TASTING_CARD_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.TASTING_CARD_NOT_FOUND);
+            throw new TastingCardNotFoundException(MessagesConstants.TASTING_CARD_NOT_FOUND);
         }
         try {
             tastingCardRepository.deleteById(id);
