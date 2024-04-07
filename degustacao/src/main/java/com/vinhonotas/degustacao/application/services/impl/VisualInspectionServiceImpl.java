@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.VisualInspectionConverter;
 import com.vinhonotas.degustacao.application.services.VisualInspectionService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.VisualInspectionNotFoundException;
 import com.vinhonotas.degustacao.infraestructure.VisualInspectionRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -43,7 +44,7 @@ public class VisualInspectionServiceImpl implements VisualInspectionService {
         List<VisualInspectionEntity> list = visualInspectionRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as inspeções visuais: {} ", MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
+            throw new VisualInspectionNotFoundException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
         }
         return list;
     }
@@ -52,7 +53,7 @@ public class VisualInspectionServiceImpl implements VisualInspectionService {
     public VisualInspectionEntity getById(UUID id) {
         log.info("getById :: Buscando inspeção visual pelo id: {}", id);
         return visualInspectionRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND));
+                .orElseThrow(() -> new VisualInspectionNotFoundException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class VisualInspectionServiceImpl implements VisualInspectionService {
         Optional<VisualInspectionEntity> opt = visualInspectionRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a inspeção visual: {} ", MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
+            throw new VisualInspectionNotFoundException(MessagesConstants.VISUAL_INSPECTION_NOT_FOUND);
         }
         try {
             visualInspectionRepository.deleteById(id);

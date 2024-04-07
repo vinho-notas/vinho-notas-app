@@ -1,8 +1,8 @@
 package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.TastingCardConverter;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.*;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
 import com.vinhonotas.degustacao.infraestructure.TastingCardRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;

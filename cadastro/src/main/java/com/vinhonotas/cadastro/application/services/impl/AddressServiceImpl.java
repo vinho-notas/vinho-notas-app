@@ -1,13 +1,12 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
-import com.vinhonotas.cadastro.application.converters.CountryConverter;
-import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.AddressService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.AddressNotFoundException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.infrastructure.AddressRepository;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
@@ -28,8 +27,6 @@ import java.util.UUID;
 public class AddressServiceImpl implements AddressService {
 
     private final AddressConverter addressConverter;
-    private final StateConverter stateConverter;
-    private final CountryConverter countryConverter;
     private final AddressRepository addressRepository;
     private final StateRepository stateRepository;
     private final CountryRepository countryRepository;
@@ -45,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
             AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
             addressEntity.setUf(state);
             addressEntity.setCountry(country);
-            log.info("Endereço a ser salvo: {}", addressEntity.toString());
+            log.info("Endereço a ser salvo: {}", addressEntity);
 
             return addressRepository.save(addressEntity);
         } catch (Exception e) {
@@ -74,7 +71,7 @@ public class AddressServiceImpl implements AddressService {
         List<AddressEntity> addressList = addressRepository.findAll();
         if (addressList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar os endereços: {}", MessagesConstants.ADDRESS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);
+            throw new AddressNotFoundException(MessagesConstants.ADDRESS_NOT_FOUND);
         }
         return addressList;
     }
@@ -83,7 +80,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity getById(UUID id) {
         log.info("getById :: Buscando endereço pelo id: {}", id.toString());
         return addressRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND));
+                .orElseThrow(() -> new AddressNotFoundException(MessagesConstants.ADDRESS_NOT_FOUND));
     }
 
     @Override
@@ -114,7 +111,7 @@ public class AddressServiceImpl implements AddressService {
         log.info("Endereço encontrado: {}", address.toString());
         if (address.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o endereço: {}", MessagesConstants.ADDRESS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ADDRESS_NOT_FOUND);
+            throw new AddressNotFoundException(MessagesConstants.ADDRESS_NOT_FOUND);
         }
         try {
             addressRepository.deleteById(id);

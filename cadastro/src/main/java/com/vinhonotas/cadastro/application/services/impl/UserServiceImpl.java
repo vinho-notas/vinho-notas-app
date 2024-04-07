@@ -2,9 +2,11 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.UserConverter;
 import com.vinhonotas.cadastro.application.services.UserService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.UserAlreadyExistsException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.UserNotFoundException;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
     private final PersonRepository personRepository;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserEntity create(UserInputDTO userInputDTO) {
@@ -49,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
         if (Objects.nonNull(user)) {
             log.error("existsUser :: Já existe um usuário com os dados: {}", user);
-            throw new BadRequestException(MessagesConstants.USER_ALREADY_EXISTS);
+            throw new UserAlreadyExistsException(MessagesConstants.USER_ALREADY_EXISTS);
         }
     }
 
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> userList = userRepository.findAll();
         if (userList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar os usuários: {}", MessagesConstants.USERS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.USERS_NOT_FOUND);
+            throw new UserNotFoundException(MessagesConstants.USERS_NOT_FOUND);
         }
         return userList;
     }
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity getById(UUID id) {
         log.info("getById :: Buscando usuário pelo id: {}", id.toString());
         return userRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserNotFoundException(MessagesConstants.USER_NOT_FOUND));
     }
 
     @Override
@@ -77,7 +80,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findByPersonName(name);
         if (Objects.isNull(user)) {
             log.error("getByName :: Ocorreu um erro ao buscar o usuário: {}", MessagesConstants.USER_NOT_FOUND_WITH_NAME + name);
-            throw new BadRequestException(MessagesConstants.USER_NOT_FOUND_WITH_NAME + name);
+            throw new UserNotFoundException(MessagesConstants.USER_NOT_FOUND_WITH_NAME + name);
         }
             return user;
     }
@@ -103,7 +106,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> user = userRepository.findById(id);
         if (user.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o usuário: {}", MessagesConstants.USER_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.USER_NOT_FOUND);
+            throw new UserNotFoundException(MessagesConstants.USER_NOT_FOUND);
         }
         try {
             log.info("Deletando usuário com os seguintes dados: {}", user.toString());

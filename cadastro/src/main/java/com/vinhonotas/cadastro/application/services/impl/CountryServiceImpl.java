@@ -2,8 +2,10 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.services.CountryService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.CountryAlreadyExistsException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.CountryNotFoundException;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -32,7 +34,7 @@ public class CountryServiceImpl implements CountryService {
         CountryEntity entity = countryRepository.findByCountryName(countryInputDTO.getCountryName());
         if (Objects.nonNull(entity)) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_ALREADY_EXISTS);
-            throw new BadRequestException(MessagesConstants.COUNTRY_ALREADY_EXISTS);
+            throw new CountryAlreadyExistsException(MessagesConstants.COUNTRY_ALREADY_EXISTS);
         }
         try {
             CountryEntity countryEntity = countryConverter.convertToEntity(countryInputDTO);
@@ -49,7 +51,7 @@ public class CountryServiceImpl implements CountryService {
         List<CountryEntity> entityList = countryRepository.findAll();
         if (entityList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar os países: {}", MessagesConstants.COUNTRIES_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.COUNTRIES_NOT_FOUND);
+            throw new CountryNotFoundException(MessagesConstants.COUNTRIES_NOT_FOUND);
         }
         return entityList;
     }
@@ -58,7 +60,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryEntity getById(UUID id) {
         log.info("getById :: Buscando país pelo id: {}", id.toString());
         return countryRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND));
+                .orElseThrow(() -> new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND));
     }
 
     @Override
@@ -67,7 +69,7 @@ public class CountryServiceImpl implements CountryService {
         CountryEntity country = countryRepository.findByCountryName(name);
         if (Objects.isNull(country)) {
             log.error("getByName :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + name);
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + name);
+            throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + name);
         }
         return country;
     }
@@ -78,7 +80,7 @@ public class CountryServiceImpl implements CountryService {
         List<CountryEntity> entityList = countryRepository.findByContinentName(continent);
         if (Objects.isNull(entityList) || entityList.isEmpty()) {
             log.error("getByContinent :: Ocorreu um erro ao buscar os países: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + continent);
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + continent);
+            throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_CONTINENT + continent);
         }
         return entityList;
     }
@@ -104,7 +106,7 @@ public class CountryServiceImpl implements CountryService {
             Optional<CountryEntity> entity = countryRepository.findById(id);
             if (entity.isEmpty()) {
                 log.error("delete :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND);
-                throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND);
+                throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND);
             }
         try {
                 countryRepository.deleteById(id);

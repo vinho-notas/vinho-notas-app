@@ -1,10 +1,9 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
-import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
+import com.vinhonotas.cadastro.domain.entities.exceptions.*;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -28,7 +27,6 @@ public class PersonServiceImpl implements PersonService {
     private final PersonConverter personConverter;
     private final StateServiceImpl stateService;
     private final CountryServiceImpl countryService;
-    private final CountryConverter countryConverter;
     private final UserServiceImpl userService;
 
     @Override
@@ -51,9 +49,10 @@ public class PersonServiceImpl implements PersonService {
     private void existsCountryByCountryName(PersonInputDTO personInputDTO) {
         CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry());
         if (Objects.isNull(country)) {
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry());
+            throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME +
+                    personInputDTO.getAddress().getCountry());
         }
-        log.info("Salvando um país com os dados: {}", country.toString());
+        log.info("Salvando um país com os dados: {}", country);
         personInputDTO.getAddress().setCountry(country.getCountryName());
     }
 
@@ -61,9 +60,9 @@ public class PersonServiceImpl implements PersonService {
         StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf());
         if (Objects.isNull(state)) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
+            throw new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND);
         } else {
-            log.info("Salvando um estado com os dados: {}", state.toString());
+            log.info("Salvando um estado com os dados: {}", state);
             personInputDTO.getAddress().setUf(state.getUf());
         }
     }
@@ -71,8 +70,8 @@ public class PersonServiceImpl implements PersonService {
     private void existsPersonByDocument(PersonInputDTO personInputDTO) {
         PersonEntity person = personRepository.findByDocument(personInputDTO.getDocument());
         if (Objects.nonNull(person)) {
-            log.error("create :: Ocorreu um erro: {}", MessagesConstants.PERSON_ALREADY_EXISTS + person.toString());
-            throw new BadRequestException(MessagesConstants.PERSON_ALREADY_EXISTS);
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.PERSON_ALREADY_EXISTS + person);
+            throw new PersonAlreadyExistsException(MessagesConstants.PERSON_ALREADY_EXISTS);
         }
     }
 
@@ -82,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
         List<PersonEntity> personList = personRepository.findAll();
         if (personList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar as pessoas: {}", MessagesConstants.PERSONS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.PERSONS_NOT_FOUND);
+            throw new PersonNotFoundException(MessagesConstants.PERSONS_NOT_FOUND);
         }
         return personList;
     }
@@ -91,7 +90,7 @@ public class PersonServiceImpl implements PersonService {
     public PersonEntity getById(UUID id) {
         log.info("getById :: Buscando pessoa pelo id: {}", id.toString());
         return personRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.PERSON_NOT_FOUND));
+                .orElseThrow(() -> new PersonNotFoundException(MessagesConstants.PERSON_NOT_FOUND));
     }
 
     @Override
@@ -100,7 +99,7 @@ public class PersonServiceImpl implements PersonService {
         PersonEntity person = personRepository.findByName(name);
         if (Objects.isNull(person)) {
             log.error("getByName :: Ocorreu um erro: {}", MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
-            throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
+            throw new PersonNotFoundException(MessagesConstants.PERSON_NOT_FOUND_WITH_NAME + name);
         }
         return person;
     }
@@ -116,7 +115,7 @@ public class PersonServiceImpl implements PersonService {
             updateAuditingInfo(existingPerson);
 
             PersonEntity updatedPerson = personRepository.save(existingPerson);
-            log.info("Pessoa atualizada com sucesso: {}", updatedPerson.toString());
+            log.info("Pessoa atualizada com sucesso: {}", updatedPerson);
 
             return updatedPerson;
         } catch (Exception e) {
@@ -142,13 +141,14 @@ public class PersonServiceImpl implements PersonService {
 
         StateEntity state = stateService.getByUf(personInputDTO.getAddress().getUf());
         if (state == null) {
-            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
+            throw new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND);
         }
         address.setUf(state);
 
         CountryEntity country = countryService.getByName(personInputDTO.getAddress().getCountry());
         if (country == null) {
-            throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + personInputDTO.getAddress().getCountry());
+            throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME +
+                    personInputDTO.getAddress().getCountry());
         }
         address.setCountry(country);
     }
@@ -159,7 +159,6 @@ public class PersonServiceImpl implements PersonService {
         existingPerson.setBirthDate(personInputDTO.getBirthDate());
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
@@ -167,13 +166,13 @@ public class PersonServiceImpl implements PersonService {
         Optional<PersonEntity> person = personRepository.findById(id);
         if (person.isEmpty()) {
             log.error("delete :: Ocorreu um erro: {}", MessagesConstants.PERSON_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.PERSON_NOT_FOUND);
+            throw new PersonNotFoundException(MessagesConstants.PERSON_NOT_FOUND);
         }
 
         log.info("Buscando um usuário com o personId: {}", person.get().getId());
         UserEntity user = userService.getByPersonId(person.get().getId());
         if (Objects.nonNull(user)) {
-            log.info("Deletando a seguinte pessoa: {}", person.toString());
+            log.info("Deletando a seguinte pessoa: {}", person);
             userService.delete(user.getId());
         }
 

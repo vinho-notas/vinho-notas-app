@@ -2,8 +2,9 @@ package com.vinhonotas.vinho.application.services.impl;
 
 import com.vinhonotas.vinho.application.converters.WineConverter;
 import com.vinhonotas.vinho.application.services.WineService;
-import com.vinhonotas.vinho.application.services.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.WineEntity;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.vinho.domain.entities.exceptions.WineNotFoundException;
 import com.vinhonotas.vinho.infraestructure.WineRepository;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
 import com.vinhonotas.vinho.utils.MessagesConstants;
@@ -42,7 +43,7 @@ public class WineServiceImpl implements WineService {
         List<WineEntity> wineList = wineRepository.findAll();
         if (wineList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar os vinhos: {} ", MessagesConstants.ERROR_WINE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND);
+            throw new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND);
         }
         return wineList;
     }
@@ -51,7 +52,7 @@ public class WineServiceImpl implements WineService {
     public WineEntity getById(UUID id) {
         log.info("getById :: Buscando vinho pelo id: {}", id.toString());
        return wineRepository.findById(id)
-               .orElseThrow(() -> new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND));
+               .orElseThrow(() -> new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
     }
 
     @Override
@@ -74,7 +75,7 @@ public class WineServiceImpl implements WineService {
         Optional<WineEntity> wine = wineRepository.findById(id);
         if (wine.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o vinho: {} ", MessagesConstants.ERROR_WINE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND);
+            throw new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND);
         }
         try {
             wineRepository.deleteById(id);
