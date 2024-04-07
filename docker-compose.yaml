@@ -43,20 +43,6 @@ services:
     networks:
       - main-network
 
-  postgresql-sonar:
-    image: postgres:15-alpine
-    container_name: postgres-sonar
-    environment:
-      POSTGRES_DB: vinho-notas-sonar
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
-    ports:
-      - "5435:5432"
-    volumes:
-      - ./.data/postgresql/data-sonar:/var/lib/postgresql/data
-    networks:
-      - main-network
-
   postgresql-degustacao:
     image: postgres:15-alpine
     container_name: postgres-degustacao
