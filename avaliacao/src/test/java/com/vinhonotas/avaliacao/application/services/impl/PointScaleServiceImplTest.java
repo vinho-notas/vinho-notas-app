@@ -1,8 +1,8 @@
 package com.vinhonotas.avaliacao.application.services.impl;
 
 import com.vinhonotas.avaliacao.application.converters.PointScaleConverter;
-import com.vinhonotas.avaliacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import com.vinhonotas.avaliacao.infraestructure.PointScaleRepository;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
