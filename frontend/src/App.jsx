@@ -5,7 +5,6 @@ import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Wine from './components/wine/Wine';
-import WineReview from './components/wine/WineReview';
 import Footer from './components/footer/Footer';
 import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
@@ -38,7 +37,6 @@ function App() {
         
         <Route path="/wine" element={<Wine />} />
         <Route path="/wine-list" element={<ListWineComponent />} />
-        <Route path="/wine-review" element={<WineReview />} />
         <Route path="/wine-review-list" element={<ListPointScaleComponent />} />        
         
         <Route path="/tasting" element={<Tasting />} />
