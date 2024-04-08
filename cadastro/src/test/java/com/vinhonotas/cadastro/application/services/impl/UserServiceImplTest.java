@@ -1,11 +1,16 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
+import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.converters.UserConverter;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
+import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +37,10 @@ class UserServiceImplTest {
     private UserRepository userRepository;
     @Mock
     private UserConverter userConverter;
+    @Mock
+    private PersonRepository personRepository;
+    @Mock
+    private PersonConverter personConverter;
 
     private UserInputDTO inputDTO;
     private UserEntity entity;
@@ -45,15 +54,16 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com sucesso")
     void testCreateSuccess() {
+        when(personRepository.findById(UUID.fromString(inputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPerson()));
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
 
-        UserEntity entity = assertDoesNotThrow(() -> userService.create(inputDTO));
-        assertNotNull(entity);
-        assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
-        assertEquals("João", entity.getPerson().getName());
-        assertEquals("email@email.com", entity.getEmail());
-        assertEquals("123456", entity.getPassword());
+        UserEntity userEntity = assertDoesNotThrow(() -> userService.create(inputDTO));
+        assertNotNull(userEntity);
+        assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), userEntity.getId());
+        assertEquals("João", userEntity.getPerson().getName());
+        assertEquals("email@email.com", userEntity.getEmail());
+        assertEquals("123456", userEntity.getPassword());
         verify(userConverter, times(1)).convertToEntity(inputDTO);
         verify(userRepository, times(1)).save(entity);
     }
@@ -61,6 +71,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Teste de criação de usuário com exceção")
     void testCreateException() {
+        when(personRepository.findById(UUID.fromString(inputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPerson()));
         when(userConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenThrow(BadRequestException.class);
 
@@ -191,8 +202,8 @@ class UserServiceImplTest {
 
     private UserInputDTO createInputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .personId(createPersonInputDTO().getId())
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@email.com")
                 .password("123456")
                 .build();
@@ -200,6 +211,7 @@ class UserServiceImplTest {
 
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
+                .id("24690839-a007-4af7-b4fe-9e81e42b7465")
                 .name("João")
                 .document("12345678900")
                 .birthDate(LocalDate.of(1990, 1, 1))
@@ -209,6 +221,7 @@ class UserServiceImplTest {
 
     private PersonEntity createPerson() {
         return PersonEntity.builder()
+                .id(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))
                 .name("João")
                 .document("12345678900")
                 .birthDate(LocalDate.of(1990, 1, 1))
@@ -239,8 +252,8 @@ class UserServiceImplTest {
                 .district("Bairro 1")
                 .zipCode("99999999")
                 .city("Cidade 1")
-                .uf(createUfInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("47999999999")
                 .build();
     }
@@ -251,14 +264,6 @@ class UserServiceImplTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(createCountry())
-                .build();
-    }
-
-    private StateInputDTO createUfInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("Santa Catarina")
-                .uf("SC")
-                .country(createCountryInputDTO())
                 .build();
     }
 

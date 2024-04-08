@@ -3,9 +3,12 @@ package com.vinhonotas.cadastro.application.services.impl;
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.converters.StateConverter;
 import com.vinhonotas.cadastro.application.services.StateService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.CountryNotFoundException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.StateAlreadyExistsException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.StateNotFoundException;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
@@ -34,24 +37,32 @@ public class StateServiceImpl implements StateService {
     @Transactional(rollbackFor = Exception.class)
     public StateEntity create(StateInputDTO stateInputDTO) {
         log.info("create :: Registrando um estado com os dados: {}", stateInputDTO.toString());
-        StateEntity state = stateRepository.findByStateName(stateInputDTO.getStateName());
-        if (Objects.nonNull(state)) {
-            log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_ALREADY_EXISTS);
-            throw new BadRequestException(MessagesConstants.STATE_ALREADY_EXISTS);
-        }
+        existsStateByName(stateInputDTO);
         try {
-            CountryEntity country = countryRepository.findByCountryName(stateInputDTO.getCountry().getCountryName());
-            if (Objects.nonNull(country)) {
-                stateInputDTO.setCountry(countryConverter.convertToInputDTO(country));
-            } else {
-                log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
-                throw new BadRequestException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
-            }
+            existsCountryByName(stateInputDTO);
             StateEntity stateEntity = stateConverter.convertToEntity(stateInputDTO);
             return stateRepository.save(stateEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_STATE, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_STATE);
+        }
+    }
+
+    private void existsCountryByName(StateInputDTO stateInputDTO) {
+        CountryEntity country = countryRepository.findByCountryName(stateInputDTO.getCountry().getCountryName());
+        if (Objects.nonNull(country)) {
+            stateInputDTO.setCountry(countryConverter.convertToInputDTO(country));
+        } else {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
+            throw new CountryNotFoundException(MessagesConstants.COUNTRY_NOT_FOUND_WITH_NAME + stateInputDTO.getCountry().getCountryName());
+        }
+    }
+
+    private void existsStateByName(StateInputDTO stateInputDTO) {
+        StateEntity state = stateRepository.findByStateName(stateInputDTO.getStateName());
+        if (Objects.nonNull(state)) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.STATE_ALREADY_EXISTS);
+            throw new StateAlreadyExistsException(MessagesConstants.STATE_ALREADY_EXISTS);
         }
     }
 
@@ -61,7 +72,7 @@ public class StateServiceImpl implements StateService {
         List<StateEntity> entityList = stateRepository.findAll();
         if (entityList.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar os estados: {}", MessagesConstants.STATES_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.STATES_NOT_FOUND);
+            throw new StateNotFoundException(MessagesConstants.STATES_NOT_FOUND);
         }
         return entityList;
     }
@@ -70,7 +81,7 @@ public class StateServiceImpl implements StateService {
     public StateEntity getById(UUID id) {
         log.info("getById :: Buscando estado pelo id: {}", id.toString());
         return stateRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.STATE_NOT_FOUND));
+                .orElseThrow(() -> new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND));
     }
 
     @Override
@@ -79,7 +90,7 @@ public class StateServiceImpl implements StateService {
         StateEntity state = stateRepository.findByStateName(name);
         if (Objects.isNull(state)) {
             log.error("getByName :: Ocorreu um erro ao buscar o estado: {}", MessagesConstants.STATE_NOT_FOUND_WITH_NAME + name);
-            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + name);
+            throw new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND_WITH_NAME + name);
         }
         return state;
     }
@@ -90,7 +101,7 @@ public class StateServiceImpl implements StateService {
         StateEntity state = stateRepository.findByUf(uf);
         if (Objects.isNull(state)) {
             log.error("getByUf :: Ocorreu um erro ao buscar o estado: {}", MessagesConstants.STATE_NOT_FOUND_WITH_UF + uf);
-            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND_WITH_UF + uf);
+            throw new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND_WITH_UF + uf);
         }
         return state;
     }
@@ -116,7 +127,7 @@ public class StateServiceImpl implements StateService {
         Optional<StateEntity> entity = stateRepository.findById(id);
         if (entity.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o estado: {}", MessagesConstants.STATE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.STATE_NOT_FOUND);
+            throw new StateNotFoundException(MessagesConstants.STATE_NOT_FOUND);
         }
         try {
             stateRepository.deleteById(id);

@@ -18,10 +18,10 @@ public class WineOutputDTO {
     private BigDecimal price;
     private String purchaseLocation;
     private LocalDate purchaseDate;
-    private EnumWineType wineType;
-    private EnumWineClassification wineClassification;
+    private String wineType;
+    private String wineClassification;
     private String alcoholContent;
-    private int volumeMl;
+    private String volumeMl;
     private String grape;
     private String winery;
     private String serviceTemperature;

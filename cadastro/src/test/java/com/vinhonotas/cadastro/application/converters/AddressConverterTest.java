@@ -3,6 +3,8 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.infrastructure.CountryRepository;
+import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
@@ -34,6 +36,10 @@ class AddressConverterTest {
     private StateConverter stateConverter;
     @Mock
     private CountryConverter countryConverter;
+    @Mock
+    private StateRepository stateRepository;
+    @Mock
+    private CountryRepository countryRepository;
 
     private AddressInputDTO addressInputDTO;
     private AddressEntity addressEntity;
@@ -49,6 +55,9 @@ class AddressConverterTest {
     @Test
     @DisplayName("Teste de conversão de AddressInputDTO para AddressEntity")
     void testToEntity() {
+        when(stateRepository.findByUf(Mockito.anyString())).thenReturn(createStateEntity());
+        when(countryRepository.findByCountryName(Mockito.anyString())).thenReturn(createCountryEntity());
+
         AddressEntity addressEntity = assertDoesNotThrow(()-> addressConverter.convertToEntity(addressInputDTO));
         assertNotNull(addressEntity);
         assertEquals(addressInputDTO.getAddressDescription(), addressEntity.getAddressDescription());
@@ -57,8 +66,8 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntity.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntity.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntity.getCity());
-        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntity.getUf());
-        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntity.getCountry());
+        assertEquals(createStateEntity(), addressEntity.getUf());
+        assertEquals(createCountryEntity(), addressEntity.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntity.getPhoneNumber());
     }
 
@@ -75,8 +84,8 @@ class AddressConverterTest {
         assertEquals(addressInputDTO.getDistrict(), addressEntityUpdate.getDistrict());
         assertEquals(addressInputDTO.getZipCode(), addressEntityUpdate.getZipCode());
         assertEquals(addressInputDTO.getCity(), addressEntityUpdate.getCity());
-        assertEquals(stateConverter.convertToEntity(addressInputDTO.getUf()), addressEntityUpdate.getUf());
-        assertEquals(countryConverter.convertToEntity(addressInputDTO.getCountry()), addressEntityUpdate.getCountry());
+        assertEquals(createStateEntity(), addressEntityUpdate.getUf());
+        assertEquals(createCountryEntity(), addressEntityUpdate.getCountry());
         assertEquals(addressInputDTO.getPhoneNumber(), addressEntityUpdate.getPhoneNumber());
     }
 
@@ -161,8 +170,8 @@ class AddressConverterTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(Mockito.mock(StateEntity.class))
-                .country(Mockito.mock(CountryEntity.class))
+                .uf(createStateEntity())
+                .country(createCountryEntity())
                 .phoneNumber("0000000000")
                 .build();
     }
@@ -175,8 +184,8 @@ class AddressConverterTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("0000000000")
                 .build();
     }
@@ -186,6 +195,23 @@ class AddressConverterTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(createCountryInputDTO())
+                .build();
+    }
+
+    private StateEntity createStateEntity() {
+        return StateEntity.builder()
+                .id(UUID.fromString("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"))
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountryEntity())
+                .build();
+    }
+
+    private CountryEntity createCountryEntity() {
+        return CountryEntity.builder()
+                .id(UUID.fromString("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"))
+                .countryName("Brasil")
+                .continentName("America do Sul")
                 .build();
     }
 

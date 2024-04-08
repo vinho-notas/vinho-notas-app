@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,13 +22,30 @@ public class PersonEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "document")
     private String document;
+
     @Column(name = "birthdate")
     private LocalDate birthDate;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private AddressEntity address;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
+
 }

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumFruityType {
+public enum EnumFruityType implements EnumCode {
 
     PINEAPPLE("Abacaxi"),
     BLACKBERRY("Amora"),
@@ -30,5 +30,6 @@ public enum EnumFruityType {
     PEAR("Pera"),
     PEACH("Pêssego");
 
-    private final String description;
+    private final String code;
+
 }

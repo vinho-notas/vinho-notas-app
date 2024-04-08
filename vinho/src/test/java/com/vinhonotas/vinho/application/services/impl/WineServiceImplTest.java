@@ -1,8 +1,8 @@
 package com.vinhonotas.vinho.application.services.impl;
 
 import com.vinhonotas.vinho.application.converters.WineConverter;
-import com.vinhonotas.vinho.application.services.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.WineEntity;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.infraestructure.WineRepository;
@@ -194,7 +194,7 @@ class WineServiceImplTest {
                 .wineType(EnumWineType.REDWINE.getCode())
                 .wineClassification(EnumWineClassification.DRYWINE.getCode())
                 .alcoholContent("12.5")
-                .volumeMl(750)
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
                 .serviceTemperature("17.0")

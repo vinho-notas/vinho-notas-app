@@ -3,8 +3,6 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.AddressClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.CountryInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.StateInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
@@ -198,8 +196,8 @@ class AddressServiceImplTest {
                 .district("district")
                 .zipCode("00000-000")
                 .city("Blumenau")
-                .uf(Mockito.mock(StateInputDTO.class))
-                .country(Mockito.mock(CountryInputDTO.class))
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("0000000000")
                 .build();
     }

@@ -3,10 +3,11 @@ package com.vinhonotas.cadastro.application.converters;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
+import com.vinhonotas.cadastro.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +32,8 @@ class UserConverterTest {
 
     @Mock
     private PersonConverter personConverter;
+    @Mock
+    private PersonRepository personRepository;
 
     private UserInputDTO userInputDTO;
     private UserEntity userEntity;
@@ -45,10 +49,11 @@ class UserConverterTest {
     @Test
     @DisplayName("Teste de conversão de UserInputDTO para UserEntity")
     void testToEntity() {
+        when(personRepository.findById(UUID.fromString(userInputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPersonEntity()));
+
         UserEntity user = assertDoesNotThrow(()-> userConverter.convertToEntity(userInputDTO));
         assertNotNull(user);
-        assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), user.getPerson());
-        assertEquals(userInputDTO.getEnumProfile(), user.getEnumProfile());
+        assertEquals(userInputDTO.getEnumProfile(), EnumConverter.toString(user.getEnumProfile()));
         assertEquals(userInputDTO.getEmail(), user.getEmail());
         assertEquals(userInputDTO.getPassword(), user.getPassword());
     }
@@ -57,11 +62,11 @@ class UserConverterTest {
     @DisplayName("Teste de conversão para UserEntityUpdate ")
     void testToEntityUpdate() {
         userInputDTO.setEmail("update@email.com");
+        when(personRepository.findById(UUID.fromString(userInputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPersonEntity()));
 
         UserEntity entity = assertDoesNotThrow(() -> userConverter.converteToEntityUpdate(userEntity, userEntity.getId(), userInputDTO));
         assertNotNull(userEntity);
-        assertEquals(personConverter.convertToEntity(userInputDTO.getPerson()), entity.getPerson());
-        assertEquals(userInputDTO.getEnumProfile(), entity.getEnumProfile());
+        assertEquals(userInputDTO.getEnumProfile(), EnumConverter.toString(entity.getEnumProfile()));
         assertEquals(userInputDTO.getEmail(), entity.getEmail());
         assertEquals(userInputDTO.getPassword(), entity.getPassword());
     }
@@ -70,10 +75,11 @@ class UserConverterTest {
     @DisplayName("Teste de conversão de UserEntity para UserOutputDTO")
     void testConvertToOutputDTO() {
         UserOutputDTO userOutput = assertDoesNotThrow(() -> userConverter.convertToOutputDTO(userEntity));
+
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.getEmail());
         assertEquals(userEntity.getPassword(), userOutput.getPassword());
     }
@@ -85,7 +91,7 @@ class UserConverterTest {
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.get(0).getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.get(0).getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.get(0).getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.get(0).getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.get(0).getEmail());
         assertEquals(userEntity.getPassword(), userOutput.get(0).getPassword());
     }
@@ -100,7 +106,7 @@ class UserConverterTest {
         assertNotNull(userOutput);
         assertEquals(userEntity.getId(), userOutput.getId());
         assertEquals(personConverter.convertToOutputDTO(userEntity.getPerson()), userOutput.getPerson());
-        assertEquals(userEntity.getEnumProfile(), userOutput.getEnumProfile());
+        assertEquals(EnumConverter.toString(userEntity.getEnumProfile()), userOutput.getEnumProfile());
         assertEquals(userEntity.getEmail(), userOutput.getEmail());
         assertEquals("456789", userOutput.getPassword());
     }
@@ -115,10 +121,16 @@ class UserConverterTest {
                 .build();
     }
 
+    private PersonEntity createPersonEntity() {
+        return PersonEntity.builder()
+                .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
+                .build();
+    }
+
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
-                .person(Mockito.mock(PersonInputDTO.class))
-                .enumProfile(EnumProfile.OENOPHILE)
+                .personId("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
                 .build();
@@ -128,7 +140,7 @@ class UserConverterTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
                 .person(Mockito.mock(PersonOutputDTO.class))
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
                 .build();

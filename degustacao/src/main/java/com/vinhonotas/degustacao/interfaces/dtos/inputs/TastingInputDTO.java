@@ -1,11 +1,10 @@
 package com.vinhonotas.degustacao.interfaces.dtos.inputs;
 
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
-import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -13,7 +12,11 @@ import java.util.Set;
 public class TastingInputDTO {
 
     private LocalDate tastingData;
-    private EnumTastingType tastingType;
-    private Set<TastingCardEntity> tastingCards;
+    private String tastingType;
+    private Set<TastingCardInputDTO> tastingCards;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

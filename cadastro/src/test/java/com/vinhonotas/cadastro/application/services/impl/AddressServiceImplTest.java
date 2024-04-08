@@ -59,17 +59,15 @@ class AddressServiceImplTest {
         addressEntity = createAddressEntity();
     }
 
-
-
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
+        when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
+        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
         when(addressConverter.convertToEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
-        when(stateRepository.findByUf(addressInputDTO.getUf().getUf())).thenReturn(createSaoPauloEntity());
-        when(countryRepository.findByCountryName(addressInputDTO.getCountry().getCountryName())).thenReturn(brasilEntity);
-        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.create(addressInputDTO));
 
+        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.create(addressInputDTO));
         assertNotNull(address);
         assertEquals(addressEntity.getId(), address.getId());
         assertEquals(addressEntity.getAddressDescription(), address.getAddressDescription());
@@ -149,6 +147,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço")
     void testUpdateSucesso() {
+        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
+        when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
         when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
@@ -173,15 +173,12 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço com erro")
     void testUpdateErro() {
-        when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
-        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
-        when(addressRepository.save(addressEntity)).thenThrow(new IllegalArgumentException());
-
         Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
+
         assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
-        verify(addressRepository, times(1)).findById(addressEntity.getId());
-        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
-        verify(addressRepository, times(1)).save(addressEntity);
+        verify(addressRepository, times(0)).findById(addressEntity.getId());
+        verify(addressConverter, times(0)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressRepository, times(0)).save(addressEntity);
     }
 
     @Test
@@ -224,14 +221,15 @@ class AddressServiceImplTest {
                 .district("Centro")
                 .zipCode("00000-000")
                 .city("São Paulo")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("11999999999")
                 .build();
     }
 
     private CountryInputDTO createCountryInputDTO() {
         return CountryInputDTO.builder()
+                .id("d0d7f9e0-0b7e-4b1e-8b7a-8b8b8b8b8b8b")
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();
@@ -239,6 +237,7 @@ class AddressServiceImplTest {
 
     private StateInputDTO createStateInputDTO() {
         return StateInputDTO.builder()
+                .id("d0d7f9e0-0b7e-4b1e-8b7a-7b7b7b7b7b7b")
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(createCountryInputDTO())
@@ -247,6 +246,7 @@ class AddressServiceImplTest {
 
     private StateEntity createSaoPauloEntity() {
         return StateEntity.builder()
+                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-9b9b9b9b9b9b"))
                 .stateName("São Paulo")
                 .uf("SP")
                 .country(brasilEntity)
@@ -255,6 +255,7 @@ class AddressServiceImplTest {
 
     private CountryEntity createBrasilEntity() {
         return CountryEntity.builder()
+                .id(UUID.fromString("d0d7f9e0-0b7e-4b1e-8b7a-8b8b8b8b8b8b"))
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();

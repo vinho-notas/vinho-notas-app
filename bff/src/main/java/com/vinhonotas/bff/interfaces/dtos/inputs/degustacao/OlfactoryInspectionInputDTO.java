@@ -1,13 +1,10 @@
 package com.vinhonotas.bff.interfaces.dtos.inputs.degustacao;
 
-import com.vinhonotas.bff.domain.enums.EnumClassificationType;
-import com.vinhonotas.bff.domain.enums.EnumIntensityType;
-import com.vinhonotas.bff.domain.enums.EnumPersistenceType;
-import com.vinhonotas.bff.domain.enums.EnumQualityType;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,10 +12,14 @@ public class OlfactoryInspectionInputDTO {
 
     private LocalDate tastingData;
     private String wineTasted;
-    private EnumIntensityType intensity;
-    private EnumPersistenceType persistence;
-    private EnumQualityType quality;
+    private String intensity;
+    private String persistence;
+    private String quality;
     private AromasInputDTO aromas;
-    private EnumClassificationType classification;
+    private String classification;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

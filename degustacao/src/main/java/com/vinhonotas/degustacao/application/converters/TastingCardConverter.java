@@ -1,15 +1,25 @@
 package com.vinhonotas.degustacao.application.converters;
 
 import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
+import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class TastingCardConverter {
+
+    private final VisualInspectionConverter visualInspectionConverter;
+    private final OlfactoryInspectionConverter olfactoryInspectionConverter;
+    private final GustatoryInspectionConverter gustatoryInspectionConverter;
 
     public TastingCardEntity toEntity(TastingCardInputDTO tastingCardInputDTO) {
         return TastingCardEntity.builder()
@@ -19,11 +29,15 @@ public class TastingCardConverter {
                 .grapes(tastingCardInputDTO.getGrapes())
                 .country(tastingCardInputDTO.getCountry())
                 .region(tastingCardInputDTO.getRegion())
-                .visualInspection(tastingCardInputDTO.getVisualInspection())
-                .olfactoryInspection(tastingCardInputDTO.getOlfactoryInspection())
-                .gustatoryInspection(tastingCardInputDTO.getGustatoryInspection())
+                .visualInspection(visualInspectionConverter.toEntity(tastingCardInputDTO.getVisualInspection()))
+                .olfactoryInspection(olfactoryInspectionConverter.toEntity(tastingCardInputDTO.getOlfactoryInspection()))
+                .gustatoryInspection(gustatoryInspectionConverter.toEntity(tastingCardInputDTO.getGustatoryInspection()))
                 .opinion(tastingCardInputDTO.getOpinion())
-                .pointScale(tastingCardInputDTO.getPointScale())
+                .pointScale(EnumConverter.fromString(tastingCardInputDTO.getPointScale(), EnumPointScale.class))
+                .userreg(tastingCardInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(tastingCardInputDTO.getUseralt())
+                .dthalt(tastingCardInputDTO.getDthalt())
                 .build();
     }
 
@@ -36,11 +50,19 @@ public class TastingCardConverter {
                 .grapes(tastingCardInputDTO.getGrapes() != null ? tastingCardInputDTO.getGrapes() : tastingCardEntity.getGrapes())
                 .country(tastingCardInputDTO.getCountry() != null ? tastingCardInputDTO.getCountry() : tastingCardEntity.getCountry())
                 .region(tastingCardInputDTO.getRegion() != null ? tastingCardInputDTO.getRegion() : tastingCardEntity.getRegion())
-                .visualInspection(tastingCardInputDTO.getVisualInspection() != null ? tastingCardInputDTO.getVisualInspection() : tastingCardEntity.getVisualInspection())
-                .olfactoryInspection(tastingCardInputDTO.getOlfactoryInspection() != null ? tastingCardInputDTO.getOlfactoryInspection() : tastingCardEntity.getOlfactoryInspection())
-                .gustatoryInspection(tastingCardInputDTO.getGustatoryInspection() != null ? tastingCardInputDTO.getGustatoryInspection() : tastingCardEntity.getGustatoryInspection())
+                .visualInspection(tastingCardInputDTO.getVisualInspection() != null ? visualInspectionConverter.toEntity(
+                        tastingCardInputDTO.getVisualInspection()) : tastingCardEntity.getVisualInspection())
+                .olfactoryInspection(tastingCardInputDTO.getOlfactoryInspection() != null ? olfactoryInspectionConverter.toEntity(
+                        tastingCardInputDTO.getOlfactoryInspection()) : tastingCardEntity.getOlfactoryInspection())
+                .gustatoryInspection(tastingCardInputDTO.getGustatoryInspection() != null ? gustatoryInspectionConverter.toEntity(
+                        tastingCardInputDTO.getGustatoryInspection()) : tastingCardEntity.getGustatoryInspection())
                 .opinion(tastingCardInputDTO.getOpinion() != null ? tastingCardInputDTO.getOpinion() : tastingCardEntity.getOpinion())
-                .pointScale(tastingCardInputDTO.getPointScale() != null ? tastingCardInputDTO.getPointScale() : tastingCardEntity.getPointScale())
+                .pointScale(tastingCardInputDTO.getPointScale() != null ? EnumConverter.fromString(tastingCardInputDTO
+                        .getPointScale(), EnumPointScale.class) : tastingCardEntity.getPointScale())
+                .userreg(tastingCardInputDTO.getUserreg() != null ? tastingCardInputDTO.getUserreg() : tastingCardEntity.getUserreg())
+                .dthreg(tastingCardInputDTO.getDthreg() != null ? tastingCardInputDTO.getDthreg() : tastingCardEntity.getDthreg())
+                .useralt(tastingCardInputDTO.getUseralt() != null ? tastingCardInputDTO.getUseralt() : tastingCardEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
@@ -53,20 +75,26 @@ public class TastingCardConverter {
                 .grapes(tastingCardEntity.getGrapes())
                 .country(tastingCardEntity.getCountry())
                 .region(tastingCardEntity.getRegion())
-                .visualInspection(tastingCardEntity.getVisualInspection())
-                .olfactoryInspection(tastingCardEntity.getOlfactoryInspection())
-                .gustatoryInspection(tastingCardEntity.getGustatoryInspection())
+                .visualInspection(visualInspectionConverter.toOutputDTO(tastingCardEntity.getVisualInspection()))
+                .olfactoryInspection(olfactoryInspectionConverter.toOutputDTO(tastingCardEntity.getOlfactoryInspection()))
+                .gustatoryInspection(gustatoryInspectionConverter.toOutputDTO(tastingCardEntity.getGustatoryInspection()))
                 .opinion(tastingCardEntity.getOpinion())
-                .pointScale(tastingCardEntity.getPointScale())
-                .tasting(tastingCardEntity.getTasting())
+                .pointScale(EnumConverter.toString(tastingCardEntity.getPointScale()))
                 .build();
     }
 
-    public List<TastingCardOutputDTO> toOutputDTOList(List<TastingCardEntity> tastingCardEntityList) {
+    public Set<TastingCardOutputDTO> toOutputDTOList(Set<TastingCardEntity> tastingCardEntityList) {
         return tastingCardEntityList
                 .stream()
                 .map(this::toOutputDTO)
-                .toList();
+                .collect(Collectors.toSet());
+    }
+
+    public Set<TastingCardEntity> toEntitySet(Set<TastingCardInputDTO> tastingCardInputDTOList) {
+        return tastingCardInputDTOList
+                .stream()
+                .map(this::toEntity)
+                .collect(Collectors.toSet());
     }
 
     public TastingCardOutputDTO toOutputDTOUpdate(TastingCardEntity tastingCardEntity, UUID id, TastingCardOutputDTO tastingCardOutputDTO) {
@@ -78,12 +106,15 @@ public class TastingCardConverter {
                 .grapes(tastingCardOutputDTO.getGrapes() != null ? tastingCardOutputDTO.getGrapes() : tastingCardEntity.getGrapes())
                 .country(tastingCardOutputDTO.getCountry() != null ? tastingCardOutputDTO.getCountry() : tastingCardEntity.getCountry())
                 .region(tastingCardOutputDTO.getRegion() != null ? tastingCardOutputDTO.getRegion() : tastingCardEntity.getRegion())
-                .visualInspection(tastingCardOutputDTO.getVisualInspection() != null ? tastingCardOutputDTO.getVisualInspection() : tastingCardEntity.getVisualInspection())
-                .olfactoryInspection(tastingCardOutputDTO.getOlfactoryInspection() != null ? tastingCardOutputDTO.getOlfactoryInspection() : tastingCardEntity.getOlfactoryInspection())
-                .gustatoryInspection(tastingCardOutputDTO.getGustatoryInspection() != null ? tastingCardOutputDTO.getGustatoryInspection() : tastingCardEntity.getGustatoryInspection())
+                .visualInspection(tastingCardOutputDTO.getVisualInspection() != null ? tastingCardOutputDTO
+                        .getVisualInspection() : visualInspectionConverter.toOutputDTO(tastingCardEntity.getVisualInspection()))
+                .olfactoryInspection(tastingCardOutputDTO.getOlfactoryInspection() != null ? tastingCardOutputDTO
+                        .getOlfactoryInspection() : olfactoryInspectionConverter.toOutputDTO(tastingCardEntity.getOlfactoryInspection()))
+                .gustatoryInspection(tastingCardOutputDTO.getGustatoryInspection() != null ? tastingCardOutputDTO
+                        .getGustatoryInspection() : gustatoryInspectionConverter.toOutputDTO(tastingCardEntity.getGustatoryInspection()))
                 .opinion(tastingCardOutputDTO.getOpinion() != null ? tastingCardOutputDTO.getOpinion() : tastingCardEntity.getOpinion())
-                .pointScale(tastingCardOutputDTO.getPointScale() != null ? tastingCardOutputDTO.getPointScale() : tastingCardEntity.getPointScale())
-                .tasting(tastingCardOutputDTO.getTasting() != null ? tastingCardOutputDTO.getTasting() : tastingCardEntity.getTasting())
+                .pointScale(tastingCardOutputDTO.getPointScale() != null ? tastingCardOutputDTO.getPointScale() :
+                        EnumConverter.toString(tastingCardEntity.getPointScale()))
                 .build();
     }
 

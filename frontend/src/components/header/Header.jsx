@@ -6,12 +6,13 @@ const Header = () => {
     { label: 'Login', icon: 'pi pi-user', url: '/login' },
     { label: 'Cadastro', icon: 'pi pi-user-plus', 
       items: [
-        { label: 'Cadastrar', icon: 'pi pi-user-plus', url: '/registration' },
-        { label: 'Usuários', icon: 'pi pi-users', url: '/users' },
-        { label: 'Pessoas', icon: 'pi pi-users', url: '/persons' },
-        { label: 'Endereços', icon: 'pi pi-folder-open', url: '/address' },
-        { label: 'Estados', icon: 'pi pi-folder-open', url: '/states' },
-        { label: 'Países', icon: 'pi pi-folder-open', url: '/countries' }
+        { label: 'Cadastrar usuário', icon: 'pi pi-user-plus', url: '/user-registration' },
+        { label: 'Cadastrar pessoa', icon: 'pi pi-user-plus', url: '/registration' },
+        { label: 'Lista de usuários', icon: 'pi pi-users', url: '/users' },
+        { label: 'Lista de pessoas', icon: 'pi pi-users', url: '/persons' },
+        { label: 'Lista de endereços', icon: 'pi pi-folder-open', url: '/address' },
+        { label: 'Lista de estados', icon: 'pi pi-folder-open', url: '/states' },
+        { label: 'Lista de países', icon: 'pi pi-folder-open', url: '/countries' }
       ]
   },
     
@@ -19,14 +20,8 @@ const Header = () => {
       items: [
         {label: 'Cadastrar Vinho', icon: 'pi pi-folder-open', url: '/wine' },
         { label: 'Listar vinhos', icon: 'pi pi-folder-open', url: '/wine-list' },
-        { label: 'Consultas', icon: 'pi pi-folder-open', url: '/search-wine' }
-      ]    
-    },
-    { label: 'Avaliação', icon: 'pi pi-folder-open',
-      items: [
-        { label: 'Avaliar vinho', icon: 'pi pi-folder-open', url: '/wine-review' },
         { label: 'Listar avaliações', icon: 'pi pi-folder-open', url: '/wine-review-list' }
-      ]
+      ]    
     },
     {
       label: 'Degustação', icon: 'pi pi-folder-open',
@@ -40,7 +35,7 @@ const Header = () => {
 
   return (
     <div >
-      <Menubar model={items} />
+      <Menubar model={items} style={{textAlign: 'start'}}/>
     </div>
   )
 }

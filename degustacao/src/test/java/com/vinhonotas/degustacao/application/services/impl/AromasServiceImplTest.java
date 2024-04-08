@@ -1,11 +1,12 @@
 package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.AromasConverter;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.AromasEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.infraestructure.AromasRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.AromasInputDTO;
+import com.vinhonotas.degustacao.utils.EnumConverter;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -53,18 +54,18 @@ class AromasServiceImplTest {
         assertNotNull(entity);
         assertEquals(aromasInputDTO.getTastingData(), entity.getTastingData());
         assertEquals(aromasInputDTO.getWineTasted(), entity.getWineTasted());
-        assertEquals(aromasInputDTO.getFruity(), entity.getFruity());
-        assertEquals(aromasInputDTO.getDryFruits(), entity.getDryFruits());
-        assertEquals(aromasInputDTO.getFlorals(), entity.getFlorals());
-        assertEquals(aromasInputDTO.getVegetablesAndHerbs(), entity.getVegetablesAndHerbs());
-        assertEquals(aromasInputDTO.getMinerals(), entity.getMinerals());
-        assertEquals(aromasInputDTO.getSpices(), entity.getSpices());
-        assertEquals(aromasInputDTO.getAnimals(), entity.getAnimals());
-        assertEquals(aromasInputDTO.getEmpireumatics(), entity.getEmpireumatics());
-        assertEquals(aromasInputDTO.getWood(), entity.getWood());
-        assertEquals(aromasInputDTO.getChemicals(), entity.getChemicals());
-        assertEquals(aromasInputDTO.getLacteal(), entity.getLacteal());
-        assertEquals(aromasInputDTO.getSweets(), entity.getSweets());
+        assertEquals(aromasInputDTO.getFruity(), EnumConverter.toString(entity.getFruity()));
+        assertEquals(aromasInputDTO.getDryFruits(), EnumConverter.toString(entity.getDryFruits()));
+        assertEquals(aromasInputDTO.getFlorals(), EnumConverter.toString(entity.getFlorals()));
+        assertEquals(aromasInputDTO.getVegetablesAndHerbs(), EnumConverter.toString(entity.getVegetablesAndHerbs()));
+        assertEquals(aromasInputDTO.getMinerals(), EnumConverter.toString(entity.getMinerals()));
+        assertEquals(aromasInputDTO.getSpices(), EnumConverter.toString(entity.getSpices()));
+        assertEquals(aromasInputDTO.getAnimals(), EnumConverter.toString(entity.getAnimals()));
+        assertEquals(aromasInputDTO.getEmpireumatics(), EnumConverter.toString(entity.getEmpireumatics()));
+        assertEquals(aromasInputDTO.getWood(), EnumConverter.toString(entity.getWood()));
+        assertEquals(aromasInputDTO.getChemicals(), EnumConverter.toString(entity.getChemicals()));
+        assertEquals(aromasInputDTO.getLacteal(), EnumConverter.toString(entity.getLacteal()));
+        assertEquals(aromasInputDTO.getSweets(), EnumConverter.toString(entity.getSweets()));
         verify(aromasRepository).save(aromasEntity);
         verify(aromasConverter).toEntity(aromasInputDTO);
     }
@@ -198,18 +199,18 @@ class AromasServiceImplTest {
         return AromasInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .fruity(EnumFruityType.RASPBERRY)
-                .dryFruits(EnumDryFruitsType.BRUNETTE)
-                .florals(EnumFloralsType.CLOVE)
-                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL)
-                .minerals(EnumMineralsType.EARTH)
-                .spices(EnumSpicesType.INDIAN_CLOVE)
-                .animals(EnumAnimalsType.LEATHER)
-                .empireumatics(EnumEmpireumaticsType.CARAMEL)
-                .wood(EnumWoodType.SAWDUST)
-                .chemicals(EnumChemicalsAndEtherealType.ACETONE)
-                .lacteal(EnumLactealType.BUTTER)
-                .sweets(EnumSweetsType.BULLET)
+                .fruity(EnumFruityType.RASPBERRY.getCode())
+                .dryFruits(EnumDryFruitsType.BRUNETTE.getCode())
+                .florals(EnumFloralsType.CLOVE.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.EARTH.getCode())
+                .spices(EnumSpicesType.INDIAN_CLOVE.getCode())
+                .animals(EnumAnimalsType.LEATHER.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:testdb",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
 })
 class PointScaleRepositoryTest {
 
@@ -124,6 +127,10 @@ class PointScaleRepositoryTest {
                         "com boa persistência, com boa tipicidade, com boa harmonização, com boa relação qualidade/preço, " +
                         "com potencial de guarda de 3 anos.")
                 .pointScale(EnumPointScale.VERYGOOD)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -139,6 +146,10 @@ class PointScaleRepositoryTest {
                 .whatOpinion("Mais um ótimo tinto da Rioja que degusto, ótimos aromas de frutas negras com toque de " +
                         "pimenta e tabaco, ótimo corpo e estrutura com tanicidade eacidez bem equilibradas, vinho bem agradável")
                 .pointScale(EnumPointScale.GOOD)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -153,6 +164,10 @@ class PointScaleRepositoryTest {
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
                 .pointScale(EnumPointScale.OUTSTANDING)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

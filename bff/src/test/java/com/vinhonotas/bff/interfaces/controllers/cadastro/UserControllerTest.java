@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.domain.enums.EnumProfile;
-import com.vinhonotas.bff.interfaces.controllers.cadastro.UserController;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.*;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.*;
 import com.vinhonotas.bff.utils.MessagesConstants;
@@ -60,7 +59,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -89,7 +88,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$[0].person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$[0].person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$[0].enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$[0].enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$[0].email").value("email@gmail.com"))
                 .andExpect(jsonPath("$[0].password").value("123456"));
     }
@@ -117,7 +116,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -145,7 +144,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -174,7 +173,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -212,8 +211,8 @@ class UserControllerTest {
 
     private UserInputDTO createUserInputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .personId(createPersonInputDTO().getId())
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();
@@ -221,6 +220,7 @@ class UserControllerTest {
 
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .name("Usuario Teste")
                 .birthDate(LocalDate.of(1990, 10, 10))
                 .document("12345678900")
@@ -233,27 +233,12 @@ class UserControllerTest {
                 .addressDescription("Rua Teste")
                 .addressNumber(123)
                 .city("Cidade Teste")
-                .uf(createStateInputDTO())
+                .uf("SC")
                 .complement("Complemento Teste")
-                .country(createCountryInputDTO())
+                .country("Brasil")
                 .district("Bairro Teste")
                 .phoneNumber("123456789")
                 .zipCode("12345678")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(createCountryInputDTO())
-                .build();
-    }
-
-    private CountryInputDTO createCountryInputDTO() {
-        return CountryInputDTO.builder()
-                .countryName("Brasil")
-                .continentName("América do Sul")
                 .build();
     }
 
@@ -261,7 +246,7 @@ class UserControllerTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .person(createPersonOutputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();

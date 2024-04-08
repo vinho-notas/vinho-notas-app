@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.GustatoryInspectionConverter;
 import com.vinhonotas.degustacao.application.services.GustatoryInspectionService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.GustatoryInspectionEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.GustatoryInspectionNotFoundException;
 import com.vinhonotas.degustacao.infraestructure.GustatoryInspectionRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -42,7 +43,7 @@ public class GustatoryInspectionServiceImpl implements GustatoryInspectionServic
         List<GustatoryInspectionEntity> list = gustatoryInspectionRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as inspeções gustativas: {} ", MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
+            throw new GustatoryInspectionNotFoundException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
         }
         return list;
     }
@@ -51,7 +52,7 @@ public class GustatoryInspectionServiceImpl implements GustatoryInspectionServic
     public GustatoryInspectionEntity getById(UUID id) {
         log.info("getById :: Buscando inspeção gustativa pelo id: {}", id.toString());
         return gustatoryInspectionRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND));
+                .orElseThrow(() -> new GustatoryInspectionNotFoundException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND));
     }
 
     @Override
@@ -74,7 +75,7 @@ public class GustatoryInspectionServiceImpl implements GustatoryInspectionServic
         Optional<GustatoryInspectionEntity> opt = gustatoryInspectionRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a inspeção gustativa: {} ", MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
+            throw new GustatoryInspectionNotFoundException(MessagesConstants.GUSTATORY_INSPECTION_NOT_FOUND);
         }
         try {
             gustatoryInspectionRepository.deleteById(id);

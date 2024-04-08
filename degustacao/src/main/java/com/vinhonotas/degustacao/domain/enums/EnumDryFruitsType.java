@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumDryFruitsType {
+public enum EnumDryFruitsType implements EnumCode {
 
     PLUM("Ameixa"),
     ALMODN("Amêndoa"),
@@ -18,5 +18,6 @@ public enum EnumDryFruitsType {
     NUT("Noz"),
     RAISINS("Uva passa");
 
-    private final String description;
+    private final String code;
+
 }

@@ -3,10 +3,12 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.cadastro.application.converters.UserConverter;
 import com.vinhonotas.cadastro.application.services.UserService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.*;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +46,6 @@ class UserControllerTest {
     @MockBean
     private UserConverter userConverter;
 
-    private CountryEntity country;
     private AddressOutputDTO address;
     private PersonOutputDTO person;
     private UserEntity userEntity;
@@ -53,7 +54,6 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        country = createCountry();
         address = createAddress();
         person = createPerson();
         userEntity = createUserEntity();
@@ -75,7 +75,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -105,7 +105,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$[0].person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
-                .andExpect(jsonPath("$[0].enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$[0].enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$[0].email").value("email@gmail.com"))
                 .andExpect(jsonPath("$[0].password").value("123456"));
     }
@@ -134,7 +134,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -163,7 +163,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("123456"));
     }
@@ -195,7 +195,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
-                .andExpect(jsonPath("$.enumProfile").value("OENOPHILE"))
+                .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
                 .andExpect(jsonPath("$.email").value("email@gmail.com"))
                 .andExpect(jsonPath("$.password").value("444444"));
     }
@@ -230,14 +230,6 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                         .andDo(print())
                         .andExpect(status().isBadRequest());
-    }
-
-    private CountryEntity createCountry() {
-        return CountryEntity.builder()
-                .id(UUID.fromString("76c1ed02-c7c1-46f9-af05-01e77983f2c3"))
-                .countryName("Brasil")
-                .continentName("America do Sul")
-                .build();
     }
 
     private AddressOutputDTO createAddress() {
@@ -302,8 +294,8 @@ class UserControllerTest {
 
     private UserInputDTO createUserIntputDTO() {
         return UserInputDTO.builder()
-                .person(createPersonInputDTO())
-                .enumProfile(EnumProfile.OENOPHILE)
+                .personId(createPersonInputDTO().getId())
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();
@@ -323,9 +315,9 @@ class UserControllerTest {
                 .addressDescription("Rua Teste")
                 .addressNumber(123)
                 .city("Cidade Teste")
-                .uf(Mockito.mock(StateInputDTO.class))
+                .uf("SC")
                 .complement("Complemento Teste")
-                .country(Mockito.mock(CountryInputDTO.class))
+                .country("Brasil")
                 .district("Bairro Teste")
                 .phoneNumber("123456789")
                 .zipCode("12345678")
@@ -336,7 +328,7 @@ class UserControllerTest {
         return UserOutputDTO.builder()
                 .id(UUID.fromString("8d39bcba-cb01-4103-b562-93c84a89c972"))
                 .person(person)
-                .enumProfile(EnumProfile.OENOPHILE)
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
                 .build();

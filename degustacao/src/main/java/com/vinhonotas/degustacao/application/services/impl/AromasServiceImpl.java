@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.AromasConverter;
 import com.vinhonotas.degustacao.application.services.AromasService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.AromasEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.AromasNotFoundException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.infraestructure.AromasRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.AromasInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -43,7 +44,7 @@ public class AromasServiceImpl implements AromasService {
         List<AromasEntity> list = aromasRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar os aromas: {} ", MessagesConstants.AROMAS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.AROMAS_NOT_FOUND);
+            throw new AromasNotFoundException(MessagesConstants.AROMAS_NOT_FOUND);
         }
         return list;
     }
@@ -52,7 +53,7 @@ public class AromasServiceImpl implements AromasService {
     public AromasEntity getById(UUID id) {
         log.info("getById :: Buscando aroma pelo id: {}", id.toString());
         return aromasRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.AROMAS_NOT_FOUND));
+                .orElseThrow(() -> new AromasNotFoundException(MessagesConstants.AROMAS_NOT_FOUND));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class AromasServiceImpl implements AromasService {
         Optional<AromasEntity> opt = aromasRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar o aroma: {} ", MessagesConstants.AROMAS_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.AROMAS_NOT_FOUND);
+            throw new AromasNotFoundException(MessagesConstants.AROMAS_NOT_FOUND);
         }
 
         try {

@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumSweetsType {
+public enum EnumSweetsType implements EnumCode {
 
     JAM("Compota"),
     HONEY("Mel"),
     BULLET("Bala");
 
-    private final String description;
+    private final String code;
 
 }

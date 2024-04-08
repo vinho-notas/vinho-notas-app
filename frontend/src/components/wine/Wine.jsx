@@ -1,11 +1,11 @@
-import WineList from './WineList';
 import WineRegistration from './WineRegistration';
+import ListWineComponent from '../wine/forms/ListWineComponent';
 
 const Vinho = () => {
     return (
         <>
             <WineRegistration />
-            <WineList />
+            <ListWineComponent />
         </>
     )
 }

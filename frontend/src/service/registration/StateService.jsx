@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_CADASTRO_URL}/states`;
+const API_URL = `${import.meta.env.VITE_API_BFF_URL}/states`;
 
 export const getAllStates = () => {
     return axios.get(API_URL);

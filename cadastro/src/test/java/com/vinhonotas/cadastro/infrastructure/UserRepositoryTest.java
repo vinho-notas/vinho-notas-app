@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest(properties = {
         "spring.datasource.url=jdbc:h2:mem:testdb",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
 })
 class UserRepositoryTest {
 
@@ -123,6 +126,10 @@ class UserRepositoryTest {
         return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -131,6 +138,10 @@ class UserRepositoryTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(country)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -145,6 +156,10 @@ class UserRepositoryTest {
                 .uf(uf)
                 .phoneNumber("47999999999")
                 .country(country)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -154,6 +169,10 @@ class UserRepositoryTest {
                 .document("12345678900")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(address)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -163,6 +182,10 @@ class UserRepositoryTest {
                 .document("12345678900")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(address)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -172,6 +195,10 @@ class UserRepositoryTest {
                 .document("12345678900")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(address)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -181,6 +208,10 @@ class UserRepositoryTest {
                 .enumProfile(EnumProfile.OENOPHILE)
                 .email("person@enofilo.com")
                 .password("123456")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -190,6 +221,10 @@ class UserRepositoryTest {
                 .enumProfile(EnumProfile.SOMMELIER)
                 .email("person@sommelier.com")
                 .password("123456")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -199,6 +234,10 @@ class UserRepositoryTest {
                 .enumProfile(EnumProfile.PARTNER)
                 .email("person@parceiro.com")
                 .password("123456")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

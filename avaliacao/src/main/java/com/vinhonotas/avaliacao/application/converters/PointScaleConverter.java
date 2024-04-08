@@ -1,10 +1,13 @@
 package com.vinhonotas.avaliacao.application.converters;
 
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
+import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
 import com.vinhonotas.avaliacao.interfaces.dtos.outputs.PointScaleOutputDTO;
+import com.vinhonotas.avaliacao.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +22,11 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleInputDTO.getWhatAromas())
                 .whatFlavors(pointScaleInputDTO.getWhatFlavors())
                 .whatOpinion(pointScaleInputDTO.getWhatOpinion())
-                .pointScale(pointScaleInputDTO.getPointScale())
+                .pointScale(EnumConverter.fromString(pointScaleInputDTO.getPointScale(), EnumPointScale.class))
+                .userreg(pointScaleInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(pointScaleInputDTO.getUseralt())
+                .dthalt(pointScaleInputDTO.getDthalt())
                 .build();
     }
 
@@ -32,7 +39,12 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleInputDTO.getWhatAromas() != null ? pointScaleInputDTO.getWhatAromas() : pointScaleEntity.getWhatAromas())
                 .whatFlavors(pointScaleInputDTO.getWhatFlavors() != null ? pointScaleInputDTO.getWhatFlavors() : pointScaleEntity.getWhatFlavors())
                 .whatOpinion(pointScaleInputDTO.getWhatOpinion() != null ? pointScaleInputDTO.getWhatOpinion() : pointScaleEntity.getWhatOpinion())
-                .pointScale(pointScaleInputDTO.getPointScale() != null ? pointScaleInputDTO.getPointScale() : pointScaleEntity.getPointScale())
+                .pointScale(pointScaleInputDTO.getPointScale() != null ? EnumConverter.fromString(pointScaleInputDTO
+                        .getPointScale(), EnumPointScale.class) : pointScaleEntity.getPointScale())
+                .userreg(pointScaleInputDTO.getUserreg() != null ? pointScaleInputDTO.getUserreg() : pointScaleEntity.getUserreg())
+                .dthreg(pointScaleInputDTO.getDthreg() != null ? pointScaleInputDTO.getDthreg() : pointScaleEntity.getDthreg())
+                .useralt(pointScaleInputDTO.getUseralt() != null ? pointScaleInputDTO.getUseralt() : pointScaleEntity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
@@ -45,7 +57,7 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleEntity.getWhatAromas())
                 .whatFlavors(pointScaleEntity.getWhatFlavors())
                 .whatOpinion(pointScaleEntity.getWhatOpinion())
-                .pointScale(pointScaleEntity.getPointScale())
+                .pointScale(EnumConverter.toString(pointScaleEntity.getPointScale()))
                 .build();
     }
 
@@ -64,7 +76,8 @@ public class PointScaleConverter {
                 .whatAromas(pointScaleEntity.getWhatAromas() != null ? pointScaleEntity.getWhatAromas() : pointScaleOutputDTO.getWhatAromas())
                 .whatFlavors(pointScaleEntity.getWhatFlavors() != null ? pointScaleEntity.getWhatFlavors() : pointScaleOutputDTO.getWhatFlavors())
                 .whatOpinion(pointScaleEntity.getWhatOpinion() != null ? pointScaleEntity.getWhatOpinion() : pointScaleOutputDTO.getWhatOpinion())
-                .pointScale(pointScaleEntity.getPointScale() != null ? pointScaleEntity.getPointScale() : pointScaleOutputDTO.getPointScale())
+                .pointScale(pointScaleEntity.getPointScale() != null ? EnumConverter.toString(pointScaleEntity.getPointScale()) :
+                        pointScaleOutputDTO.getPointScale())
                 .build();
     }
 }

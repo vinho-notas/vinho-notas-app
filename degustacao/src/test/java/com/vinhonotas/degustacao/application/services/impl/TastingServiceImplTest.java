@@ -1,11 +1,12 @@
 package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.TastingConverter;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.TastingEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.EnumTastingType;
 import com.vinhonotas.degustacao.infraestructure.TastingRepository;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,12 +81,12 @@ class TastingServiceImplTest {
     void testGetAll() {
         when(repository.findAll()).thenReturn(List.of(entity));
 
-        List<TastingEntity> result = assertDoesNotThrow(() -> service.getAll());
+        var result = assertDoesNotThrow(() -> service.getAll());
         assertNotNull(result);
         assertFalse(result.isEmpty());
-        assertEquals(entity.getTastingData(), result.get(0).getTastingData());
-        assertEquals(entity.getTastingType(), result.get(0).getTastingType());
-        assertEquals(entity.getTastingCards(), result.get(0).getTastingCards());
+        assertEquals(entity.getTastingData(), result.stream().toList().get(0).getTastingData());
+        assertEquals(entity.getTastingType(), result.stream().toList().get(0).getTastingType());
+        assertEquals(entity.getTastingCards(), result.stream().toList().get(0).getTastingCards());
         verify(repository).findAll();
     }
 
@@ -187,8 +188,8 @@ class TastingServiceImplTest {
     private TastingInputDTO createTastingInputDTO() {
         return TastingInputDTO.builder()
                 .tastingData(LocalDate.now())
-                .tastingType(EnumTastingType.COMPARATIVE)
-                .tastingCards(Set.of(Mockito.mock(TastingCardEntity.class)))
+                .tastingType(EnumTastingType.COMPARATIVE.getCode())
+                .tastingCards(Set.of(TastingCardInputDTO.builder().build()))
                 .build();
     }
 

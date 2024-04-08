@@ -1,7 +1,5 @@
 package com.vinhonotas.cadastro.interfaces.dtos.outputs;
 
-import com.vinhonotas.cadastro.domain.entities.PersonEntity;
-import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +11,7 @@ public class UserOutputDTO {
 
     private UUID id;
     private PersonOutputDTO person;
-    private EnumProfile enumProfile;
+    private String enumProfile;
     private String email;
     private String password;
 

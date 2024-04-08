@@ -1,9 +1,8 @@
 package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.VisualInspectionConverter;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
 import com.vinhonotas.degustacao.domain.entities.VisualInspectionEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.*;
 import com.vinhonotas.degustacao.infraestructure.VisualInspectionRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -182,11 +180,11 @@ class VisualInspectionServiceImplTest {
         return VisualInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .clarity(EnumClarityType.CLEAR)
-                .brightness(EnumBrightnessType.OPAQUE)
-                .viscosity(EnumViscosityType.VISCOUS)
-                .colorRed(EnumRedColorType.RUBY)
-                .classification(EnumClassificationType.LITTLE)
+                .clarity(EnumClarityType.CLEAR.getCode())
+                .brightness(EnumBrightnessType.OPAQUE.getCode())
+                .viscosity(EnumViscosityType.VISCOUS.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

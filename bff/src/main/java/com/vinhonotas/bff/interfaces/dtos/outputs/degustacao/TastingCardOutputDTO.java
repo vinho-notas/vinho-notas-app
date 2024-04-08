@@ -22,7 +22,7 @@ public class TastingCardOutputDTO {
     private OlfactoryInspectionOutputDTO olfactoryInspection;
     private GustatoryInspectionOutputDTO gustatoryInspection;
     private String opinion;
-    private EnumPointScale pointScale;
+    private String pointScale;
     private TastingOutputDTO tasting;
 
 }

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.AddressService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.CountryInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.StateInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
@@ -208,24 +206,9 @@ class AdressControllerTest {
                 .district("Bairro 1")
                 .zipCode("00000-000")
                 .city("Cidade 1")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
-                .phoneNumber("00000000000")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("Santa Catarina")
                 .uf("SC")
-                .country(createCountryInputDTO())
-                .build();
-    }
-
-    private CountryInputDTO createCountryInputDTO() {
-        return CountryInputDTO.builder()
-                .countryName("Brasil")
-                .continentName("América do Sul")
+                .country("Brasil")
+                .phoneNumber("00000000000")
                 .build();
     }
 

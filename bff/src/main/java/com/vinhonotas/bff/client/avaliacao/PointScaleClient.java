@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "review", url = "$(avaliacao-api.url)", configuration = FeignConfig.class)
+@FeignClient(name = "point-scales", url = "${avaliacao-api.url}", configuration = FeignConfig.class)
 public interface PointScaleClient {
 
-    @PostMapping("/review")
+    @PostMapping("/point-scales")
     PointScaleOutputDTO createPointScale(@Valid @RequestBody PointScaleInputDTO pointScaleInputDTO);
 
-    @GetMapping("/review")
+    @GetMapping("/point-scales")
     List<PointScaleOutputDTO> getAllPointScale();
 
-    @GetMapping("/review/{id}")
+    @GetMapping("/point-scales/{id}")
     PointScaleOutputDTO getPointScaleById(@PathVariable("id") String id);
 
-    @PutMapping("/review/{id}")
+    @PutMapping("/point-scales/{id}")
     PointScaleOutputDTO updatePointScale(@PathVariable("id") String id, @Valid @RequestBody PointScaleInputDTO pointScaleInputDTO);
 
-    @DeleteMapping("/review/{id}")
+    @DeleteMapping("/point-scales/{id}")
     void deletePointScale(@PathVariable("id") String id);
 
 }

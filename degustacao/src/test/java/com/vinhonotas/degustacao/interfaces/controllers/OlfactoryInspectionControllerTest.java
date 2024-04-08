@@ -3,16 +3,18 @@ package com.vinhonotas.degustacao.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.degustacao.application.converters.OlfactoryInspectionConverter;
 import com.vinhonotas.degustacao.application.services.OlfactoryInspectionService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.AromasEntity;
 import com.vinhonotas.degustacao.domain.entities.OlfactoryInspectionEntity;
-import com.vinhonotas.degustacao.domain.entities.TastingCardEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.EnumClassificationType;
 import com.vinhonotas.degustacao.domain.enums.EnumIntensityType;
 import com.vinhonotas.degustacao.domain.enums.EnumPersistenceType;
 import com.vinhonotas.degustacao.domain.enums.EnumQualityType;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.AromasInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.AromasOutputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.outputs.OlfactoryInspectionOutputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -192,12 +194,12 @@ class OlfactoryInspectionControllerTest {
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
-                .aromas(new AromasEntity())
-                .classification(EnumClassificationType.LITTLE)
-                .tastingCard(new TastingCardEntity())
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .aromas(AromasOutputDTO.builder().build())
+                .classification(EnumClassificationType.LITTLE.getCode())
+                .tastingCard(TastingCardOutputDTO.builder().build())
                 .build();
     }
 
@@ -205,11 +207,11 @@ class OlfactoryInspectionControllerTest {
         return OlfactoryInspectionInputDTO.builder()
                 .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .intensity(EnumIntensityType.INTENSE)
-                .persistence(EnumPersistenceType.PERSISTENT)
-                .quality(EnumQualityType.COMMON)
-                .aromas(new AromasEntity())
-                .classification(EnumClassificationType.LITTLE)
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .persistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .aromas(AromasInputDTO.builder().build())
+                .classification(EnumClassificationType.LITTLE.getCode())
                 .build();
     }
 

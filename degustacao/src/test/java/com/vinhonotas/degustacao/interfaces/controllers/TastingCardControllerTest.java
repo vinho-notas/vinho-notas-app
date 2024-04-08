@@ -3,11 +3,14 @@ package com.vinhonotas.degustacao.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.degustacao.application.converters.TastingCardConverter;
 import com.vinhonotas.degustacao.application.services.TastingCardService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.*;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.enums.EnumPointScale;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.GustatoryInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.TastingCardInputDTO;
-import com.vinhonotas.degustacao.interfaces.dtos.outputs.TastingCardOutputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.inputs.VisualInspectionInputDTO;
+import com.vinhonotas.degustacao.interfaces.dtos.outputs.*;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.mockito.Mockito.doThrow;
@@ -83,8 +87,8 @@ class TastingCardControllerTest {
     @Test
     @DisplayName("Deve retornar uma lista com todas as fichas de degustação cadastradas")
     void testGetAllTastingCards() throws Exception {
-        when(tastingCardService.getAll()).thenReturn(List.of(entity));
-        when(tastingCardConverter.toOutputDTOList(List.of(entity))).thenReturn(List.of(outputDTO));
+        when(tastingCardService.getAll()).thenReturn(Set.of(entity));
+        when(tastingCardConverter.toOutputDTOList(Set.of(entity))).thenReturn(Set.of(outputDTO));
 
         mockMvc.perform(get("/api/v1/tasting-card")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -187,12 +191,12 @@ class TastingCardControllerTest {
                 .grapes("Grapes")
                 .country("Chile")
                 .region("Vale Central")
-                .visualInspection(Mockito.mock(VisualInspectionEntity.class))
-                .olfactoryInspection(Mockito.mock(OlfactoryInspectionEntity.class))
-                .gustatoryInspection(Mockito.mock(GustatoryInspectionEntity.class))
+                .visualInspection(VisualInspectionOutputDTO.builder().build())
+                .olfactoryInspection(OlfactoryInspectionOutputDTO.builder().build())
+                .gustatoryInspection(GustatoryInspectionOutputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
-                .tasting(Mockito.mock(TastingEntity.class))
+                .pointScale(EnumPointScale.CLASSIC.getCode())
+                .tasting(TastingOutputDTO.builder().build())
                 .build();
     }
 
@@ -204,11 +208,11 @@ class TastingCardControllerTest {
                 .grapes("Grapes")
                 .country("Chile")
                 .region("Vale Central")
-                .visualInspection(new VisualInspectionEntity())
-                .olfactoryInspection(new OlfactoryInspectionEntity())
-                .gustatoryInspection(new GustatoryInspectionEntity())
+                .visualInspection(VisualInspectionInputDTO.builder().build())
+                .olfactoryInspection(OlfactoryInspectionInputDTO.builder().build())
+                .gustatoryInspection(GustatoryInspectionInputDTO.builder().build())
                 .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC)
+                .pointScale(EnumPointScale.CLASSIC.getCode())
                 .build();
     }
 

@@ -2,8 +2,9 @@ package com.vinhonotas.degustacao.application.services.impl;
 
 import com.vinhonotas.degustacao.application.converters.OlfactoryInspectionConverter;
 import com.vinhonotas.degustacao.application.services.OlfactoryInspectionService;
-import com.vinhonotas.degustacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.OlfactoryInspectionEntity;
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.degustacao.domain.entities.exceptions.OlfactoryInspectionNotFoundException;
 import com.vinhonotas.degustacao.infraestructure.OlfactoryInspectionRepository;
 import com.vinhonotas.degustacao.interfaces.dtos.inputs.OlfactoryInspectionInputDTO;
 import com.vinhonotas.degustacao.utils.MessagesConstants;
@@ -43,7 +44,7 @@ public class OlfactoryInspectionServiceImpl implements OlfactoryInspectionServic
         List<OlfactoryInspectionEntity> list = olfactoryInspectionRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao listar as inspeções olfativas: {} ", MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
+            throw new OlfactoryInspectionNotFoundException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
         }
         return list;
     }
@@ -52,7 +53,7 @@ public class OlfactoryInspectionServiceImpl implements OlfactoryInspectionServic
     public OlfactoryInspectionEntity getById(UUID id) {
         log.info("getById :: Buscando inspeção olfativa pelo id: {}", id.toString());
         return olfactoryInspectionRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND));
+                .orElseThrow(() -> new OlfactoryInspectionNotFoundException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND));
     }
 
     @Override
@@ -75,7 +76,7 @@ public class OlfactoryInspectionServiceImpl implements OlfactoryInspectionServic
         Optional<OlfactoryInspectionEntity> opt = olfactoryInspectionRepository.findById(id);
         if (opt.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a inspeção olfativa: {} ", MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
+            throw new OlfactoryInspectionNotFoundException(MessagesConstants.OLFACTORY_INSPECTION_NOT_FOUND);
         }
         try {
             olfactoryInspectionRepository.deleteById(id);

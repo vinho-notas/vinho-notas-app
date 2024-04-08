@@ -98,6 +98,7 @@ class CountryConverterTest {
 
     private CountryInputDTO createCountryInputDTO() {
         return CountryInputDTO.builder()
+                .id("d0d7c2a0-0b7a-4e1e-8b7a-0b7a4e1e8b7a")
                 .countryName("Brasil")
                 .continentName("América do Sul")
                 .build();

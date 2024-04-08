@@ -1,10 +1,10 @@
 package com.vinhonotas.degustacao.interfaces.dtos.inputs;
 
-import com.vinhonotas.degustacao.domain.enums.*;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -12,17 +12,21 @@ public class AromasInputDTO {
 
     private LocalDate tastingData;
     private String wineTasted;
-    private EnumFruityType fruity;
-    private EnumDryFruitsType dryFruits;
-    private EnumFloralsType florals;
-    private EnumVegetablesAndHerbsType vegetablesAndHerbs;
-    private EnumMineralsType minerals;
-    private EnumSpicesType spices;
-    private EnumAnimalsType animals;
-    private EnumEmpireumaticsType empireumatics;
-    private EnumWoodType wood;
-    private EnumChemicalsAndEtherealType chemicals;
-    private EnumLactealType lacteal;
-    private EnumSweetsType sweets;
+    private String fruity;
+    private String dryFruits;
+    private String florals;
+    private String vegetablesAndHerbs;
+    private String minerals;
+    private String spices;
+    private String animals;
+    private String empireumatics;
+    private String wood;
+    private String chemicals;
+    private String lacteal;
+    private String sweets;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
 
 }

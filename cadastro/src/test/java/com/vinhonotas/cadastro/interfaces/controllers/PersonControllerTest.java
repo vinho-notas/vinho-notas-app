@@ -3,11 +3,11 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
@@ -180,9 +180,7 @@ class PersonControllerTest {
     void testUpdatePerson() throws Exception {
         personOutputDTO.setName("Nome da pessoa atualizado");
         when(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO)).thenReturn(personEntity);
-        when(personConverter.convertToOutputDTOUpdate(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO),
-                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personConverter.convertToOutputDTO(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO))))
-                .thenReturn(personOutputDTO);
+        when(personConverter.convertToOutputDTO(personEntity)).thenReturn(personOutputDTO);
 
         mockMvc.perform(put("/api/v1/persons/{id}", "123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -313,8 +311,8 @@ class PersonControllerTest {
                 .complement("Complemento da pessoa")
                 .district("Bairro da pessoa")
                 .city("Cidade da pessoa")
-                .uf(createStateInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .zipCode("12345678")
                 .phoneNumber("12345678910")
                 .build();

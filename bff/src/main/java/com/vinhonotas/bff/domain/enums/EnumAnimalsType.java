@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumAnimalsType {
+public enum EnumAnimalsType implements EnumCode {
 
     HUNTING("Caça"),
     LEATHER("Couro");
 
-    private final String description;
+    private final String code;
 
 }

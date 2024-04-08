@@ -3,8 +3,8 @@ package com.vinhonotas.vinho.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.vinho.application.converters.WineConverter;
 import com.vinhonotas.vinho.application.services.WineService;
-import com.vinhonotas.vinho.application.services.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.WineEntity;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
@@ -189,10 +189,10 @@ class WineControllerTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
                 .alcoholContent("12.5")
-                .volumeMl(750)
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
                 .serviceTemperature("17.0")
@@ -237,7 +237,7 @@ class WineControllerTest {
                 .wineType(EnumWineType.REDWINE.getCode())
                 .wineClassification(EnumWineClassification.DRYWINE.getCode())
                 .alcoholContent("12.5")
-                .volumeMl(750)
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
                 .serviceTemperature("17.0")

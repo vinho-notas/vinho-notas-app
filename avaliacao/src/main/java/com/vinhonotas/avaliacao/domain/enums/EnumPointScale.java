@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumPointScale {
+public enum EnumPointScale implements EnumCode {
 
     CLASSIC("Um vinho incrível, sem falhas e prazeroso"),
     OUTSTANDING("Vinho excelente, com qualidade superior ao esperado"),
@@ -14,5 +14,5 @@ public enum EnumPointScale {
     MEDIOCRE("Satisfatório, com falhas pequenas"),
     NOTRECOMMENDED("Não recomendado");
 
-    private final String description;
+    private final String code;
 }

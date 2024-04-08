@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumRedColorType {
+public enum EnumRedColorType implements EnumCode {
 
     VIOLET("Violáceo"),
     RUBY_VIOLET_REFLECTIONS("Rubi com reflexos violáceos"),
@@ -13,6 +13,6 @@ public enum EnumRedColorType {
     RUBY_ORANGE_REFLECTIONS("Rubi com reflexos alaranjados"),
     ORANGE("Alaranjado");
 
-    private final String description;
+    private final String code;
 
 }
