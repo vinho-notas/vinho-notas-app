@@ -17,13 +17,9 @@ describe('Header', () => {
   it('renders sub-menu items correctly', () => {
     const { getByText } = render(<Header />);
 
-    expect(getByText('Cadastrar usuário')).toBeInTheDocument();
-    expect(getByText('Cadastrar pessoa')).toBeInTheDocument();
-    expect(getByText('Lista de usuários')).toBeInTheDocument();
-    expect(getByText('Lista de pessoas')).toBeInTheDocument();
-    expect(getByText('Lista de endereços')).toBeInTheDocument();
-    expect(getByText('Lista de estados')).toBeInTheDocument();
-    expect(getByText('Lista de países')).toBeInTheDocument();
+    expect(getByText('Usuários')).toBeInTheDocument();
+    expect(getByText('Pessoas')).toBeInTheDocument();
+    expect(getByText('Endereços')).toBeInTheDocument();
     expect(getByText('Cadastrar Vinho')).toBeInTheDocument();
     expect(getByText('Listar vinhos')).toBeInTheDocument();
     expect(getByText('Listar avaliações')).toBeInTheDocument();
@@ -46,13 +42,9 @@ describe('Header', () => {
    
     expect(getByText('Home').closest('a')).toHaveAttribute('href', '/');
     expect(getByText('Login').closest('a')).toHaveAttribute('href', '/login');
-    expect(getByText('Cadastrar usuário').closest('a')).toHaveAttribute('href', '/user-registration');
-    expect(getByText('Cadastrar pessoa').closest('a')).toHaveAttribute('href', '/registration');
-    expect(getByText('Lista de usuários').closest('a')).toHaveAttribute('href', '/users');
-    expect(getByText('Lista de pessoas').closest('a')).toHaveAttribute('href', '/persons');
-    expect(getByText('Lista de endereços').closest('a')).toHaveAttribute('href', '/address');
-    expect(getByText('Lista de estados').closest('a')).toHaveAttribute('href', '/states');
-    expect(getByText('Lista de países').closest('a')).toHaveAttribute('href', '/countries');
+    expect(getByText('Usuários').closest('a')).toHaveAttribute('href', '/users');
+    expect(getByText('Pessoas').closest('a')).toHaveAttribute('href', '/persons');
+    expect(getByText('Endereços').closest('a')).toHaveAttribute('href', '/address');
     expect(getByText('Cadastrar Vinho').closest('a')).toHaveAttribute('href', '/wine');
     expect(getByText('Listar vinhos').closest('a')).toHaveAttribute('href', '/wine-list');
     expect(getByText('Listar avaliações').closest('a')).toHaveAttribute('href', '/wine-review-list');
