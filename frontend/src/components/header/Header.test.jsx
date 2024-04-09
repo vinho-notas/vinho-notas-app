@@ -1,20 +1,12 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Header from './Header';
-import { BrowserRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
-import { screen } from '@testing-library/react';
 
 describe('Header', () => {
 
   it('renders correctly', () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    )
+    render(<Header />);
 
-    // screen.debug(); //imprime os elementos html renderizados
-  // Verifica se o texto dos itens do menu está presente no componente renderizado
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Login')).toBeInTheDocument();
     expect(screen.getByText('Cadastro')).toBeInTheDocument();
@@ -25,7 +17,6 @@ describe('Header', () => {
   it('renders sub-menu items correctly', () => {
     const { getByText } = render(<Header />);
 
-    // Verifica se os sub-itens do menu estão presentes no componente renderizado
     expect(getByText('Cadastrar usuário')).toBeInTheDocument();
     expect(getByText('Cadastrar pessoa')).toBeInTheDocument();
     expect(getByText('Lista de usuários')).toBeInTheDocument();
@@ -44,7 +35,6 @@ describe('Header', () => {
   it('renders menu icons correctly', () => {
     const { container } = render(<Header />);
 
-    // Verifica se os ícones estão presentes no componente renderizado
     expect(container.querySelector('.pi.pi-home')).toBeInTheDocument();
     expect(container.querySelector('.pi.pi-user')).toBeInTheDocument();
     expect(container.querySelector('.pi.pi-user-plus')).toBeInTheDocument();
@@ -53,8 +43,7 @@ describe('Header', () => {
 
   it('renders menu urls correctly', () => {
     const { getByText } = render(<Header />);
-
-    // Verifica se as URLs estão corretas nos links do menu
+   
     expect(getByText('Home').closest('a')).toHaveAttribute('href', '/');
     expect(getByText('Login').closest('a')).toHaveAttribute('href', '/login');
     expect(getByText('Cadastrar usuário').closest('a')).toHaveAttribute('href', '/user-registration');
