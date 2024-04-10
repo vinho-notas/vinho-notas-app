@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import ListAddressComponent from './ListAddressComponent';
 
@@ -20,70 +20,70 @@ jest.mock("../../../hooks/registration/useListAddressComponentHook", () => {
 
 describe('ListAddressComponent', () => {
     it('should renders correctly columns', () => {
-        const { getByText } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        expect(getByText('Descrição')).toBeInTheDocument();
-        expect(getByText('Número')).toBeInTheDocument();
-        expect(getByText('Complemento')).toBeInTheDocument();
-        expect(getByText('Bairro')).toBeInTheDocument();
-        expect(getByText('CEP')).toBeInTheDocument();
-        expect(getByText('Cidade')).toBeInTheDocument();
-        expect(getByText('Estado')).toBeInTheDocument();
-        expect(getByText('País')).toBeInTheDocument();
+        expect(screen.getByText('Descrição')).toBeInTheDocument();
+        expect(screen.getByText('Número')).toBeInTheDocument();
+        expect(screen.getByText('Complemento')).toBeInTheDocument();
+        expect(screen.getByText('Bairro')).toBeInTheDocument();
+        expect(screen.getByText('CEP')).toBeInTheDocument();
+        expect(screen.getByText('Cidade')).toBeInTheDocument();
+        expect(screen.getByText('Estado')).toBeInTheDocument();
+        expect(screen.getByText('País')).toBeInTheDocument();
     });
 
     it('should renders correctly Card and DataTable', () => {
-        const { getByTestId } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        expect(getByTestId('address-table').textContent).toMatch(/Nenhum endereço encontrado./i);
-        expect(getByTestId('principal-card').textContent).toMatch(/Lista de endereços/i);
+        expect(screen.getByTestId('address-table').textContent).toMatch(/Nenhum endereço encontrado./i);
+        expect(screen.getByTestId('principal-card').textContent).toMatch(/Lista de endereços/i);
     });
 
     it('should renders correctly leftToolbarTemplate', () => {
-        const { getByText } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        expect(getByText('Descrição')).toBeInTheDocument();
-        expect(getByText('Número')).toBeInTheDocument();
-        expect(getByText('Complemento')).toBeInTheDocument();
-        expect(getByText('Bairro')).toBeInTheDocument();
-        expect(getByText('CEP')).toBeInTheDocument();
-        expect(getByText('Cidade')).toBeInTheDocument();
-        expect(getByText('Estado')).toBeInTheDocument();
-        expect(getByText('País')).toBeInTheDocument();
+        expect(screen.getByText('Descrição')).toBeInTheDocument();
+        expect(screen.getByText('Número')).toBeInTheDocument();
+        expect(screen.getByText('Complemento')).toBeInTheDocument();
+        expect(screen.getByText('Bairro')).toBeInTheDocument();
+        expect(screen.getByText('CEP')).toBeInTheDocument();
+        expect(screen.getByText('Cidade')).toBeInTheDocument();
+        expect(screen.getByText('Estado')).toBeInTheDocument();
+        expect(screen.getByText('País')).toBeInTheDocument();
     });
 
     it('should renders Buttons', () => {
-        const { getByText } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        expect(getByText('Editar')).toBeInTheDocument();
-        expect(getByText('Excluir')).toBeInTheDocument();
+        expect(screen.getByText('Editar')).toBeInTheDocument();
+        expect(screen.getByText('Excluir')).toBeInTheDocument();
     });
 
     it('should renders rightToolbarTemplate', () => {
-        const { getByText } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        expect(getByText('CSV')).toBeInTheDocument();
+        expect(screen.getByText('CSV')).toBeInTheDocument();
     });    
 
     it('should edit address correctly', () => {
-        const { getByText } = render(<ListAddressComponent />);
+        render(<ListAddressComponent />);
 
-        fireEvent.click(getByText('Editar'));
+        fireEvent.click(screen.getByText('Editar'));
     });
 
         it('should delete address correctly', async () => {
-        const { getByText } = render(<ListAddressComponent />);
+         render(<ListAddressComponent />);
 
-        fireEvent.click(getByText('Excluir'));
+        fireEvent.click(screen.getByText('Excluir'));
     });
 
         it('should paginate and select addresses correctly', () => {
-        const { getByText, queryByText, getByPlaceholderText } = render(<ListAddressComponent />); 
+        render(<ListAddressComponent />); 
 
-        fireEvent.change(getByPlaceholderText('Keyword Search'), { target: { value: 'Test' } });
-        expect(queryByText('Nenhum endereço encontrado.')).toBeInTheDocument();
-        expect(getByText('Nenhum endereço encontrado.')).toBeInTheDocument();
-        fireEvent.click(getByText('Editar'));
+        fireEvent.change(screen.getByPlaceholderText('Keyword Search'), { target: { value: 'Test' } });
+        expect(screen.queryByText('Nenhum endereço encontrado.')).toBeInTheDocument();
+        expect(screen.getByText('Nenhum endereço encontrado.')).toBeInTheDocument();
+        fireEvent.click(screen.getByText('Editar'));
     });
 
 });
