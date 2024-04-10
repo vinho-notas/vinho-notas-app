@@ -74,7 +74,7 @@ const ListAddressComponent = () => {
     if (selectedAddress && selectedAddress.length > 0) {
       setVisibleDeleteDialog(true);
     } else {
-      alert('Selecione um vinho para excluir.');
+      alert('Selecione um endereço para excluir.');
     }
   };
 
@@ -218,7 +218,7 @@ const ListAddressComponent = () => {
   const header = renderHeader();
 
   return (
-    <Card style={{ marginTop: 10 }} title="Lista de endereços">
+    <Card style={{ marginTop: 10 }} title="Lista de endereços" data-testid="principal-card">
       <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
       <DataTable
         value={address}
@@ -239,6 +239,7 @@ const ListAddressComponent = () => {
         tableStyle={{ minWidth: '50rem' }}
         emptyMessage="Nenhum endereço encontrado."
         ref={dt}
+        data-testid="address-table"
       >
         <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
         {visibleColumns.map((col) => (
