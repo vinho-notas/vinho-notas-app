@@ -72,7 +72,6 @@ const ListWineComponent = () => {
         { field: 'harmonization', header: 'Harmonização' }
     ]
 
-    //handlers
     const onEditClick = () => {
         if (selectedWines && selectedWines.length === 1) {
             setEditingWine(selectedWines[0]);
@@ -302,10 +301,10 @@ const ListWineComponent = () => {
                 </Dialog>
 
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
-                    <Button rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
+                    <Button data-testid="button-component-novo" rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
+                    <Button data-testid="button-component-editar" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
+                    <Button data-testid="button-component-excluir" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
+                    <Button data-testid="button-component-avaliar" rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
 
                 </div>
             </>
@@ -320,7 +319,7 @@ const ListWineComponent = () => {
         return (
             <>
                 <div className="flex justify-content-end">
-                    <MultiSelect value={visibleColumns} options={columns} optionLabel="header" onChange={onColumnToggle} className="w-full sm:w-20rem" display="chip" />
+                    <MultiSelect data-testid="multiselect-component" value={visibleColumns} options={columns} optionLabel="header" onChange={onColumnToggle} className="w-full sm:w-20rem" display="chip" />
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" />
                         <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
@@ -332,20 +331,15 @@ const ListWineComponent = () => {
 
     const header = renderHeader();
 
-    // Effects
-
     useEffect(() => {
         setLoading(false);
         setVisibleColumns(columns);
     }, []);
 
-    // Render
-
-
     return (
         <>
-            <Card style={{ marginTop: 10 }} title="Lista de Vinhos" >
-                <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
+            <Card data-testid="card-component" style={{ marginTop: 10 }} title="Lista de Vinhos" >
+                <Toolbar data-testid="toolbar-component" className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
                 <DataTable
                     value={wines}
                     paginator
@@ -364,6 +358,7 @@ const ListWineComponent = () => {
                     onSelectionChange={onSelectionChange}
                     onSelectAll={onSelectAllChange}
                     ref={dt}
+                    data-testid="datatable-component"
                 >
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
                     {visibleColumns.map((col) => (
