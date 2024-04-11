@@ -48,9 +48,9 @@ const UserRegistration = () => {
         <>
             <Card style={{ marginTop: 10 }} title="Cadastro de Usuários">
                 <Form onSubmit={handleSubmit}>
-                    <Row className='mb-3'>
+                    <Row data-testid="user-registration-form" className='mb-3'>
                         <Form.Group as={Col} className='mb-3'>
-                            <Form.Label>Pessoa</Form.Label>
+                            <Form.Label data-testid="label-pessoa">Pessoa</Form.Label>
                             <br />
                             <Dropdown
                                 value={person}
@@ -62,7 +62,7 @@ const UserRegistration = () => {
 
                         </Form.Group>
                         <Form.Group as={Col} className='mb-3'>
-                            <Form.Label>Perfil</Form.Label>
+                            <Form.Label data-testid="label-perfil">Perfil</Form.Label>
                             <br />
                             <Dropdown
                                 value={enumProfile}
@@ -74,7 +74,7 @@ const UserRegistration = () => {
                     </Row>
                     <Row className='mb-3'>
                         <Form.Group as={Col} className='mb-3'>
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label data-testid="label-email">Email</Form.Label>
                             <Form.Control
                                 type='text'
                                 name='email'
@@ -84,7 +84,7 @@ const UserRegistration = () => {
                             />
                         </Form.Group>
                         <Form.Group as={Col} className='mb-3'>
-                            <Form.Label>Senha</Form.Label>
+                            <Form.Label data-testid="label-senha">Senha</Form.Label>
                             <Form.Control
                                 type='password'
                                 name='password'

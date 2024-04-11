@@ -1,7 +1,7 @@
 import WineRegistration from './WineRegistration';
 import ListWineComponent from '../wine/forms/ListWineComponent';
 
-const Vinho = () => {
+const Wine = () => {
     return (
         <>
             <WineRegistration />
@@ -10,4 +10,4 @@ const Vinho = () => {
     )
 }
 
-export default Vinho
+export default Wine;

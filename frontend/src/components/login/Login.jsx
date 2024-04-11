@@ -31,8 +31,12 @@ const Login = () => {
             errors.password = 'A senha deve ser informada';
         }
 
+        if (!data.accept) {
+            errors.accept = 'Você deve aceitar os termos e condições';
+        }
+
         return errors;
-    }
+    }    
 
     const onSubmit = (data, form) => {
         setFormData(data);
@@ -70,6 +74,7 @@ const Login = () => {
                                             toggleMask
                                             className={classNames({ 'p-invalid': isFormFieldValid(meta) })}
                                             feedback={false}
+                                            data-testid="password"
                                         />
                                         <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                                     </span>
