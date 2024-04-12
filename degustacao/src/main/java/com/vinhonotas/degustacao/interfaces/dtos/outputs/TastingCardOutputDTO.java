@@ -17,11 +17,11 @@ public class TastingCardOutputDTO {
     private String grapes;
     private String country;
     private String region;
-    private VisualInspectionOutputDTO visualInspection;
-    private OlfactoryInspectionOutputDTO olfactoryInspection;
-    private GustatoryInspectionOutputDTO gustatoryInspection;
+//    private VisualInspectionOutputDTO visualInspection;
+//    private OlfactoryInspectionOutputDTO olfactoryInspection;
+//    private GustatoryInspectionOutputDTO gustatoryInspection;
     private String opinion;
     private String pointScale;
-    private TastingOutputDTO tasting;
+//    private TastingOutputDTO tasting;
 
 }
