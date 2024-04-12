@@ -16,9 +16,9 @@ public class TastingCardInputDTO {
     private String grapes;
     private String country;
     private String region;
-    private VisualInspectionInputDTO visualInspection;
-    private OlfactoryInspectionInputDTO olfactoryInspection;
-    private GustatoryInspectionInputDTO gustatoryInspection;
+//    private VisualInspectionInputDTO visualInspection;
+//    private OlfactoryInspectionInputDTO olfactoryInspection;
+//    private GustatoryInspectionInputDTO gustatoryInspection;
     private String opinion;
     private String pointScale;
     private LocalDateTime dthreg;
