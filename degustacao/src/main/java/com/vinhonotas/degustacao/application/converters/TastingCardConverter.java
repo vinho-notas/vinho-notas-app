@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class TastingCardConverter {
@@ -25,4 +28,12 @@ public class TastingCardConverter {
         return modelMapper.map(tastingCardEntity, TastingCardOutputDTO.class);
     }
 
+
+    public TastingCardEntity toEntityUpdate(TastingCardInputDTO inputDTO, UUID id) {
+        TastingCardEntity mapped = modelMapper.map(inputDTO, TastingCardEntity.class);
+        mapped.setId(id);
+        mapped.setUseralt("userAlt");
+        mapped.setDthalt(LocalDateTime.now());
+        return mapped;
+    }
 }
