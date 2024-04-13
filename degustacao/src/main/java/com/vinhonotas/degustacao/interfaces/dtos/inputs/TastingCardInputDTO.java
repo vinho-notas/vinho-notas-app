@@ -1,8 +1,11 @@
 package com.vinhonotas.degustacao.interfaces.dtos.inputs;
 
+import lombok.Builder;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Builder
 public record TastingCardInputDTO (
     String wineTasted,
     LocalDate tastingData,
