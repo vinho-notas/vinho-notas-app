@@ -13,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +26,14 @@ public class TastingCardServiceImpl implements TastingCardService {
     private final TastingCardRepository tastingCardRepository;
     private final TastingCardConverter tastingCardConverter;
 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public TastingCardEntity create(TastingCardInputDTO inputDTO) {
         log.info("create :: Registrando uma ficha de degustação com os dados: {}", inputDTO.toString());
         try {
             TastingCardEntity entity = tastingCardConverter.toEntity(inputDTO);
+            log.info("create :: Salvando ficha de degustação: {}", entity.toString());
             return tastingCardRepository.save(entity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_SAVING_TASTING_CARD, e);
