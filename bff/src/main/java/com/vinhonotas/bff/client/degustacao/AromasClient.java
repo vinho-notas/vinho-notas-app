@@ -1,8 +1,6 @@
 package com.vinhonotas.bff.client.degustacao;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.AromasInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.AromasOutputDTO;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;

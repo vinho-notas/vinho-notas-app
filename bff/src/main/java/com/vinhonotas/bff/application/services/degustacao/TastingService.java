@@ -1,8 +1,5 @@
 package com.vinhonotas.bff.application.services.degustacao;
 
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.TastingInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.TastingOutputDTO;
-
 import java.util.List;
 
 public interface TastingService {

@@ -1,8 +1,6 @@
 package com.vinhonotas.bff.interfaces.controllers.degustacao;
 
 import com.vinhonotas.bff.application.services.degustacao.TastingService;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.TastingInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.TastingOutputDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

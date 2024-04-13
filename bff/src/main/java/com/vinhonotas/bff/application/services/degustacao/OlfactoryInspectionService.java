@@ -1,8 +1,5 @@
 package com.vinhonotas.bff.application.services.degustacao;
 
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.OlfactoryInspectionInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.OlfactoryInspectionOutputDTO;
-
 import java.util.List;
 
 public interface OlfactoryInspectionService {

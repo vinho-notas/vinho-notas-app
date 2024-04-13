@@ -4,8 +4,6 @@ import com.vinhonotas.bff.application.services.degustacao.AromasService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.degustacao.AromasClient;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.AromasInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.AromasOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
