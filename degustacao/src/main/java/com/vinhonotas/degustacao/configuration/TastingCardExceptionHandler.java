@@ -1,5 +1,6 @@
 package com.vinhonotas.degustacao.configuration;
 
+import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.degustacao.domain.entities.exceptions.TastingCardNotFoundException;
 import com.vinhonotas.degustacao.interfaces.dtos.general.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -14,5 +15,11 @@ public class TastingCardExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleTastingCardNotFoundException(TastingCardNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(exception.getMessage()));
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(BadRequestException exception) {
+        return ResponseEntity.badRequest().body(new ErrorResponseDTO(exception.getMessage()));
+    }
+
 
 }
