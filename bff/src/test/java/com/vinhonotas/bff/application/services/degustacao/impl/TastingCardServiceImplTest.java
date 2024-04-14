@@ -161,6 +161,7 @@ class TastingCardServiceImplTest {
     @Test
     @DisplayName("Deve deletar uma ficha de degustação pelo id")
     void testDeleteTastingCard() {
+        when(client.getTastingCardById(anyString())).thenReturn(outputDTO);;
         assertDoesNotThrow(() -> service.deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"));
         verify(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
     }
@@ -168,11 +169,11 @@ class TastingCardServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao tentar deletar uma ficha de degustação pelo id")
     void testDeleteTastingCardThrowBadRequestException() {
-        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING)).when(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
+        when(client.getTastingCardById(anyString())).thenThrow(new BadRequestException(MessagesConstants.NOT_FOUND));
 
         BadRequestException exception = assertThrows(BadRequestException.class, () -> service.deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"));
         assertEquals(MessagesConstants.ERROR_WHEN_DELETING, exception.getMessage());
-        verify(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
+        verify(client, times(0)).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
     }
 
     private TastingCardInputDTO createTastingCardInputDTO() {
