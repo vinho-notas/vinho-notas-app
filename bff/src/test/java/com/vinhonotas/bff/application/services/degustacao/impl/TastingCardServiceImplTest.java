@@ -2,15 +2,9 @@ package com.vinhonotas.bff.application.services.degustacao.impl;
 
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.degustacao.TastingCardClient;
-import com.vinhonotas.bff.domain.enums.EnumPointScale;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.GustatoryInspectionInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.OlfactoryInspectionInputDTO;
+import com.vinhonotas.bff.domain.enums.*;
 import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.TastingCardInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.VisualInspectionInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.GustatoryInspectionOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.OlfactoryInspectionOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.TastingCardOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.VisualInspectionOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,9 +54,6 @@ class TastingCardServiceImplTest {
         assertEquals(outputDTO.getGrapes(), result.getGrapes());
         assertEquals(outputDTO.getCountry(), result.getCountry());
         assertEquals(outputDTO.getRegion(), result.getRegion());
-        assertEquals(outputDTO.getVisualInspection(), result.getVisualInspection());
-        assertEquals(outputDTO.getOlfactoryInspection(), result.getOlfactoryInspection());
-        assertEquals(outputDTO.getGustatoryInspection(), result.getGustatoryInspection());
         assertEquals(outputDTO.getOpinion(), result.getOpinion());
         assertEquals(outputDTO.getPointScale(), result.getPointScale());
         verify(client).createTastingCard(inputDTO);
@@ -94,9 +85,6 @@ class TastingCardServiceImplTest {
         assertEquals(outputDTO.getGrapes(), result.get(0).getGrapes());
         assertEquals(outputDTO.getCountry(), result.get(0).getCountry());
         assertEquals(outputDTO.getRegion(), result.get(0).getRegion());
-        assertEquals(outputDTO.getVisualInspection(), result.get(0).getVisualInspection());
-        assertEquals(outputDTO.getOlfactoryInspection(), result.get(0).getOlfactoryInspection());
-        assertEquals(outputDTO.getGustatoryInspection(), result.get(0).getGustatoryInspection());
         assertEquals(outputDTO.getOpinion(), result.get(0).getOpinion());
         assertEquals(outputDTO.getPointScale(), result.get(0).getPointScale());
         verify(client).getAllTastingCards();
@@ -126,9 +114,6 @@ class TastingCardServiceImplTest {
         assertEquals(outputDTO.getGrapes(), result.getGrapes());
         assertEquals(outputDTO.getCountry(), result.getCountry());
         assertEquals(outputDTO.getRegion(), result.getRegion());
-        assertEquals(outputDTO.getVisualInspection(), result.getVisualInspection());
-        assertEquals(outputDTO.getOlfactoryInspection(), result.getOlfactoryInspection());
-        assertEquals(outputDTO.getGustatoryInspection(), result.getGustatoryInspection());
         assertEquals(outputDTO.getOpinion(), result.getOpinion());
         assertEquals(outputDTO.getPointScale(), result.getPointScale());
         verify(client).getTastingCardById("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
@@ -158,9 +143,6 @@ class TastingCardServiceImplTest {
         assertEquals(outputDTO.getGrapes(), result.getGrapes());
         assertEquals(outputDTO.getCountry(), result.getCountry());
         assertEquals(outputDTO.getRegion(), result.getRegion());
-        assertEquals(outputDTO.getVisualInspection(), result.getVisualInspection());
-        assertEquals(outputDTO.getOlfactoryInspection(), result.getOlfactoryInspection());
-        assertEquals(outputDTO.getGustatoryInspection(), result.getGustatoryInspection());
         assertEquals(outputDTO.getOpinion(), result.getOpinion());
         assertEquals(outputDTO.getPointScale(), result.getPointScale());
         verify(client).updateTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e", inputDTO);
@@ -179,6 +161,7 @@ class TastingCardServiceImplTest {
     @Test
     @DisplayName("Deve deletar uma ficha de degustação pelo id")
     void testDeleteTastingCard() {
+        when(client.getTastingCardById(anyString())).thenReturn(outputDTO);;
         assertDoesNotThrow(() -> service.deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"));
         verify(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
     }
@@ -186,43 +169,103 @@ class TastingCardServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao tentar deletar uma ficha de degustação pelo id")
     void testDeleteTastingCardThrowBadRequestException() {
-        doThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING)).when(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
+        when(client.getTastingCardById(anyString())).thenThrow(new BadRequestException(MessagesConstants.NOT_FOUND));
 
         BadRequestException exception = assertThrows(BadRequestException.class, () -> service.deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"));
         assertEquals(MessagesConstants.ERROR_WHEN_DELETING, exception.getMessage());
-        verify(client).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
+        verify(client, times(0)).deleteTastingCard("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e");
     }
 
     private TastingCardInputDTO createTastingCardInputDTO() {
         return TastingCardInputDTO.builder()
-                .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .harvest("2020")
+                .tastingData(LocalDate.now())
+                .harvest("2021")
                 .grapes("Grapes")
-                .country("Chile")
-                .region("Vale Central")
-                .visualInspection(Mockito.mock(VisualInspectionInputDTO.class))
-                .olfactoryInspection(Mockito.mock(OlfactoryInspectionInputDTO.class))
-                .gustatoryInspection(Mockito.mock(GustatoryInspectionInputDTO.class))
-                .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC.getCode())
+                .country("Country")
+                .region("Region")
+                .clarity(EnumClarityType.CLEAR.getCode())
+                .brightness(EnumBrightnessType.BRIGHT.getCode())
+                .viscosity(EnumViscosityType.VISCOUS.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.GOLDEN.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .visualInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .olfactoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .fruity(EnumFruityType.BANANA.getCode())
+                .dryFruits(EnumDryFruitsType.ALMODN.getCode())
+                .florals(EnumFloralsType.ACACIA.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.CHALK.getCode())
+                .spices(EnumSpicesType.ANISE.getCode())
+                .animals(EnumAnimalsType.HUNTING.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
+                .olfactoryInspectionClassification(EnumClassificationType.EXCELLENT.getCode())
+                .body(EnumBodyType.LITTLE_BODY.getCode())
+                .sweetness(EnumSweetnessType.SWEET.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .gustatoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.TYPICAL.getCode())
+                .gustatoryInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .opinion("Opinion")
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
+                .dthreg(LocalDateTime.now())
+                .userreg("User Reg")
                 .build();
     }
 
     private TastingCardOutputDTO createTastingCardOutputDTO() {
         return TastingCardOutputDTO.builder()
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
-                .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .harvest("2020")
+                .tastingData(LocalDate.now())
+                .harvest("2021")
                 .grapes("Grapes")
-                .country("Chile")
-                .region("Vale Central")
-                .visualInspection(Mockito.mock(VisualInspectionOutputDTO.class))
-                .olfactoryInspection(Mockito.mock(OlfactoryInspectionOutputDTO.class))
-                .gustatoryInspection(Mockito.mock(GustatoryInspectionOutputDTO.class))
-                .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC.getCode())
+                .country("Country")
+                .region("Region")
+                .clarity(EnumClarityType.CLEAR.getCode())
+                .brightness(EnumBrightnessType.BRIGHT.getCode())
+                .viscosity(EnumViscosityType.VISCOUS.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.GOLDEN.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .visualInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .olfactoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .fruity(EnumFruityType.BANANA.getCode())
+                .dryFruits(EnumDryFruitsType.ALMODN.getCode())
+                .florals(EnumFloralsType.ACACIA.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.CHALK.getCode())
+                .spices(EnumSpicesType.ANISE.getCode())
+                .animals(EnumAnimalsType.HUNTING.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
+                .olfactoryInspectionClassification(EnumClassificationType.EXCELLENT.getCode())
+                .body(EnumBodyType.LITTLE_BODY.getCode())
+                .sweetness(EnumSweetnessType.SWEET.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .gustatoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.TYPICAL.getCode())
+                .gustatoryInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .opinion("Opinion")
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
                 .build();
     }
 
