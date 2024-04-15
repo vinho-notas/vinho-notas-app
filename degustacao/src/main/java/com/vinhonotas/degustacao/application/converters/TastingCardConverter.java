@@ -48,6 +48,7 @@ public class TastingCardConverter {
 
     private TastingCardEntity getTastingCardEntity(TastingCardInputDTO tastingCardInputDTO) {
         TastingCardEntity entity = modelMapper.map(tastingCardInputDTO, TastingCardEntity.class);
+        entity.setTastingType(EnumConverter.fromString(tastingCardInputDTO.getTastingType(), EnumTastingType.class));
         entity.setClarity(EnumConverter.fromString(tastingCardInputDTO.getClarity(), EnumClarityType.class));
         entity.setBrightness(EnumConverter.fromString(tastingCardInputDTO.getBrightness(), EnumBrightnessType.class));
         entity.setViscosity(EnumConverter.fromString(tastingCardInputDTO.getViscosity(), EnumViscosityType.class));
@@ -92,6 +93,7 @@ public class TastingCardConverter {
 
     private TastingCardOutputDTO getTastingCardOutputDTO(TastingCardEntity tastingCardEntity) {
         TastingCardOutputDTO mapped = customModelMapper.map(tastingCardEntity, TastingCardOutputDTO.class);
+        mapped.setTastingType(EnumConverter.toString(tastingCardEntity.getTastingType()));
         mapped.setClarity(EnumConverter.toString(tastingCardEntity.getClarity()));
         mapped.setBrightness(EnumConverter.toString(tastingCardEntity.getBrightness()));
         mapped.setViscosity(EnumConverter.toString(tastingCardEntity.getViscosity()));
