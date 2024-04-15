@@ -24,19 +24,16 @@ public class TastingCardConverter {
         return getTastingCardEntity(tastingCardInputDTO);
     }
 
-    public TastingCardInputDTO toInputDTO(TastingCardEntity tastingCardEntity) {
-        return modelMapper.map(tastingCardEntity, TastingCardInputDTO.class);
-    }
-
     public TastingCardOutputDTO toOutputDTO(TastingCardEntity tastingCardEntity) {
         customModelMapperToOutputDTO();
-
         return getTastingCardOutputDTO(tastingCardEntity);
     }
 
     public TastingCardEntity toEntityUpdate(TastingCardInputDTO inputDTO, UUID id) {
-        TastingCardEntity mapped = modelMapper.map(inputDTO, TastingCardEntity.class);
+        TastingCardEntity mapped = getTastingCardEntity(inputDTO);
         mapped.setId(id);
+        mapped.setUserreg(inputDTO.getUserreg());
+        mapped.setDthreg(inputDTO.getDthreg());
         mapped.setUseralt("userAlt");
         mapped.setDthalt(LocalDateTime.now());
         return mapped;
@@ -93,40 +90,46 @@ public class TastingCardConverter {
 
     private TastingCardOutputDTO getTastingCardOutputDTO(TastingCardEntity tastingCardEntity) {
         TastingCardOutputDTO mapped = customModelMapper.map(tastingCardEntity, TastingCardOutputDTO.class);
-        mapped.setTastingType(EnumConverter.toString(tastingCardEntity.getTastingType()));
-        mapped.setClarity(EnumConverter.toString(tastingCardEntity.getClarity()));
-        mapped.setBrightness(EnumConverter.toString(tastingCardEntity.getBrightness()));
-        mapped.setViscosity(EnumConverter.toString(tastingCardEntity.getViscosity()));
-        mapped.setColorRed(EnumConverter.toString(tastingCardEntity.getColorRed()));
-        mapped.setColorWhite(EnumConverter.toString(tastingCardEntity.getColorWhite()));
-        mapped.setColorRose(EnumConverter.toString(tastingCardEntity.getColorRose()));
-        mapped.setVisualInspectionClassification(EnumConverter.toString(tastingCardEntity.getVisualInspectionClassification()));
-        mapped.setIntensity(EnumConverter.toString(tastingCardEntity.getIntensity()));
-        mapped.setOlfactoryInspectionPersistence(EnumConverter.toString(tastingCardEntity.getOlfactoryInspectionPersistence()));
-        mapped.setQuality(EnumConverter.toString(tastingCardEntity.getQuality()));
-        mapped.setFruity(EnumConverter.toString(tastingCardEntity.getFruity()));
-        mapped.setDryFruits(EnumConverter.toString(tastingCardEntity.getDryFruits()));
-        mapped.setFlorals(EnumConverter.toString(tastingCardEntity.getFlorals()));
-        mapped.setVegetablesAndHerbs(EnumConverter.toString(tastingCardEntity.getVegetablesAndHerbs()));
-        mapped.setMinerals(EnumConverter.toString(tastingCardEntity.getMinerals()));
-        mapped.setSpices(EnumConverter.toString(tastingCardEntity.getSpices()));
-        mapped.setAnimals(EnumConverter.toString(tastingCardEntity.getAnimals()));
-        mapped.setEmpireumatics(EnumConverter.toString(tastingCardEntity.getEmpireumatics()));
-        mapped.setWood(EnumConverter.toString(tastingCardEntity.getWood()));
-        mapped.setChemicals(EnumConverter.toString(tastingCardEntity.getChemicals()));
-        mapped.setLacteal(EnumConverter.toString(tastingCardEntity.getLacteal()));
-        mapped.setSweets(EnumConverter.toString(tastingCardEntity.getSweets()));
-        mapped.setOlfactoryInspectionClassification(EnumConverter.toString(tastingCardEntity.getOlfactoryInspectionClassification()));
-        mapped.setBody(EnumConverter.toString(tastingCardEntity.getBody()));
-        mapped.setSweetness(EnumConverter.toString(tastingCardEntity.getSweetness()));
-        mapped.setTannin(EnumConverter.toString(tastingCardEntity.getTannin()));
-        mapped.setAcidity(EnumConverter.toString(tastingCardEntity.getAcidity()));
-        mapped.setAlcohol(EnumConverter.toString(tastingCardEntity.getAlcohol()));
-        mapped.setGustatoryInspectionPersistence(EnumConverter.toString(tastingCardEntity.getGustatoryInspectionPersistence()));
-        mapped.setMaturity(EnumConverter.toString(tastingCardEntity.getMaturity()));
-        mapped.setTypicality(EnumConverter.toString(tastingCardEntity.getTypicality()));
-        mapped.setGustatoryInspectionClassification(EnumConverter.toString(tastingCardEntity.getGustatoryInspectionClassification()));
-        mapped.setPointScale(EnumConverter.toString(tastingCardEntity.getPointScale()));
+        mapped.setTastingType(tastingCardEntity.getTastingType() != null ? EnumConverter.toString(tastingCardEntity.getTastingType()) : null);
+        mapped.setClarity(tastingCardEntity.getClarity() != null ? EnumConverter.toString(tastingCardEntity.getClarity()) : null);
+        mapped.setBrightness(tastingCardEntity.getBrightness() != null ? EnumConverter.toString(tastingCardEntity.getBrightness()) : null);
+        mapped.setViscosity(tastingCardEntity.getViscosity() != null ? EnumConverter.toString(tastingCardEntity.getViscosity()) : null);
+        mapped.setColorRed(tastingCardEntity.getColorRed() != null ? EnumConverter.toString(tastingCardEntity.getColorRed()) : null);
+        mapped.setColorWhite(tastingCardEntity.getColorWhite() != null ? EnumConverter.toString(tastingCardEntity.getColorWhite()) : null);
+        mapped.setColorRose(tastingCardEntity.getColorRose() != null ? EnumConverter.toString(tastingCardEntity.getColorRose()) : null);
+        mapped.setVisualInspectionClassification(tastingCardEntity.getVisualInspectionClassification() != null ? EnumConverter.toString(
+                tastingCardEntity.getVisualInspectionClassification()) : null);
+        mapped.setIntensity(tastingCardEntity.getIntensity() != null ? EnumConverter.toString(tastingCardEntity.getIntensity()) : null);
+        mapped.setOlfactoryInspectionPersistence(tastingCardEntity.getOlfactoryInspectionPersistence() != null ? EnumConverter.toString(
+                tastingCardEntity.getOlfactoryInspectionPersistence()) : null);
+        mapped.setQuality(tastingCardEntity.getQuality() != null ? EnumConverter.toString(tastingCardEntity.getQuality()) : null);
+        mapped.setFruity(tastingCardEntity.getFruity() != null ? EnumConverter.toString(tastingCardEntity.getFruity()) : null);
+        mapped.setDryFruits(tastingCardEntity.getDryFruits() != null ? EnumConverter.toString(tastingCardEntity.getDryFruits()) : null);
+        mapped.setFlorals(tastingCardEntity.getFlorals() != null ? EnumConverter.toString(tastingCardEntity.getFlorals()) : null);
+        mapped.setVegetablesAndHerbs(tastingCardEntity.getVegetablesAndHerbs() != null ? EnumConverter.toString(
+                tastingCardEntity.getVegetablesAndHerbs()) : null);
+        mapped.setMinerals(tastingCardEntity.getMinerals() != null ? EnumConverter.toString(tastingCardEntity.getMinerals()) : null);
+        mapped.setSpices(tastingCardEntity.getSpices() != null ? EnumConverter.toString(tastingCardEntity.getSpices()) : null);
+        mapped.setAnimals(tastingCardEntity.getAnimals() != null ? EnumConverter.toString(tastingCardEntity.getAnimals()) : null);
+        mapped.setEmpireumatics(tastingCardEntity.getEmpireumatics() != null ? EnumConverter.toString(tastingCardEntity.getEmpireumatics()) : null);
+        mapped.setWood(tastingCardEntity.getWood() != null ? EnumConverter.toString(tastingCardEntity.getWood()) : null);
+        mapped.setChemicals(tastingCardEntity.getChemicals() != null ? EnumConverter.toString(tastingCardEntity.getChemicals()) : null);
+        mapped.setLacteal(tastingCardEntity.getLacteal() != null ? EnumConverter.toString(tastingCardEntity.getLacteal()) : null);
+        mapped.setSweets(tastingCardEntity.getSweets() != null ? EnumConverter.toString(tastingCardEntity.getSweets()) : null);
+        mapped.setOlfactoryInspectionClassification(tastingCardEntity.getOlfactoryInspectionClassification() != null ? EnumConverter.toString(
+                tastingCardEntity.getOlfactoryInspectionClassification()) : null);
+        mapped.setBody(tastingCardEntity.getBody() != null ? EnumConverter.toString(tastingCardEntity.getBody()) : null);
+        mapped.setSweetness(tastingCardEntity.getSweetness() != null ? EnumConverter.toString(tastingCardEntity.getSweetness()) : null);
+        mapped.setTannin(tastingCardEntity.getTannin() != null ? EnumConverter.toString(tastingCardEntity.getTannin()) : null);
+        mapped.setAcidity(tastingCardEntity.getAcidity() != null ? EnumConverter.toString(tastingCardEntity.getAcidity()) : null);
+        mapped.setAlcohol(tastingCardEntity.getAlcohol() != null ? EnumConverter.toString(tastingCardEntity.getAlcohol()) : null);
+        mapped.setGustatoryInspectionPersistence(tastingCardEntity.getGustatoryInspectionPersistence() != null ? EnumConverter.toString(
+                tastingCardEntity.getGustatoryInspectionPersistence()) : null);
+        mapped.setMaturity(tastingCardEntity.getMaturity() != null ? EnumConverter.toString(tastingCardEntity.getMaturity()) : null);
+        mapped.setTypicality(tastingCardEntity.getTypicality() != null ? EnumConverter.toString(tastingCardEntity.getTypicality()) : null);
+        mapped.setGustatoryInspectionClassification(tastingCardEntity.getGustatoryInspectionClassification() != null ? EnumConverter.toString(
+                tastingCardEntity.getGustatoryInspectionClassification()) : null);
+        mapped.setPointScale(tastingCardEntity.getPointScale() != null ? EnumConverter.toString(tastingCardEntity.getPointScale()) : null);
         return mapped;
     }
 
