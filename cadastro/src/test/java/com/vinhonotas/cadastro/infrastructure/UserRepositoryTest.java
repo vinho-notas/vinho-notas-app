@@ -129,7 +129,7 @@ class UserRepositoryTest {
         String role = "[ROLE_OENOPHILE]";
 
         assertDoesNotThrow(() -> userRepository.save(userEnofilo));
-        UserDetails user = userRepository.findByEmail("person@enofilo.com");
+        UserDetails user = assertDoesNotThrow(() ->userRepository.findByEmail("person@enofilo.com"));
 
         assertNotNull(user);
         assertEquals(role, user.getAuthorities().toString());
