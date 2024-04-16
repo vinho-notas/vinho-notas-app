@@ -14,17 +14,15 @@ const Header = () => {
     
     { label: 'Vinho', icon: 'pi pi-folder-open',
       items: [
-        {label: 'Cadastrar Vinho', icon: 'pi pi-folder-open', url: '/wine' },
-        { label: 'Listar vinhos', icon: 'pi pi-folder-open', url: '/wine-list' },
-        { label: 'Listar avaliações', icon: 'pi pi-folder-open', url: '/wine-review-list' }
+        { label: 'Vinhos', icon: 'pi pi-folder-open', url: '/wine-list' },
+        { label: 'Avaliações', icon: 'pi pi-folder-open', url: '/wine-review-list' }
       ]    
     },
     {
       label: 'Degustação', icon: 'pi pi-folder-open',
-      items: [
-        { label: 'Registrar degustação', icon: 'pi pi-folder-open', url: '/tasting' },
-        { label: 'Ficha de degustação', icon: 'pi pi-folder-open', url: '/tasting-card' },        
-        { label: 'Listar fichas de degustação', icon: 'pi pi-folder-open', url: '/tasting-list' }
+      items: [        
+               
+        { label: 'Fichas de degustação', icon: 'pi pi-folder-open', url: '/tasting-list' }
       ]
     }
   ];

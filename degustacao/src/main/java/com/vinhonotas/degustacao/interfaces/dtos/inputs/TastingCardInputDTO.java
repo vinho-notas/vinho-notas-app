@@ -16,6 +16,7 @@ public class TastingCardInputDTO {
     private String grapes;
     private String country;
     private String region;
+    private String tastingType;
     private String clarity;
     private String brightness;
     private String viscosity;

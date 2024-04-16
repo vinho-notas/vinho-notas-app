@@ -26,7 +26,6 @@ public class TastingCardServiceImpl implements TastingCardService {
     private final TastingCardRepository tastingCardRepository;
     private final TastingCardConverter tastingCardConverter;
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public TastingCardEntity create(TastingCardInputDTO inputDTO) {
@@ -64,8 +63,8 @@ public class TastingCardServiceImpl implements TastingCardService {
     public TastingCardEntity update(UUID id, TastingCardInputDTO inputDTO) {
         log.info("update :: Atualizando ficha de degustação com os dados: {}", inputDTO.toString());
         try {
-            existsTastingCardById(id);
-            return tastingCardRepository.save(tastingCardConverter.toEntityUpdate(inputDTO, id));
+            TastingCardEntity entityUpdate = getTastingCardEntity(id, inputDTO);
+            return tastingCardRepository.save(entityUpdate);
         } catch (Exception e) {
             log.error("update :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_UPDATING_TASTING_CARD, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING_TASTING_CARD);
@@ -86,12 +85,23 @@ public class TastingCardServiceImpl implements TastingCardService {
         }
     }
 
-    private void existsTastingCardById(UUID id) {
+    private TastingCardEntity existsTastingCardById(UUID id) {
         TastingCardEntity entity = this.getById(id);
         if (Objects.isNull(entity)) {
             log.error("existsTastingCardById :: Ocorreu um erro ao buscar ficha de degustação: {} ", MessagesConstants.TASTING_CARD_NOT_FOUND);
             throw new TastingCardNotFoundException(MessagesConstants.TASTING_CARD_NOT_FOUND);
         }
+        return entity;
+    }
+
+    private TastingCardEntity getTastingCardEntity(UUID id, TastingCardInputDTO inputDTO) {
+        TastingCardEntity tastingCardEntity = existsTastingCardById(id);
+        inputDTO.setUserreg(tastingCardEntity.getUserreg());
+        inputDTO.setDthreg(tastingCardEntity.getDthreg());
+        log.info("update :: Salvando ficha de degustação atualizada: {}", inputDTO);
+        TastingCardEntity entityUpdate = tastingCardConverter.toEntityUpdate(inputDTO, id);
+        log.info("update :: Salvando ficha de degustação atualizada: {}", entityUpdate.toString());
+        return entityUpdate;
     }
 
 }

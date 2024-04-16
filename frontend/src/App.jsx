@@ -13,7 +13,7 @@ import ListPersonComponent from './components/registration/forms/ListPersonCompo
 import ListUserComponent from './components/registration/forms/ListUserComponent';
 import ListWineComponent from './components/wine/forms/ListWineComponent';
 import ListPointScaleComponent from './components/review/ListPointScaleComponent';
-import ListTastingComponent from './components/tasting/forms/ListTastingComponent';
+import ListTastingComponent from './components/tasting/forms/ListTastingCardComponent';
 import PersonRegistration from './components/registration/PersonRegistration';
 import UserRegistration from './components/registration/UserRegistration';
 

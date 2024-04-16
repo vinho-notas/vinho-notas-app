@@ -42,6 +42,10 @@ public class TastingCardEntity {
     @Column(name = "region")
     private String region;
 
+    @Column(name = "tastingtype")
+    @Enumerated(EnumType.STRING)
+    private EnumTastingType tastingType;
+
     @Column(name = "clarity")
     @Enumerated(EnumType.STRING)
     private EnumClarityType clarity;

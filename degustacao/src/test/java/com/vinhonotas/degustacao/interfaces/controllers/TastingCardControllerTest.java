@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -85,13 +84,13 @@ class TastingCardControllerTest {
     @DisplayName("Deve retornar uma lista com todas as fichas de degustação cadastradas")
     void testGetAllTastingCards() throws Exception {
         when(tastingCardService.getAll()).thenReturn(Set.of(entity));
-        when(tastingCardConverter.toOutputDTOList(Set.of(entity))).thenReturn(Set.of(outputDTO));
+        when(tastingCardConverter.toOutputDTO(entity)).thenReturn(outputDTO);
 
         mockMvc.perform(get("/api/v1/tasting-card")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(List.of(outputDTO))));
+                .andExpect(content().json(objectMapper.writeValueAsString(Set.of(outputDTO))));
     }
 
     @Test
