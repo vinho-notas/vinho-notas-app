@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -120,6 +121,20 @@ class UserRepositoryTest {
         assertDoesNotThrow(() -> userRepository.delete(userEntitySaved));
 
         assertEquals(0, userRepository.findAll().size());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um usuário quando passado o email da pessoa como parâmetro de busca")
+    void testFindByEmail() {
+        String role = "[ROLE_OENOPHILE]";
+
+        assertDoesNotThrow(() -> userRepository.save(userEnofilo));
+        UserDetails user = userRepository.findByEmail("person@enofilo.com");
+
+        assertNotNull(user);
+        assertEquals(role, user.getAuthorities().toString());
+        assertEquals("person@enofilo.com", user.getUsername());
+        assertEquals("123456", user.getPassword());
     }
 
     private CountryEntity createCountry() {
