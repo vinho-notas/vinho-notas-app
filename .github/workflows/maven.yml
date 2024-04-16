@@ -48,3 +48,9 @@ jobs:
         cd bff
         mvn -B package --file pom.xml
         mvn test
+
+    - name: Build and execute testes with Maven on 'acesso'
+      run: |
+        cd acesso
+        mvn -B package --file pom.xml
+        mvn test
