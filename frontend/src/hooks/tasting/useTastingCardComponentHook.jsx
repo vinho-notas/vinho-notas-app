@@ -5,7 +5,7 @@ import { createTastingCard } from "../../service/tasting/TastingCardService";
 
 const useTastingCardComponentHook = () => {
     const navigate = useNavigate();
-
+    const [tastingType, setTastingType] = useState('');
     const [wineTasted, setWineTasted] = useState('');
     const [tastingData, setTastingData] = useState('');
     const [harvest, setHarvest] = useState('');
@@ -53,6 +53,7 @@ const useTastingCardComponentHook = () => {
 
     const saveTastingCard = async () => {
         const tastingCard = {
+            tastingType,
             wineTasted,
             tastingData,
             harvest,
@@ -109,6 +110,7 @@ const useTastingCardComponentHook = () => {
     };
 
     return {
+        tastingType, setTastingType,
         wineTasted, setWineTasted,
         tastingData, setTastingData,
         harvest, setHarvest,
