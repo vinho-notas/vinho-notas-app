@@ -1,8 +1,8 @@
-package com.vinhonotas.degustacao.configuration;
+package com.vinhonotas.bff.configuration;
 
-import com.vinhonotas.degustacao.domain.entities.exceptions.BadRequestException;
-import com.vinhonotas.degustacao.domain.entities.exceptions.TastingCardNotFoundException;
-import com.vinhonotas.degustacao.interfaces.dtos.general.ErrorResponseDTO;
+import com.vinhonotas.bff.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.bff.domain.entities.exceptions.TastingCardNotFoundException;
+import com.vinhonotas.bff.interfaces.dtos.general.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

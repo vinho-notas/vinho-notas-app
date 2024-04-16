@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_TASTING_URL}/tasting-card`;
+const API_URL = `${import.meta.env.VITE_API_BFF_URL}/tasting-card`;
 
 export const createTastingCard = (tastingCard) => {
     return axios.post(API_URL, tastingCard);

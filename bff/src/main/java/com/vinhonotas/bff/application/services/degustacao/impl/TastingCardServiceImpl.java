@@ -70,6 +70,7 @@ public class TastingCardServiceImpl implements TastingCardService {
     public void deleteTastingCard(String id) {
         log.info("deleteTastingCard :: Deletando uma ficha degustação pelo id: {}", id);
         try {
+            this.getTastingCardById(id);
             tastingCardClient.deleteTastingCard(id);
         } catch (Exception e) {
             log.error("deleteTastingCard :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_DELETING, e);

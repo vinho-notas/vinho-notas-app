@@ -1,7 +1,5 @@
 package com.vinhonotas.vinho.interfaces.dtos.outputs;
 
-import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
-import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -31,4 +29,5 @@ public class WineOutputDTO {
     private String region;
     private String maturation;
     private String harmonization;
+
 }

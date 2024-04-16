@@ -20,9 +20,8 @@ describe('Header', () => {
     expect(getByText('Usuários')).toBeInTheDocument();
     expect(getByText('Pessoas')).toBeInTheDocument();
     expect(getByText('Endereços')).toBeInTheDocument();
-    expect(getByText('Cadastrar Vinho')).toBeInTheDocument();
-    expect(getByText('Listar vinhos')).toBeInTheDocument();
-    expect(getByText('Listar avaliações')).toBeInTheDocument();
+    expect(getByText('Vinhos')).toBeInTheDocument();
+    expect(getByText('Avaliações')).toBeInTheDocument();
     expect(getByText('Registrar degustação')).toBeInTheDocument();
     expect(getByText('Ficha de degustação')).toBeInTheDocument();
     expect(getByText('Listar fichas de degustação')).toBeInTheDocument();
@@ -45,9 +44,8 @@ describe('Header', () => {
     expect(getByText('Usuários').closest('a')).toHaveAttribute('href', '/users');
     expect(getByText('Pessoas').closest('a')).toHaveAttribute('href', '/persons');
     expect(getByText('Endereços').closest('a')).toHaveAttribute('href', '/address');
-    expect(getByText('Cadastrar Vinho').closest('a')).toHaveAttribute('href', '/wine');
-    expect(getByText('Listar vinhos').closest('a')).toHaveAttribute('href', '/wine-list');
-    expect(getByText('Listar avaliações').closest('a')).toHaveAttribute('href', '/wine-review-list');
+    expect(getByText('Vinhos').closest('a')).toHaveAttribute('href', '/wine-list');
+    expect(getByText('Avaliações').closest('a')).toHaveAttribute('href', '/wine-review-list');
     expect(getByText('Registrar degustação').closest('a')).toHaveAttribute('href', '/tasting');
     expect(getByText('Ficha de degustação').closest('a')).toHaveAttribute('href', '/tasting-card');
     expect(getByText('Listar fichas de degustação').closest('a')).toHaveAttribute('href', '/tasting-list');

@@ -4,15 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.degustacao.TastingCardService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
-import com.vinhonotas.bff.domain.enums.EnumPointScale;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.GustatoryInspectionInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.OlfactoryInspectionInputDTO;
+import com.vinhonotas.bff.domain.enums.*;
 import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.TastingCardInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.VisualInspectionInputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.GustatoryInspectionOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.OlfactoryInspectionOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.TastingCardOutputDTO;
-import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.VisualInspectionOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -174,33 +169,93 @@ class TastingCardControllerTest {
     private TastingCardOutputDTO createTastingCardOutputDTO() {
         return TastingCardOutputDTO.builder()
                 .id(UUID.fromString("f5e7e3e3-3e3e-4e3e-8e3e-3e3e3e3e3e3e"))
-                .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .harvest("2020")
+                .tastingData(LocalDate.now())
+                .harvest("2021")
                 .grapes("Grapes")
-                .country("Chile")
-                .region("Vale Central")
-                .visualInspection(VisualInspectionOutputDTO.builder().build())
-                .olfactoryInspection(OlfactoryInspectionOutputDTO.builder().build())
-                .gustatoryInspection(GustatoryInspectionOutputDTO.builder().build())
-                .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC.name())
+                .country("Country")
+                .region("Region")
+                .clarity(EnumClarityType.CLEAR.getCode())
+                .brightness(EnumBrightnessType.BRIGHT.getCode())
+                .viscosity(EnumViscosityType.VISCOUS.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.GOLDEN.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .visualInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .olfactoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .fruity(EnumFruityType.BANANA.getCode())
+                .dryFruits(EnumDryFruitsType.ALMODN.getCode())
+                .florals(EnumFloralsType.ACACIA.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.CHALK.getCode())
+                .spices(EnumSpicesType.ANISE.getCode())
+                .animals(EnumAnimalsType.HUNTING.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
+                .olfactoryInspectionClassification(EnumClassificationType.EXCELLENT.getCode())
+                .body(EnumBodyType.LITTLE_BODY.getCode())
+                .sweetness(EnumSweetnessType.SWEET.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .gustatoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.TYPICAL.getCode())
+                .gustatoryInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .opinion("Opinion")
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
                 .build();
     }
 
     private TastingCardInputDTO createTastingCardInputDTO() {
         return TastingCardInputDTO.builder()
-                .tastingData(LocalDate.now())
                 .wineTasted("Wine Tasted")
-                .harvest("2020")
+                .tastingData(LocalDate.now())
+                .harvest("2021")
                 .grapes("Grapes")
-                .country("Chile")
-                .region("Vale Central")
-                .visualInspection(VisualInspectionInputDTO.builder().build())
-                .olfactoryInspection(OlfactoryInspectionInputDTO.builder().build())
-                .gustatoryInspection(GustatoryInspectionInputDTO.builder().build())
-                .opinion("Opinion about the wine")
-                .pointScale(EnumPointScale.CLASSIC.getCode())
+                .country("Country")
+                .region("Region")
+                .clarity(EnumClarityType.CLEAR.getCode())
+                .brightness(EnumBrightnessType.BRIGHT.getCode())
+                .viscosity(EnumViscosityType.VISCOUS.getCode())
+                .colorRed(EnumRedColorType.RUBY.getCode())
+                .colorWhite(EnumWhiteColorType.GOLDEN.getCode())
+                .colorRose(EnumRoseColorType.BROWN.getCode())
+                .visualInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .intensity(EnumIntensityType.INTENSE.getCode())
+                .olfactoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .quality(EnumQualityType.COMMON.getCode())
+                .fruity(EnumFruityType.BANANA.getCode())
+                .dryFruits(EnumDryFruitsType.ALMODN.getCode())
+                .florals(EnumFloralsType.ACACIA.getCode())
+                .vegetablesAndHerbs(EnumVegetablesAndHerbsType.FENNEL.getCode())
+                .minerals(EnumMineralsType.CHALK.getCode())
+                .spices(EnumSpicesType.ANISE.getCode())
+                .animals(EnumAnimalsType.HUNTING.getCode())
+                .empireumatics(EnumEmpireumaticsType.CARAMEL.getCode())
+                .wood(EnumWoodType.SAWDUST.getCode())
+                .chemicals(EnumChemicalsAndEtherealType.ACETONE.getCode())
+                .lacteal(EnumLactealType.BUTTER.getCode())
+                .sweets(EnumSweetsType.BULLET.getCode())
+                .olfactoryInspectionClassification(EnumClassificationType.EXCELLENT.getCode())
+                .body(EnumBodyType.LITTLE_BODY.getCode())
+                .sweetness(EnumSweetnessType.SWEET.getCode())
+                .tannin(EnumTanninType.LITTLE_TANIC.getCode())
+                .acidity(EnumAcidityType.LITTLE_ACID.getCode())
+                .alcohol(EnumAlcoholType.LOW.getCode())
+                .gustatoryInspectionPersistence(EnumPersistenceType.PERSISTENT.getCode())
+                .maturity(EnumMaturityType.MATURE.getCode())
+                .typicality(EnumTypicalityType.TYPICAL.getCode())
+                .gustatoryInspectionClassification(EnumClassificationType.LITTLE.getCode())
+                .opinion("Opinion")
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
+                .dthreg(LocalDateTime.now())
+                .userreg("User Reg")
                 .build();
     }
 
