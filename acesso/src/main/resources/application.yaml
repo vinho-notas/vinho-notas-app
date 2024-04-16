@@ -1,0 +1,8 @@
+server:
+  error:
+    include-stacktrace: never
+  port: 8085
+
+springdoc:
+  api-docs:
+    path: /api-docs
