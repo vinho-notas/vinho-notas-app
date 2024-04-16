@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
   postgresql-cadastro:
@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: vinho-notas-cadastro
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
+      POSTGRES_PASSWORD: 1234567    
     ports:
       - "5432:5432"
     volumes:
