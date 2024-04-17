@@ -8,6 +8,7 @@ public class MessagesConstants {
     public static final String ERROR_WHEN_UPDATING = "Erro ao atualizar registro";
     public static final String ERROR_WHEN_SAVING = "Erro ao salvar registro";
     public static final String BAD_REQUEST = "Requisição inválida, verifique os campos informados";
+    public static final String ERROR_WHEN_LOGIN = "Erro ao realizar login";
 
     private MessagesConstants() {
     }
