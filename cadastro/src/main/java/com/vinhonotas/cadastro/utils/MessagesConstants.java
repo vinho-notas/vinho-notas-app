@@ -51,6 +51,8 @@ public class MessagesConstants {
     public static final String COUNTRY_NOT_FOUND_WITH_ID = "País não encontrado com o id: ";
     public static final String STATE_NOT_FOUND_WITH_ID = "Estado não encontrado com o id: ";
 
+    public static final String ERROR_GENERATING_TOKEN = "Erro ao gerar token";
+
     private MessagesConstants() {
     }
 
