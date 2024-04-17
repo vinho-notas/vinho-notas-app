@@ -1,12 +1,14 @@
 package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.services.PersonService;
+import com.vinhonotas.cadastro.application.services.TokenService;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AuthenticationDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.LoginResponseDTO;
 import com.vinhonotas.cadastro.utils.EnumConverter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +36,18 @@ public class AuthenticationController{
     private final AuthenticationManager authenticationManager;
     private final UserRepository repository;
     private final PersonService personService;
+    private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data){
         log.info("login :: Login request received {}: ", data);
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
         log.info("login :: usernamePassword {}: ",usernamePassword);
         var auth = authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        String token = tokenService.generateToken((UserEntity) auth.getPrincipal());
+        LoginResponseDTO login = LoginResponseDTO.builder().token(token).build();
+        return ResponseEntity.ok(login);
     }
 
     @PostMapping("/register")
