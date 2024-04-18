@@ -50,7 +50,7 @@ jobs:
         mvn test
 
     - name: Build and execute testes with Maven on 'harmonizacao'
-          run: |
-            cd harmonizacao
-            mvn -B package --file pom.xml
-            mvn test
+      run: |
+        cd harmonizacao
+        mvn -B package --file pom.xml
+        mvn test
