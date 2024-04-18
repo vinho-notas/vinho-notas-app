@@ -2,7 +2,7 @@ import { Menubar } from 'primereact/menubar';
 
 const Header = () => {
   const items = [
-    { label: 'Home', icon: 'pi pi-home', url: '/' },
+    { label: 'Home', icon: 'pi pi-home', url: '/home' },
     { label: 'Cadastro', icon: 'pi pi-user-plus', 
       items: [
         { label: 'Usuários', icon: 'pi pi-users', url: '/users' },
