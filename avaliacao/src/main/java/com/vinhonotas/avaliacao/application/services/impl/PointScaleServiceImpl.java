@@ -2,8 +2,9 @@ package com.vinhonotas.avaliacao.application.services.impl;
 
 import com.vinhonotas.avaliacao.application.converters.PointScaleConverter;
 import com.vinhonotas.avaliacao.application.services.PointScaleService;
-import com.vinhonotas.avaliacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.PointScaleNotFoundException;
 import com.vinhonotas.avaliacao.infraestructure.PointScaleRepository;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
 import com.vinhonotas.avaliacao.utils.MessagesConstants;
@@ -42,7 +43,7 @@ public class PointScaleServiceImpl implements PointScaleService {
         List<PointScaleEntity> list = pointScaleRepository.findAll();
         if (list.isEmpty()) {
             log.error("getAll :: Ocorreu um erro ao buscar as avaliações: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
+            throw new PointScaleNotFoundException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
         }
         return list;
     }
@@ -50,7 +51,8 @@ public class PointScaleServiceImpl implements PointScaleService {
     @Override
     public PointScaleEntity getById(UUID id) {
         log.info("getById :: Buscando uma avaliação pelo id: {}", id.toString());
-        return pointScaleRepository.findById(id).orElseThrow(() -> new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
+        return pointScaleRepository.findById(id).orElseThrow(() ->
+                new PointScaleNotFoundException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
     }
 
     @Override
@@ -73,7 +75,7 @@ public class PointScaleServiceImpl implements PointScaleService {
         Optional<PointScaleEntity> pointScale = pointScaleRepository.findById(id);
         if (pointScale.isEmpty()) {
             log.error("delete :: Ocorreu um erro ao deletar a avaliação: {}", MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
-            throw new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
+            throw new PointScaleNotFoundException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND);
         }
         try {
             pointScaleRepository.deleteById(id);

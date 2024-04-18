@@ -73,6 +73,7 @@ const WineRegistration = () => {
                             type='text'
                             placeholder="Informe o rótulo do vinho"
                             onChange={(e) => setName(e.target.value)}
+                            data-testid="form-control-name"
                         />
                     </Form.Group>
                 </Row>

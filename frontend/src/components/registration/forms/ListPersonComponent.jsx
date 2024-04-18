@@ -200,7 +200,7 @@ const ListPersonComponent = () => {
     };
 
     return (
-        <Card style={{ marginTop: 10 }} title="Lista de pessoas">
+        <Card data-testid="principal-card" style={{ marginTop: 10 }} title="Lista de pessoas">
             <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
             <DataTable
                 value={persons}
@@ -223,7 +223,9 @@ const ListPersonComponent = () => {
                 onSelectAll={onSelectAllChange}
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
-                ref={dt}            >
+                data-testid="person-table"
+                ref={dt}            
+                >
                 <Column expander={allowExpansion} style={{ width: '5rem' }} />
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
                 {visibleColumns.map((col) => (

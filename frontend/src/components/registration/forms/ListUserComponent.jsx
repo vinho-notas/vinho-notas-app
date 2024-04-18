@@ -136,9 +136,9 @@ const ListUserComponent = () => {
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
                 <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
+                    <Button data-testid="update-button" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
                         raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
+                    <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
                 </div>
             </>
         )
@@ -195,6 +195,7 @@ const ListUserComponent = () => {
                 onSelectionChange={onSelectionChange}
                 onSelectAll={onSelectAllChange}
                 emptyMessage="Nenhum registro encontrado"
+                data-testid="user-list"
                 ref={dt}
             >
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />

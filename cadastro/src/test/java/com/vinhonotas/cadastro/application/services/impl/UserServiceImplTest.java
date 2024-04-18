@@ -2,12 +2,15 @@ package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.converters.UserConverter;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.*;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -261,14 +264,6 @@ class UserServiceImplTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(createCountry())
-                .build();
-    }
-
-    private StateInputDTO createUfInputDTO() {
-        return StateInputDTO.builder()
-                .stateName("Santa Catarina")
-                .uf("SC")
-                .country(createCountryInputDTO())
                 .build();
     }
 
