@@ -1,9 +1,11 @@
 package com.vinhonotas.harmonizacao.interfaces.controllers;
 
+import com.vinhonotas.harmonizacao.application.services.PairingService;
+import com.vinhonotas.harmonizacao.interfaces.dtos.inputs.WineInputDTO;
+import com.vinhonotas.harmonizacao.interfaces.dtos.outputs.PairingResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PairingController {
 
-    private final OpenAiChatClient openAiChatClient;
+    private final PairingService pairingService;
 
     @GetMapping("/information")
-    public String getWineInformation(@RequestParam(value = "wine") String wine) {
-        PromptTemplate promptTemplate = new PromptTemplate("Quais as características do vinho {wine}?");
-        log.info("getWineInformation :: Buscando informações sobre o vinho: {}", wine);
-        promptTemplate.add("wine", wine);
-        String result = openAiChatClient.call(promptTemplate.create()).getResult().getOutput().getContent();
-        log.info("getWineInformation :: Informações encontradas: {}", result);
-        return result;
+    public ResponseEntity<PairingResponseDTO> getWineInformation(@RequestParam(value = "wine") WineInputDTO wine) {
+        PairingResponseDTO wineInformation = pairingService.getWineInformation(wine);
+        return ResponseEntity.ok(wineInformation);
     }
+
+    @GetMapping("/pairings")
+    public ResponseEntity<PairingResponseDTO> getWinePairing(@RequestParam(value = "wine") WineInputDTO wine) {
+        PairingResponseDTO winePairing = pairingService.getWinePairing(wine);
+        return ResponseEntity.ok(winePairing);
+    }
+
+    @GetMapping("/menu")
+    public PairingResponseDTO getMenuPairing(@RequestParam(value = "wine") WineInputDTO wine) {
+        PairingResponseDTO menuPairing = pairingService.getMenuPairing(wine);
+        return menuPairing;
+    }
+
 }
