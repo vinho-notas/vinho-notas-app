@@ -4,7 +4,9 @@ import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.UserClient;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AuthenticationDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
@@ -84,6 +86,19 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             log.error("deleteUser :: Ocorreu um erro ao deletar o usuário: {} ", MessagesConstants.ERROR_WHEN_DELETING, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_DELETING);
+        }
+    }
+
+    @Override
+    public LoginResponseDTO login(AuthenticationDTO data) {
+        log.info("login :: Realizando login");
+        try {
+            LoginResponseDTO login = userClient.login(data);
+            log.info("login :: Login realizado com sucesso");
+            return login;
+        } catch (Exception e) {
+            log.error("login :: Ocorreu um erro ao realizar o login: {} ", MessagesConstants.ERROR_WHEN_LOGIN, e);
+            throw new BadRequestException(MessagesConstants.ERROR_WHEN_LOGIN);
         }
     }
 
