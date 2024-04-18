@@ -32,9 +32,9 @@ public class PairingController {
     }
 
     @GetMapping("/menu")
-    public PairingResponseDTO getMenuPairing(@RequestParam(value = "wine") WineInputDTO wine) {
+    public ResponseEntity<PairingResponseDTO> getMenuPairing(@RequestParam(value = "wine") WineInputDTO wine) {
         PairingResponseDTO menuPairing = pairingService.getMenuPairing(wine);
-        return menuPairing;
+        return ResponseEntity.ok(menuPairing);
     }
 
 }
