@@ -5,14 +5,12 @@ import com.vinhonotas.bff.interfaces.dtos.inputs.harmonizacao.PairingInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.harmonizacao.PairingResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/pairing")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class PairingController {
 
     private final PairingService pairingService;
