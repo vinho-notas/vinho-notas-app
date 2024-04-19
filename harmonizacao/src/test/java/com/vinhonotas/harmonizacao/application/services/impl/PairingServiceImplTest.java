@@ -3,6 +3,7 @@ package com.vinhonotas.harmonizacao.application.services.impl;
 import com.vinhonotas.harmonizacao.interfaces.dtos.inputs.WineInputDTO;
 import com.vinhonotas.harmonizacao.interfaces.dtos.outputs.PairingResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,6 +40,7 @@ class PairingServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deve retornar informações do vinho")
     public void testGetWineInformation() {
         promptTemplate = new PromptTemplate("Quais as características do vinho {wine}?");
         promptTemplate.add("wine", wine);
@@ -55,6 +57,7 @@ class PairingServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deve retornar harmonizações do vinho")
     public void testGetWinePairing() {
         promptTemplate = new PromptTemplate("Quais os pratos que combinam com o vinho {wine}?");
         promptTemplate.add("wine", wine);
@@ -71,6 +74,7 @@ class PairingServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deve retornar menu harmonizado com o vinho")
     public void testGetMenuPairing() {
         promptTemplate = new PromptTemplate("Crie um menu com entrada, prato principal e sobremesa que harmonize com o vinho {wine}?");
         promptTemplate.add("wine", wine);
