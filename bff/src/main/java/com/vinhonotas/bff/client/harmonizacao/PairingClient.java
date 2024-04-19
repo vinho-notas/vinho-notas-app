@@ -4,7 +4,6 @@ import com.vinhonotas.bff.configuration.FeignConfig;
 import com.vinhonotas.bff.interfaces.dtos.inputs.harmonizacao.PairingInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.harmonizacao.PairingResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PairingClient {
 
     @GetMapping("/pairing/information")
-    ResponseEntity<PairingResponseDTO> getWineInformation(@RequestParam(value = "wine") PairingInputDTO wine);
+    PairingResponseDTO getWineInformation(@RequestParam(value = "wine") PairingInputDTO wine);
 
     @GetMapping("/pairing/pairings")
-    ResponseEntity<PairingResponseDTO> getWinePairing(@RequestParam(value = "wine") PairingInputDTO wine);
+    PairingResponseDTO getWinePairing(@RequestParam(value = "wine") PairingInputDTO wine);
 
     @GetMapping("/pairing/menu")
-    ResponseEntity<PairingResponseDTO> getMenuPairing(@RequestParam(value = "wine") PairingInputDTO wine);
+    PairingResponseDTO getMenuPairing(@RequestParam(value = "wine") PairingInputDTO wine);
 
 }

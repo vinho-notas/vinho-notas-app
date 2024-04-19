@@ -19,7 +19,7 @@ public class PairingServiceImpl implements PairingService {
     public PairingResponseDTO getWineInformation(PairingInputDTO wine) {
         try {
             log.info("getWineInformation :: Buscando informações sobre o vinho: {}", wine);
-            return pairingClient.getWineInformation(wine).getBody();
+            return pairingClient.getWineInformation(wine);
         } catch (Exception e) {
             return null;
         }
@@ -29,7 +29,7 @@ public class PairingServiceImpl implements PairingService {
     public PairingResponseDTO getWinePairing(PairingInputDTO wine) {
         try {
             log.info("getWinePairing :: Buscando harmonizações para o vinho: {}", wine);
-            return pairingClient.getWinePairing(wine).getBody();
+            return pairingClient.getWinePairing(wine);
         } catch (Exception e) {
             return null;
         }
@@ -39,7 +39,7 @@ public class PairingServiceImpl implements PairingService {
     public PairingResponseDTO getMenuPairing(PairingInputDTO wine) {
         try {
             log.info("getMenuPairing :: Buscando menu harmonizado para o vinho: {}", wine);
-            return pairingClient.getMenuPairing(wine).getBody();
+            return pairingClient.getMenuPairing(wine);
         } catch (Exception e) {
             return null;
         }
