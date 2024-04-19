@@ -16,6 +16,7 @@ import ListPointScaleComponent from './components/review/ListPointScaleComponent
 import ListTastingComponent from './components/tasting/forms/ListTastingCardComponent';
 import PersonRegistration from './components/registration/PersonRegistration';
 import UserRegistration from './components/registration/UserRegistration';
+import PairingComponent from './components/pairing/PairingComponent';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
         <Route path="/tasting" element={<Tasting />} />
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/tasting-list" element={<ListTastingComponent />} />
+
+        <Route path="/pairing-list" element={<PairingComponent />} />
       </Routes>
       <Footer />
     </>
