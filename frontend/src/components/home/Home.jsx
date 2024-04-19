@@ -2,7 +2,6 @@ const Home = () => {
   return (<>
   <h1>Home Pge</h1>
   </>
-    
   );
 };
 
