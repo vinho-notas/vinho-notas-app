@@ -39,7 +39,7 @@ public class PairingServiceImpl implements PairingService {
 
     @Override
     public PairingResponseDTO getMenuPairing(WineInputDTO wine) {
-        PromptTemplate promptTemplate = new PromptTemplate("Crie um menu com entrada, prato principal e sobremesa que harmonize com o vinho {wine}?");
+        PromptTemplate promptTemplate = new PromptTemplate("Crie um menu com entrada, prato principal e sobremesa que harmonize com o vinho {wine}");
         log.info("getMenuPairing :: Buscando menu harmonizado para o vinho: {}", wine);
         promptTemplate.add("wine", wine);
         String result = openAiChatClient.call(promptTemplate.create()).getResult().getOutput().getContent();
