@@ -3,53 +3,57 @@ version: '3.8'
 services:
   postgresql-cadastro:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-cadastro
     environment:
       POSTGRES_DB: vinho-notas-cadastro
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567    
+      POSTGRES_PASSWORD: 1234567        
     ports:
       - "5432:5432"
     volumes:
-      - ./.data/postgresql/data-cadastro:/var/lib/postgresql/data
+      - postgres-data-cadastro:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-vinho:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-vinho
     environment:
       POSTGRES_DB: vinho-notas-vinho
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
+      POSTGRES_PASSWORD: 1234567    
     ports:
       - "5433:5432"
     volumes:
-      - ./.data/postgresql/data-vinho:/var/lib/postgresql/data
+      - postgres-data-vinho:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-avaliacao:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-avaliacao
     environment:
       POSTGRES_DB: vinho-notas-avaliacao
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
+      POSTGRES_PASSWORD: 1234567    
     ports:
       - "5434:5432"
     volumes:
-      - ./.data/postgresql/data-avaliacao:/var/lib/postgresql/data
+      - postgres-data-avaliacao:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-degustacao:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-degustacao
     environment:
       POSTGRES_DB: vinho-notas-degustacao
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
+      POSTGRES_PASSWORD: 1234567    
     ports:
       - "5436:5432"
     volumes:
@@ -60,3 +64,9 @@ services:
 networks:
   main-network:
     driver: bridge
+
+volumes:
+  postgres-data-cadastro:
+  postgres-data-vinho:
+  postgres-data-avaliacao:
+  postgres-data-degustacao:
