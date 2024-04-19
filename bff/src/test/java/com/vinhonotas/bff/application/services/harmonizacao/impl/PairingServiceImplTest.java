@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 class PairingServiceImplTest {
 
     private final String WINE_NAME = "Vinho Miolo Lote 43";
+
     private final String INFORMATION = "As características do vinho Vinho Miolo Lote 43 podem variar de acordo com a " +
             "safra e o processo de produção, mas geralmente são:" +
             "\n- Tipo de vinho: Tinto" +
