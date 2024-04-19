@@ -23,6 +23,9 @@ const Header = () => {
                
         { label: 'Fichas de degustação', icon: 'pi pi-folder-open', url: '/tasting-list' }
       ]
+    },
+    {
+      label: 'Harmonização', icon: 'pi pi-folder-open', url: '/pairing-list'
     }
   ];
 
