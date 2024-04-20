@@ -11,7 +11,7 @@ import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditAddressInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,20 +50,21 @@ class AddressServiceImplTest {
     private AddressInputDTO addressInputDTO;
     private CountryEntity brasilEntity;
     private AddressEntity addressEntity;
-    private StateEntity state;
+    private EditAddressInputDTO editAddressInputDTO;
 
     @BeforeEach
     void setUp() {
         brasilEntity = createBrasilEntity();
         addressInputDTO = createAddressInputDTO();
         addressEntity = createAddressEntity();
+        editAddressInputDTO = createEditAddressInputDTO();
     }
 
     @Test
     @DisplayName("Teste de criação de endereço")
     void testCreateSucesso() {
         when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
-        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
+        when(stateRepository.findByStateName(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
         when(addressConverter.convertToEntity(addressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
 
@@ -147,12 +148,12 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Teste de atualização de endereço")
     void testUpdateSucesso() {
-        when(stateRepository.findByUf(addressInputDTO.getUf())).thenReturn(createSaoPauloEntity());
-        when(countryRepository.findByCountryName(addressInputDTO.getCountry())).thenReturn(brasilEntity);
+        when(stateRepository.findByStateName(editAddressInputDTO.getState())).thenReturn(createSaoPauloEntity());
+        when(countryRepository.findByCountryName(editAddressInputDTO.getCountry())).thenReturn(brasilEntity);
         when(addressRepository.findById(addressEntity.getId())).thenReturn(Optional.of(addressEntity));
-        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO)).thenReturn(addressEntity);
+        when(addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), editAddressInputDTO)).thenReturn(addressEntity);
         when(addressRepository.save(addressEntity)).thenReturn(addressEntity);
-        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
+        AddressEntity address = assertDoesNotThrow(() -> addressServiceImpl.update(addressEntity.getId(), editAddressInputDTO));
 
         assertNotNull(address);
         assertEquals(addressEntity.getId(), address.getId());
@@ -166,18 +167,18 @@ class AddressServiceImplTest {
         assertEquals(addressEntity.getCountry(), address.getCountry());
         assertEquals(addressEntity.getPhoneNumber(), address.getPhoneNumber());
         verify(addressRepository, times(1)).findById(addressEntity.getId());
-        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressConverter, times(1)).convertToEntityUpdate(addressEntity, addressEntity.getId(), editAddressInputDTO);
         verify(addressRepository, times(1)).save(addressEntity);
     }
 
     @Test
     @DisplayName("Teste de atualização de endereço com erro")
     void testUpdateErro() {
-        Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), addressInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> addressServiceImpl.update(addressEntity.getId(), editAddressInputDTO));
 
         assertEquals(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, exception.getMessage());
         verify(addressRepository, times(0)).findById(addressEntity.getId());
-        verify(addressConverter, times(0)).convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO);
+        verify(addressConverter, times(0)).convertToEntityUpdate(addressEntity, addressEntity.getId(), editAddressInputDTO);
         verify(addressRepository, times(0)).save(addressEntity);
     }
 
@@ -213,6 +214,20 @@ class AddressServiceImplTest {
                 .build();
     }
 
+    private EditAddressInputDTO createEditAddressInputDTO() {
+        return EditAddressInputDTO.builder()
+                .addressDescription("Rua dos Bobos")
+                .addressNumber(0)
+                .complement("Casa")
+                .district("Centro")
+                .zipCode("00000-000")
+                .city("São Paulo")
+                .state("São Paulo")
+                .country("Brasil")
+                .phoneNumber("11999999999")
+                .build();
+    }
+
     private AddressInputDTO createAddressInputDTO() {
         return AddressInputDTO.builder()
                 .addressDescription("Rua dos Bobos")
@@ -232,15 +247,6 @@ class AddressServiceImplTest {
                 .id("d0d7f9e0-0b7e-4b1e-8b7a-8b8b8b8b8b8b")
                 .countryName("Brasil")
                 .continentName("América do Sul")
-                .build();
-    }
-
-    private StateInputDTO createStateInputDTO() {
-        return StateInputDTO.builder()
-                .id("d0d7f9e0-0b7e-4b1e-8b7a-7b7b7b7b7b7b")
-                .stateName("São Paulo")
-                .uf("SP")
-                .country(createCountryInputDTO())
                 .build();
     }
 

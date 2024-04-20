@@ -11,6 +11,7 @@ import com.vinhonotas.cadastro.infrastructure.AddressRepository;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditAddressInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,8 +38,8 @@ public class AddressServiceImpl implements AddressService {
     public AddressEntity create(AddressInputDTO addressInputDTO) {
         log.info("create :: Registrando um endereço com os dados: {}", addressInputDTO.toString());
         try {
-            StateEntity state = getStateEntity(addressInputDTO);
-            CountryEntity country = getCountryEntity(addressInputDTO);
+            StateEntity state = getStateEntityByStateName(addressInputDTO.getUf());
+            CountryEntity country = getCountryEntity(addressInputDTO.getCountry());
 
             AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
             addressEntity.setUf(state);
@@ -51,17 +53,21 @@ public class AddressServiceImpl implements AddressService {
         }
     }
 
-    private CountryEntity getCountryEntity(AddressInputDTO addressInputDTO) {
-        log.info("Buscando país pelo nome: {}", addressInputDTO.getCountry());
-        CountryEntity country = countryRepository.findByCountryName(addressInputDTO.getCountry());
+    private CountryEntity getCountryEntity(String countryName) {
+        log.info("Buscando país pelo nome: {}", countryName);
+        CountryEntity country = countryRepository.findByCountryName(countryName);
         log.info("País encontrado: {}", country.toString());
         return country;
     }
 
-    private StateEntity getStateEntity(AddressInputDTO addressInputDTO) {
-        log.info("Buscando estado pela UF: {}", addressInputDTO.getUf());
-        StateEntity state = stateRepository.findByUf(addressInputDTO.getUf());
-        log.info("Estado encontrado: {}", state.toString());
+    private StateEntity getStateEntityByStateName(String stateName) {
+        log.info("Buscando estado pelo nome do estado: {}", stateName);
+        StateEntity state = stateRepository.findByStateName(stateName);
+        if (Objects.isNull(state)) {
+            log.error("Estado não encontrado: {}", MessagesConstants.STATE_NOT_FOUND);
+            throw new AddressNotFoundException(MessagesConstants.STATE_NOT_FOUND);
+        }
+        log.info("Estado encontrado: {}", state);
         return state;
     }
 
@@ -85,18 +91,19 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public AddressEntity update(UUID id, AddressInputDTO addressInputDTO) {
-        log.info("update :: Atualizando endereço com os dados: {}", addressInputDTO.toString());
+    public AddressEntity update(UUID id, EditAddressInputDTO editAddressInputDTO) {
+        log.info("update :: Atualizando endereço com os dados: {}", editAddressInputDTO.toString());
         try {
-            StateEntity state = getStateEntity(addressInputDTO);
-            CountryEntity country = getCountryEntity(addressInputDTO);
+            StateEntity state = getStateEntityByStateName(editAddressInputDTO.getState());
+            CountryEntity country = getCountryEntity(editAddressInputDTO.getCountry());
 
             AddressEntity addressEntity = this.getById(id);
             addressEntity.setUf(state);
             addressEntity.setCountry(country);
-            log.info("Endereço a ser atualizado: {}", addressEntity.toString());
+            log.info("Endereço a ser atualizado: {}", addressEntity);
 
-            return addressRepository.save(addressConverter.convertToEntityUpdate(addressEntity, id, addressInputDTO));
+            AddressEntity addressUpdated = addressConverter.convertToEntityUpdate(addressEntity, id, editAddressInputDTO);
+            return addressRepository.save(addressUpdated);
         } catch (Exception e) {
             log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_ADDRESS_DATA, e);
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_ADDRESS_DATA);

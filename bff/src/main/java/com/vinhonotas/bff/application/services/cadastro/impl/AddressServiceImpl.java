@@ -5,6 +5,7 @@ import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.AddressClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
@@ -55,10 +56,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressOutputDTO updateAddress(String id, AddressInputDTO addressInputDTO) {
-        log.info("updateAddress :: Atualizando endereço com os dados: {}", addressInputDTO.toString());
+    public AddressOutputDTO updateAddress(String id, EditAddressInputDTO editAddressInputDTO) {
+        log.info("updateAddress :: Atualizando endereço com os dados: {}", editAddressInputDTO.toString());
         try {
-            return addressClient.updateAddress(id, addressInputDTO);
+            return addressClient.updateAddress(id, editAddressInputDTO);
         } catch (Exception e) {
             log.error("updateAddress :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_UPDATING, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING);

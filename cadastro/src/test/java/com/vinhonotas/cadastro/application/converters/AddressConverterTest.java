@@ -7,6 +7,7 @@ import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditAddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
@@ -44,12 +45,14 @@ class AddressConverterTest {
     private AddressInputDTO addressInputDTO;
     private AddressEntity addressEntity;
     private AddressOutputDTO addressOutputDTO;
+    private EditAddressInputDTO editAddressInputDTO;
 
     @BeforeEach
     void setUp() {
         addressInputDTO = createAddressInputDTO();
         addressEntity = createAddressEntity();
         addressOutputDTO = createAddressOutputDTO();
+        editAddressInputDTO = createEditAddressInputDTO();
     }
 
     @Test
@@ -74,9 +77,9 @@ class AddressConverterTest {
     @Test
     @DisplayName("Teste de conversão para AddressEntityUpdate ")
     void testToEntityUpdate() {
-        addressInputDTO.setAddressNumber(200);
+        editAddressInputDTO.setAddressNumber(200);
 
-        AddressEntity addressEntityUpdate = assertDoesNotThrow(()-> addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), addressInputDTO));
+        AddressEntity addressEntityUpdate = assertDoesNotThrow(()-> addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), editAddressInputDTO));
         assertNotNull(addressEntityUpdate);
         assertEquals(addressInputDTO.getAddressDescription(), addressEntityUpdate.getAddressDescription());
         assertEquals(200, addressEntityUpdate.getAddressNumber());
@@ -127,25 +130,6 @@ class AddressConverterTest {
         assertEquals(addressEntity.getPhoneNumber(), addressOutput.getPhoneNumber());
     }
 
-    @Test
-    @DisplayName("Teste de conversão de AddressOutputDTO para AddressOutputDTOUpdate")
-    void testConvertToOutputDTOUpdate() {
-        addressOutputDTO.setAddressNumber(200);
-
-        AddressOutputDTO addressOutput = assertDoesNotThrow(()-> addressConverter.convertToOutputDTOUpdate(addressEntity, addressEntity.getId(), addressOutputDTO));
-        assertNotNull(addressOutput);
-        assertEquals(addressEntity.getId(), addressOutput.getId());
-        assertEquals(addressOutputDTO.getAddressDescription(), addressOutput.getAddressDescription());
-        assertEquals(200, addressOutput.getAddressNumber());
-        assertEquals(addressOutputDTO.getComplement(), addressOutput.getComplement());
-        assertEquals(addressOutputDTO.getDistrict(), addressOutput.getDistrict());
-        assertEquals(addressOutputDTO.getZipCode(), addressOutput.getZipCode());
-        assertEquals(addressOutputDTO.getCity(), addressOutput.getCity());
-        assertEquals(addressOutputDTO.getUf(), addressOutput.getUf());
-        assertEquals(addressOutputDTO.getCountry(), addressOutput.getCountry());
-        assertEquals(addressOutputDTO.getPhoneNumber(), addressOutput.getPhoneNumber());
-    }
-
     private AddressOutputDTO createAddressOutputDTO() {
         return AddressOutputDTO.builder()
                 .id(UUID.fromString("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"))
@@ -172,6 +156,20 @@ class AddressConverterTest {
                 .city("Blumenau")
                 .uf(createStateEntity())
                 .country(createCountryEntity())
+                .phoneNumber("0000000000")
+                .build();
+    }
+
+    private EditAddressInputDTO createEditAddressInputDTO() {
+        return EditAddressInputDTO.builder()
+                .addressDescription("Rua addressDescription")
+                .addressNumber(159)
+                .complement("Ap 201")
+                .district("district")
+                .zipCode("00000-000")
+                .city("Blumenau")
+                .state("SC")
+                .country("Brasil")
                 .phoneNumber("0000000000")
                 .build();
     }
