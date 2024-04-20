@@ -4,7 +4,6 @@ import Login from './components/login/Login';
 import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import Wine from './components/wine/Wine';
 import Footer from './components/footer/Footer';
 import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
@@ -18,6 +17,7 @@ import PersonRegistration from './components/registration/PersonRegistration';
 import UserRegistration from './components/registration/UserRegistration';
 import PairingComponent from './components/pairing/PairingComponent';
 import About from './components/about/About';
+import WineRegistration from './components/wine/WineRegistration';
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
         <Route path="/persons" element={<ListPersonComponent />} />
         <Route path="/address" element={<ListAddressComponent />} />
         
-        <Route path="/wine" element={<Wine />} />
+        <Route path="/wine-registration" element={<WineRegistration />} />
         <Route path="/wine-list" element={<ListWineComponent />} />
         <Route path="/wine-review-list" element={<ListPointScaleComponent />} />        
         
