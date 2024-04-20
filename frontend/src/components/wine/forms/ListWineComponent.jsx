@@ -115,7 +115,7 @@ const ListWineComponent = () => {
     };
 
     const onNewClick = () => {
-        navigate('/wine');
+        navigate('/wine-registration');
     };
 
     const saveEditedWine = async () => {
