@@ -77,7 +77,7 @@ class AddressConverterTest {
     @Test
     @DisplayName("Teste de conversão para AddressEntityUpdate ")
     void testToEntityUpdate() {
-        addressInputDTO.setAddressNumber(200);
+        editAddressInputDTO.setAddressNumber(200);
 
         AddressEntity addressEntityUpdate = assertDoesNotThrow(()-> addressConverter.convertToEntityUpdate(addressEntity, addressEntity.getId(), editAddressInputDTO));
         assertNotNull(addressEntityUpdate);
