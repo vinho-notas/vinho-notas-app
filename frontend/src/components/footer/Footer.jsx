@@ -6,7 +6,8 @@ const Footer = () => {
   const companyLinks = [
     { label: 'Sobre', icon: FaRegArrowAltCircleRight, Link: 'about' },
     { label: 'Fale conosco', icon: FaRegArrowAltCircleRight, Link: 'mailto:vanderlei.master@gmail.com' },
-    { label: 'Linkedin', icon: FaRegArrowAltCircleRight, Link: 'https://www.linkedin.com/in/vanderlei-kleinschmidt-a1557731/'}
+    { label: 'Linkedin', icon: FaRegArrowAltCircleRight, Link: 'https://www.linkedin.com/in/vanderlei-kleinschmidt-a1557731/'},
+    { label: 'Github', icon: FaRegArrowAltCircleRight, Link: 'https://github.com/vinho-notas/vinho-notas-app/' }
   ];  
   
   return (
