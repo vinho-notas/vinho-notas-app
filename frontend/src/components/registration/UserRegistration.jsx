@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-
+import { useNavigate } from "react-router-dom";
 import useUserComponentHook from '../../hooks/registration/useUserComponentHook';
 import useListPersonComponentHook from '../../hooks/registration/useListPersonComponentHook';
 import EnumProfile from '../../utils/enums/EnumProfile';
@@ -19,9 +19,8 @@ const UserRegistration = () => {
         password, setPassword,
         saveUser
     } = useUserComponentHook();
-
+    const navigate = useNavigate();
     const profile = Object.values(EnumProfile);
-
     const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -34,7 +33,7 @@ const UserRegistration = () => {
         };
         await saveUser(userData);
         setSubmitted(true);
-        handleLimparFormulario();
+        navigate('/users');
     };
 
     const handleLimparFormulario = () => {
@@ -47,7 +46,7 @@ const UserRegistration = () => {
     return (
         <>
             <Card style={{ marginTop: 10 }} title="Cadastro de Usuários">
-                <Form onSubmit={handleSubmit}>
+                <Form>
                     <Row data-testid="user-registration-form" className='mb-3'>
                         <Form.Group as={Col} className='mb-3'>
                             <Form.Label data-testid="label-pessoa">Pessoa</Form.Label>
@@ -97,7 +96,7 @@ const UserRegistration = () => {
 
                     <div className="flex flex-wrap gap-2 mt-4">
                         <Button label="Limpar Formulário" icon="pi pi-times" className="p-button-danger" onClick={handleLimparFormulario} />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' onClick={handleSubmit}/>
                     </div>
                 </Form>
 
