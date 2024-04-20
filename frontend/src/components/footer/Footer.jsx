@@ -1,13 +1,13 @@
 import React from 'react'
-import { FaRegArrowAltCircleRight } from 'react-icons/fa';
+import { FaLinkedin, FaRegArrowAltCircleRight, FaGithub, FaMailBulk } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
   const companyLinks = [
     { label: 'Sobre', icon: FaRegArrowAltCircleRight, Link: 'about' },
-    { label: 'Fale conosco', icon: FaRegArrowAltCircleRight, Link: 'mailto:vanderlei.master@gmail.com' },
-    { label: 'Linkedin', icon: FaRegArrowAltCircleRight, Link: 'https://www.linkedin.com/in/vanderlei-kleinschmidt-a1557731/'},
-    { label: 'Github', icon: FaRegArrowAltCircleRight, Link: 'https://github.com/vinho-notas/vinho-notas-app/' }
+    { label: 'Fale conosco', icon: FaMailBulk, Link: 'mailto:vanderlei.master@gmail.com' },
+    { label: 'Linkedin', icon: FaLinkedin, Link: 'https://www.linkedin.com/in/vanderlei-kleinschmidt-a1557731/'},
+    { label: 'Github', icon: FaGithub, Link: 'https://github.com/vinho-notas/vinho-notas-app/' }
   ];  
   
   return (
