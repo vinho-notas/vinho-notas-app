@@ -4,6 +4,7 @@ import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
@@ -36,6 +37,7 @@ class UserConverterTest {
     private PersonRepository personRepository;
 
     private UserInputDTO userInputDTO;
+    private EditUserInputDTO editUserInputDTO;
     private UserEntity userEntity;
     private UserOutputDTO userOutputDTO;
 
@@ -43,6 +45,7 @@ class UserConverterTest {
     void setUp() {
         userEntity = createUserEntity();
         userInputDTO = createUserInputDTO();
+        editUserInputDTO = createEditUserInputDTO();
         userOutputDTO = createUserOutputDTO();
     }
 
@@ -61,14 +64,12 @@ class UserConverterTest {
     @Test
     @DisplayName("Teste de conversão para UserEntityUpdate ")
     void testToEntityUpdate() {
-        userInputDTO.setEmail("update@email.com");
-        when(personRepository.findById(UUID.fromString(userInputDTO.getPersonId()))).thenReturn(Optional.ofNullable(createPersonEntity()));
+        editUserInputDTO.setEmail("update@email.com");
 
-        UserEntity entity = assertDoesNotThrow(() -> userConverter.converteToEntityUpdate(userEntity, userEntity.getId(), userInputDTO));
+        UserEntity entity = assertDoesNotThrow(() -> userConverter.converteToEntityUpdate(userEntity, userEntity.getId(), editUserInputDTO));
         assertNotNull(userEntity);
-        assertEquals(userInputDTO.getEnumProfile(), EnumConverter.toString(entity.getEnumProfile()));
-        assertEquals(userInputDTO.getEmail(), entity.getEmail());
-        assertEquals(userInputDTO.getPassword(), entity.getPassword());
+        assertEquals(editUserInputDTO.getEnumProfile(), EnumConverter.toString(entity.getEnumProfile()));
+        assertEquals(editUserInputDTO.getEmail(), entity.getEmail());
     }
 
     @Test
@@ -133,6 +134,14 @@ class UserConverterTest {
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
+                .build();
+    }
+
+    private EditUserInputDTO createEditUserInputDTO() {
+        return EditUserInputDTO.builder()
+                .personName("Person Name")
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
+                .email("user@email.com")
                 .build();
     }
 

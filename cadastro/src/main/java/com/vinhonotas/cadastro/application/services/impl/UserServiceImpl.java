@@ -9,6 +9,7 @@ import com.vinhonotas.cadastro.domain.entities.exceptions.UserAlreadyExistsExcep
 import com.vinhonotas.cadastro.domain.entities.exceptions.UserNotFoundException;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import lombok.RequiredArgsConstructor;
@@ -87,12 +88,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserEntity update(UUID id, UserInputDTO userInputDTO) {
-        log.info("update :: Atualizando usuário com os dados: {}", userInputDTO.toString());
+    public UserEntity update(UUID id, EditUserInputDTO editUserInputDTO) {
+        log.info("update :: Atualizando usuário com os dados: {}", editUserInputDTO.toString());
         try {
             UserEntity userEntity = this.getById(id);
-            userRepository.save(userConverter.converteToEntityUpdate(userEntity, id, userInputDTO));
-            return userRepository.findByPersonName(userEntity.getPerson().getName());
+            log.info("Usuário encontrado: {}", userEntity.toString());
+
+            return userRepository.save(userConverter.converteToEntityUpdate(userEntity, id, editUserInputDTO));
         } catch (Exception e) {
             log.error("update :: Ocorreu um erro: {}", MessagesConstants.ERROR_UPDATE_USER_DATA, e);
             throw new BadRequestException(MessagesConstants.ERROR_UPDATE_USER_DATA);
