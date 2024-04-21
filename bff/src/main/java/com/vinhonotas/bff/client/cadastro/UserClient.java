@@ -2,6 +2,7 @@ package com.vinhonotas.bff.client.cadastro;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AuthenticationDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
@@ -27,7 +28,7 @@ public interface UserClient {
     UserOutputDTO getUserByName(@PathVariable("name") String name);
 
     @PutMapping("/users/{id}")
-    UserOutputDTO updateUser(@PathVariable("id") String id, @Valid @RequestBody UserInputDTO userInputDTO);
+    UserOutputDTO updateUser(@PathVariable("id") String id, @Valid @RequestBody EditUserInputDTO editUserInputDTO);
 
     @DeleteMapping("/users/{id}")
     Void deleteUser(@PathVariable("id") String id);

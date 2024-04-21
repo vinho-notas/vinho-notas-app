@@ -7,13 +7,12 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class UserInputDTO {
+public class EditUserInputDTO {
 
-    private String personId;
+    private String userId;
     private String personName;
     private String enumProfile;
     private String email;
-    private String password;
     private LocalDateTime dthreg;
     private String userreg;
     private LocalDateTime dthalt;

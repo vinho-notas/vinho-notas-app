@@ -2,6 +2,7 @@ package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AuthenticationDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
@@ -41,8 +42,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody UserInputDTO userInputDTO) {
-        return ResponseEntity.ok(userService.updateUser(id, userInputDTO));
+    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody EditUserInputDTO editUserInputDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, editUserInputDTO));
     }
 
     @DeleteMapping("/{id}")

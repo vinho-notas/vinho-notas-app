@@ -39,11 +39,13 @@ class UserControllerTest {
 
     private UserInputDTO userInputDTO;
     private UserOutputDTO userOutputDTO;
+    private EditUserInputDTO editUserInputDTO;
 
     @BeforeEach
     void setUp() {
         userInputDTO = createUserInputDTO();
         userOutputDTO = createUserOutputDTO();
+        editUserInputDTO = createEditUserInputDTO();
     }
 
     @Test
@@ -163,30 +165,28 @@ class UserControllerTest {
     @Test
     @DisplayName("Deve atualizar um usuário")
     void testUpdateUser() throws Exception {
-        when(userService.updateUser("8d39bcba-cb01-4103-b562-93c84a89c972", userInputDTO)).thenReturn(userOutputDTO);
+        when(userService.updateUser("8d39bcba-cb01-4103-b562-93c84a89c972", editUserInputDTO)).thenReturn(userOutputDTO);
 
         mockMvc.perform(put("/api/v1/users/8d39bcba-cb01-4103-b562-93c84a89c972")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userInputDTO)))
+                        .content(objectMapper.writeValueAsString(editUserInputDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("8d39bcba-cb01-4103-b562-93c84a89c972"))
-                .andExpect(jsonPath("$.person.id").value("987efc9e-f787-4e83-bc88-bf1159230930"))
                 .andExpect(jsonPath("$.person.name").value("Usuario Teste"))
                 .andExpect(jsonPath("$.enumProfile").value("Enófilo"))
-                .andExpect(jsonPath("$.email").value("email@gmail.com"))
-                .andExpect(jsonPath("$.password").value("123456"));
+                .andExpect(jsonPath("$.email").value("email@gmail.com"));
     }
 
     @Test
     @DisplayName("Deve lançar uma exceção ao tentar atualizar um usuário com dados inválidos")
     void testUpdateUserWithInvalidData() throws Exception {
-        when(userService.updateUser("8d39bcba-cb01-4103-b562-93c84a89c972", userInputDTO))
+        when(userService.updateUser("8d39bcba-cb01-4103-b562-93c84a89c972", editUserInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.BAD_REQUEST));
 
         mockMvc.perform(put("/api/v1/users/8d39bcba-cb01-4103-b562-93c84a89c972")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userInputDTO)))
+                        .content(objectMapper.writeValueAsString(editUserInputDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -215,6 +215,14 @@ class UserControllerTest {
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("email@gmail.com")
                 .password("123456")
+                .build();
+    }
+
+    private EditUserInputDTO createEditUserInputDTO() {
+        return EditUserInputDTO.builder()
+                .personName(createPersonInputDTO().getName())
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
+                .email("email@gmail.com")
                 .build();
     }
 

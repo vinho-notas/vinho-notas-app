@@ -4,6 +4,7 @@ import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.UserClient;
 import com.vinhonotas.bff.domain.enums.EnumProfile;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
@@ -37,10 +38,13 @@ class UserServiceImplTest {
 
     private UserOutputDTO userOutputDTO;
     private UserInputDTO userInputDTO;
+    private EditUserInputDTO editUserInputDTO;
+
     @BeforeEach
     void setUp() {
         userOutputDTO = createUserOutputDTO();
         userInputDTO = createUserInputDTO();
+        editUserInputDTO = createEditUserInputDTO();
     }
 
     @Test
@@ -152,29 +156,28 @@ class UserServiceImplTest {
     @Test
     @DisplayName("Deve atualizar um usuário")
     void testUpdateUser() {
-        when(userClient.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO)).thenReturn(userOutputDTO);
+        when(userClient.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editUserInputDTO)).thenReturn(userOutputDTO);
         userOutputDTO.setEmail("newemail@email.com");
 
-        UserOutputDTO response = assertDoesNotThrow(() -> userService.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO));
+        UserOutputDTO response = assertDoesNotThrow(() -> userService.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editUserInputDTO));
 
         assertNotNull(response);
         assertEquals(userOutputDTO.getId(), response.getId());
         assertEquals(userOutputDTO.getPerson(), response.getPerson());
         assertEquals(userOutputDTO.getEnumProfile(), response.getEnumProfile());
         assertEquals("newemail@email.com", response.getEmail());
-        assertEquals(userOutputDTO.getPassword(), response.getPassword());
-        verify(userClient).updateUser(userOutputDTO.getId().toString(), userInputDTO);
+        verify(userClient).updateUser(userOutputDTO.getId().toString(), editUserInputDTO);
     }
 
     @Test
     @DisplayName("Deve lançar BadRequestException ao atualizar um usuário")
     void testUpdateUserThrowBadRequestException() {
-        when(userClient.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO))
+        when(userClient.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editUserInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
-        Exception exception = assertThrows(Exception.class, () -> userService.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", userInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> userService.updateUser("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editUserInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
-        verify(userClient).updateUser(userOutputDTO.getId().toString(), userInputDTO);
+        verify(userClient).updateUser(userOutputDTO.getId().toString(), editUserInputDTO);
     }
 
     @Test
@@ -201,6 +204,14 @@ class UserServiceImplTest {
                 .enumProfile(EnumProfile.OENOPHILE.getCode())
                 .email("user@email.com")
                 .password("123456")
+                .build();
+    }
+
+    private EditUserInputDTO createEditUserInputDTO() {
+        return EditUserInputDTO.builder()
+                .personName(createPersonInputDTO().getName())
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
+                .email("user@email.com")
                 .build();
     }
 
