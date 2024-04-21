@@ -4,6 +4,7 @@ import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.PersonClient;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import com.vinhonotas.bff.utils.MessagesConstants;
@@ -66,10 +67,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonOutputDTO updatePerson(String id, PersonInputDTO personInputDTO) {
-        log.info("updatePerson :: Atualizando pessoa com os dados: {}", personInputDTO.toString());
+    public PersonOutputDTO updatePerson(String id, EditPersonInputDTO editPersonInputDTO) {
+        log.info("updatePerson :: Atualizando pessoa com os dados: {}", editPersonInputDTO.toString());
         try {
-            return personClient.updatePerson(id, personInputDTO);
+            return personClient.updatePerson(id, editPersonInputDTO);
         } catch (Exception e) {
             log.error("updatePerson :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_UPDATING, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING);

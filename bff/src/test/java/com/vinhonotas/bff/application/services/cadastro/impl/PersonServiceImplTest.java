@@ -3,6 +3,7 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.PersonClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
@@ -34,11 +35,13 @@ class PersonServiceImplTest {
 
     private PersonOutputDTO personOutputDTO;
     private PersonInputDTO personInputDTO;
+    private EditPersonInputDTO editPersonInputDTO;
 
     @BeforeEach
     void setUp() {
         personOutputDTO = createPersonOutputDTO();
         personInputDTO = createPersonInputDTO();
+        editPersonInputDTO = createEditPersonInputDTO();
     }
 
     @Test
@@ -148,25 +151,25 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdatePerson() {
-        when(personClient.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO)).thenReturn(personOutputDTO);
+        when(personClient.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editPersonInputDTO)).thenReturn(personOutputDTO);
 
         personOutputDTO.setName("Junior dos Santos");
-        PersonOutputDTO response = assertDoesNotThrow(() -> personService.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO));
+        PersonOutputDTO response = assertDoesNotThrow(() -> personService.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editPersonInputDTO));
 
         assertNotNull(response);
         assertEquals("Junior dos Santos", response.getName());
-        verify(personClient).updatePerson(personOutputDTO.getId().toString(), personInputDTO);
+        verify(personClient).updatePerson(personOutputDTO.getId().toString(), editPersonInputDTO);
     }
 
     @Test
     @DisplayName("Deve lançar BadRequestException ao atualizar uma pessoa")
     void testUpdatePersonThrowBadRequestException() {
-        when(personClient.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO))
+        when(personClient.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editPersonInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
-        Exception exception = assertThrows(Exception.class, () -> personService.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", personInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> personService.updatePerson("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editPersonInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
-        verify(personClient).updatePerson(personOutputDTO.getId().toString(), personInputDTO);
+        verify(personClient).updatePerson(personOutputDTO.getId().toString(), editPersonInputDTO);
     }
 
     @Test
@@ -203,6 +206,14 @@ class PersonServiceImplTest {
                 .document("123456789")
                 .birthDate(LocalDate.of(1995, 10, 10))
                 .address(Mockito.mock(AddressInputDTO.class))
+                .build();
+    }
+
+    private EditPersonInputDTO createEditPersonInputDTO() {
+        return EditPersonInputDTO.builder()
+                .name("Junior dos Santos")
+                .document("987654321")
+                .birthDate(LocalDate.of(1990, 10, 10))
                 .build();
     }
 

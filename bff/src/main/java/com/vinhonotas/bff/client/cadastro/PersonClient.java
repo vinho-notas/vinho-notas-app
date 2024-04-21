@@ -1,6 +1,7 @@
 package com.vinhonotas.bff.client.cadastro;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import jakarta.validation.Valid;
@@ -25,7 +26,7 @@ public interface PersonClient {
     PersonOutputDTO getPersonByName(@PathVariable("name") String name);
 
     @PutMapping("/persons/{id}")
-    PersonOutputDTO updatePerson(@PathVariable("id") String id, @Valid @RequestBody PersonInputDTO personInputDTO);
+    PersonOutputDTO updatePerson(@PathVariable("id") String id, @Valid @RequestBody EditPersonInputDTO editPersonInputDTO);
 
     @DeleteMapping("/persons/{id}")
     Void deletePerson(@PathVariable("id") String id);

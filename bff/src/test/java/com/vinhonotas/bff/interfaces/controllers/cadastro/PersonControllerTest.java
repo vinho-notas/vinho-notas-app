@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
@@ -43,11 +44,13 @@ class PersonControllerTest {
 
     private PersonInputDTO personInputDTO;
     private PersonOutputDTO personOutputDTO;
+    private EditPersonInputDTO editPersonInputDTO;
 
     @BeforeEach
     void setUp() {
         personInputDTO = createPersonInputDTO();
         personOutputDTO = createPersonOutputDTO();
+        editPersonInputDTO = createEditPersonInputDTO();
     }
 
     @Test
@@ -164,29 +167,28 @@ class PersonControllerTest {
     @Test
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdatePerson() throws Exception {
-        when(personService.updatePerson("123e4567-e89b-12d3-a456-426614174000", personInputDTO)).thenReturn(personOutputDTO);
+        when(personService.updatePerson("123e4567-e89b-12d3-a456-426614174000", editPersonInputDTO)).thenReturn(personOutputDTO);
 
         mockMvc.perform(put("/api/v1/persons/123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(personInputDTO)))
+                .content(objectMapper.writeValueAsString(editPersonInputDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(personOutputDTO.getId().toString()))
                 .andExpect(jsonPath("$.name").value(personOutputDTO.getName()))
                 .andExpect(jsonPath("$.document").value(personOutputDTO.getDocument()))
-                .andExpect(jsonPath("$.birthDate").value(personOutputDTO.getBirthDate().toString()))
-                .andExpect(jsonPath("$.address.id").value(personOutputDTO.getAddress().getId().toString()));
+                .andExpect(jsonPath("$.birthDate").value(personOutputDTO.getBirthDate().toString()));
     }
 
     @Test
     @DisplayName("Deve retornar um BadRequest ao tentar atualizar uma pessoa com dados inválidos")
     void testUpdatePersonWithInvalidData() throws Exception {
-        when(personService.updatePerson("123e4567-e89b-12d3-a456-426614174000", personInputDTO))
+        when(personService.updatePerson("123e4567-e89b-12d3-a456-426614174000", editPersonInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.BAD_REQUEST));
 
         mockMvc.perform(put("/api/v1/persons/123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(personInputDTO)))
+                .content(objectMapper.writeValueAsString(editPersonInputDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -212,13 +214,20 @@ class PersonControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
                 .name("Nome da pessoa")
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(createAddressInputDTO())
+                .build();
+    }
+
+    private EditPersonInputDTO createEditPersonInputDTO() {
+        return EditPersonInputDTO.builder()
+                .name("Nome da pessoa")
+                .document("12345678910")
+                .birthDate(LocalDate.of(1990, 1, 1))
                 .build();
     }
 
