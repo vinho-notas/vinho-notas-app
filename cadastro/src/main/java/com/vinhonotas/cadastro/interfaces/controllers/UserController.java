@@ -2,6 +2,8 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.UserConverter;
 import com.vinhonotas.cadastro.application.services.UserService;
+import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,9 +51,9 @@ public class UserController {
 
     @Operation(summary = "Atualiza um usuário")
     @PutMapping("/{id}")
-    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody UserInputDTO userInputDTO) {
-        return ResponseEntity.ok(userConverter.convertToOutputDTOUpdate(userService.update(UUID.fromString(id),
-                        userInputDTO), UUID.fromString(id), userConverter.convertToOutputDTO(userService.update(UUID.fromString(id), userInputDTO))));
+    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody EditUserInputDTO editUserInputDTO) {
+        UserEntity updated = userService.update(UUID.fromString(id), editUserInputDTO);
+        return ResponseEntity.ok(userConverter.convertToOutputDTO(updated));
     }
 
     @Operation(summary = "Deleta um usuário")

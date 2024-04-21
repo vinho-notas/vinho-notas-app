@@ -58,8 +58,9 @@ const ListUserComponent = () => {
 
     const onEditClick = () => {
         if (selectedUser && selectedUser.length === 1) {
-            setEditingUser(selectedUser[0]);
-            setVisibleEditDialog(true);
+            const userToEdit = selectedUser[0];
+            setEditingUser(userToEdit);
+        setVisibleEditDialog(true);
         } else {
             alert('Selecione um usuário para editar.');
         }
@@ -67,14 +68,23 @@ const ListUserComponent = () => {
 
     const saveEditedUser = async () => {
         try {
-            await updateUser(editingUser.id, editingUser);
+            const { id, person, enumProfile, email } = editingUser;
+            const simplifiedUser = {
+                id,
+                personName: person.name,
+                enumProfile,
+                email,
+            };
+
+            await updateUser(id, simplifiedUser);
             setVisibleEditDialog(false);
             await fetchUsers();
-            navigate("/users")
+            navigate("/users");
         } catch (error) {
             console.log(error);
         }
     };
+
 
     const onDeleteClick = () => {
         if (selectedUser && selectedUser.length > 0) {
@@ -118,7 +128,13 @@ const ListUserComponent = () => {
                     </div>
                     <div className='p-fluid'>
                         <label htmlFor="enumProfile" className="p-col-12 p-md-2">Perfil</label>
-                        <Dropdown id="pointScale" value={editingUser?.profile || ''} options={profile} onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.target.value })} placeholder="Selecione um perfil" />
+                        <Dropdown 
+                            id="pointScale" 
+                            value={editingUser?.enumProfile || ''} 
+                            options={profile} 
+                            onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.value })} 
+                            placeholder="Selecione um perfil" 
+                        />
                     </div>
                     <div className="flex justify-content-end gap-2">
                         <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
@@ -135,7 +151,7 @@ const ListUserComponent = () => {
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
                     <Button data-testid="update-button" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
                         raised />
                     <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
