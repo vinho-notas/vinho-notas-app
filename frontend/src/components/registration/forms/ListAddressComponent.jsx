@@ -7,7 +7,7 @@ import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { updateAddress, deleteAddress } from '../../../service/registration/AddressService';
+import { updateAddress, deleteAddress, deleteAllAddress } from '../../../service/registration/AddressService';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
@@ -88,8 +88,13 @@ const ListAddressComponent = () => {
 
   const confirmDeleteAddress = async () => {
     try {
-      const addressIds = selectedAddress.map(address => address.id);
-      await deleteAddress(addressIds);
+      if (selectedAddress.length === 1) {
+        await deleteAddress(selectedAddress[0].id);
+      } else if (selectedAddress.length > 1) {
+        const addressIds = selectedAddress.map(address => address.id);
+        await deleteAllAddress(addressIds);
+      }
+
       setVisibleDeleteDialog(false);
       setSelectedAddress(null);
       await fetchAddress();
@@ -97,6 +102,7 @@ const ListAddressComponent = () => {
       console.log(error);
     }
   };
+
 
   const leftToolbarTemplate = () => {
     return (

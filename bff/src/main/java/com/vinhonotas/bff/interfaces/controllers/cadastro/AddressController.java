@@ -49,4 +49,10 @@ public class AddressController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllAddress(@RequestBody List<String> ids) {
+        ids.forEach(addressService::deleteAddress);
+        return ResponseEntity.noContent().build();
+    }
+
 }
