@@ -25,3 +25,7 @@ export const updatePerson = (id, person) => {
 export const deletePerson = (id) => {
     return axios.delete(`${API_URL}/${id}`);
 };
+
+export const deleteAllPerson = (ids) => {
+    return axios.delete(`${API_URL}/deleteAll`, { data: ids });
+};

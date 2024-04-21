@@ -8,7 +8,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import useListPersonComponentHook from '../../../hooks/registration/useListPersonComponentHook';
-import { updatePerson, deletePerson } from '../../../service/registration/PersonService';
+import { updatePerson, deletePerson, deleteAllPerson } from '../../../service/registration/PersonService';
 
 const ListPersonComponent = () => {
     const { persons, navigate, fetchPersons } = useListPersonComponentHook();
@@ -73,14 +73,14 @@ const ListPersonComponent = () => {
 
     const saveEditedPerson = async () => {
         try {
-            const { id, name, document, birthDate } = editingPerson;    
+            const { id, name, document, birthDate } = editingPerson;
             const simplifiedPerson = {
                 id,
                 name,
                 document,
                 birthDate,
             };
-    
+
             await updatePerson(id, simplifiedPerson);
             setVisibleEditDialog(false);
             await fetchPersons();
@@ -89,7 +89,7 @@ const ListPersonComponent = () => {
             console.log(error);
         }
     };
-    
+
 
     const onDeleteClick = () => {
         if (selectedPerson && selectedPerson.length > 0) {
@@ -101,8 +101,13 @@ const ListPersonComponent = () => {
 
     const confirmDeletePerson = async () => {
         try {
-            const personIds = selectedPerson.map(person => person.id);
-            await deletePerson(personIds);
+            if (selectedPerson.length === 1) {
+                await deletePerson(selectedPerson[0].id);
+            } else if (selectedPerson.length > 1) {
+                const personsIds = selectedPerson.map(person => person.id);
+                await deleteAllPerson(personsIds);
+            }
+
             setVisibleDeleteDialog(false);
             setSelectedPerson(null);
             await fetchPersons();
@@ -110,6 +115,7 @@ const ListPersonComponent = () => {
             console.log(error);
         }
     };
+
 
     const rightToolbarTemplate = () => {
         return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
@@ -233,8 +239,8 @@ const ListPersonComponent = () => {
                 tableStyle={{ width: '50rem' }}
                 emptyMessage="Nenhum registro encontrado"
                 data-testid="person-table"
-                ref={dt}            
-                >
+                ref={dt}
+            >
                 <Column expander={allowExpansion} style={{ width: '5rem' }} />
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
                 {visibleColumns.map((col) => (
