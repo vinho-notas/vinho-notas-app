@@ -10,7 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import useListUserComponentHook from '../../../hooks/registration/useListUserComponentHook';
 import EnumProfile from '../../../utils/enums/EnumProfile';
-import { updateUser, deleteUser } from '../../../service/registration/UserService';
+import { updateUser, deleteUser, deleteAllUser } from '../../../service/registration/UserService';
 
 const ListUserComponent = () => {
     const { users, navigate, fetchUsers } = useListUserComponentHook();
@@ -96,8 +96,13 @@ const ListUserComponent = () => {
 
     const confirmDeleteUser = async () => {
         try {
-            const userIds = selectedUser.map(user => user.id);
-            await deleteUser(userIds);
+            if (selectedUser.length === 1) {
+                await deleteUser(selectedUser[0].id);
+            } else if (selectedUser.length > 1) {
+                const usersIds = selectedUser.map(user => user.id);
+                await deleteAllUser(usersIds);
+            }
+
             setVisibleDeleteDialog(false);
             setSelectedUser(null);
             await fetchUsers();

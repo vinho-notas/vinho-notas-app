@@ -57,4 +57,10 @@ public class UserController {
         return ResponseEntity.ok(userService.login(data));
     }
 
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllUser(@RequestBody List<String> ids) {
+        ids.forEach(userService::deleteUser);
+        return ResponseEntity.noContent().build();
+    }
+
 }

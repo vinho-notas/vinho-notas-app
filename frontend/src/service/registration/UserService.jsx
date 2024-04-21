@@ -29,3 +29,7 @@ export const deleteUser = (id) => {
 export const login = (auth) => {
     return axios.post(`${API_URL}/login`, auth);
 }
+
+export const deleteAllUser = (ids) => {
+    return axios.delete(`${API_URL}/deleteAll`, { data: ids });
+};
