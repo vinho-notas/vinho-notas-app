@@ -73,14 +73,23 @@ const ListPersonComponent = () => {
 
     const saveEditedPerson = async () => {
         try {
-            await updatePerson(editingPerson.id, editingPerson);
+            const { id, name, document, birthDate } = editingPerson;    
+            const simplifiedPerson = {
+                id,
+                name,
+                document,
+                birthDate,
+            };
+    
+            await updatePerson(id, simplifiedPerson);
             setVisibleEditDialog(false);
             await fetchPersons();
-            navigate("/persons")
+            navigate("/persons");
         } catch (error) {
             console.log(error);
         }
     };
+    
 
     const onDeleteClick = () => {
         if (selectedPerson && selectedPerson.length > 0) {
