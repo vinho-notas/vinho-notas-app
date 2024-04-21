@@ -1,5 +1,6 @@
 package com.vinhonotas.bff.application.services.cadastro;
 
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 
@@ -11,7 +12,7 @@ public interface PersonService {
     List<PersonOutputDTO> getAllPerson();
     PersonOutputDTO getPersonById(String id);
     PersonOutputDTO getPersonByName(String name);
-    PersonOutputDTO updatePerson(String id, PersonInputDTO personInputDTO);
+    PersonOutputDTO updatePerson(String id, EditPersonInputDTO editPersonInputDTO);
     void deletePerson(String id);
 
 }

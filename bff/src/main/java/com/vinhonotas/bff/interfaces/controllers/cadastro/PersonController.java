@@ -1,6 +1,7 @@
 package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.PersonService;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
 import jakarta.validation.Valid;
@@ -39,8 +40,8 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody PersonInputDTO personInputDTO) {
-        return ResponseEntity.ok(personService.updatePerson(id, personInputDTO));
+    public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody EditPersonInputDTO editPersonInputDTO) {
+        return ResponseEntity.ok(personService.updatePerson(id, editPersonInputDTO));
     }
 
     @DeleteMapping("/{id}")
