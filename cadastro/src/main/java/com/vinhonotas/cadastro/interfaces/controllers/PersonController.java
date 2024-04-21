@@ -3,6 +3,7 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditPersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,9 +51,9 @@ public class PersonController {
 
     @Operation(summary = "Atualiza uma pessoa")
     @PutMapping("/{id}")
-    public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody PersonInputDTO personInputDTO) {
+    public ResponseEntity<PersonOutputDTO> updatePerson(@PathVariable("id") String id, @Valid @RequestBody EditPersonInputDTO editPersonInputDTO) {
         UUID personId = UUID.fromString(id);
-        PersonEntity updatedPerson = personService.update(personId, personInputDTO);
+        PersonEntity updatedPerson = personService.update(personId, editPersonInputDTO);
         return ResponseEntity.ok(personConverter.convertToOutputDTO(updatedPerson));
     }
 

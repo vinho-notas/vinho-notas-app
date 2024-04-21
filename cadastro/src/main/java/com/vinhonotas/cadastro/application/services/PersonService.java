@@ -1,6 +1,7 @@
 package com.vinhonotas.cadastro.application.services;
 
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditPersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface PersonService {
     List<PersonEntity> getAll();
     PersonEntity getById(UUID id);
     PersonEntity getByName(String name);
-    PersonEntity update(UUID id, PersonInputDTO personInputDTO);
+    PersonEntity update(UUID id, EditPersonInputDTO editPersonInputDTO);
     void delete(UUID id);
 }
