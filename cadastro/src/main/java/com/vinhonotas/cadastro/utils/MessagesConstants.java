@@ -52,6 +52,7 @@ public class MessagesConstants {
     public static final String STATE_NOT_FOUND_WITH_ID = "Estado não encontrado com o id: ";
 
     public static final String ERROR_GENERATING_TOKEN = "Erro ao gerar token";
+    public static final String PERSON_UNDERAGE = "O cadastramento e acesso ao sistema só é permitido para pessoas maiores de 18 anos";
 
     private MessagesConstants() {
     }

@@ -80,6 +80,9 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
+
         Exception exception = assertThrows(Exception.class, () -> personService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
     }
