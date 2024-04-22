@@ -21,3 +21,7 @@ export const updatePointScale = (id, pointScale) => {
 export const deletePointScale = (id) => {
     return axios.delete(`${API_URL}/${id}`);
 };
+
+export const deleteAllPointScale =(ids) => {
+    return axios.delete(`${API_URL}/deleteAll`, { data: ids });
+};
