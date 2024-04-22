@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -36,15 +37,23 @@ public class PersonServiceImpl implements PersonService {
     public PersonEntity create(PersonInputDTO personInputDTO) {
         log.info("create :: Registrando uma pessoa com os dados: {}", personInputDTO.toString());
         existsPersonByDocument(personInputDTO);
+        existsStateByUf(personInputDTO);
+        validateAge(personInputDTO.getBirthDate());
+        existsCountryByCountryName(personInputDTO);
         try {
-            existsStateByUf(personInputDTO);
-            existsCountryByCountryName(personInputDTO);
             PersonEntity personEntity = personConverter.convertToEntity(personInputDTO);
             log.info("Salvando pessoa no banco com os dados: {}", personEntity.toString());
             return personRepository.save(personEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_PERSON, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
+        }
+    }
+
+    private void validateAge(LocalDate birthDate) {
+        if (birthDate.isAfter(LocalDate.now().minusYears(18))) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.PERSON_UNDERAGE);
+            throw new PersonUnderageException(MessagesConstants.PERSON_UNDERAGE);
         }
     }
 
