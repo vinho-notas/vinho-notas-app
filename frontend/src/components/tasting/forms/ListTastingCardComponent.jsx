@@ -11,7 +11,7 @@ import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import { Calendar } from 'primereact/calendar';
 import useListTastingCardComponentHook from '../../../hooks/tasting/useListTastingCardComponentHook';
-import { updateTastingCard, deleteTastingCard } from '../../../service/tasting/TastingCardService';
+import { updateTastingCard, deleteTastingCard, deleteAllTastingCards } from '../../../service/tasting/TastingCardService';
 import EnumTastingType from '../../../utils/enums/EnumTastingType';
 import EnumClarityType from '../../../utils/enums/EnumClarityType';
 import EnumBrightnessType from '../../../utils/enums/EnumBrightnessType';
@@ -196,11 +196,15 @@ const ListCardTastingComponent = () => {
         }
     };
 
-    const confirmDeleteTastingCards = async () => {
-        setVisibleDeleteDialog(false);
+    const confirmDeleteTastingCards = async () => {        
         try {
-            const tastingCardsId = selectedTastingCards.map((tastingCard) => tastingCard.id);
-            await deleteTastingCard(tastingCardsId);
+            if (selectedTastingCards.length === 1) {
+                await deleteTastingCard(selectedTastingCards[0].id);
+            } else if (selectedTastingCards.length > 1) {
+                const tastingCardsId = selectedTastingCards.map(tastingCard => tastingCard.id);
+                await deleteAllTastingCards(tastingCardsId);
+            }
+            
             setVisibleDeleteDialog(false);
             setSelectedTastingCards(null);
             await fetchTastingCards();

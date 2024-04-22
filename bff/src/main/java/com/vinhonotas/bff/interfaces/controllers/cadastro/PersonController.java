@@ -50,4 +50,10 @@ public class PersonController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllPerson(@RequestBody List<String> ids) {
+        ids.forEach(personService::deletePerson);
+        return ResponseEntity.noContent().build();
+    }
+
 }
