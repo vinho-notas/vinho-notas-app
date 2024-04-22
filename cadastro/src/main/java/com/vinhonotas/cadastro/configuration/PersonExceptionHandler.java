@@ -1,5 +1,6 @@
 package com.vinhonotas.cadastro.configuration;
 
+import com.vinhonotas.cadastro.domain.entities.exceptions.InvalidDocumentException;
 import com.vinhonotas.cadastro.domain.entities.exceptions.PersonAlreadyExistsException;
 import com.vinhonotas.cadastro.domain.entities.exceptions.PersonNotFoundException;
 import com.vinhonotas.cadastro.domain.entities.exceptions.PersonUnderageException;
@@ -26,4 +27,10 @@ public class PersonExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handlePersonUnderageException(PersonUnderageException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDTO(exception.getMessage()));
     }
+
+    @ExceptionHandler(InvalidDocumentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidDocumentException(InvalidDocumentException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseDTO(exception.getMessage()));
+    }
+
 }
