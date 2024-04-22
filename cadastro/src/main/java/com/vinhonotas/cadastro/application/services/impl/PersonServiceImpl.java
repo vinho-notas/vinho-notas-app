@@ -26,6 +26,9 @@ import java.util.UUID;
 @Slf4j
 public class PersonServiceImpl implements PersonService {
 
+    private final List<String> VALID_DOCUMENTS = List.of("00000000000", "11111111111", "22222222222", "33333333333",
+            "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999");
+
     private final PersonRepository personRepository;
     private final PersonConverter personConverter;
     private final StateServiceImpl stateService;
@@ -36,9 +39,10 @@ public class PersonServiceImpl implements PersonService {
     @Transactional(rollbackFor = Exception.class)
     public PersonEntity create(PersonInputDTO personInputDTO) {
         log.info("create :: Registrando uma pessoa com os dados: {}", personInputDTO.toString());
+        validateAge(personInputDTO.getBirthDate());
+        documentValid(personInputDTO.getDocument());
         existsPersonByDocument(personInputDTO);
         existsStateByUf(personInputDTO);
-        validateAge(personInputDTO.getBirthDate());
         existsCountryByCountryName(personInputDTO);
         try {
             PersonEntity personEntity = personConverter.convertToEntity(personInputDTO);
@@ -48,6 +52,14 @@ public class PersonServiceImpl implements PersonService {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_PERSON, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_PERSON);
         }
+    }
+
+    private void documentValid(String document) {
+        if (!VALID_DOCUMENTS.contains(document)) {
+            log.error("create :: Ocorreu um erro: {}", MessagesConstants.INVALID_DOCUMENT);
+            throw new InvalidDocumentException(MessagesConstants.INVALID_DOCUMENT);
+        }
+
     }
 
     private void validateAge(LocalDate birthDate) {

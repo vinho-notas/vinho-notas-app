@@ -70,7 +70,7 @@ class PersonServiceImplTest {
         PersonEntity entity = assertDoesNotThrow(() -> personService.create(inputDTO));
         assertNotNull(entity);
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personConverter, times(1)).convertToEntity(inputDTO);
@@ -198,7 +198,7 @@ class PersonServiceImplTest {
         return PersonEntity.builder()
                 .id(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))
                 .name("João")
-                .document("12345678900")
+                .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(createAddressEntity())
                 .build();
@@ -207,7 +207,7 @@ class PersonServiceImplTest {
     private PersonInputDTO createInputDTO() {
         return PersonInputDTO.builder()
                 .name("João")
-                .document("12345678900")
+                .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(createAddressInputDTO())
                 .build();
@@ -216,7 +216,7 @@ class PersonServiceImplTest {
     private EditPersonInputDTO createEditPersonInputDTO() {
         return EditPersonInputDTO.builder()
                 .name("João")
-                .document("12345678900")
+                .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .build();
     }
