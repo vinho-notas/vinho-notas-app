@@ -43,4 +43,11 @@ public class TastingCardController {
         tastingCardService.deleteTastingCard(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllTastingCards(@RequestBody List<String> ids) {
+        ids.forEach(tastingCardService::deleteTastingCard);
+        return ResponseEntity.noContent().build();
+    }
+
 }
