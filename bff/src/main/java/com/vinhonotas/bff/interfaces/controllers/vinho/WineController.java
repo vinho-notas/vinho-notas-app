@@ -44,4 +44,10 @@ public class WineController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllWine(@RequestBody List<String> ids) {
+        ids.forEach(wineService::deleteWine);
+        return ResponseEntity.noContent().build();
+    }
+
 }
