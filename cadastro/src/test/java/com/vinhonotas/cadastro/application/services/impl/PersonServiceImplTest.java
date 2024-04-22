@@ -96,7 +96,7 @@ class PersonServiceImplTest {
         assertNotNull(list);
         assertEquals(1, list.size());
         assertEquals("João", list.get(0).getName());
-        assertEquals("12345678900", list.get(0).getDocument());
+        assertEquals("00000000000", list.get(0).getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), list.get(0).getBirthDate());
         assertEquals("Rua 3", list.get(0).getAddress().getAddressDescription());
         verify(personRepository, times(1)).findAll();
@@ -111,7 +111,7 @@ class PersonServiceImplTest {
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
@@ -136,7 +136,7 @@ class PersonServiceImplTest {
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findByName("João");
