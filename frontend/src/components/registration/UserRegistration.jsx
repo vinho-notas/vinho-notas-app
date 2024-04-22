@@ -27,7 +27,7 @@ const UserRegistration = () => {
         e.preventDefault();
         const userData = {
             personId: person.id,
-            enumProfile,
+            enumProfile: EnumProfile.OENOPHILE,
             email,
             password
         };
@@ -37,8 +37,7 @@ const UserRegistration = () => {
     };
 
     const handleLimparFormulario = () => {
-        setPerson('');
-        setEnumProfile('');
+        setPerson('');        
         setEmail('');
         setPassword('');
     };
@@ -64,7 +63,8 @@ const UserRegistration = () => {
                             <Form.Label data-testid="label-perfil">Perfil</Form.Label>
                             <br />
                             <Dropdown
-                                value={enumProfile}
+                                disabled
+                                value={EnumProfile.OENOPHILE}
                                 options={profile}
                                 onChange={(e) => setEnumProfile(e.value)}
                                 placeholder="Selecione o perfil"

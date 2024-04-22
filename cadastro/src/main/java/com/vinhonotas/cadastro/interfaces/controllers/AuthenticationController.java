@@ -4,12 +4,14 @@ import com.vinhonotas.cadastro.application.services.PersonService;
 import com.vinhonotas.cadastro.application.services.TokenService;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.UserProfileException;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AuthenticationDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.LoginResponseDTO;
 import com.vinhonotas.cadastro.utils.EnumConverter;
+import com.vinhonotas.cadastro.utils.MessagesConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +66,7 @@ public class AuthenticationController{
                 .person(person)
                 .email(data.getEmail())
                 .password(encoded)
-                .enumProfile(EnumConverter.fromString(data.getEnumProfile(), EnumProfile.class))
+                .enumProfile(verifyProfile(data.getEnumProfile()))
                 .dthreg(LocalDateTime.now())
                 .build();
 
@@ -72,6 +74,15 @@ public class AuthenticationController{
         repository.save(user);
 
         return ResponseEntity.ok().build();
+    }
+
+    private EnumProfile verifyProfile(String enumProfile) {
+        EnumProfile profile = EnumConverter.fromString(enumProfile, EnumProfile.class);
+        if (!EnumProfile.OENOPHILE.equals(profile)) {
+            log.error("verifyProfile :: Ocorreu um erro: {}", MessagesConstants.INVALID_PROFILE);
+            throw new UserProfileException(MessagesConstants.INVALID_PROFILE);
+        }
+        return profile;
     }
 
 }
