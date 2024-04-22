@@ -7,6 +7,7 @@ import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.entities.exceptions.UserAlreadyExistsException;
 import com.vinhonotas.cadastro.domain.entities.exceptions.UserNotFoundException;
+import com.vinhonotas.cadastro.domain.entities.exceptions.UserProfileException;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
@@ -36,12 +37,20 @@ public class UserServiceImpl implements UserService {
     public UserEntity create(UserInputDTO userInputDTO) {
         log.info("create :: Registrando um usuário com os dados: {}", userInputDTO.toString());
         existsUser(userInputDTO);
+        verifyProfile(userInputDTO.getEnumProfile());
         try {
             UserEntity userEntity = userConverter.convertToEntity(userInputDTO);
             return userRepository.save(userEntity);
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_USER, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_USER);
+        }
+    }
+
+    private void verifyProfile(String enumProfile) {
+        if (!enumProfile.equals("Enófilo")) {
+            log.error("verifyProfile :: Ocorreu um erro: {}", MessagesConstants.INVALID_PROFILE);
+            throw new UserProfileException(MessagesConstants.INVALID_PROFILE);
         }
     }
 

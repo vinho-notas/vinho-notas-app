@@ -56,6 +56,7 @@ public class MessagesConstants {
     public static final String INVALID_DOCUMENT = "Documento inválido. Informe um dos seguintes documentos para se cadastrar: " +
             "00000000000, 11111111111, 22222222222, 33333333333, 44444444444, 55555555555, 66666666666, 77777777777, " +
             "88888888888, 99999999999";
+    public static final String INVALID_PROFILE = "Perfil inválido. Informe o seguinte perfil para se cadastrar: Enófilo";
 
     private MessagesConstants() {
     }
