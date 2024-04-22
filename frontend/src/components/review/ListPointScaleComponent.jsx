@@ -9,7 +9,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import useListPointScaleComponentHook from '../../hooks/review/usePointScaleComponentHook';
-import { deletePointScale, updatePointScale } from '../../service/review/PointScaleService';
+import { deletePointScale, updatePointScale, deleteAllPointScale } from '../../service/review/PointScaleService';
 import EnumPointScale from '../../utils/enums/EnumPointScale';
 
 const ListPointScaleComponent = () => {
@@ -74,8 +74,13 @@ const ListPointScaleComponent = () => {
 
     const confirmDeletePointScales = async () => {
         try {
-            const pointScalesIds = selectedPointScales.map(scale => scale.id);
-            await deletePointScale(pointScalesIds);
+            if (selectedPointScales.length === 1) {
+                await deletePointScale(selectedPointScales[0].id);
+            } else if (selectedPointScales.length > 1) {
+                const pointScalesIds = selectedPointScales.map(scale => scale.id);
+                await deleteAllPointScale(pointScalesIds);
+            }
+
             setVisibleDeleteDialog(false);
             setSelectedPointScales(null);
             await fetchPointScales();

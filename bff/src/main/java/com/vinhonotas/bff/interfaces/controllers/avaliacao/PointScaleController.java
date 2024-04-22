@@ -44,4 +44,10 @@ public class PointScaleController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllPointScale(@RequestBody List<String> ids) {
+        ids.forEach(pointScaleService::deletePointScale);
+        return ResponseEntity.noContent().build();
+    }
+
 }
