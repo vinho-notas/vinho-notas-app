@@ -4,15 +4,15 @@ import com.vinhonotas.bff.application.services.cadastro.AddressService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
@@ -38,8 +38,6 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody EditAddressInputDTO editAddressInputDTO) {
-        log.info("updateAddress :: Atualizando endereço com id: {}", id);
-        log.info("updateAddress :: Novos dados: {}", editAddressInputDTO);
         return ResponseEntity.ok(addressService.updateAddress(id, editAddressInputDTO));
     }
 

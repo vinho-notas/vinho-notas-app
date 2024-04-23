@@ -2,12 +2,14 @@ package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.StateService;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/states")
 @RequiredArgsConstructor

@@ -3,6 +3,7 @@ package com.vinhonotas.bff.interfaces.controllers.vinho;
 import com.vinhonotas.bff.application.services.vinho.WineService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.vinho.WineInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.vinho.WineOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/wines")
 @RequiredArgsConstructor

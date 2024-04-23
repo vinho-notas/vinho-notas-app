@@ -3,10 +3,12 @@ package com.vinhonotas.bff.interfaces.controllers.harmonizacao;
 import com.vinhonotas.bff.application.services.harmonizacao.PairingService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.harmonizacao.PairingInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.harmonizacao.PairingResponseDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/pairing")
 @RequiredArgsConstructor
