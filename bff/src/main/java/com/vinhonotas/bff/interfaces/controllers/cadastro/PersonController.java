@@ -4,6 +4,7 @@ import com.vinhonotas.bff.application.services.cadastro.PersonService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditPersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.PersonInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.PersonOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/persons")
 @RequiredArgsConstructor
@@ -21,12 +23,12 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<PersonOutputDTO> createPerson(@Valid @RequestBody PersonInputDTO personInputDTO) {
-        return ResponseEntity.ok(personService.createPerson(personInputDTO));
+                return ResponseEntity.ok(personService.createPerson(personInputDTO));
     }
 
     @GetMapping
     public ResponseEntity<List<PersonOutputDTO>> getAllPerson() {
-        return ResponseEntity.ok(personService.getAllPerson());
+                return ResponseEntity.ok(personService.getAllPerson());
     }
 
     @GetMapping("/{id}")

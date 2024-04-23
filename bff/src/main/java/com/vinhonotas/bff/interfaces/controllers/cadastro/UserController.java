@@ -6,6 +6,7 @@ import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
