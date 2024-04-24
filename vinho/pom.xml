@@ -102,6 +102,38 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/com/vinhonotas/vinho/VinhoApplication.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/interfaces/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/utils/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/configuration/**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
