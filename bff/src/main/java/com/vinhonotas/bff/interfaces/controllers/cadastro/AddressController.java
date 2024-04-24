@@ -2,7 +2,9 @@ package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.AddressService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
@@ -34,13 +37,19 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody AddressInputDTO addressInputDTO) {
-        return ResponseEntity.ok(addressService.updateAddress(id, addressInputDTO));
+    public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody EditAddressInputDTO editAddressInputDTO) {
+        return ResponseEntity.ok(addressService.updateAddress(id, editAddressInputDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable("id") String id) {
         addressService.deleteAddress(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllAddress(@RequestBody List<String> ids) {
+        ids.forEach(addressService::deleteAddress);
         return ResponseEntity.noContent().build();
     }
 

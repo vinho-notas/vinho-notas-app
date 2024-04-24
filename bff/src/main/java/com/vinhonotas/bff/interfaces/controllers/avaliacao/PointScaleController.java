@@ -3,6 +3,7 @@ package com.vinhonotas.bff.interfaces.controllers.avaliacao;
 import com.vinhonotas.bff.application.services.avaliacao.PointScaleService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.avaliacao.PointScaleInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.avaliacao.PointScaleOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/point-scales")
 @RequiredArgsConstructor
@@ -41,6 +43,12 @@ public class PointScaleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePointScale(@PathVariable("id") String id) {
         pointScaleService.deletePointScale(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllPointScale(@RequestBody List<String> ids) {
+        ids.forEach(pointScaleService::deletePointScale);
         return ResponseEntity.noContent().build();
     }
 

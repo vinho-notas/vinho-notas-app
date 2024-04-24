@@ -52,6 +52,11 @@ public class MessagesConstants {
     public static final String STATE_NOT_FOUND_WITH_ID = "Estado não encontrado com o id: ";
 
     public static final String ERROR_GENERATING_TOKEN = "Erro ao gerar token";
+    public static final String PERSON_UNDERAGE = "O cadastramento e acesso ao sistema só é permitido para pessoas maiores de 18 anos";
+    public static final String INVALID_DOCUMENT = "Documento inválido. Informe um dos seguintes documentos para se cadastrar: " +
+            "00000000000, 11111111111, 22222222222, 33333333333, 44444444444, 55555555555, 66666666666, 77777777777, " +
+            "88888888888, 99999999999";
+    public static final String INVALID_PROFILE = "Perfil inválido. Informe o seguinte perfil para se cadastrar: Enófilo";
 
     private MessagesConstants() {
     }

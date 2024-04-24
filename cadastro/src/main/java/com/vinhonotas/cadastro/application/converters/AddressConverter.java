@@ -6,6 +6,7 @@ import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.CountryRepository;
 import com.vinhonotas.cadastro.infrastructure.StateRepository;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditAddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,7 @@ public class AddressConverter {
                 .build();
     }
 
-    public AddressEntity convertToEntityUpdate(AddressEntity entity, UUID id, AddressInputDTO addressInputDTO) {
+    public AddressEntity convertToEntityUpdate(AddressEntity entity, UUID id, EditAddressInputDTO addressInputDTO) {
         return AddressEntity.builder()
                 .id(id)
                 .addressDescription(addressInputDTO.getAddressDescription() != null ? addressInputDTO
@@ -85,21 +86,6 @@ public class AddressConverter {
         return list.stream()
                 .map(this::convertToOutputDTO)
                 .toList();
-    }
-
-    public AddressOutputDTO convertToOutputDTOUpdate(AddressEntity addressEntity, UUID id, AddressOutputDTO addressOutputDTO) {
-        return AddressOutputDTO.builder()
-                .id(id)
-                .addressDescription(addressOutputDTO.getAddressDescription() != null ? addressOutputDTO.getAddressDescription() : addressEntity.getAddressDescription())
-                .addressNumber(addressOutputDTO.getAddressNumber() != 0 ? addressOutputDTO.getAddressNumber() : addressEntity.getAddressNumber())
-                .complement(addressOutputDTO.getComplement() != null ? addressOutputDTO.getComplement() : addressEntity.getComplement())
-                .district(addressOutputDTO.getDistrict() != null ? addressOutputDTO.getDistrict() : addressEntity.getDistrict())
-                .zipCode(addressOutputDTO.getZipCode() != null ? addressOutputDTO.getZipCode() : addressEntity.getZipCode())
-                .city(addressOutputDTO.getCity() != null ? addressOutputDTO.getCity() : addressEntity.getCity())
-                .uf(addressOutputDTO.getUf() != null ? addressOutputDTO.getUf() : stateConverter.convertToOutputDTO(addressEntity.getUf()))
-                .country(addressOutputDTO.getCountry() != null ? addressOutputDTO.getCountry() : countryConverter.convertToOutputDTO(addressEntity.getCountry()))
-                .phoneNumber(addressOutputDTO.getPhoneNumber() != null ? addressOutputDTO.getPhoneNumber() : addressEntity.getPhoneNumber())
-                .build();
     }
 
     public AddressInputDTO convertToInputDTO(AddressEntity address) {

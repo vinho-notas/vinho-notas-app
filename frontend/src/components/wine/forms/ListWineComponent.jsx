@@ -10,7 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import useListWineComponentHook from '../../../hooks/wine/useListWineComponentHook';
-import { updateWine, deleteWine } from '../../../service/wine/WineService';
+import { updateWine, deleteWine, deleteAllWine } from '../../../service/wine/WineService';
 import { createPointScale } from '../../../service/review/PointScaleService';
 import EnumPointScale from '../../../utils/enums/EnumPointScale';
 
@@ -104,8 +104,13 @@ const ListWineComponent = () => {
 
     const confirmDeleteWines = async () => {
         try {
-            const wineIds = selectedWines.map((wine) => wine.id);
-            await deleteWine(wineIds);
+            if (selectedWines.length === 1) {
+                await deleteWine(selectedWines[0].id);
+            } else if (selectedWines.length > 1) {
+                const winesIds = selectedWines.map((wine) => wine.id);
+                await deleteAllWine(winesIds);
+            }
+
             setVisibleDeleteDialog(false);
             setSelectedWines(null);
             await fetchWines();
@@ -115,7 +120,7 @@ const ListWineComponent = () => {
     };
 
     const onNewClick = () => {
-        navigate('/wine');
+        navigate('/wine-registration');
     };
 
     const saveEditedWine = async () => {

@@ -3,6 +3,7 @@ package com.vinhonotas.bff.interfaces.controllers.degustacao;
 import com.vinhonotas.bff.application.services.degustacao.TastingCardService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.degustacao.TastingCardInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.degustacao.TastingCardOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/tasting-card")
 @RequiredArgsConstructor
@@ -43,4 +45,11 @@ public class TastingCardController {
         tastingCardService.deleteTastingCard(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllTastingCards(@RequestBody List<String> ids) {
+        ids.forEach(tastingCardService::deleteTastingCard);
+        return ResponseEntity.noContent().build();
+    }
+
 }

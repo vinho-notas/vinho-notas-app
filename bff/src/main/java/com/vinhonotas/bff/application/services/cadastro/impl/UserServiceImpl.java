@@ -5,6 +5,7 @@ import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.application.services.exceptions.NotFoundException;
 import com.vinhonotas.bff.client.cadastro.UserClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AuthenticationDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
@@ -68,10 +69,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserOutputDTO updateUser(String id, UserInputDTO userInputDTO) {
-        log.info("updateUser :: Atualizando usuário com os dados: {}", userInputDTO.toString());
+    public UserOutputDTO updateUser(String id, EditUserInputDTO editUserInputDTO) {
+        log.info("updateUser :: Atualizando usuário com os dados: {}", editUserInputDTO.toString());
         try {
-            return userClient.updateUser(id, userInputDTO);
+            return userClient.updateUser(id, editUserInputDTO);
         } catch (Exception e) {
             log.error("updateUser :: Ocorreu um erro: {} ", MessagesConstants.ERROR_WHEN_UPDATING, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING);

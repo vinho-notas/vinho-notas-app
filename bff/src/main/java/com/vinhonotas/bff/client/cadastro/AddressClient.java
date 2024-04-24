@@ -2,6 +2,7 @@ package com.vinhonotas.bff.client.cadastro;
 
 import com.vinhonotas.bff.configuration.FeignConfig;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,7 +23,7 @@ public interface AddressClient {
     AddressOutputDTO getAddressById(@PathVariable("id") String id);
 
     @PutMapping("/address/{id}")
-    AddressOutputDTO updateAddress(@PathVariable("id") String id, @Valid @RequestBody AddressInputDTO addressInputDTO);
+    AddressOutputDTO updateAddress(@PathVariable("id") String id, @Valid @RequestBody EditAddressInputDTO editAddressInputDTO);
 
     @DeleteMapping("/address/{id}")
     void deleteAddress(@PathVariable("id") String id);

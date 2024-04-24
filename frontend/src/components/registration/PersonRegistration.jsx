@@ -8,10 +8,12 @@ import { Button } from 'primereact/button';
 import usePersonComponentHook from '../../hooks/registration/usePersonComponentHook';
 import useListStateComponentHook from '../../hooks/registration/useListStateComponentHook';
 import useListCountryComponentHook from '../../hooks/registration/useListCountryComponentHook';
+import { useNavigate } from "react-router-dom";
 
 const PersonRegistration = () => {
   const { state } = useListStateComponentHook();
   const { country: countries } = useListCountryComponentHook();
+  const navigate = useNavigate();
 
   const {
     name, setName,
@@ -38,7 +40,7 @@ const PersonRegistration = () => {
     }));
     await savePerson();
     setSubmitted(true);
-    handleLimparFormulario();
+    navigate('/persons');
   };
 
   const handleLimparFormulario = () => {
@@ -61,7 +63,7 @@ const PersonRegistration = () => {
   return (
     <>
       <Card style={{ marginTop: 10 }} title="Cadastro de Pessoa">
-        <Form onSubmit={handleSubmit}>
+        <Form >
           <Row className="mb-3">
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Nome</Form.Label>
@@ -98,7 +100,7 @@ const PersonRegistration = () => {
       </Card>
 
       <Card style={{ marginTop: 10 }} title="Cadastro de Endereço">
-        <Form onSubmit={handleSubmit}>
+        <Form >
           <Row className='mb-3'>
             <Form.Group as={Col} className='mb-3'>
               <Form.Label>Endereço</Form.Label>
@@ -201,8 +203,8 @@ const PersonRegistration = () => {
             </Form.Group>
           </Row>
           <div className="flex flex-wrap gap-2 mt-4">
-            <Button label="Limpar Formulário" icon="pi pi-times" className="p-button-danger" />
-            <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' />
+            <Button label="Limpar Formulário" icon="pi pi-times" className="p-button-danger" onClick={handleLimparFormulario} />
+            <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' onClick={handleSubmit}/>
           </div>
         </Form>
       </Card>

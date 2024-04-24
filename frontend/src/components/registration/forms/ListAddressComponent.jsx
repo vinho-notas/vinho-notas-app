@@ -7,7 +7,7 @@ import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { updateAddress, deleteAddress } from '../../../service/registration/AddressService';
+import { updateAddress, deleteAddress, deleteAllAddress } from '../../../service/registration/AddressService';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
@@ -61,10 +61,18 @@ const ListAddressComponent = () => {
 
   const saveEditedAddress = async () => {
     try {
-      await updateAddress(editingAddress.id, editingAddress);
+      const { uf: { stateName: state }, country: { countryName: country }, ...addressData } = editingAddress;
+      const simplifiedAddress = {
+        ...addressData,
+        state,
+        country,
+      };
+
+      console.log(simplifiedAddress);
+      await updateAddress(editingAddress.id, simplifiedAddress);
       setVisibleEditDialog(false);
       await fetchAddress();
-      navigate("/address")
+      navigate("/address");
     } catch (error) {
       console.log(error);
     }
@@ -80,8 +88,13 @@ const ListAddressComponent = () => {
 
   const confirmDeleteAddress = async () => {
     try {
-      const addressIds = selectedAddress.map(address => address.id);
-      await deleteAddress(addressIds);
+      if (selectedAddress.length === 1) {
+        await deleteAddress(selectedAddress[0].id);
+      } else if (selectedAddress.length > 1) {
+        const addressIds = selectedAddress.map(address => address.id);
+        await deleteAllAddress(addressIds);
+      }
+
       setVisibleDeleteDialog(false);
       setSelectedAddress(null);
       await fetchAddress();
@@ -90,62 +103,63 @@ const ListAddressComponent = () => {
     }
   };
 
+
   const leftToolbarTemplate = () => {
     return (
       <>
         <Dialog header="Editar Endereço" visible={visibleEditDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleEditDialog(false)}>
           <div className="p-fluid">
-              <label htmlFor="addressDescription" className="p-col-12 p-md-2">Descrição</label>
-              <div className="p-col-12 p-md-10">
-                <InputText id="addressDescription" value={editingAddress?.addressDescription || ''} onChange={(e) => setEditingAddress({ ...editingAddress, addressDescription: e.target.value })} />
+            <label htmlFor="addressDescription" className="p-col-12 p-md-2">Descrição</label>
+            <div className="p-col-12 p-md-10">
+              <InputText id="addressDescription" value={editingAddress?.addressDescription || ''} onChange={(e) => setEditingAddress({ ...editingAddress, addressDescription: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="addressNumber" className="p-col-12 p-md-2">Número</label>
-                <InputText id="addressNumber" value={editingAddress?.addressNumber || ''} onChange={(e) => setEditingAddress({ ...editingAddress, addressNumber: e.target.value })} />
+              <InputText id="addressNumber" value={editingAddress?.addressNumber || ''} onChange={(e) => setEditingAddress({ ...editingAddress, addressNumber: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="complement" className="p-col-12 p-md-2">Complemento</label>
-                <InputText id="complement" value={editingAddress?.complement || ''} onChange={(e) => setEditingAddress({ ...editingAddress, complement: e.target.value })} />
+              <InputText id="complement" value={editingAddress?.complement || ''} onChange={(e) => setEditingAddress({ ...editingAddress, complement: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="district" className="p-col-12 p-md-2">Bairro</label>
-                <InputText id="district" value={editingAddress?.district || ''} onChange={(e) => setEditingAddress({ ...editingAddress, district: e.target.value })} />
+              <InputText id="district" value={editingAddress?.district || ''} onChange={(e) => setEditingAddress({ ...editingAddress, district: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="zipCode" className="p-col-12 p-md-2">CEP</label>
-                <InputText id="zipCode" value={editingAddress?.zipCode || ''} onChange={(e) => setEditingAddress({ ...editingAddress, zipCode: e.target.value })} />
+              <InputText id="zipCode" value={editingAddress?.zipCode || ''} onChange={(e) => setEditingAddress({ ...editingAddress, zipCode: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="city" className="p-col-12 p-md-2">Cidade</label>
-                <InputText id="city" value={editingAddress?.city || ''} onChange={(e) => setEditingAddress({ ...editingAddress, city: e.target.value })} />
+              <InputText id="city" value={editingAddress?.city || ''} onChange={(e) => setEditingAddress({ ...editingAddress, city: e.target.value })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="uf.stateName" className="p-col-12 p-md-2">Estado</label>
-                <InputText id="uf.stateName" value={editingAddress?.uf?.stateName || ''} onChange={(e) => setEditingAddress({ ...editingAddress, uf: { stateName: e.target.value } })} />
+              <InputText id="uf.stateName" value={editingAddress?.uf?.stateName || ''} onChange={(e) => setEditingAddress({ ...editingAddress, uf: { stateName: e.target.value } })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="country.countryName" className="p-col-12 p-md-2">País</label>
-                <InputText id="country.countryName" value={editingAddress?.country?.countryName || ''} onChange={(e) => setEditingAddress({ ...editingAddress, country: { countryName: e.target.value } })} />
+              <InputText id="country.countryName" value={editingAddress?.country?.countryName || ''} onChange={(e) => setEditingAddress({ ...editingAddress, country: { countryName: e.target.value } })} />
             </div>
           </div>
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="phoneNumber" className="p-col-12 p-md-2">Telefone</label>
-                <InputText id="phoneNumber" value={editingAddress?.phoneNumber || ''} onChange={(e) => setEditingAddress({ ...editingAddress, phoneNumber: e.target.value })} />
+              <InputText id="phoneNumber" value={editingAddress?.phoneNumber || ''} onChange={(e) => setEditingAddress({ ...editingAddress, phoneNumber: e.target.value })} />
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -227,7 +241,7 @@ const ListAddressComponent = () => {
         rowsPerPageOptions={[10, 20, 30, 50]}
         loading={loading}
         filters={filters}
-        resizableColumns 
+        resizableColumns
         columnResizeMode="expand"
         globalFilterFields={['addressDescription', 'addressNumber', 'complement', 'district', 'zipCode', 'city', 'uf.stateName', 'country.countryName', 'phoneNumber']}
         header={header}

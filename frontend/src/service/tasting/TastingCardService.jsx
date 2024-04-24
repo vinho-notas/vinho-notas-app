@@ -21,3 +21,7 @@ export const updateTastingCard = (id, tastingCard) => {
 export const deleteTastingCard = (id) => {
     return axios.delete(`${API_URL}/${id}`);
 };
+
+export const deleteAllTastingCards = (ids) => {
+    return axios.delete(`${API_URL}/deleteAll`, { data: ids });
+};

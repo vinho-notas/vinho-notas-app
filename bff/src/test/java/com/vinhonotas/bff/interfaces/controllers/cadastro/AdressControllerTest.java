@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.bff.application.services.cadastro.AddressService;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
@@ -40,11 +41,13 @@ class AdressControllerTest {
 
     private AddressInputDTO addressInputDTO;
     private AddressOutputDTO addressOutputDTO;
+    private EditAddressInputDTO editAddressInputDTO;
 
     @BeforeEach
     void setUp() {
         addressInputDTO = createAddressInputDTO();
         addressOutputDTO = createAddressOutputDTO();
+        editAddressInputDTO = createEditAddressInputDTO();
     }
 
     @Test
@@ -146,11 +149,11 @@ class AdressControllerTest {
     @Test
     @DisplayName("Deve atualizar um endereço")
     void testUpdateAddress() throws Exception {
-        when(addressService.updateAddress("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", addressInputDTO)).thenReturn(addressOutputDTO);
+        when(addressService.updateAddress("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editAddressInputDTO)).thenReturn(addressOutputDTO);
 
         mockMvc.perform(put("/api/v1/address/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(addressInputDTO)))
+                .content(objectMapper.writeValueAsString(editAddressInputDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
@@ -167,12 +170,12 @@ class AdressControllerTest {
     @Test
     @DisplayName("Deve retornar um BadRequestException ao tentar atualizar um endereço inválido")
     void testUpdateAddressBadRequestException() throws Exception {
-        when(addressService.updateAddress("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", addressInputDTO))
+        when(addressService.updateAddress("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", editAddressInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.BAD_REQUEST));
 
         mockMvc.perform(put("/api/v1/address/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(addressInputDTO)))
+                .content(objectMapper.writeValueAsString(editAddressInputDTO)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -196,6 +199,20 @@ class AdressControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    private EditAddressInputDTO createEditAddressInputDTO() {
+        return EditAddressInputDTO.builder()
+                .addressDescription("Rua 1")
+                .addressNumber(1)
+                .complement("Casa 1")
+                .district("Bairro 1")
+                .zipCode("00000-000")
+                .city("Cidade 1")
+                .state("Santa Catarina")
+                .country("Brasil")
+                .phoneNumber("00000000000")
+                .build();
     }
 
     private AddressInputDTO createAddressInputDTO() {

@@ -7,10 +7,7 @@ import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
 import com.vinhonotas.cadastro.infrastructure.UserRepository;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,11 +41,13 @@ class UserServiceImplTest {
 
     private UserInputDTO inputDTO;
     private UserEntity entity;
+    private EditUserInputDTO editUserInputDTO;
 
     @BeforeEach
     void setUp() {
         inputDTO = createInputDTO();
         entity = createEntity();
+        editUserInputDTO = createEditUserInputDTO();
     }
 
     @Test
@@ -146,20 +145,17 @@ class UserServiceImplTest {
     @DisplayName("Deve atualizar um usuário")
     void testUpdate() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
-        when(userConverter.converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
+        when(userConverter.converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editUserInputDTO)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(entity);
-        when(userRepository.findByPersonName("João")).thenReturn(entity);
 
-        UserEntity entity = assertDoesNotThrow(() -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
+        UserEntity entity = assertDoesNotThrow(() -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editUserInputDTO));
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getPerson().getName());
         assertEquals("email@email.com", entity.getEmail());
-        assertEquals("123456", entity.getPassword());
         verify(userRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(userConverter, times(1)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(userConverter, times(1)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editUserInputDTO);
         verify(userRepository, times(1)).save(entity);
-        verify(userRepository, times(1)).findByPersonName("João");
     }
 
     @Test
@@ -167,10 +163,10 @@ class UserServiceImplTest {
     void testUpdateException() {
         when(userRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(Exception.class, () -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
+        Exception exception = assertThrows(Exception.class, () -> userService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editUserInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_USER_DATA, exception.getMessage());
         verify(userRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(userConverter, times(0)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
+        verify(userConverter, times(0)).converteToEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editUserInputDTO);
         verify(userRepository, times(0)).save(entity);
     }
 
@@ -209,6 +205,13 @@ class UserServiceImplTest {
                 .build();
     }
 
+    private EditUserInputDTO createEditUserInputDTO() {
+        return EditUserInputDTO.builder()
+                .personName("João")
+                .enumProfile(EnumProfile.OENOPHILE.getCode())
+                .email("email@email.com")
+                .build();
+    }
     private PersonInputDTO createPersonInputDTO() {
         return PersonInputDTO.builder()
                 .id("24690839-a007-4af7-b4fe-9e81e42b7465")

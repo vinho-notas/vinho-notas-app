@@ -3,6 +3,7 @@ package com.vinhonotas.bff.application.services.cadastro.impl;
 import com.vinhonotas.bff.application.services.exceptions.BadRequestException;
 import com.vinhonotas.bff.client.cadastro.AddressClient;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AddressInputDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditAddressInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.AddressOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.CountryOutputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.StateOutputDTO;
@@ -33,11 +34,13 @@ class AddressServiceImplTest {
 
     private AddressOutputDTO addressOutputDTO;
     private AddressInputDTO addressInputDTO;
+    private EditAddressInputDTO editAddressInputDTO;
 
     @BeforeEach
     void setUp() {
         addressOutputDTO = createAddressOutputDTO();
         addressInputDTO = createAddressInputDTO();
+        editAddressInputDTO = createEditAddressInputDTO();
     }
 
     @Test
@@ -135,24 +138,24 @@ class AddressServiceImplTest {
     @DisplayName("Deve atualizar um endereço")
     void testUpdateAddress() {
         addressOutputDTO.setAddressNumber(160);
-        when(addressClient.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO)).thenReturn(addressOutputDTO);
-        AddressOutputDTO response = assertDoesNotThrow(() -> addressService.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO));
+        when(addressClient.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO)).thenReturn(addressOutputDTO);
+        AddressOutputDTO response = assertDoesNotThrow(() -> addressService.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO));
 
         assertNotNull(response);
         assertEquals(UUID.fromString("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a"), response.getId());
         assertEquals(160, response.getAddressNumber());
-        verify(addressClient).updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO);
+        verify(addressClient).updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO);
     }
 
     @Test
     @DisplayName("Deve lançar BadRequestException ao atualizar um endereço")
     void testUpdateAddressThrowBadRequestException() {
-        when(addressClient.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO))
+        when(addressClient.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO))
                 .thenThrow(new BadRequestException(MessagesConstants.ERROR_WHEN_UPDATING));
 
-        Exception exception = assertThrows(Exception.class, () -> addressService.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO));
+        Exception exception = assertThrows(Exception.class, () -> addressService.updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_UPDATING, exception.getMessage());
-        verify(addressClient).updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", addressInputDTO);
+        verify(addressClient).updateAddress("f5d2e9e0-0b7e-4b1e-9b0a-0e9f5b9b6b1a", editAddressInputDTO);
     }
 
     @Test
@@ -184,6 +187,20 @@ class AddressServiceImplTest {
                 .city("Blumenau")
                 .uf(Mockito.mock(StateOutputDTO.class))
                 .country(Mockito.mock(CountryOutputDTO.class))
+                .phoneNumber("0000000000")
+                .build();
+    }
+
+    private EditAddressInputDTO createEditAddressInputDTO() {
+        return EditAddressInputDTO.builder()
+                .addressDescription("Rua addressDescription")
+                .addressNumber(159)
+                .complement("Ap 201")
+                .district("district")
+                .zipCode("00000-000")
+                .city("Blumenau")
+                .state("SC")
+                .country("Brasil")
                 .phoneNumber("0000000000")
                 .build();
     }

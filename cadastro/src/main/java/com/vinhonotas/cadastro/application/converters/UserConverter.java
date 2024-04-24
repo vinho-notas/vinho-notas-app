@@ -4,6 +4,7 @@ import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
 import com.vinhonotas.cadastro.domain.enums.EnumProfile;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
 import com.vinhonotas.cadastro.utils.EnumConverter;
@@ -35,15 +36,15 @@ public class UserConverter {
                 .build();
     }
 
-    public UserEntity converteToEntityUpdate(UserEntity entity, UUID id, UserInputDTO userInputDTO) {
-        PersonEntity personEntity = personRepository.findById(UUID.fromString(userInputDTO.getPersonId())).orElseThrow();
+    public UserEntity converteToEntityUpdate(UserEntity entity, UUID id, EditUserInputDTO userInputDTO) {
+        PersonEntity personEntity = entity.getPerson();
         return UserEntity.builder()
                 .id(id)
                 .person(entity.getPerson() != null ? entity.getPerson() : personEntity)
                 .enumProfile(userInputDTO.getEnumProfile() != null ? EnumConverter.fromString(userInputDTO
                         .getEnumProfile(), EnumProfile.class) : entity.getEnumProfile())
                 .email(userInputDTO.getEmail() != null ? userInputDTO.getEmail() : entity.getEmail())
-                .password(userInputDTO.getPassword() != null ? userInputDTO.getPassword() : entity.getPassword())
+                .password(entity.getPassword())
                 .dthreg(userInputDTO.getDthreg() != null ? userInputDTO.getDthreg() : entity.getDthreg())
                 .useralt(userInputDTO.getUseralt() != null ? userInputDTO.getUseralt() : entity.getUseralt())
                 .dthalt(LocalDateTime.now())

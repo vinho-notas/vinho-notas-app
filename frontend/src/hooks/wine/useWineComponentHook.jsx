@@ -56,7 +56,7 @@ const useWineComponentHook = () => {
         try {
             await createWine(wine);
             toast.success("Wine created successfully!");
-            navigate("/wine");
+            navigate("/wine-list");
         } catch (error) {
             toast.error("Error creating wine! " + error);
         }

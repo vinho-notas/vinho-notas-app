@@ -2,9 +2,11 @@ package com.vinhonotas.bff.interfaces.controllers.cadastro;
 
 import com.vinhonotas.bff.application.services.cadastro.UserService;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.AuthenticationDTO;
+import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.EditUserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.inputs.cadastro.UserInputDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.LoginResponseDTO;
 import com.vinhonotas.bff.interfaces.dtos.outputs.cadastro.UserOutputDTO;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RateLimiter(name = "rateLimiter")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -41,8 +44,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody UserInputDTO userInputDTO) {
-        return ResponseEntity.ok(userService.updateUser(id, userInputDTO));
+    public ResponseEntity<UserOutputDTO> updateUser(@PathVariable("id") String id, @Valid @RequestBody EditUserInputDTO editUserInputDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, editUserInputDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -54,6 +57,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody AuthenticationDTO data) {
         return ResponseEntity.ok(userService.login(data));
+    }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllUser(@RequestBody List<String> ids) {
+        ids.forEach(userService::deleteUser);
+        return ResponseEntity.noContent().build();
     }
 
 }
