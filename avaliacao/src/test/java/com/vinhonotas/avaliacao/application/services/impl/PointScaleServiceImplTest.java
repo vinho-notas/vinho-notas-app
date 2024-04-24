@@ -3,6 +3,7 @@ package com.vinhonotas.avaliacao.application.services.impl;
 import com.vinhonotas.avaliacao.application.converters.PointScaleConverter;
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
 import com.vinhonotas.avaliacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.PointScaleNotFoundException;
 import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import com.vinhonotas.avaliacao.infraestructure.PointScaleRepository;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
@@ -106,7 +107,7 @@ class PointScaleServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao buscar um PointScaleEntity ao se passar o id")
     void testGetByIdBadRequestException() {
-        when(pointScaleRepository.findById(pointScaleOne.getId())).thenThrow(new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
+        when(pointScaleRepository.findById(pointScaleOne.getId())).thenThrow(new PointScaleNotFoundException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
 
         Exception exception = assertThrows(Exception.class, () -> pointScaleService.getById(pointScaleOne.getId()));
         assertEquals(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND, exception.getMessage());
