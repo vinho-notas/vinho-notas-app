@@ -57,7 +57,7 @@ describe('ListPointScaleComponent', () => {
     });
 
 
-    it('deletes selected point scales and fetches updated point scales', async () => {
+    it('should deletes selected point scales and fetches updated point scales', async () => {
         const mockSelectedPointScales = [
             { id: 1, name: 'Scale 1', value: 5 },
             { id: 2, name: 'Scale 2', value: 10 },
@@ -75,7 +75,7 @@ describe('ListPointScaleComponent', () => {
     });
 
 
-    it('logs an error if deleting point scales fails', async () => {
+    it('should logs an error if deleting point scales fails', async () => {
         const mockSelectedPointScales = [
             { id: 1, name: 'Scale 1', value: 5 },
             { id: 2, name: 'Scale 2', value: 10 },
@@ -92,4 +92,5 @@ describe('ListPointScaleComponent', () => {
             />
         );
     });
+    
 });
