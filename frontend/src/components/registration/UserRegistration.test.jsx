@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import UserRegistration from './UserRegistration';
+import { BrowserRouter } from 'react-router-dom';
 
 //Mock useUserComponentHook
 jest.mock("../../hooks/registration/useUserComponentHook", () => {
@@ -31,7 +32,13 @@ jest.mock("../../hooks/registration/useListPersonComponentHook", () => {
 
 describe('UserRegistration', () => {
     it('should renders the component', () => {
-        render(<UserRegistration />);
+        render(
+            <>
+                <BrowserRouter>
+                    <UserRegistration />
+                </BrowserRouter>
+            </>
+        );
         expect(screen.getByText('Cadastro de Usuários')).toBeInTheDocument();
         expect(screen.getByText('Pessoa')).toBeInTheDocument();
         expect(screen.getByText('Perfil')).toBeInTheDocument();
@@ -42,13 +49,19 @@ describe('UserRegistration', () => {
     });
 
     it('should handle form submission', async () => {
-        render(<UserRegistration />);
+        render(
+            <>
+            <BrowserRouter>
+                <UserRegistration />
+            </BrowserRouter>
+        </>
+        );
 
         fireEvent.change(screen.getByTestId('label-pessoa'));
         fireEvent.change(screen.getByTestId('label-perfil'));
         fireEvent.change(screen.getByTestId('label-email'));
         fireEvent.change(screen.getByTestId('label-senha'));
 
-        fireEvent.submit(screen.getByTestId('user-registration-form'));        
+        fireEvent.submit(screen.getByTestId('user-registration-form'));
     });
 });
