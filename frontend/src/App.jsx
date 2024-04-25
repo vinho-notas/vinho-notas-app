@@ -5,7 +5,7 @@ import { Routes, Route, } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Footer from './components/footer/Footer';
-import Tasting from './components/tasting/Tasting';
+// import Tasting from './components/tasting/Tasting';
 import TastingCard from './components/tasting/TastingCard';
 import ListAddressComponent from './components/registration/forms/ListAddressComponent';
 import ListPersonComponent from './components/registration/forms/ListPersonComponent';
@@ -37,7 +37,7 @@ function App() {
         <Route path="/wine-list" element={<ListWineComponent />} />
         <Route path="/wine-review-list" element={<ListPointScaleComponent />} />        
         
-        <Route path="/tasting" element={<Tasting />} />
+        {/* <Route path="/tasting" element={<Tasting />} /> */}
         <Route path="/tasting-card" element={<TastingCard />} />
         <Route path="/tasting-list" element={<ListTastingComponent />} />
 
