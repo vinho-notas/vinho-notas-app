@@ -142,8 +142,8 @@ const ListUserComponent = () => {
                         />
                     </div>
                     <div className="flex justify-content-end gap-2">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedUser} />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedUser} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
                 <Dialog header="Excluir Usuário" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
@@ -151,22 +151,22 @@ const ListUserComponent = () => {
                         <h5>Você deseja excluir o(s) usuário(s) selecionado(s)?</h5>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteUser} />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteUser} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
                     <Button data-testid="update-button" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
-                        raised />
-                    <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised />
+                        raised style={{ borderRadius: '20px' }}/>
+                    <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised style={{ borderRadius: '20px' }}/>
                 </div>
             </>
         )
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
     };
 
     useEffect(() => {

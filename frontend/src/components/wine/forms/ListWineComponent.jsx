@@ -262,8 +262,8 @@ const ListWineComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} />
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} />
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
 
@@ -300,16 +300,16 @@ const ListWineComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} />
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} />
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
 
                 <div className="flex flex-wrap gap-2">
-                    <Button data-testid="button-component-novo" rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button data-testid="button-component-editar" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised />
-                    <Button data-testid="button-component-excluir" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised />
-                    <Button data-testid="button-component-avaliar" rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised />
+                    <Button data-testid="button-component-novo" rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
+                    <Button data-testid="button-component-editar" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised style={{ borderRadius: '20px' }}/>
+                    <Button data-testid="button-component-excluir" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }}/>
+                    <Button data-testid="button-component-avaliar" rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }}/>
 
                 </div>
             </>
@@ -317,7 +317,7 @@ const ListWineComponent = () => {
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
     };
 
     const renderHeader = () => {

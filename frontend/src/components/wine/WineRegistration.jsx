@@ -259,7 +259,7 @@ const WineRegistration = () => {
                         onChange={(e) => setHarmonization(e.target.value)}
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit">Cadastrar</Button>
+                <Button variant="primary" type="submit" style={{ borderRadius: '20px' }}>Cadastrar</Button>
             </Form>
             
         </Card>

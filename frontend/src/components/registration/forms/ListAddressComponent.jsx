@@ -163,8 +163,8 @@ const ListAddressComponent = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
-            <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
-            <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedAddress} />
+            <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+            <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedAddress} style={{ borderRadius: '20px' }} />
           </div>
 
         </Dialog>
@@ -174,14 +174,14 @@ const ListAddressComponent = () => {
             <p>Você deseja excluir o(s) endereço(s) selecionado(s)?</p>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
-            <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
-            <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteAddress} />
+            <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+            <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteAddress} style={{ borderRadius: '20px' }}/>
           </div>
         </Dialog>
 
         <div className="flex flex-wrap gap-2">
-          <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedAddress || selectedAddress.length !== 1} raised />
-          <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedAddress || selectedAddress.length === 0} raised />
+          <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedAddress || selectedAddress.length !== 1} raised style={{ borderRadius: '20px' }}/>
+          <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedAddress || selectedAddress.length === 0} raised style={{ borderRadius: '20px' }}/>
         </div>
       </>
 
@@ -189,7 +189,7 @@ const ListAddressComponent = () => {
   };
 
   const rightToolbarTemplate = () => {
-    return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+    return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
   }
 
   const onSelectionChange = (e) => {

@@ -265,8 +265,8 @@ const ListCardTastingComponent = () => {
                         <p>Deseja realmente excluir a ficha de degustação selecionada?</p>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleDeleteDialog(false)} />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteTastingCards} />
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleDeleteDialog(false)} style={{ borderRadius: '20px' }}/>
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteTastingCards} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
 
@@ -439,21 +439,21 @@ const ListCardTastingComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} />
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveTastingCard} />
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveTastingCard} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedTastingCards || selectedTastingCards.length !== 1} raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedTastingCards || selectedTastingCards.length === 0} raised />
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedTastingCards || selectedTastingCards.length !== 1} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedTastingCards || selectedTastingCards.length === 0} raised style={{ borderRadius: '20px' }}/>
                 </div>
             </>
         );
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
     };
 
     const renderHeader = () => {

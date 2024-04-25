@@ -95,8 +95,8 @@ const UserRegistration = () => {
                     </Row>
 
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Limpar Formulário" icon="pi pi-times" className="p-button-danger" onClick={handleLimparFormulario} />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' onClick={handleSubmit}/>
+                        <Button label="Limpar Formulário" icon="pi pi-times" className="p-button-danger" onClick={handleLimparFormulario} style={{ borderRadius: '20px' }}/>
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" type='submit' onClick={handleSubmit} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Form>
 

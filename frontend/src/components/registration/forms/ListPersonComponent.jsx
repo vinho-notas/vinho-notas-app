@@ -118,7 +118,7 @@ const ListPersonComponent = () => {
 
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
     }
 
     const leftToolbarTemplate = () => {
@@ -144,8 +144,8 @@ const ListPersonComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
                 <Dialog header="Excluir Pessoa" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
@@ -153,14 +153,14 @@ const ListPersonComponent = () => {
                         <h5>Você deseja excluir a(s) pessoa(s) selecionada(s)?</h5>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeletePerson} />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeletePerson} style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised />
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPerson || selectedPerson.length === 0} raised />
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPerson || selectedPerson.length === 0} raised style={{ borderRadius: '20px' }}/>
                 </div>
             </>
 

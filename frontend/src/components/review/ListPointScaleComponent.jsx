@@ -13,8 +13,7 @@ import { deletePointScale, updatePointScale, deleteAllPointScale } from '../../s
 import EnumPointScale from '../../utils/enums/EnumPointScale';
 
 const ListPointScaleComponent = () => {
-
-    //hooks
+  
     const { pointScales, navigate, fetchPointScales } = useListPointScaleComponentHook();
     const [selectedPointScales, setSelectedPointScales] = useState(null);
     const [editingPointScales, setEditingPointScales] = useState(null);
@@ -32,8 +31,6 @@ const ListPointScaleComponent = () => {
         pointScale: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
 
-
-    //constants
     const pointScale = Object.values(EnumPointScale);
     const columns = [
         { field: 'whatTasted', header: 'O que foi degustado', sortable: true, filterField: 'whatTasted' },
@@ -53,8 +50,6 @@ const ListPointScaleComponent = () => {
         dt.current.exportCSV();
     };
 
-
-    //handlers    
     const onEditClick = () => {
         if (selectedPointScales && selectedPointScales.length === 1) {
             setEditingPointScales(selectedPointScales[0]);
@@ -148,8 +143,8 @@ const ListPointScaleComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" />
-                        <Button label="Salvar" icon="pi pi-check" onClick={saveEditedPointScale} className="p-button-success" />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Salvar" icon="pi pi-check" onClick={saveEditedPointScale} className="p-button-success" style={{ borderRadius: '20px' }}/>
                     </div>
 
 
@@ -159,21 +154,21 @@ const ListPointScaleComponent = () => {
                         <p>Tem certeza que deseja excluir as avaliações selecionadas?</p>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" />
-                        <Button label="Confirmar" icon="pi pi-check" onClick={confirmDeletePointScales} className="p-button-success" />
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
+                        <Button label="Confirmar" icon="pi pi-check" onClick={confirmDeletePointScales} className="p-button-success" style={{ borderRadius: '20px' }}/>
                     </div>
                 </Dialog>
 
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPointScales || selectedPointScales.length !== 1} raised />
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPointScales || selectedPointScales.length === 0} raised />
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPointScales || selectedPointScales.length !== 1} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPointScales || selectedPointScales.length === 0} raised style={{ borderRadius: '20px' }}/>
                 </div>
             </>
         )
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised />;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
     };
 
     const onSelectionChange = (e) => {
