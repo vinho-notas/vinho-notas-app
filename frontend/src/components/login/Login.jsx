@@ -5,7 +5,6 @@ import { Dialog } from 'primereact/dialog';
 import { login } from '../../service/registration/UserService';
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [username, setUsername] = useState('');
@@ -53,7 +52,7 @@ const Login = () => {
                                 <InputText id="username" label="Username" className="bg-white-alpha-20 border-none p-3 text-primary-50" value={username} onChange={(e) => setUsername(e.target.value)} />
                             </div>
                             <div className="inline-flex flex-column gap-2">
-                                <label htmlFor="username" className="text-primary-50 font-semibold">Senha</label>
+                                <label htmlFor="password" className="text-primary-50 font-semibold">Senha</label>
                                 <InputText id="password" label="Password" className="bg-white-alpha-20 border-none p-3 text-primary-50" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                             </div>
                             <div className="flex align-items-center gap-2">
