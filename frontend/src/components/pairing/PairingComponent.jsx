@@ -42,7 +42,6 @@ const PairingComponent = () => {
         }
     };
 
-
     const toolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
