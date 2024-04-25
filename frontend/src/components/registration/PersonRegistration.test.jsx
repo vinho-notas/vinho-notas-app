@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import PersonRegistration from './PersonRegistration';
+import { BrowserRouter } from 'react-router-dom';
 
 //Mock usePersonComponentHook
 jest.mock("../../hooks/registration/usePersonComponentHook", () => {
@@ -38,7 +39,13 @@ jest.mock("../../hooks/registration/useListCountryComponentHook", () => {
 
 describe('PersonRegistration', () => {
     test('renders the component', () => {
-        render(<PersonRegistration />);
+        render(
+            <>
+                <BrowserRouter>
+                    <PersonRegistration />
+                </BrowserRouter>
+            </>
+        );
 
         expect(screen.getByText('Cadastro de Pessoa')).toBeInTheDocument();
         expect(screen.getByText('Nome')).toBeInTheDocument();
@@ -59,7 +66,13 @@ describe('PersonRegistration', () => {
     });
 
     test('submits the form', () => {
-        render(<PersonRegistration />);
+        render(
+            <>
+                <BrowserRouter>
+                    <PersonRegistration />
+                </BrowserRouter>
+            </>
+        );
 
         const submitButton = screen.getByText('Confirmar');
         fireEvent.click(submitButton);

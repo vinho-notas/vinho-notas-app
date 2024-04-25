@@ -4,7 +4,7 @@ import Footer from './Footer';
 import { FaRegArrowAltCircleRight } from 'react-icons/fa';
 
 describe('Footer', () => {
-    it('renders correctly', () => {
+    it('should renders correctly', () => {
         render(<Footer />);
        
         expect(screen.getByText('Sobre')).toBeInTheDocument();
@@ -14,7 +14,7 @@ describe('Footer', () => {
         expect(screen.getByText(/All Right Reserved\./)).toBeInTheDocument();
     });
 
-    it('renders footer links correctly', () => {
+    it('should renders footer links correctly', () => {
         render(<Footer />);
         const companyLinks = [
             { label: 'Sobre', icon: FaRegArrowAltCircleRight, Link: 'about' },
