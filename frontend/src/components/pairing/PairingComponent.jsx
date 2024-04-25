@@ -3,11 +3,13 @@ import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
+import { ProgressSpinner } from 'primereact/progressspinner'; // Importe o ProgressSpinner
 import { getWineInformation, getWinePairing, getMenuPairing } from '../../service/harmonizacao/PairingService';
 
 const PairingComponent = () => {
     const [value, setValue] = useState('');
     const [responseText, setResponseText] = useState('');
+    const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
 
     const formatResponse = (response) => {
         let formattedResponse = "Informações encontradas:\n";
@@ -15,31 +17,28 @@ const PairingComponent = () => {
         return formattedResponse;
     };
 
-    const onInformationClick = async () => {
+    const fetchData = async (fetchFunction) => {
         try {
-            const response = await getWineInformation({ wine: value });
+            setLoading(true); // Define o estado de carregamento como verdadeiro antes da chamada à API
+            const response = await fetchFunction({ wine: value });
             setResponseText(formatResponse(response.data));
         } catch (error) {
-            console.error('Erro ao obter informações sobre o vinho:', error);
+            console.error('Erro ao obter informações:', error);
+        } finally {
+            setLoading(false); // Define o estado de carregamento como falso após a resposta da API
         }
+    };
+
+    const onInformationClick = async () => {
+        fetchData(getWineInformation);
     };
 
     const onPairingClick = async () => {
-        try {
-            const response = await getWinePairing({ wine: value });
-            setResponseText(formatResponse(response.data));
-        } catch (error) {
-            console.error('Erro ao obter sugestão de harmonização:', error);
-        }
+        fetchData(getWinePairing);
     };
 
     const onMenuClick = async () => {
-        try {
-            const response = await getMenuPairing({ wine: value });
-            setResponseText(formatResponse(response.data));
-        } catch (error) {
-            console.error('Erro ao obter sugestão de menu:', error);
-        }
+        fetchData(getMenuPairing);
     };
 
     const toolbarTemplate = () => {
@@ -60,11 +59,17 @@ const PairingComponent = () => {
                     <InputText id="wine" value={value} onChange={(e) => setValue(e.target.value)} style={{ width: '900px' }} className='flex justify-content-star' />
                 </div>
                 <Toolbar className="mb-4" start={toolbarTemplate}></Toolbar>
-                {responseText && (
-                    <div className="mt-4">
-                        <h3>Resposta do Serviço:</h3>
-                        <pre>{responseText}</pre>
+                {loading ? (
+                    <div className="flex justify-content-center mt-4">
+                        <ProgressSpinner />
                     </div>
+                ) : (
+                    responseText && (
+                        <div className="mt-4">
+                            <h3>Resposta do Serviço:</h3>
+                            <pre style={{ textAlign: 'left', fontFamily: 'arial', fontSize: '1.2rem'}}>{responseText}</pre>
+                        </div>
+                    )
                 )}
             </Card>
 

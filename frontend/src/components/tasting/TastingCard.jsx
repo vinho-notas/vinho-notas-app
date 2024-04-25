@@ -837,7 +837,7 @@ const TastingCard = () => {
                             </Form.Select>
                         </Form.Group>
                     </Row>
-                    <Button variant="primary" type="submit">Cadastrar</Button>
+                    <Button variant="primary" type="submit" style={{ borderRadius: '20px' }}>Cadastrar</Button>
                 </Form>
             </Card>
             <ListCardTastingComponent />
