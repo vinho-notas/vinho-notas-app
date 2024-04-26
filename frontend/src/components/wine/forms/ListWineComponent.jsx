@@ -9,6 +9,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
+import { Toast } from 'primereact/toast';
 import useListWineComponentHook from '../../../hooks/wine/useListWineComponentHook';
 import { updateWine, deleteWine, deleteAllWine } from '../../../service/wine/WineService';
 import { createPointScale } from '../../../service/review/PointScaleService';
@@ -16,7 +17,6 @@ import EnumPointScale from '../../../utils/enums/EnumPointScale';
 
 const ListWineComponent = () => {
 
-    // Hooks
     const { wines, navigate, fetchWines } = useListWineComponentHook();
     const [selectedWines, setSelectedWines] = useState(null);
     const [editingWine, setEditingWine] = useState(null);
@@ -24,6 +24,9 @@ const ListWineComponent = () => {
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const [visibleReviewDialog, setVisibleReviewDialog] = useState(false);
     const [wineReview, setWineReview] = useState(null);
+    const editToast = useRef(null);
+    const deleteToast = useRef(null);
+
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -50,7 +53,6 @@ const ListWineComponent = () => {
     const dt = useRef(null);
     const [visibleColumns, setVisibleColumns] = useState([]);
 
-    // Constants
     const pointScale = Object.values(EnumPointScale);
     const columns = [
         { field: 'name', header: 'Vinho' },
@@ -114,8 +116,9 @@ const ListWineComponent = () => {
             setVisibleDeleteDialog(false);
             setSelectedWines(null);
             await fetchWines();
+            deleteToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Vinho(s) excluído(s) com sucesso.', life: 3000 });
         } catch (error) {
-            console.log(error);
+            deleteToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
@@ -126,11 +129,13 @@ const ListWineComponent = () => {
     const saveEditedWine = async () => {
         try {
             await updateWine(editingWine.id, editingWine);
+            editToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Vinho atualizado com sucesso.', life: 3000 });
             setVisibleEditDialog(false);
+            setSelectedWines(null);
             await fetchWines();
             navigate('/wine-list');
         } catch (error) {
-            console.log(error);
+            editToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
@@ -262,8 +267,8 @@ const ListWineComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} style={{ borderRadius: '20px' }}/>
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleEditDialog(false)} style={{ borderRadius: '20px' }} />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedWine} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
 
@@ -300,16 +305,16 @@ const ListWineComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} style={{ borderRadius: '20px' }}/>
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-danger" onClick={() => setVisibleReviewDialog(false)} style={{ borderRadius: '20px' }} />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={savePointScale} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
 
                 <div className="flex flex-wrap gap-2">
-                    <Button data-testid="button-component-novo" rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
-                    <Button data-testid="button-component-editar" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised style={{ borderRadius: '20px' }}/>
-                    <Button data-testid="button-component-excluir" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }}/>
-                    <Button data-testid="button-component-avaliar" rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }}/>
+                    <Button data-testid="button-component-novo" rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }} />
+                    <Button data-testid="button-component-editar" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedWines || selectedWines.length !== 1} raised style={{ borderRadius: '20px' }} />
+                    <Button data-testid="button-component-excluir" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }} />
+                    <Button data-testid="button-component-avaliar" rounded label="Avaliar" icon="pi pi-star" className="p-button-help" onClick={onNewPointScale} disabled={!selectedWines || selectedWines.length === 0} raised style={{ borderRadius: '20px' }} />
 
                 </div>
             </>
@@ -317,7 +322,7 @@ const ListWineComponent = () => {
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }} />;
     };
 
     const renderHeader = () => {
@@ -370,7 +375,8 @@ const ListWineComponent = () => {
                         <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
                     ))}
                 </DataTable>
-
+                <Toast ref={editToast} />
+                <Toast ref={deleteToast} />
             </Card>
         </>
     )
