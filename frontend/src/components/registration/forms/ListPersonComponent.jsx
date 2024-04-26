@@ -7,6 +7,7 @@ import { Card } from 'primereact/card';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
 import useListPersonComponentHook from '../../../hooks/registration/useListPersonComponentHook';
 import { updatePerson, deletePerson, deleteAllPerson } from '../../../service/registration/PersonService';
 
@@ -17,6 +18,8 @@ const ListPersonComponent = () => {
     const [visibleEditDialog, setVisibleEditDialog] = useState(false);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const dt = useRef(null);
+    const editToast = useRef(null);
+    const deleteToast = useRef(null);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -82,11 +85,13 @@ const ListPersonComponent = () => {
             };
 
             await updatePerson(id, simplifiedPerson);
+            editToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Pessoa atualizada com sucesso.', life: 3000 });
             setVisibleEditDialog(false);
+            setSelectedPerson(null);
             await fetchPersons();
             navigate("/persons");
         } catch (error) {
-            console.log(error);
+            editToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
@@ -111,14 +116,14 @@ const ListPersonComponent = () => {
             setVisibleDeleteDialog(false);
             setSelectedPerson(null);
             await fetchPersons();
+            deleteToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Pessoa(s) excluída(s) com sucesso.', life: 3000 });
         } catch (error) {
-            console.log(error);
+            deleteToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
-
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }} />;
     }
 
     const leftToolbarTemplate = () => {
@@ -144,8 +149,8 @@ const ListPersonComponent = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }} />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedPerson} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
                 <Dialog header="Excluir Pessoa" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
@@ -153,14 +158,14 @@ const ListPersonComponent = () => {
                         <h5>Você deseja excluir a(s) pessoa(s) selecionada(s)?</h5>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeletePerson} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }} />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeletePerson} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
-                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised style={{ borderRadius: '20px' }}/>
-                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPerson || selectedPerson.length === 0} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }} />
+                    <Button rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedPerson || selectedPerson.length !== 1} raised style={{ borderRadius: '20px' }} />
+                    <Button rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedPerson || selectedPerson.length === 0} raised style={{ borderRadius: '20px' }} />
                 </div>
             </>
 
@@ -247,6 +252,8 @@ const ListPersonComponent = () => {
                     <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
                 ))}
             </DataTable>
+            <Toast ref={editToast} />
+            <Toast ref={deleteToast} />
         </Card>
     )
 }

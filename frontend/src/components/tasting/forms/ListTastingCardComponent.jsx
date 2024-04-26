@@ -10,6 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import { Calendar } from 'primereact/calendar';
+import { Toast } from 'primereact/toast';
 import useListTastingCardComponentHook from '../../../hooks/tasting/useListTastingCardComponentHook';
 import { updateTastingCard, deleteTastingCard, deleteAllTastingCards } from '../../../service/tasting/TastingCardService';
 import EnumTastingType from '../../../utils/enums/EnumTastingType';
@@ -55,6 +56,8 @@ const ListCardTastingComponent = () => {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [visibleColumns, setVisibleColumns] = useState([]);
     const dt = useRef(null);
+    const editToast = useRef(null);
+    const deleteToast = useRef(null);
     const enumTastingType = Object.values(EnumTastingType);
     const enumClarityType = Object.values(EnumClarityType);
     const enumBrightnessType = Object.values(EnumBrightnessType);
@@ -208,20 +211,22 @@ const ListCardTastingComponent = () => {
             setVisibleDeleteDialog(false);
             setSelectedTastingCards(null);
             await fetchTastingCards();
+            deleteToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Ficha(s) de degustação(ões) excluída(s) com sucesso.', life: 3000 });
         } catch (error) {
-            console.log(error);
+            deleteToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
     const saveTastingCard = async () => {
         try {
             await updateTastingCard(editingTastingCards.id, editingTastingCards);
+            editToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Ficha de degustação atualizada com sucesso.', life: 3000 });
             setVisibleEditDialog(false);
             setSelectedTastingCards(null);
             await fetchTastingCards();
             navigate('/tasting-list');
         } catch (error) {
-            console.log(error);
+            editToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
@@ -511,6 +516,8 @@ const ListCardTastingComponent = () => {
                         <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
                     ))}
                 </DataTable>
+                <Toast ref={editToast} />
+            <Toast ref={deleteToast} />
             </Card>
         </>
     )

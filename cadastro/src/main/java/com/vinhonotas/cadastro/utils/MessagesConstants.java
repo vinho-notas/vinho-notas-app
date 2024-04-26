@@ -46,11 +46,6 @@ public class MessagesConstants {
     public static final String COUNTRIES_NOT_FOUND = "Nenhum país encontrado";
     public static final String COUNTRY_ALREADY_EXISTS = "Já existe um país cadastrado com os parâmetros informados";
 
-    //CONTROLLER
-    public static final String INVALID_FIELDS = "A requisição possui campos inválidos, verifique";
-    public static final String COUNTRY_NOT_FOUND_WITH_ID = "País não encontrado com o id: ";
-    public static final String STATE_NOT_FOUND_WITH_ID = "Estado não encontrado com o id: ";
-
     public static final String ERROR_GENERATING_TOKEN = "Erro ao gerar token";
     public static final String PERSON_UNDERAGE = "O cadastramento e acesso ao sistema só é permitido para pessoas maiores de 18 anos";
     public static final String INVALID_DOCUMENT = "Documento inválido. Informe um dos seguintes documentos para se cadastrar: " +

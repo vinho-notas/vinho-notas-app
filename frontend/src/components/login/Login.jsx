@@ -1,15 +1,18 @@
 import { Button } from "primereact/button";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Dialog } from 'primereact/dialog';
 import { login } from '../../service/registration/UserService';
 import { useNavigate } from "react-router-dom";
+import { Toast } from 'primereact/toast';
+        
 
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const toast = useRef(null);
 
     const processLogin = async () => {
         const auth = {
@@ -22,8 +25,12 @@ const Login = () => {
             console.log(response.data);
             setVisible(false);
             navigate('/home');
-        } catch (error) {
-            console.log(error);
+        } catch (error) {   
+            if (toast.current) {
+                toast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
+            } else {
+                console.error('Toast not found')
+            }
         }
 
     };
@@ -56,6 +63,7 @@ const Login = () => {
                                 <InputText id="password" label="Password" className="bg-white-alpha-20 border-none p-3 text-primary-50" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                             </div>
                             <div className="flex align-items-center gap-2">
+                                <Toast ref={toast} />
                                 <Button label="Entrar" onClick={processLogin} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" style={{ borderRadius: '20px' }}></Button>
                                 <Button label="Cancelar" onClick={(e) => hide(e)} text className="p-3 w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" style={{ borderRadius: '20px' }}></Button>
                             </div>

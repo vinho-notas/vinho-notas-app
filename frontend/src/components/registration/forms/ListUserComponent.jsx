@@ -8,6 +8,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
+import { Toast } from 'primereact/toast';
 import useListUserComponentHook from '../../../hooks/registration/useListUserComponentHook';
 import EnumProfile from '../../../utils/enums/EnumProfile';
 import { updateUser, deleteUser, deleteAllUser } from '../../../service/registration/UserService';
@@ -20,7 +21,8 @@ const ListUserComponent = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const profile = Object.values(EnumProfile);
-
+    const editToast = useRef(null);
+    const deleteToast = useRef(null);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -60,7 +62,7 @@ const ListUserComponent = () => {
         if (selectedUser && selectedUser.length === 1) {
             const userToEdit = selectedUser[0];
             setEditingUser(userToEdit);
-        setVisibleEditDialog(true);
+            setVisibleEditDialog(true);
         } else {
             alert('Selecione um usuário para editar.');
         }
@@ -77,14 +79,15 @@ const ListUserComponent = () => {
             };
 
             await updateUser(id, simplifiedUser);
+            editToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuário(a) atualizado(a) com sucesso.', life: 3000 });
             setVisibleEditDialog(false);
+            setSelectedUser(null);
             await fetchUsers();
             navigate("/users");
         } catch (error) {
-            console.log(error);
+            editToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
-
 
     const onDeleteClick = () => {
         if (selectedUser && selectedUser.length > 0) {
@@ -106,8 +109,9 @@ const ListUserComponent = () => {
             setVisibleDeleteDialog(false);
             setSelectedUser(null);
             await fetchUsers();
+            deleteToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuário(a)(s) excluído(a)(s) com sucesso.', life: 3000 });
         } catch (error) {
-            console.log(error);
+            deleteToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
@@ -133,17 +137,17 @@ const ListUserComponent = () => {
                     </div>
                     <div className='p-fluid'>
                         <label htmlFor="enumProfile" className="p-col-12 p-md-2">Perfil</label>
-                        <Dropdown 
-                            id="pointScale" 
-                            value={editingUser?.enumProfile || ''} 
-                            options={profile} 
-                            onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.value })} 
-                            placeholder="Selecione um perfil" 
+                        <Dropdown
+                            id="pointScale"
+                            value={editingUser?.enumProfile || ''}
+                            options={profile}
+                            onChange={(e) => setEditingUser({ ...editingUser, enumProfile: e.value })}
+                            placeholder="Selecione um perfil"
                         />
                     </div>
                     <div className="flex justify-content-end gap-2">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
-                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedUser} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleEditDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }} />
+                        <Button label="Salvar" icon="pi pi-check" className="p-button-success" onClick={saveEditedUser} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
                 <Dialog header="Excluir Usuário" visible={visibleDeleteDialog} style={{ width: '50vw' }} modal onHide={() => setVisibleDeleteDialog(false)}>
@@ -151,22 +155,22 @@ const ListUserComponent = () => {
                         <h5>Você deseja excluir o(s) usuário(s) selecionado(s)?</h5>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
-                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }}/>
-                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteUser} style={{ borderRadius: '20px' }}/>
+                        <Button label="Cancelar" icon="pi pi-times" onClick={() => setVisibleDeleteDialog(false)} className="p-button-danger" style={{ borderRadius: '20px' }} />
+                        <Button label="Confirmar" icon="pi pi-check" className="p-button-success" onClick={confirmDeleteUser} style={{ borderRadius: '20px' }} />
                     </div>
                 </Dialog>
                 <div className="flex flex-wrap gap-2">
-                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }}/>
+                    <Button rounded label="Novo" icon="pi pi-plus" severity="success" onClick={onNewClick} raised style={{ borderRadius: '20px' }} />
                     <Button data-testid="update-button" rounded label="Editar" icon="pi pi-pencil" severity="secondary" onClick={onEditClick} disabled={!selectedUser || selectedUser.length !== 1}
-                        raised style={{ borderRadius: '20px' }}/>
-                    <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised style={{ borderRadius: '20px' }}/>
+                        raised style={{ borderRadius: '20px' }} />
+                    <Button data-testid="delete-button" rounded label="Excluir" icon="pi pi-trash" severity="danger" onClick={onDeleteClick} disabled={!selectedUser || selectedUser.length === 0} raised style={{ borderRadius: '20px' }} />
                 </div>
             </>
         )
     };
 
     const rightToolbarTemplate = () => {
-        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }}/>;
+        return <Button rounded label="CSV" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} raised style={{ borderRadius: '20px' }} />;
     };
 
     useEffect(() => {
@@ -224,6 +228,8 @@ const ListUserComponent = () => {
                     <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
                 ))}
             </DataTable>
+            <Toast ref={editToast} />
+            <Toast ref={deleteToast} />
         </Card>
     )
 }

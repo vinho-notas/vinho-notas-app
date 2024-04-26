@@ -3,13 +3,13 @@ import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
-import { ProgressSpinner } from 'primereact/progressspinner'; // Importe o ProgressSpinner
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { getWineInformation, getWinePairing, getMenuPairing } from '../../service/harmonizacao/PairingService';
 
 const PairingComponent = () => {
     const [value, setValue] = useState('');
     const [responseText, setResponseText] = useState('');
-    const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+    const [loading, setLoading] = useState(false);
 
     const formatResponse = (response) => {
         let formattedResponse = "Informações encontradas:\n";
@@ -19,13 +19,13 @@ const PairingComponent = () => {
 
     const fetchData = async (fetchFunction) => {
         try {
-            setLoading(true); // Define o estado de carregamento como verdadeiro antes da chamada à API
+            setLoading(true);
             const response = await fetchFunction({ wine: value });
             setResponseText(formatResponse(response.data));
         } catch (error) {
             console.error('Erro ao obter informações:', error);
         } finally {
-            setLoading(false); // Define o estado de carregamento como falso após a resposta da API
+            setLoading(false);
         }
     };
 
