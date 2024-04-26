@@ -8,6 +8,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
+import { Toast } from 'primereact/toast';
 import useListPointScaleComponentHook from '../../hooks/review/usePointScaleComponentHook';
 import { deletePointScale, updatePointScale, deleteAllPointScale } from '../../service/review/PointScaleService';
 import EnumPointScale from '../../utils/enums/EnumPointScale';
@@ -20,6 +21,9 @@ const ListPointScaleComponent = () => {
     const [visibleEditDialog, setVisibleEditDialog] = useState(false);
     const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
     const dt = useRef(null);
+    const editToast = useRef(null);
+    const deleteToast = useRef(null);
+
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         whatTasted: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -79,19 +83,22 @@ const ListPointScaleComponent = () => {
             setVisibleDeleteDialog(false);
             setSelectedPointScales(null);
             await fetchPointScales();
+            deleteToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Avaliação(ões) excluída(s) com sucesso.', life: 3000 });
         } catch (error) {
-            console.log(error);
+            deleteToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
     };
 
     const saveEditedPointScale = async () => {
         try {
             await updatePointScale(editingPointScales.id, editingPointScales);
+            editToast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Avaliação atualizada com sucesso.', life: 3000 });
             setVisibleEditDialog(false);
+            setSelectedPointScales(null);
             await fetchPointScales();
             navigate("/wine-review-list")
         } catch (error) {
-            console.log(error);
+            editToast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 });
         }
 
     };
@@ -239,6 +246,8 @@ const ListPointScaleComponent = () => {
                     <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
                 ))}
             </DataTable>
+            <Toast ref={editToast} />
+            <Toast ref={deleteToast} />
         </Card>
     )
 }
