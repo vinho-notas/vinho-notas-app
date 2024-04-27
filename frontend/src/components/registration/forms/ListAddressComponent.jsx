@@ -8,6 +8,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
+import { InputMask } from "primereact/inputmask";
 import { updateAddress, deleteAddress, deleteAllAddress } from '../../../service/registration/AddressService';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
@@ -140,7 +141,7 @@ const ListAddressComponent = () => {
           <div className="p-fluid">
             <div className="p-field p-grid">
               <label htmlFor="zipCode" className="p-col-12 p-md-2">CEP</label>
-              <InputText id="zipCode" value={editingAddress?.zipCode || ''} onChange={(e) => setEditingAddress({ ...editingAddress, zipCode: e.target.value })} />
+              <InputMask id="zipCode" value={editingAddress?.zipCode || ''} onChange={(e) => setEditingAddress({ ...editingAddress, zipCode: e.target.value })} mask="99999-999" />
             </div>
           </div>
           <div className="p-fluid">

@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import { Card } from 'primereact/card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import InputMask from 'react-input-mask';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import usePersonComponentHook from '../../hooks/registration/usePersonComponentHook';
@@ -83,6 +84,8 @@ const PersonRegistration = () => {
                 type='text'
                 placeholder="Informe seu CPF"
                 onChange={(e) => setDocument(e.target.value)}
+                as={InputMask}
+                mask="999.999.999-99"
               />
             </Form.Group>
             <Form.Group as={Col} className="mb-3">
@@ -153,6 +156,8 @@ const PersonRegistration = () => {
                 type='text'
                 placeholder="Informe o CEP"
                 onChange={handleAddressChange}
+                as={InputMask}
+                mask="99999-999"
               />
             </Form.Group>
             <Form.Group as={Col} className='mb-3'>
