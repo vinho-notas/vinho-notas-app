@@ -40,6 +40,7 @@ public class AddressServiceImpl implements AddressService {
         try {
             StateEntity state = getStateEntityByStateName(addressInputDTO.getUf());
             CountryEntity country = getCountryEntity(addressInputDTO.getCountry());
+            validateZipCode(addressInputDTO.getZipCode());
 
             AddressEntity addressEntity = addressConverter.convertToEntity(addressInputDTO);
             addressEntity.setUf(state);
@@ -50,6 +51,14 @@ public class AddressServiceImpl implements AddressService {
         } catch (Exception e) {
             log.error("create :: Ocorreu um erro: {}", MessagesConstants.ERROR_WHEN_SAVING_ADDRESS, e);
             throw new BadRequestException(MessagesConstants.ERROR_WHEN_SAVING_ADDRESS);
+        }
+    }
+
+    private void validateZipCode(String zipCode) {
+        log.info("Validando CEP: {}", zipCode);
+        if (zipCode.length() != 8) {
+            log.error("CEP inválido: {}", MessagesConstants.INVALID_ZIP_CODE);
+            throw new BadRequestException(MessagesConstants.INVALID_ZIP_CODE);
         }
     }
 

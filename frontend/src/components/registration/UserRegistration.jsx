@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { Card } from 'primereact/card';
+import InputMask from 'react-input-mask';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Dropdown } from 'primereact/dropdown';
@@ -75,17 +76,17 @@ const UserRegistration = () => {
                         <Form.Group as={Col} className='mb-3'>
                             <Form.Label data-testid="label-email">Email</Form.Label>
                             <Form.Control
-                                type='text'
+                                type='email'
                                 name='email'
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder='Digite o email'
+                                placeholder="name@example.com"
                             />
                         </Form.Group>
                         <Form.Group as={Col} className='mb-3'>
                             <Form.Label data-testid="label-senha">Senha</Form.Label>
                             <Form.Control
-                                type='password'
+                                type='text'
                                 name='password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
