@@ -432,7 +432,6 @@ const ListCardTastingComponent = () => {
                         <div className="p-field">
                             <label htmlFor="gustatoryInspectionClassification">Classificação gustatória</label>
                             <Dropdown id='gustatoryInspectionClassification' value={editingTastingCards?.gustatoryInspectionClassification || ''} options={enumClassificationType} onChange={(e) => setEditingTastingCards({ ...editingTastingCards, gustatoryInspectionClassification: e.target.value })} placeholder='Selecione um tipo de classificação' />
-                            {/* <InputText id="gustatoryInspectionClassification" value={editingTastingCards?.gustatoryInspectionClassification} onChange={(e) => setEditingTastingCards({ ...editingTastingCards, gustatoryInspectionClassification: e.target.value })} /> */}
                         </div>
                         <div className="p-field">
                             <label htmlFor="opinion">Opinião</label>
