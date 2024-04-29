@@ -8,7 +8,6 @@ import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';        
 import { FilterMatchMode } from 'primereact/api';
 import { Toast } from 'primereact/toast';
 import useListWineComponentHook from '../../../hooks/wine/useListWineComponentHook';
@@ -204,7 +203,7 @@ const ListWineComponent = () => {
                         </div>
                         <div className="p-field">
                             <label htmlFor="price">Preço de compra</label>
-                            <InputNumber id="price" value={editingWine?.price || ''} onChange={(e) => setEditingWine({ ...editingWine, price: e.target.value })} />
+                            <InputText id="price" value={editingWine?.price || ''} onChange={(e) => setEditingWine({ ...editingWine, price: e.target.value })} />
                         </div>
                         <div className="p-field">
                             <label htmlFor="purchaseLocation">Local de compra</label>
