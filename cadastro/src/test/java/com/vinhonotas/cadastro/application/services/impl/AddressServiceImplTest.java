@@ -234,7 +234,7 @@ class AddressServiceImplTest {
                 .addressNumber(0)
                 .complement("Casa")
                 .district("Centro")
-                .zipCode("00000-000")
+                .zipCode("00000000")
                 .city("São Paulo")
                 .uf("SC")
                 .country("Brasil")
