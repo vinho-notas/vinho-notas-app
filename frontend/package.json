@@ -1,7 +1,7 @@
 {
-  "name": "frontend",
+  "name": "Vinho-Notas",
   "private": true,
-  "version": "0.0.0",  
+  "version": "1.0.0-alpha",  
   "scripts": {
     "dev": "vite",
     "test": "jest --coverage",
