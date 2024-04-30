@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+
+# Banco de dados
   postgresql-cadastro:
     image: postgres:15-alpine
     restart: always
@@ -8,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: vinho-notas-cadastro
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567        
+      POSTGRES_PASSWORD: 1234567
     ports:
       - "5432:5432"
     volumes:
@@ -38,7 +40,7 @@ services:
     environment:
       POSTGRES_DB: vinho-notas-avaliacao
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567    
+      POSTGRES_PASSWORD: 1234567
     ports:
       - "5434:5432"
     volumes:
@@ -53,13 +55,76 @@ services:
     environment:
       POSTGRES_DB: vinho-notas-degustacao
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567    
+      POSTGRES_PASSWORD: 1234567
     ports:
       - "5436:5432"
     volumes:
       - ./.data/postgresql/data-degustacao:/var/lib/postgresql/data
     networks:
       - main-network
+
+# Serviços da aplicação
+  cadastro:
+    image: vinho-notas-cadastro:0.0.1
+    container_name: vinho-notas-cadastro
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql-cadastro
+    networks:
+      - main-network  
+
+  vinho:
+    image: vinho-notas-vinho:0.0.1
+    container_name: vinho-notas-vinho
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgresql-vinho
+    networks:
+      - main-network
+
+  harmonizacao:
+    image: vinho-notas-harmonizacao:0.0.1
+    container_name: vinho-notas-harmonizacao
+    restart: always
+    ports:
+      - "8085:8085"
+    networks:
+      - main-network
+
+  avaliacao:
+    image: vinho-notas-avaliacao:0.0.1
+    container_name: vinho-notas-avaliacao
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgresql-avaliacao
+    networks:
+      - main-network
+
+  degustacao:
+      image: vinho-notas-degustacao:0.0.1
+      container_name: vinho-notas-degustacao
+      restart: always
+      ports:
+        - "8083:8083"
+      depends_on:
+        - postgresql-degustacao
+      networks:
+        - main-network
+
+  bff:
+    image: vinho-notas-bff:0.0.1
+    container_name: vinho-notas-bff
+    restart: always
+    ports:
+      - "8084:8084"
+    networks:
+      - main-network  
 
 networks:
   main-network:
