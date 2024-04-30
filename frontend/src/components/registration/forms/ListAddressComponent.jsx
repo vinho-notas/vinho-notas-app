@@ -9,11 +9,12 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { InputMask } from "primereact/inputmask";
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { updateAddress, deleteAddress, deleteAllAddress } from '../../../service/registration/AddressService';
 import useListAddressComponentHook from "../../../hooks/registration/useListAddressComponentHook";
 
 const ListAddressComponent = () => {
-  const { address, navigate, fetchAddress } = useListAddressComponentHook();
+  const { address, navigate, fetchAddress, loading, setLoading } = useListAddressComponentHook();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [visibleEditDialog, setVisibleEditDialog] = useState(false);
   const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false);
@@ -35,7 +36,7 @@ const ListAddressComponent = () => {
     phoneNumber: { value: null, matchMode: FilterMatchMode.CONTAINS }
   });
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   const columns = [
@@ -244,36 +245,43 @@ const ListAddressComponent = () => {
   return (
     <Card style={{ marginTop: 10 }} title="Lista de endereços" data-testid="principal-card">
       <Toolbar className="mb-4" start={leftToolbarTemplate} end={rightToolbarTemplate}></Toolbar>
-      <DataTable
-        value={address}
-        paginator
-        rows={10}
-        rowsPerPageOptions={[10, 20, 30, 50]}
-        loading={loading}
-        filters={filters}
-        resizableColumns
-        columnResizeMode="expand"
-        globalFilterFields={['addressDescription', 'addressNumber', 'complement', 'district', 'zipCode', 'city', 'uf.stateName', 'country.countryName', 'phoneNumber']}
-        header={header}
-        showGridlines
-        selectionMode="multiple"
-        selection={selectedAddress}
-        onSelectionChange={onSelectionChange}
-        onSelectAll={onSelectAllChange}
-        tableStyle={{ minWidth: '50rem' }}
-        emptyMessage="Nenhum endereço encontrado."
-        ref={dt}
-        data-testid="address-table"
-      >
-        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
-        {visibleColumns.map((col) => (
-          <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
-        ))}
-      </DataTable>
+      {loading ? (
+        <div className="text-center">
+          <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" animationDuration=".5s" />
+        </div>
+      ) : (
+        <DataTable
+          value={address}
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 20, 30, 50]}
+          loading={loading}
+          filters={filters}
+          resizableColumns
+          columnResizeMode="expand"
+          globalFilterFields={['addressDescription', 'addressNumber', 'complement', 'district', 'zipCode', 'city', 'uf.stateName', 'country.countryName', 'phoneNumber']}
+          header={header}
+          showGridlines
+          selectionMode="multiple"
+          selection={selectedAddress}
+          onSelectionChange={onSelectionChange}
+          onSelectAll={onSelectAllChange}
+          tableStyle={{ minWidth: '50rem' }}
+          emptyMessage="Nenhum endereço encontrado."
+          ref={dt}
+          data-testid="address-table"
+        >
+          <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
+          {visibleColumns.map((col) => (
+            <Column key={col.field} field={col.field} header={col.header} sortable filterField={col.field} />
+          ))}
+        </DataTable>
+      )}
       <Toast ref={editToast} />
       <Toast ref={deleteToast} />
     </Card>
   )
+  
 }
 
 export default ListAddressComponent
