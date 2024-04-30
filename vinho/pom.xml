@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vinho-notas</groupId>
 	<artifactId>vinho</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-alpha</version>
 	<name>vinho</name>
 	<description>vinho</description>
 	<properties>
