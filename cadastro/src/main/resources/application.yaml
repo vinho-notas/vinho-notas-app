@@ -6,6 +6,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/vinho-notas-cadastro
+#    url: jdbc:postgresql://postgresql-cadastro:5432/vinho-notas-cadastro
     username: postgres
     password: 1234567
   config:
