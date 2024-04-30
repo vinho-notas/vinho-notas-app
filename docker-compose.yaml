@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+
+# Banco de dados
   postgresql-cadastro:
     image: postgres:15-alpine
     restart: always
@@ -16,17 +18,6 @@ services:
     networks:
       - main-network
 
-  cadastro:
-    image: vinho-notas-cadastro:0.0.1
-    container_name: vinho-notas-cadastro
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgresql-cadastro
-    networks:
-      - main-network
-  
   postgresql-vinho:
     image: postgres:15-alpine
     restart: always
@@ -41,6 +32,48 @@ services:
       - postgres-data-vinho:/var/lib/postgresql/data
     networks:
       - main-network
+
+  postgresql-avaliacao:
+    image: postgres:15-alpine
+    restart: always
+    container_name: postgres-avaliacao
+    environment:
+      POSTGRES_DB: vinho-notas-avaliacao
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres-data-avaliacao:/var/lib/postgresql/data
+    networks:
+      - main-network
+
+  postgresql-degustacao:
+    image: postgres:15-alpine
+    restart: always
+    container_name: postgres-degustacao
+    environment:
+      POSTGRES_DB: vinho-notas-degustacao
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./.data/postgresql/data-degustacao:/var/lib/postgresql/data
+    networks:
+      - main-network
+
+# Serviços da aplicação
+  cadastro:
+    image: vinho-notas-cadastro:0.0.1
+    container_name: vinho-notas-cadastro
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql-cadastro
+    networks:
+      - main-network  
 
   vinho:
     image: vinho-notas-vinho:0.0.1
@@ -62,21 +95,6 @@ services:
     networks:
       - main-network
 
-  postgresql-avaliacao:
-    image: postgres:15-alpine
-    restart: always
-    container_name: postgres-avaliacao
-    environment:
-      POSTGRES_DB: vinho-notas-avaliacao
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
-    ports:
-      - "5434:5432"
-    volumes:
-      - postgres-data-avaliacao:/var/lib/postgresql/data
-    networks:
-      - main-network
-
   avaliacao:
     image: vinho-notas-avaliacao:0.0.1
     container_name: vinho-notas-avaliacao
@@ -85,21 +103,6 @@ services:
       - "8082:8082"
     depends_on:
       - postgresql-avaliacao
-    networks:
-      - main-network
-
-  postgresql-degustacao:
-    image: postgres:15-alpine
-    restart: always
-    container_name: postgres-degustacao
-    environment:
-      POSTGRES_DB: vinho-notas-degustacao
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
-    ports:
-      - "5436:5432"
-    volumes:
-      - ./.data/postgresql/data-degustacao:/var/lib/postgresql/data
     networks:
       - main-network
 
