@@ -64,67 +64,67 @@ services:
       - main-network
 
 # Serviços da aplicação
-  cadastro:
-    image: vanderleik/vinho-notas-cadastro:1.0.0-alpha
-    container_name: vinho-notas-cadastro
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgresql-cadastro
-    networks:
-      - main-network  
+  # cadastro:
+  #   image: vanderleik/vinho-notas-cadastro:1.0.0-alpha
+  #   container_name: vinho-notas-cadastro
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - postgresql-cadastro
+  #   networks:
+  #     - main-network  
 
-  vinho:
-    image: vanderleik/vinho-notas-vinho:1.0.0-alpha
-    container_name: vinho-notas-vinho
-    restart: always
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgresql-vinho
-    networks:
-      - main-network
+  # vinho:
+  #   image: vanderleik/vinho-notas-vinho:1.0.0-alpha
+  #   container_name: vinho-notas-vinho
+  #   restart: always
+  #   ports:
+  #     - "8081:8081"
+  #   depends_on:
+  #     - postgresql-vinho
+  #   networks:
+  #     - main-network
 
-  harmonizacao:
-    image: vanderleik/vinho-notas-harmonizacao:1.0.0-alpha
-    container_name: vinho-notas-harmonizacao
-    restart: always
-    ports:
-      - "8085:8085"
-    networks:
-      - main-network
+  # harmonizacao:
+  #   image: vanderleik/vinho-notas-harmonizacao:1.0.0-alpha
+  #   container_name: vinho-notas-harmonizacao
+  #   restart: always
+  #   ports:
+  #     - "8085:8085"
+  #   networks:
+  #     - main-network
 
-  avaliacao:
-    image: vanderleik/vinho-notas-avaliacao:1.0.0-alpha
-    container_name: vinho-notas-avaliacao
-    restart: always
-    ports:
-      - "8082:8082"
-    depends_on:
-      - postgresql-avaliacao
-    networks:
-      - main-network
+  # avaliacao:
+  #   image: vanderleik/vinho-notas-avaliacao:1.0.0-alpha
+  #   container_name: vinho-notas-avaliacao
+  #   restart: always
+  #   ports:
+  #     - "8082:8082"
+  #   depends_on:
+  #     - postgresql-avaliacao
+  #   networks:
+  #     - main-network
 
-  degustacao:
-      image: vanderleik/vinho-notas-degustacao:1.0.0-alpha
-      container_name: vinho-notas-degustacao
-      restart: always
-      ports:
-        - "8083:8083"
-      depends_on:
-        - postgresql-degustacao
-      networks:
-        - main-network
+  # degustacao:
+  #     image: vanderleik/vinho-notas-degustacao:1.0.0-alpha
+  #     container_name: vinho-notas-degustacao
+  #     restart: always
+  #     ports:
+  #       - "8083:8083"
+  #     depends_on:
+  #       - postgresql-degustacao
+  #     networks:
+  #       - main-network
 
-  bff:
-    image: vanderleik/vinho-notas-bff:1.0.0-alpha
-    container_name: vinho-notas-bff
-    restart: always
-    ports:
-      - "8084:8084"
-    networks:
-      - main-network  
+  # bff:
+  #   image: vanderleik/vinho-notas-bff:1.0.0-alpha
+  #   container_name: vinho-notas-bff
+  #   restart: always
+  #   ports:
+  #     - "8084:8084"
+  #   networks:
+  #     - main-network  
 
 networks:
   main-network:
