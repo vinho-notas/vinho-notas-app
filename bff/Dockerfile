@@ -23,8 +23,5 @@ COPY --from=build /app/target/bff-1.0.0-alpha.jar /app/app.jar
 
 WORKDIR /app
 
-# Defina o endereço do banco de dados
-#ENV DATABASE_URL jdbc:postgresql://postgresql-vinho:5432/vinho-notas-vinho
-
 EXPOSE 8084
 CMD ["java", "-jar", "app.jar"]

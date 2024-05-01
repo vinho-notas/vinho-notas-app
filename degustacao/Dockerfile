@@ -26,5 +26,5 @@ WORKDIR /app
 # Defina o endereço do banco de dados
 ENV DATABASE_URL jdbc:postgresql://postgresql-degustacao:5432/vinho-notas-degustacao
 
-EXPOSE 8081
+EXPOSE 8083
 CMD ["java", "-jar", "app.jar"]

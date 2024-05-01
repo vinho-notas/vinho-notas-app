@@ -65,7 +65,7 @@ services:
 
 # Serviços da aplicação
   cadastro:
-    image: vinho-notas-cadastro:0.0.1
+    image: vanderleik/vinho-notas-cadastro:1.0.0-alpha
     container_name: vinho-notas-cadastro
     restart: always
     ports:
@@ -76,7 +76,7 @@ services:
       - main-network  
 
   vinho:
-    image: vinho-notas-vinho:0.0.1
+    image: vanderleik/vinho-notas-vinho:1.0.0-alpha
     container_name: vinho-notas-vinho
     restart: always
     ports:
@@ -87,7 +87,7 @@ services:
       - main-network
 
   harmonizacao:
-    image: vinho-notas-harmonizacao:0.0.1
+    image: vanderleik/vinho-notas-harmonizacao:1.0.0-alpha
     container_name: vinho-notas-harmonizacao
     restart: always
     ports:
@@ -96,7 +96,7 @@ services:
       - main-network
 
   avaliacao:
-    image: vinho-notas-avaliacao:0.0.1
+    image: vanderleik/vinho-notas-avaliacao:1.0.0-alpha
     container_name: vinho-notas-avaliacao
     restart: always
     ports:
@@ -107,7 +107,7 @@ services:
       - main-network
 
   degustacao:
-      image: vinho-notas-degustacao:0.0.1
+      image: vanderleik/vinho-notas-degustacao:1.0.0-alpha
       container_name: vinho-notas-degustacao
       restart: always
       ports:
@@ -118,7 +118,7 @@ services:
         - main-network
 
   bff:
-    image: vinho-notas-bff:0.0.1
+    image: vanderleik/vinho-notas-bff:1.0.0-alpha
     container_name: vinho-notas-bff
     restart: always
     ports:
