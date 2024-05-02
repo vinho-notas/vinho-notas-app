@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_BFF_URL}/wines`;
+const API_URL = 'http://localhost:8084/api/v1/wines';
 
 export const createWine = (wine) => {
     return axios.post(API_URL, wine);

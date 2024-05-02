@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_BFF_URL}/pairing`;
+const API_URL = 'http://localhost:8084/api/v1/pairing';
 
 export const getWineInformation = (wine) => {
     return axios.get(`${API_URL}/information`, { params: wine });

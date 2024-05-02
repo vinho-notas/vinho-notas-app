@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_BFF_URL}/address`;
+const API_URL = 'http://localhost:8084/api/v1/address';
 
 export const createAddress = (address) => {
     return axios.post(API_URL, address);

@@ -4,7 +4,7 @@ Este é o repositório do projeto `vinho-notas-app`, uma aplicação para facili
 
 ## Tecnologias Utilizadas
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 ## Índice
 
@@ -21,7 +21,7 @@ Este é o repositório do projeto `vinho-notas-app`, uma aplicação para facili
 
 <p>A figura abaixo apresenta o Business Model Canvas da solução, obtida a partir do template fornecido pelo <a href='https://www.strategyzer.com/library/the-business-model-canvas' target="_blank">Strategyzer</a>.</p>
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 ## Funcionalidades
 <p>A solução toda foi pensada para ser agnóstica, ou seja, independente de qualquer plataforma ou tecnologia específica. Em outras palavras, ela não está vinculada a um sistema operacional, linguagem de programação ou ambiente de desenvolvimento específico.</p>
@@ -40,9 +40,8 @@ Este é o repositório do projeto `vinho-notas-app`, uma aplicação para facili
 ### Configuração
 
 1. Clone o repositório para o seu ambiente local utilizando o comando git abaixo:
-``git clone https://github.com/vinho-notas/vinho-notas-app.git
-``
-2. Navegue até a pasta de cada um dos microsserviços e execute `mvn install` para instalar as dependências do Maven.
+``git clone https://github.com/vinho-notas/vinho-notas-app.git``
+2. Navegue até a pasta de cada um dos microsserviços e execute ``mvn install` para instalar as dependências do Maven.
 3. Na pasta do frontend, execute `npm install` para instalar as dependências do Node.js.
 
 ## Execução do Projeto
@@ -52,13 +51,13 @@ Para executar o projeto, siga os passos abaixo:
 
 1. Navegue até a pasta raiz do projeto e execute o comando ``docker compose up -d`` em um terminal, certificand-se de estar com o Docker ligado. Esse comando inicia o banco de dados PostgreSQL relacionado a cada microsserviço.
 
-![alt text](image-3.png)
+![alt text](img/image-3.png)
 
 2. Execute `mvn spring-boot:run` para iniciar o servidor backend de cada microsserviço.
 3. Em uma nova janela do terminal, navegue até a pasta do projeto de frontend e execute `npm run dev` para iniciar o servidor frontend.
 4. Agora você deve ser capaz de acessar a aplicação em <a href='http://localhost:5173' target="_blank"> `http://localhost:5173`</a>, que deve se apresentar com a seguinte aparência:
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
 
 ### Executando o projeto como um todo a partir de uma imagem Docker
@@ -68,23 +67,23 @@ Para executar o projeto, siga os passos abaixo:
 1. Navegue até a pasta raiz do projeto e abra o arquivo <a href='./docker-compose.yaml'>docker-compose.yaml</a>.
 2. Remova os comentários das linhas 67 em diante, salve o arquivo e execute o comando ``docker compose up -d`` em um terminal, certificand-se de estar com o Docker ligado. 
 
-![alt text](image-4.png)
+![alt text](img/image-4.png)
 
 Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as imagens de cada microsserviço no Docker Hub e dessa forma iniciará o banco de dados PostgreSQL relacionado a cada serviço mais os back ends.
 
 
-![alt text](image-5.png)
+![alt text](img/image-5.png)
 
 3. Agora você deve ser capaz de acessar a aplicação em <a href='http://localhost:5173' target="_blank"> `http://localhost:5173`</a>, que deve se apresentar com a seguinte aparência:
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
 ## Navegando pela solução
 
 ### Tela inicial e cadastro
 <p>A tela inicial convida o usuário a realizar o login a fim de permitir que ele possa utilizar o sistema. Caso ele ainda não tenha usuário e senha, é convidado a se registrar, coforme figura abaixo:</p>
 
-![alt text](image-6.png)
+![alt text](img/image-6.png)
 
 <p>As validações de usuário e senha que permitem a utilização do sistema estão desabilitados para possibilitar a utilização do sistema sem a necessidade de informar dados pessoais na aplicação, que serão salvos em um banco de dados.</p>
 <p>No entanto, caso queira realizar um cadastro para ver como funciona, o sistema está habilitado para aceitar os seguintes CPFs:
@@ -95,7 +94,7 @@ Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as image
 ### Menu Vinho
 <p>O menu Vinho é composto por dois submenus: Vinhos e Avaliações.</p>
 
-![alt text](image-7.png)
+![alt text](img/image-7.png)
 
 <p>A tela com a listagem dos vinhos possui as seguintes características:</p>
 <ol>
@@ -107,16 +106,16 @@ Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as image
 <li>Componente checkbox: permite selecionar um registro ou mais registros. Necessário para editar ou excluir um ou mais vinhos.</li>
 </ol>
 
-![alt text](image-8.png)
+![alt text](img/image-8.png)
 
 <p>A avaliação do vinho é feita a partir da seleção de um vinho, clicando no botão "Avaliar". O menu "Avaliações" lista todas as avaliações registradas no sistema.</p>
 
-![alt text](image-9.png)
+![alt text](img/image-9.png)
 
 ### Menu Degustação
 <p>O menu degustação apresenta as fichas de degustação cadastradas pelo usuário. Diferentemente do submenu "Avaliação", a degustação é algo mais elaborado, seguindo regras, conduzindo o usuário à uma degustação mais profissional, preenchendo literalmente uma ficha de degustação de vinhos.</p>
 
-![alt text](image-10.png)
+![alt text](img/image-10.png)
 
 ### Menu Harmonização
 
@@ -130,21 +129,21 @@ Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as image
 
 <p>O serviço responsável pela execução dessa tela foi concebido para utilizar uma Inteligência Artificial (IA) Generativa, baseada no GPT da OpenAi. Ao informar o vinho, essa IA buscará as informações e fará as recomendações conforme solicitado pelo usuário.</p>
 
-![alt text](image-11.png)
+![alt text](img/image-11.png)
 
 <p>Para que isso seja possível é necessária a criação de uma APIKEY no site da <a href='https://platform.openai.com/api-keys' target="_blank">OpenAi</a>.</p>
 
-![alt text](image-12.png)
+![alt text](img/image-12.png)
 
 ### Instalando o Vinho Notas localmente
 
 <p>O fato do Vinho Notas ter sido construído como uma PWA permite que o usuário instale a solução em seu computador pessoal ou no celular. Para isso basta clicar no ícone que aparece no canto superior direito da barra de endereços do navagador:</p>
 
-![alt text](image-13.png)
+![alt text](img/image-13.png)
 
 <p>O resultado final é uma aplicação limpa e visualmente agradável ao usuário:</p>
 
-![alt text](image-14.png)
+![alt text](img/image-14.png)
 
 ### Swagger
 <p>Após subir a aplicação você pode acessar o Swagger das APIs nos seguintes endereços:</p>
@@ -163,7 +162,7 @@ O projeto é dividido em duas partes principais: o backend e o frontend. O backe
 
 Em termos arquiteturais, o projeto segue o padrão MVC (Model-View-Controller) no backend e o padrão de componentes no frontend.
 
-![img_1.png](img_1.png)
+![img_1.png](img/img_1.png)
 
 ## Licença
 
