@@ -8,13 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
+})
 class PointScaleRepositoryTest {
 
     @Autowired
@@ -116,11 +122,15 @@ class PointScaleRepositoryTest {
                         "como pimenta preta, e de ervas, como tomilho.")
                 .whatFlavors("Em boca, o vinho é seco, com acidez média, taninos médios, álcool médio, corpo médio, " +
                         "intensidade de sabor média, com sabores de frutas vermelhas maduras, como cereja e framboesa, " +
-                        "com notas de especiarias, como pimenta preta, e de ervas, como tomilho, e final médio.")
+                        "com notas de especiarias, como pimenta preta, e de ervas, como tomilho.")
                 .whatOpinion("Vinho de boa qualidade, com boa complexidade, equilibrado, com boa intensidade de sabor, " +
                         "com boa persistência, com boa tipicidade, com boa harmonização, com boa relação qualidade/preço, " +
-                        "com potencial de guarda de 3 anos, mas que pode ser consumido desde já.")
+                        "com potencial de guarda de 3 anos.")
                 .pointScale(EnumPointScale.VERYGOOD)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -136,6 +146,10 @@ class PointScaleRepositoryTest {
                 .whatOpinion("Mais um ótimo tinto da Rioja que degusto, ótimos aromas de frutas negras com toque de " +
                         "pimenta e tabaco, ótimo corpo e estrutura com tanicidade eacidez bem equilibradas, vinho bem agradável")
                 .pointScale(EnumPointScale.GOOD)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -150,6 +164,10 @@ class PointScaleRepositoryTest {
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
                 .pointScale(EnumPointScale.OUTSTANDING)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

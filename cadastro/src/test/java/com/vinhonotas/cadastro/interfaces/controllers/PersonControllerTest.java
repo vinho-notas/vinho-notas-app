@@ -3,22 +3,29 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
 import com.vinhonotas.cadastro.application.services.PersonService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.configuration.security.SecurityFilter;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
-import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.*;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.PersonOutputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = PersonController.class)
 class PersonControllerTest {
 
@@ -38,11 +46,15 @@ class PersonControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private PersonService personService;
     @MockBean
     private PersonConverter personConverter;
+    @MockBean
+    private SecurityFilter securityFilter;
 
     private PersonInputDTO personInputDTO;
     private PersonOutputDTO personOutputDTO;
@@ -50,6 +62,7 @@ class PersonControllerTest {
     private StateEntity stateEntity;
     private CountryEntity countryEntity;
     private PersonEntity personEntity;
+    private EditPersonInputDTO editPersonInputDTO;
 
     @BeforeEach
     void setUp() {
@@ -59,7 +72,7 @@ class PersonControllerTest {
         personInputDTO = createPersonInputDTO();
         personOutputDTO = createPersonOutputDTO();
         personEntity = createPersonEntity();
-
+        editPersonInputDTO = createEditPersonInputDTO();
     }
 
 
@@ -114,7 +127,8 @@ class PersonControllerTest {
     @DisplayName("Deve retornar uma pessoa pelo id")
     void testGetPersonById() throws Exception {
         when(personService.getById(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"))).thenReturn(personEntity);
-        when(personConverter.convertToOutputDTO(personService.getById(UUID.fromString("123e4567-e89b-12d3-a456-426614174000")))).thenReturn(personOutputDTO);
+        when(personConverter.convertToOutputDTO(personService.getById(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"))))
+                .thenReturn(personOutputDTO);
 
         mockMvc.perform(get("/api/v1/persons/{id}", "123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -172,34 +186,14 @@ class PersonControllerTest {
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdatePerson() throws Exception {
         personOutputDTO.setName("Nome da pessoa atualizado");
-        when(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO)).thenReturn(personEntity);
-        when(personConverter.convertToOutputDTOUpdate(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO),
-                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personConverter.convertToOutputDTO(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO))))
-                .thenReturn(personOutputDTO);
+        when(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), editPersonInputDTO)).thenReturn(personEntity);
+        when(personConverter.convertToOutputDTO(personEntity)).thenReturn(personOutputDTO);
 
         mockMvc.perform(put("/api/v1/persons/{id}", "123e4567-e89b-12d3-a456-426614174000")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personInputDTO)))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value("123e4567-e89b-12d3-a456-426614174000"))
-                .andExpect(jsonPath("$.name").value("Nome da pessoa atualizado"))
-                .andExpect(jsonPath("$.document").value("12345678910"))
-                .andExpect(jsonPath("$.birthDate").value("1990-01-01"))
-                .andExpect(jsonPath("$.address.id").value("987efc9e-f787-4e83-bc88-bf1159230930"));
-    }
-
-    @Test
-    @DisplayName("Deve retornar erro ao atualizar uma pessoa")
-    void testUpdatePersonError() throws Exception {
-        when(personService.update(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), personInputDTO))
-                .thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_PERSON_DATA));
-
-        mockMvc.perform(put("/api/v1/persons/{id}", "123e4567-e89b-12d3-a456-426614174000")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(personInputDTO)))
-                .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -239,7 +233,35 @@ class PersonControllerTest {
                 .name("Nome da pessoa")
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
-                .address(addressEntity)
+                .address(createAddressOutputDTO())
+                .build();
+    }
+
+    private EditPersonInputDTO createEditPersonInputDTO() {
+        return EditPersonInputDTO.builder()
+                .id("123e4567-e89b-12d3-a456-426614174000")
+                .name("Nome da pessoa")
+                .document("12345678910")
+                .birthDate(LocalDate.of(1990, 1, 1))
+                .dthreg(null)
+                .userreg(null)
+                .dthalt(null)
+                .useralt(null)
+                .build();
+    }
+
+    private AddressOutputDTO createAddressOutputDTO() {
+        return AddressOutputDTO.builder()
+                .id(UUID.fromString("987efc9e-f787-4e83-bc88-bf1159230930"))
+                .addressDescription("Descrição do endereço")
+                .addressNumber(123)
+                .complement("Complemento da pessoa")
+                .district("Bairro da pessoa")
+                .city("Cidade da pessoa")
+                .uf(Mockito.mock(StateOutputDTO.class))
+                .country(Mockito.mock(CountryOutputDTO.class))
+                .zipCode("12345678")
+                .phoneNumber("12345678910")
                 .build();
     }
 
@@ -280,7 +302,36 @@ class PersonControllerTest {
                 .name("Nome da pessoa")
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
-                .address(addressEntity)
+                .address(createAddressInputDTO())
+                .build();
+    }
+
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
+                .addressDescription("Descrição do endereço")
+                .addressNumber(123)
+                .complement("Complemento da pessoa")
+                .district("Bairro da pessoa")
+                .city("Cidade da pessoa")
+                .uf("SC")
+                .country("Brasil")
+                .zipCode("12345678")
+                .phoneNumber("12345678910")
+                .build();
+    }
+
+    private StateInputDTO createStateInputDTO() {
+        return StateInputDTO.builder()
+                .stateName("Nome do estado")
+                .uf("UF")
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

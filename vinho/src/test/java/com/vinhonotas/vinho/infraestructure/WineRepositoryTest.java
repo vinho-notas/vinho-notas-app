@@ -11,12 +11,18 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
+})
 class WineRepositoryTest {
 
     @Autowired
@@ -110,17 +116,21 @@ class WineRepositoryTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.WHITEWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Tempranillo Blanco (80.00%), Verdejo (20.00%)")
                 .winery("Bodegas D. Mateos")
-                .serviceTemperature(9.0)
-                .harvest(2021)
+                .serviceTemperature("9.0")
+                .harvest("2021")
                 .country("Espanha")
                 .guardTime("15 anos")
                 .region("La Rioja")
                 .maturation("10 meses em barricas de carvalho francês")
                 .harmonization("Peixe assado na folha de bananeira, frutos do mar, arroz com brócolis, espetinho de camarão, massas, burrata, saladas.")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -133,17 +143,21 @@ class WineRepositoryTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.REDWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
                 .maturation("1 mês em garrafa")
                 .harmonization("Carnes vermelhas, Queijos, Pato assado, polenta com ragus de sabor intenso, excelente com carnes de caça, queijos de massa dura, com longa maturação.")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

@@ -1,8 +1,8 @@
 package com.vinhonotas.vinho.application.services.impl;
 
 import com.vinhonotas.vinho.application.converters.WineConverter;
-import com.vinhonotas.vinho.application.services.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.WineEntity;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.infraestructure.WineRepository;
@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -81,7 +82,7 @@ class WineServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao tentar retornar uma lista de vinhos")
     void testGetAllWithException() {
-        when(wineRepository.findAll()).thenThrow(new BadRequestException(MessagesConstants.ERROR_WINE_NOT_FOUND));
+        when(wineRepository.findAll()).thenReturn(Collections.emptyList());
 
         Exception exception = assertThrows(Exception.class, () -> wineServiceImpl.getAll());
         assertEquals(MessagesConstants.ERROR_WINE_NOT_FOUND, exception.getMessage());
@@ -151,7 +152,7 @@ class WineServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve lançar BadRequestException ao tentar deletar um vinho")
+    @DisplayName("Deve lançar exceção ao tentar deletar um vinho")
     void testDeleteWithException() {
         when(wineRepository.findById(redWineEntity.getId())).thenReturn(Optional.of(redWineEntity));
         doThrow(new BadRequestException(MessagesConstants.ERROR_DELETE_WINE)).when(wineRepository).deleteById(redWineEntity.getId());
@@ -162,6 +163,18 @@ class WineServiceImplTest {
         verify(wineRepository, times(1)).deleteById(redWineEntity.getId());
     }
 
+    @Test
+    @DisplayName("Deve lançar uma exceção quando retornar uma lista de vinhos vazia ao chamar o método delete")
+    void testDeleteWithExceptionWineNotFound() {
+        when(wineRepository.findById(redWineEntity.getId())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(Exception.class, () -> wineServiceImpl.delete(redWineEntity.getId()));
+        assertEquals(MessagesConstants.ERROR_WINE_NOT_FOUND, exception.getMessage());
+        verify(wineRepository, times(1)).findById(redWineEntity.getId());
+        verify(wineRepository, times(0)).deleteById(redWineEntity.getId());
+    }
+
+
     private WineEntity createRedWineEntity() {
         return WineEntity.builder()
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
@@ -171,12 +184,12 @@ class WineServiceImplTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.REDWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
@@ -191,14 +204,14 @@ class WineServiceImplTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
-                .volumeMl(750)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
+                .alcoholContent("12.5")
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")

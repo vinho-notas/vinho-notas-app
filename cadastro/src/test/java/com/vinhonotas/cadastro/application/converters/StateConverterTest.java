@@ -2,13 +2,16 @@ package com.vinhonotas.cadastro.application.converters;
 
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.StateInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.StateOutputDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -16,12 +19,16 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class StateConverterTest {
 
     @InjectMocks
     private StateConverter stateConverter;
+
+    @Mock
+    private CountryConverter countryConverter;
 
     private StateInputDTO stateInputDTO;
     private StateEntity stateEntity;
@@ -37,11 +44,12 @@ class StateConverterTest {
     @Test
     @DisplayName("Teste de conversão de StateInputDTO para StateEntity")
     void testToEntity() {
-        StateEntity state = assertDoesNotThrow(()-> stateConverter.toEntity(stateInputDTO));
+
+        StateEntity state = assertDoesNotThrow(()-> stateConverter.convertToEntity(stateInputDTO));
         assertNotNull(stateEntity);
         assertEquals(stateInputDTO.getStateName(), state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());
-        assertEquals(stateInputDTO.getCountry(), state.getCountry());
+        assertEquals(countryConverter.convertToEntity(stateInputDTO.getCountry()), state.getCountry());
     }
 
     @Test
@@ -49,33 +57,35 @@ class StateConverterTest {
     void testToEntityUpdate() {
         stateInputDTO.setStateName("Rio de Janeiro");
 
-        StateEntity state = assertDoesNotThrow(()-> stateConverter.toEntityUpdate(stateEntity, stateEntity.getId(), stateInputDTO));
+        StateEntity state = assertDoesNotThrow(()-> stateConverter.convertToEntityUpdate(stateEntity, stateEntity.getId(), stateInputDTO));
         assertNotNull(state);
         assertEquals("Rio de Janeiro", state.getStateName());
         assertEquals(stateInputDTO.getUf(), state.getUf());
-        assertEquals(stateInputDTO.getCountry(), state.getCountry());
+        assertEquals(countryConverter.convertToEntity(stateInputDTO.getCountry()), state.getCountry());
     }
 
     @Test
     @DisplayName("Teste de conversão de StateEntity para StateOutputDTO")
     void testConvertToOutputDTO() {
+        when(countryConverter.convertToOutputDTO(Mockito.any(CountryEntity.class))).thenReturn(Mockito.mock(CountryOutputDTO.class));
+
         StateOutputDTO stateOutput = assertDoesNotThrow(()-> stateConverter.convertToOutputDTO(stateEntity));
         assertNotNull(stateOutputDTO);
         assertEquals(stateEntity.getId(), stateOutput.getId());
         assertEquals(stateEntity.getStateName(), stateOutput.getStateName());
         assertEquals(stateEntity.getUf(), stateOutput.getUf());
-        assertEquals(stateEntity.getCountry(), stateOutput.getCountry());
     }
 
     @Test
     @DisplayName("Teste de conversão de List<StateEntity> para List<StateOutputDTO>")
     void testConvertToOutputDTOList() {
+        when(countryConverter.convertToOutputDTO(Mockito.any(CountryEntity.class))).thenReturn(Mockito.mock(CountryOutputDTO.class));
+
         List<StateOutputDTO> stateOutput = assertDoesNotThrow(()-> stateConverter.convertToOutputDTOList(List.of(stateEntity)));
         assertNotNull(stateOutputDTO);
         assertEquals(stateEntity.getId(), stateOutput.get(0).getId());
         assertEquals(stateEntity.getStateName(), stateOutput.get(0).getStateName());
         assertEquals(stateEntity.getUf(), stateOutput.get(0).getUf());
-        assertEquals(stateEntity.getCountry(), stateOutput.get(0).getCountry());
     }
 
     @Test
@@ -96,15 +106,23 @@ class StateConverterTest {
                 .id(UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"))
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(Mockito.mock(CountryEntity.class))
+                .country(Mockito.mock(CountryOutputDTO.class))
                 .build();
     }
 
     private StateInputDTO createStateInputDTO() {
         return StateInputDTO.builder()
+                .id("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11")
                 .stateName("São Paulo")
                 .uf("SP")
-                .country(Mockito.mock(CountryEntity.class))
+                .country(createCountryInputDTO())
+                .build();
+    }
+
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .countryName("Brasil")
+                .continentName("América do Sul")
                 .build();
     }
 

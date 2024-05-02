@@ -3,8 +3,9 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.cadastro.application.converters.CountryConverter;
 import com.vinhonotas.cadastro.application.services.CountryService;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.configuration.security.SecurityFilter;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
+import com.vinhonotas.cadastro.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.CountryOutputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
@@ -12,10 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = CountryController.class)
 class CountryControllerTest {
 
@@ -34,11 +38,15 @@ class CountryControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private CountryService countryService;
     @MockBean
     private CountryConverter countryConverter;
+    @MockBean
+    private SecurityFilter securityFilter;
 
     private CountryEntity brasilEntity;
     private CountryInputDTO brasilDTO;

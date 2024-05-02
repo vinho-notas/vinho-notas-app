@@ -1,40 +1,61 @@
 package com.vinhonotas.cadastro.application.converters;
 
+import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.UserEntity;
+import com.vinhonotas.cadastro.domain.enums.EnumProfile;
+import com.vinhonotas.cadastro.infrastructure.PersonRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditUserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.UserOutputDTO;
+import com.vinhonotas.cadastro.utils.EnumConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class UserConverter {
 
-    public UserEntity toEntity(UserInputDTO userInputDTO) {
+    private final PersonConverter personConverter;
+    private final PersonRepository personRepository;
+
+    public UserEntity convertToEntity(UserInputDTO userInputDTO) {
+        PersonEntity personEntity = personRepository.findById(UUID.fromString(userInputDTO.getPersonId())).orElseThrow();
         return UserEntity.builder()
-                .person(userInputDTO.getPerson())
-                .enumProfile(userInputDTO.getEnumProfile())
+                .person(personEntity)
+                .enumProfile(EnumConverter.fromString(userInputDTO.getEnumProfile(), EnumProfile.class))
                 .email(userInputDTO.getEmail())
                 .password(userInputDTO.getPassword())
+                .userreg(userInputDTO.getUserreg())
+                .dthreg(LocalDateTime.now())
+                .useralt(userInputDTO.getUseralt())
+                .dthalt(userInputDTO.getDthalt())
                 .build();
     }
 
-    public UserEntity toEntityUpdate(UserEntity entity, UUID id, UserInputDTO userInputDTO) {
+    public UserEntity converteToEntityUpdate(UserEntity entity, UUID id, EditUserInputDTO userInputDTO) {
+        PersonEntity personEntity = entity.getPerson();
         return UserEntity.builder()
                 .id(id)
-                .person(userInputDTO.getPerson() != null ? userInputDTO.getPerson() : entity.getPerson())
-                .enumProfile(userInputDTO.getEnumProfile() != null ? userInputDTO.getEnumProfile() : entity.getEnumProfile())
+                .person(entity.getPerson() != null ? entity.getPerson() : personEntity)
+                .enumProfile(userInputDTO.getEnumProfile() != null ? EnumConverter.fromString(userInputDTO
+                        .getEnumProfile(), EnumProfile.class) : entity.getEnumProfile())
                 .email(userInputDTO.getEmail() != null ? userInputDTO.getEmail() : entity.getEmail())
-                .password(userInputDTO.getPassword() != null ? userInputDTO.getPassword() : entity.getPassword())
+                .password(entity.getPassword())
+                .dthreg(userInputDTO.getDthreg() != null ? userInputDTO.getDthreg() : entity.getDthreg())
+                .useralt(userInputDTO.getUseralt() != null ? userInputDTO.getUseralt() : entity.getUseralt())
+                .dthalt(LocalDateTime.now())
                 .build();
     }
 
     public UserOutputDTO convertToOutputDTO(UserEntity userEntity) {
         return UserOutputDTO.builder()
                 .id(userEntity.getId())
-                .person(userEntity.getPerson())
-                .enumProfile(userEntity.getEnumProfile())
+                .person(personConverter.convertToOutputDTO(userEntity.getPerson()))
+                .enumProfile(EnumConverter.toString(userEntity.getEnumProfile()))
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())
                 .build();
@@ -43,8 +64,10 @@ public class UserConverter {
     public UserOutputDTO convertToOutputDTOUpdate(UserEntity update, UUID uuid, UserOutputDTO userOutputDTO) {
         return UserOutputDTO.builder()
                 .id(uuid)
-                .person(update.getPerson() != null ? update.getPerson() : userOutputDTO.getPerson())
-                .enumProfile(update.getEnumProfile() != null ? update.getEnumProfile() : userOutputDTO.getEnumProfile())
+                .person(personConverter.convertToOutputDTO(update.getPerson()) != null ?
+                        personConverter.convertToOutputDTO(update.getPerson()) : userOutputDTO.getPerson())
+                .enumProfile(update.getEnumProfile() != null ? EnumConverter.toString(update.getEnumProfile()) :
+                        userOutputDTO.getEnumProfile())
                 .email(update.getEmail() != null ? update.getEmail() : userOutputDTO.getEmail())
                 .password(update.getPassword() != null ? update.getPassword() : userOutputDTO.getPassword())
                 .build();
@@ -55,4 +78,5 @@ public class UserConverter {
                 .map(this::convertToOutputDTO)
                 .toList();
     }
+
 }

@@ -18,7 +18,7 @@ public class AddressOutputDTO {
     private String district;
     private String zipCode;
     private String city;
-    private StateEntity uf;
-    private CountryEntity country;
+    private StateOutputDTO uf;
+    private CountryOutputDTO country;
     private String phoneNumber;
 }

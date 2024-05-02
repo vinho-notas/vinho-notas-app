@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.vinho-notas</groupId>
     <artifactId>cadastro</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-alpha</version>
     <name>cadastro</name>
     <description>cadastro</description>
     <properties>
@@ -75,6 +75,20 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.4.0</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -99,6 +113,39 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/com/vinhonotas/cadastro/CadastroApplication.class</exclude>
+                        <exclude>**/com/vinhonotas/cadastro/domain/**</exclude>
+                        <exclude>**/com/vinhonotas/cadastro/interfaces/dtos/**</exclude>
+                        <exclude>**/com/vinhonotas/cadastro/utils/**</exclude>
+                        <exclude>**/com/vinhonotas/cadastro/configuration/**</exclude>
+                        <exclude>**/com/vinhonotas/cadastro/application/converters/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

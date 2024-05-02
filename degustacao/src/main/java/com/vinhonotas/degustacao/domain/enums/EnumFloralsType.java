@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumFloralsType {
+public enum EnumFloralsType implements EnumCode {
 
     ACACIA("Acácia"),
     CLOVE("Cravo"),
@@ -19,5 +19,6 @@ public enum EnumFloralsType {
     ROSE("Rosa"),
     VIOLET("Violeta");
 
-    private final String description;
+    private final String code;
+
 }

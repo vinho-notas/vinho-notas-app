@@ -3,8 +3,8 @@ package com.vinhonotas.vinho.interfaces.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.vinho.application.converters.WineConverter;
 import com.vinhonotas.vinho.application.services.WineService;
-import com.vinhonotas.vinho.application.services.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.WineEntity;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
@@ -189,14 +189,14 @@ class WineControllerTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
-                .volumeMl(750)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
+                .alcoholContent("12.5")
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
@@ -214,12 +214,12 @@ class WineControllerTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.REDWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
@@ -234,14 +234,14 @@ class WineControllerTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
-                .volumeMl(750)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
+                .alcoholContent("12.5")
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")

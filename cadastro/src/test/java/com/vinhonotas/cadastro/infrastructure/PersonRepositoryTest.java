@@ -11,10 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
+})
 class PersonRepositoryTest {
 
     @Autowired
@@ -112,6 +118,10 @@ class PersonRepositoryTest {
         return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -126,6 +136,10 @@ class PersonRepositoryTest {
                 .uf(uf)
                 .country(country)
                 .phoneNumber("47999999999")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -135,6 +149,10 @@ class PersonRepositoryTest {
                 .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(address1)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -143,6 +161,10 @@ class PersonRepositoryTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(country)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -157,6 +179,10 @@ class PersonRepositoryTest {
                 .uf(uf)
                 .country(country)
                 .phoneNumber("47999999999")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -166,6 +192,10 @@ class PersonRepositoryTest {
                 .document("12345678910")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(address2)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

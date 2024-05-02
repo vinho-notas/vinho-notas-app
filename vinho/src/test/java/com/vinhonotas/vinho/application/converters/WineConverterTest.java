@@ -5,6 +5,7 @@ import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
 import com.vinhonotas.vinho.interfaces.dtos.outputs.WineOutputDTO;
+import com.vinhonotas.vinho.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -131,10 +132,10 @@ class WineConverterTest {
                 () -> assertEquals(BigDecimal.valueOf(800.00), wineOutputDTOConverted.getPrice()),
                 () -> assertEquals(wineEntity.getPurchaseLocation(), wineOutputDTOConverted.getPurchaseLocation()),
                 () -> assertEquals(wineEntity.getPurchaseDate(), wineOutputDTOConverted.getPurchaseDate()),
-                () -> assertEquals(wineEntity.getWineType(), wineOutputDTOConverted.getWineType()),
-                () -> assertEquals(wineEntity.getWineClassification(), wineOutputDTOConverted.getWineClassification()),
+                () -> assertEquals(EnumConverter.toString(wineEntity.getWineType()), wineOutputDTOConverted.getWineType()),
+                () -> assertEquals(EnumConverter.toString(wineEntity.getWineClassification()), wineOutputDTOConverted.getWineClassification()),
                 () -> assertEquals(wineEntity.getAlcoholContent(), wineOutputDTOConverted.getAlcoholContent()),
-                () -> assertEquals(wineEntity.getVolumeMl(), wineOutputDTOConverted.getVolumeMl()),
+                () -> assertEquals(String.valueOf(wineEntity.getVolumeMl()), wineOutputDTOConverted.getVolumeMl()),
                 () -> assertEquals(wineEntity.getGrape(), wineOutputDTOConverted.getGrape()),
                 () -> assertEquals(wineEntity.getWinery(), wineOutputDTOConverted.getWinery()),
                 () -> assertEquals(wineEntity.getServiceTemperature(), wineOutputDTOConverted.getServiceTemperature()),
@@ -183,14 +184,14 @@ class WineConverterTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
-                .volumeMl(750)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
+                .alcoholContent("12.5")
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
@@ -205,14 +206,14 @@ class WineConverterTest {
                 .price(BigDecimal.valueOf(70.00))
                 .purchaseLocation("www.evino.com.br")
                 .purchaseDate(LocalDate.now())
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
-                .volumeMl(750)
+                .wineType(EnumWineType.REDWINE.getCode())
+                .wineClassification(EnumWineClassification.DRYWINE.getCode())
+                .alcoholContent("12.5")
+                .volumeMl("750")
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")
@@ -230,12 +231,12 @@ class WineConverterTest {
                 .purchaseDate(LocalDate.now())
                 .wineType(EnumWineType.REDWINE)
                 .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent(12.5)
+                .alcoholContent("12.5")
                 .volumeMl(750)
                 .grape("Uvas variadas")
                 .winery("DFJ Vinhos")
-                .serviceTemperature(17.0)
-                .harvest(2020)
+                .serviceTemperature("17.0")
+                .harvest("2020")
                 .country("Portugal")
                 .guardTime("2023")
                 .region("Lisboa")

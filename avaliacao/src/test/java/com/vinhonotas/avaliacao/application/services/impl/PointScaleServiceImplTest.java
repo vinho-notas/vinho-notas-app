@@ -1,8 +1,9 @@
 package com.vinhonotas.avaliacao.application.services.impl;
 
 import com.vinhonotas.avaliacao.application.converters.PointScaleConverter;
-import com.vinhonotas.avaliacao.application.services.exceptions.BadRequestException;
 import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.avaliacao.domain.entities.exceptions.PointScaleNotFoundException;
 import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import com.vinhonotas.avaliacao.infraestructure.PointScaleRepository;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
@@ -106,7 +107,7 @@ class PointScaleServiceImplTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao buscar um PointScaleEntity ao se passar o id")
     void testGetByIdBadRequestException() {
-        when(pointScaleRepository.findById(pointScaleOne.getId())).thenThrow(new BadRequestException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
+        when(pointScaleRepository.findById(pointScaleOne.getId())).thenThrow(new PointScaleNotFoundException(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND));
 
         Exception exception = assertThrows(Exception.class, () -> pointScaleService.getById(pointScaleOne.getId()));
         assertEquals(MessagesConstants.ERROR_POINT_SCALE_NOT_FOUND, exception.getMessage());
@@ -115,7 +116,7 @@ class PointScaleServiceImplTest {
     @Test
     @DisplayName("Deve atualizar um PointScaleEntity")
     void testUpdate() {
-        pointScaleInputDTOOne.setPointScale(EnumPointScale.OUTSTANDING);
+        pointScaleInputDTOOne.setPointScale(EnumPointScale.OUTSTANDING.getCode());
 
         when(pointScaleRepository.findById(pointScaleOne.getId())).thenReturn(Optional.of(pointScaleOne));
         when(pointScaleConverter.toEntityUpdate(pointScaleInputDTOOne, pointScaleOne.getId(), pointScaleOne)).thenReturn(pointScaleOne);
@@ -176,7 +177,7 @@ class PointScaleServiceImplTest {
                 .whatOpinion("Vinho de boa qualidade, com boa complexidade, equilibrado, com boa intensidade de sabor, " +
                         "com boa persistência, com boa tipicidade, com boa harmonização, com boa relação qualidade/preço, " +
                         "com potencial de guarda de 3 anos, mas que pode ser consumido desde já.")
-                .pointScale(EnumPointScale.VERYGOOD)
+                .pointScale(EnumPointScale.VERYGOOD.getCode())
                 .build();
     }
 

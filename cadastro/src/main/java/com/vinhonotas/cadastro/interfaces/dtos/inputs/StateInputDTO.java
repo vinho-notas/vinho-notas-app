@@ -1,14 +1,21 @@
 package com.vinhonotas.cadastro.interfaces.dtos.inputs;
 
-import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class StateInputDTO {
 
+    private String id;
     private String stateName;
     private String uf;
-    private CountryEntity country;
+    private CountryInputDTO country;
+    private LocalDateTime dthreg;
+    private String userreg;
+    private LocalDateTime dthalt;
+    private String useralt;
+
 }

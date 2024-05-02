@@ -2,7 +2,9 @@ package com.vinhonotas.cadastro.interfaces.controllers;
 
 import com.vinhonotas.cadastro.application.converters.AddressConverter;
 import com.vinhonotas.cadastro.application.services.AddressService;
+import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditAddressInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.AddressOutputDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,9 +45,11 @@ public class AddressController {
 
     @Operation(summary = "Atualiza um endereço")
     @PutMapping("/{id}")
-    public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody AddressInputDTO addressInputDTO) {
-        return ResponseEntity.ok(addressConverter.convertToOutputDTOUpdate(addressService.update(UUID.fromString(id),
-                addressInputDTO), UUID.fromString(id), addressConverter.convertToOutputDTO(addressService.update(UUID.fromString(id), addressInputDTO))));
+    public ResponseEntity<AddressOutputDTO> updateAddress(@PathVariable("id") String id, @Valid @RequestBody EditAddressInputDTO editAddressInputDTO) {
+        AddressEntity addressUpdated = addressService.update(UUID.fromString(id), editAddressInputDTO);
+        AddressOutputDTO addressOutputDTO = addressConverter.convertToOutputDTO(addressUpdated);
+
+        return ResponseEntity.ok(addressOutputDTO);
     }
 
     @Operation(summary = "Deleta um endereço")

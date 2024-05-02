@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EnumWoodType {
+public enum EnumWoodType implements EnumCode {
 
     VANILLA("Baunilha"),
     SAWDUST("Serragem");
 
-    private final String description;
+    private final String code;
+
 }

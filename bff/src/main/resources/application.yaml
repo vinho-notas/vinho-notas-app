@@ -1,0 +1,28 @@
+server:
+  error:
+    include-stacktrace: never
+  port: 8084
+
+cadastro-api:
+  url: "http://localhost:8080/api/v1"
+#  url: "http://cadastro:8080/api/v1"
+
+vinho-api:
+  url: "http://localhost:8081/api/v1"
+#  url: "http://vinho:8081/api/v1"
+
+avaliacao-api:
+  url: "http://localhost:8082/api/v1"
+#  url: "http://avaliacao:8082/api/v1"
+
+degustacao-api:
+  url: "http://localhost:8083/api/v1"
+#  url: "http://degustacao:8083/api/v1"
+
+harmonizacao-api:
+  url: "http://localhost:8085/api/v1"
+#  url: "http://harmonizacao:8085/api/v1"
+
+springdoc:
+  api-docs:
+    path: /api-docs

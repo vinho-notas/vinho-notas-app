@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,19 +22,39 @@ public class PointScaleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
     @Column(name = "whattasted")
     private String whatTasted;
+
     @Column(name = "whentasted")
     private String whenTasted;
+
     @Column(name = "whatsaw")
     private String whatSaw;
+
     @Column(name = "whataromas")
     private String whatAromas;
+
     @Column(name = "whatflavors")
     private String whatFlavors;
+
     @Column(name = "whatopinion")
     private String whatOpinion;
+
     @Column(name = "pointscale")
     @Enumerated(EnumType.STRING)
     private EnumPointScale pointScale;
+
+    @Column(name = "dthreg")
+    private LocalDateTime dthreg;
+
+    @Column(name = "userreg")
+    private String userreg;
+
+    @Column(name = "dthalt")
+    private LocalDateTime dthalt;
+
+    @Column(name = "useralt")
+    private String useralt;
+
 }

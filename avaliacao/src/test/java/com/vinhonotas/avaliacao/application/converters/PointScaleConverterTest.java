@@ -4,6 +4,7 @@ import com.vinhonotas.avaliacao.domain.entities.PointScaleEntity;
 import com.vinhonotas.avaliacao.domain.enums.EnumPointScale;
 import com.vinhonotas.avaliacao.interfaces.dtos.inputs.PointScaleInputDTO;
 import com.vinhonotas.avaliacao.interfaces.dtos.outputs.PointScaleOutputDTO;
+import com.vinhonotas.avaliacao.utils.EnumConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,13 +47,13 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), pointScaleInputDTO.getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), pointScaleInputDTO.getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), pointScaleInputDTO.getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), pointScaleInputDTO.getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), pointScaleInputDTO.getPointScale());
     }
 
     @Test
     @DisplayName("Testa o método toEntityUpdate")
     void testToEntityUpdate() {
-        pointScaleInputDTO.setPointScale(EnumPointScale.MEDIOCRE);
+        pointScaleInputDTO.setPointScale(EnumPointScale.MEDIOCRE.getCode());
         PointScaleEntity pointScaleUpdated = assertDoesNotThrow(() -> pointScaleConverter.toEntityUpdate(
                 pointScaleInputDTO, UUID.randomUUID(), pointScaleEntity));
 
@@ -78,7 +79,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), dtoUpdated.getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), dtoUpdated.getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), dtoUpdated.getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), dtoUpdated.getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), dtoUpdated.getPointScale());
     }
 
     @Test
@@ -94,7 +95,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), outputList.get(0).getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), outputList.get(0).getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), outputList.get(0).getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), outputList.get(0).getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), outputList.get(0).getPointScale());
     }
 
     @Test
@@ -109,7 +110,7 @@ class PointScaleConverterTest {
         assertEquals(pointScaleEntity.getWhatAromas(), dtoUpdated.getWhatAromas());
         assertEquals(pointScaleEntity.getWhatFlavors(), dtoUpdated.getWhatFlavors());
         assertEquals(pointScaleEntity.getWhatOpinion(), dtoUpdated.getWhatOpinion());
-        assertEquals(pointScaleEntity.getPointScale(), dtoUpdated.getPointScale());
+        assertEquals(EnumConverter.toString(pointScaleEntity.getPointScale()), dtoUpdated.getPointScale());
     }
 
     private PointScaleOutputDTO createPointScaleOutputDTO() {
@@ -122,7 +123,7 @@ class PointScaleConverterTest {
                 .whatAromas("Aroma de pimentão vermelho maduro.")
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
-                .pointScale(EnumPointScale.OUTSTANDING)
+                .pointScale(EnumPointScale.OUTSTANDING.getCode())
                 .build();
     }
 
@@ -135,7 +136,7 @@ class PointScaleConverterTest {
                 .whatAromas("Aroma de pimentão vermelho maduro.")
                 .whatFlavors("Na boca boa acidez, lembrando frutas cítricas.")
                 .whatOpinion("Muito suculento com final longo.")
-                .pointScale(EnumPointScale.OUTSTANDING)
+                .pointScale(EnumPointScale.OUTSTANDING.getCode())
                 .build();
     }
 

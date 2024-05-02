@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vinho-notas</groupId>
 	<artifactId>degustacao</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-alpha</version>
 	<name>degustacao</name>
 	<description>degustacao</description>
 	<properties>
@@ -75,6 +75,13 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -99,6 +106,39 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/com/vinhonotas/degustacao/DegustacaoApplication.class</exclude>
+						<exclude>**/com/vinhonotas/degustacao/domain/**</exclude>
+						<exclude>**/com/vinhonotas/degustacao/interfaces/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/degustacao/utils/**</exclude>
+						<exclude>**/com/vinhonotas/degustacao/configuration/**</exclude>
+						<exclude>**/com/vinhonotas/degustacao/application/converters/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

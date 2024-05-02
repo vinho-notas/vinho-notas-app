@@ -1,8 +1,11 @@
-version: '3.1'
+version: '3.8'
 
 services:
+
+# Banco de dados
   postgresql-cadastro:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-cadastro
     environment:
       POSTGRES_DB: vinho-notas-cadastro
@@ -11,26 +14,28 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./.data/postgresql/data-cadastro:/var/lib/postgresql/data
+      - postgres-data-cadastro:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-vinho:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-vinho
     environment:
       POSTGRES_DB: vinho-notas-vinho
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
+      POSTGRES_PASSWORD: 1234567    
     ports:
       - "5433:5432"
     volumes:
-      - ./.data/postgresql/data-vinho:/var/lib/postgresql/data
+      - postgres-data-vinho:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-avaliacao:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-avaliacao
     environment:
       POSTGRES_DB: vinho-notas-avaliacao
@@ -39,26 +44,13 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - ./.data/postgresql/data-avaliacao:/var/lib/postgresql/data
-    networks:
-      - main-network
-
-  postgresql-sonar:
-    image: postgres:15-alpine
-    container_name: postgres-sonar
-    environment:
-      POSTGRES_DB: vinho-notas-sonar
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
-    ports:
-      - "5435:5432"
-    volumes:
-      - ./.data/postgresql/data-sonar:/var/lib/postgresql/data
+      - postgres-data-avaliacao:/var/lib/postgresql/data
     networks:
       - main-network
 
   postgresql-degustacao:
     image: postgres:15-alpine
+    restart: always
     container_name: postgres-degustacao
     environment:
       POSTGRES_DB: vinho-notas-degustacao
@@ -71,6 +63,75 @@ services:
     networks:
       - main-network
 
+# Serviços da aplicação
+  # cadastro:
+  #   image: vanderleik/vinho-notas-cadastro:1.0.0-alpha
+  #   container_name: vinho-notas-cadastro
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - postgresql-cadastro
+  #   networks:
+  #     - main-network  
+
+  # vinho:
+  #   image: vanderleik/vinho-notas-vinho:1.0.0-alpha
+  #   container_name: vinho-notas-vinho
+  #   restart: always
+  #   ports:
+  #     - "8081:8081"
+  #   depends_on:
+  #     - postgresql-vinho
+  #   networks:
+  #     - main-network
+
+  # harmonizacao:
+  #   image: vanderleik/vinho-notas-harmonizacao:1.0.0-alpha
+  #   container_name: vinho-notas-harmonizacao
+  #   restart: always
+  #   ports:
+  #     - "8085:8085"
+  #   networks:
+  #     - main-network
+
+  # avaliacao:
+  #   image: vanderleik/vinho-notas-avaliacao:1.0.0-alpha
+  #   container_name: vinho-notas-avaliacao
+  #   restart: always
+  #   ports:
+  #     - "8082:8082"
+  #   depends_on:
+  #     - postgresql-avaliacao
+  #   networks:
+  #     - main-network
+
+  # degustacao:
+  #     image: vanderleik/vinho-notas-degustacao:1.0.0-alpha
+  #     container_name: vinho-notas-degustacao
+  #     restart: always
+  #     ports:
+  #       - "8083:8083"
+  #     depends_on:
+  #       - postgresql-degustacao
+  #     networks:
+  #       - main-network
+
+  # bff:
+  #   image: vanderleik/vinho-notas-bff:1.0.0-alpha
+  #   container_name: vinho-notas-bff
+  #   restart: always
+  #   ports:
+  #     - "8084:8084"
+  #   networks:
+  #     - main-network  
+
 networks:
   main-network:
     driver: bridge
+
+volumes:
+  postgres-data-cadastro:
+  postgres-data-vinho:
+  postgres-data-avaliacao:
+  postgres-data-degustacao:

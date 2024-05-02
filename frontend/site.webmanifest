@@ -1,0 +1,36 @@
+{
+    "name": "Vinho Notas",
+    "short_name": "VIN",
+    "description": "Esta é uma aplicação para você que gosta de vinhos e quer guardar suas impressões sobre os vinhos que experimentou.",
+    "id": "/?source=pwa",
+    "start_url": "/home",
+    "display": "standalone",    
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src":"src/img/favicon-16x16.png",
+            "sizes":"16x16",
+            "type":"image/png"
+        },
+        {
+            "src":"src/img/favicon-32x32.png",
+            "sizes":"32x32",
+            "type":"image/png"
+        },
+        {
+            "src":"src/img/apple-touch-icon.png",
+            "sizes":"180x180",
+            "type":"image/png"
+        },
+        {
+            "src":"src/img/android-chrome-192x192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"src/img/android-chrome-512x512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+            }
+        ]        
+}

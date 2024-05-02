@@ -8,9 +8,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@DataJpaTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.show-sql=true",
+        "spring.jpa.properties.hibernate.format_sql=true"
+})
 class StateRepositoryTest {
 
     @Autowired
@@ -90,6 +97,10 @@ class StateRepositoryTest {
                 .stateName("Paraná")
                 .uf("PR")
                 .country(countryEntity)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -97,6 +108,10 @@ class StateRepositoryTest {
         return CountryEntity.builder()
                 .countryName("Brasil")
                 .continentName("América do Sul")
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 
@@ -105,6 +120,10 @@ class StateRepositoryTest {
                 .stateName("Santa Catarina")
                 .uf("SC")
                 .country(countryEntity)
+                .userreg("admin")
+                .dthreg(LocalDateTime.now())
+                .useralt(null)
+                .dthalt(null)
                 .build();
     }
 

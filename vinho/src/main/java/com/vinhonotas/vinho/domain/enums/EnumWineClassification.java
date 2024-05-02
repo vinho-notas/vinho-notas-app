@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumWineClassification {
+public enum EnumWineClassification implements EnumCode {
 
     DRYWINE("Vinho Seco"),
     MEDIUMDRYWINE("Vinho Meio Seco"),
@@ -16,4 +16,5 @@ public enum EnumWineClassification {
     ICEWINE("Vinho Gelado");
 
     private final String code;
+
 }

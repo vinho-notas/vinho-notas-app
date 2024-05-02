@@ -1,12 +1,15 @@
 package com.vinhonotas.cadastro.application.services.impl;
 
 import com.vinhonotas.cadastro.application.converters.PersonConverter;
-import com.vinhonotas.cadastro.application.services.exceptions.BadRequestException;
+import com.vinhonotas.cadastro.application.services.UserService;
 import com.vinhonotas.cadastro.domain.entities.AddressEntity;
 import com.vinhonotas.cadastro.domain.entities.CountryEntity;
 import com.vinhonotas.cadastro.domain.entities.PersonEntity;
 import com.vinhonotas.cadastro.domain.entities.StateEntity;
 import com.vinhonotas.cadastro.infrastructure.PersonRepository;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.AddressInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.CountryInputDTO;
+import com.vinhonotas.cadastro.interfaces.dtos.inputs.EditPersonInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.inputs.PersonInputDTO;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,42 +37,54 @@ class PersonServiceImplTest {
     private PersonRepository personRepository;
     @Mock
     private PersonConverter personConverter;
+    @Mock
+    private StateServiceImpl stateService;
+    @Mock
+    private CountryServiceImpl countryService;
+    @Mock
+    private UserService userService;
 
     private PersonInputDTO inputDTO;
+    private EditPersonInputDTO editPersonInputDTO;
     private PersonEntity entity;
+    private StateEntity state;
+    private AddressEntity address;
 
     @BeforeEach
     void setUp() {
         inputDTO = createInputDTO();
+        editPersonInputDTO = createEditPersonInputDTO();
         entity = createEntity();
+        state = createStateEntity();
+        address = createAddressEntity();
     }
 
     @Test
     @DisplayName("Teste de criação de pessoa com sucesso")
     void testCreateSuccess() {
-        when(personConverter.toEntity(inputDTO)).thenReturn(entity);
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
+        when(personConverter.convertToEntity(inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
 
         PersonEntity entity = assertDoesNotThrow(() -> personService.create(inputDTO));
         assertNotNull(entity);
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
-        verify(personConverter, times(1)).toEntity(inputDTO);
+        verify(personConverter, times(1)).convertToEntity(inputDTO);
         verify(personRepository, times(1)).save(entity);
     }
 
     @Test
     @DisplayName("Teste de criação de pessoa com exceção")
     void testCreateException() {
-        when(personConverter.toEntity(inputDTO)).thenReturn(entity);
-        when(personRepository.save(entity)).thenThrow(BadRequestException.class);
+        when(stateService.getByUf(inputDTO.getAddress().getUf())).thenReturn(state);
+        when(countryService.getByName(inputDTO.getAddress().getCountry())).thenReturn(createCountry());
 
         Exception exception = assertThrows(Exception.class, () -> personService.create(inputDTO));
         assertEquals(MessagesConstants.ERROR_WHEN_SAVING_PERSON, exception.getMessage());
-        verify(personConverter, times(1)).toEntity(inputDTO);
-        verify(personRepository, times(1)).save(entity);
     }
 
     @Test
@@ -81,7 +96,7 @@ class PersonServiceImplTest {
         assertNotNull(list);
         assertEquals(1, list.size());
         assertEquals("João", list.get(0).getName());
-        assertEquals("12345678900", list.get(0).getDocument());
+        assertEquals("00000000000", list.get(0).getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), list.get(0).getBirthDate());
         assertEquals("Rua 3", list.get(0).getAddress().getAddressDescription());
         verify(personRepository, times(1)).findAll();
@@ -96,7 +111,7 @@ class PersonServiceImplTest {
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
@@ -121,7 +136,7 @@ class PersonServiceImplTest {
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("00000000000", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
         assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findByName("João");
@@ -138,22 +153,18 @@ class PersonServiceImplTest {
     @Test
     @DisplayName("Deve atualizar uma pessoa")
     void testUpdate() {
+        editPersonInputDTO.setDocument("99999999999");
         when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.of(entity));
-        when(personConverter.toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO)).thenReturn(entity);
         when(personRepository.save(entity)).thenReturn(entity);
-        when(personRepository.findByName("João")).thenReturn(entity);
 
-        PersonEntity entity = assertDoesNotThrow(() -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
+        PersonEntity entity = assertDoesNotThrow(() -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editPersonInputDTO));
         assertNotNull(entity);
         assertEquals(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), entity.getId());
         assertEquals("João", entity.getName());
-        assertEquals("12345678900", entity.getDocument());
+        assertEquals("99999999999", entity.getDocument());
         assertEquals(LocalDate.of(1990, 1, 1), entity.getBirthDate());
-        assertEquals("Rua 3", entity.getAddress().getAddressDescription());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(personConverter, times(1)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(personRepository, times(1)).save(entity);
-        verify(personRepository, times(1)).findByName("João");
     }
 
     @Test
@@ -161,10 +172,9 @@ class PersonServiceImplTest {
     void testUpdateException() {
         when(personRepository.findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(Exception.class, () -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO));
+        Exception exception = assertThrows(Exception.class, () -> personService.update(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), editPersonInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_PERSON_DATA, exception.getMessage());
         verify(personRepository, times(1)).findById(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"));
-        verify(personConverter, times(0)).toEntityUpdate(entity, UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"), inputDTO);
         verify(personRepository, times(0)).save(entity);
     }
 
@@ -188,7 +198,7 @@ class PersonServiceImplTest {
         return PersonEntity.builder()
                 .id(UUID.fromString("24690839-a007-4af7-b4fe-9e81e42b7465"))
                 .name("João")
-                .document("12345678900")
+                .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(createAddressEntity())
                 .build();
@@ -197,9 +207,17 @@ class PersonServiceImplTest {
     private PersonInputDTO createInputDTO() {
         return PersonInputDTO.builder()
                 .name("João")
-                .document("12345678900")
+                .document("00000000000")
                 .birthDate(LocalDate.of(1990, 1, 1))
                 .address(createAddressInputDTO())
+                .build();
+    }
+
+    private EditPersonInputDTO createEditPersonInputDTO() {
+        return EditPersonInputDTO.builder()
+                .name("João")
+                .document("00000000000")
+                .birthDate(LocalDate.of(1990, 1, 1))
                 .build();
     }
 
@@ -218,16 +236,16 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private AddressEntity createAddressInputDTO() {
-        return AddressEntity.builder()
+    private AddressInputDTO createAddressInputDTO() {
+        return AddressInputDTO.builder()
                 .addressDescription("Rua 3")
                 .addressNumber(456)
                 .complement("Complemento 1")
                 .district("Bairro 1")
                 .zipCode("99999999")
                 .city("Cidade 1")
-                .uf(createUfInputDTO())
-                .country(createCountryInputDTO())
+                .uf("SC")
+                .country("Brasil")
                 .phoneNumber("47999999999")
                 .build();
     }
@@ -241,14 +259,6 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private StateEntity createUfInputDTO() {
-        return StateEntity.builder()
-                .stateName("Santa Catarina")
-                .uf("SC")
-                .country(createCountryInputDTO())
-                .build();
-    }
-
     private CountryEntity createCountry() {
         return CountryEntity.builder()
                 .id(UUID.fromString("2cb051aa-5beb-4678-82cb-af44490c16af"))
@@ -257,10 +267,20 @@ class PersonServiceImplTest {
                 .build();
     }
 
-    private CountryEntity createCountryInputDTO() {
-        return CountryEntity.builder()
+    private CountryInputDTO createCountryInputDTO() {
+        return CountryInputDTO.builder()
+                .id("2cb051aa-5beb-4678-82cb-af44490c16af")
                 .countryName("Brasil")
                 .continentName("América do Sul")
+                .build();
+    }
+
+    private StateEntity createStateEntity() {
+        return StateEntity.builder()
+                .id(UUID.fromString("f941c810-c380-4b35-8430-cc5a3dc28b1a"))
+                .stateName("Santa Catarina")
+                .uf("SC")
+                .country(createCountry())
                 .build();
     }
 
