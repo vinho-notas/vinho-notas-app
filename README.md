@@ -41,10 +41,31 @@ Este é o repositório do projeto `vinho-notas-app`, uma aplicação para facili
 
 1. Clone o repositório para o seu ambiente local utilizando o comando git abaixo:
 ``git clone https://github.com/vinho-notas/vinho-notas-app.git``
-2. Navegue até a pasta de cada um dos microsserviços e execute ``mvn install` para instalar as dependências do Maven.
+2. Navegue até a pasta de cada um dos microsserviços e execute `mvn install` para instalar as dependências do Maven.
 3. Na pasta do frontend, execute `npm install` para instalar as dependências do Node.js.
 
 ## Execução do Projeto
+
+### Executando o projeto como um todo a partir de imagens Docker
+
+<p>A meneira mais rápida de executar o projeto é iniciar os serviços utilizando as imagens disponíveis no <a href='https://hub.docker.com/u/vanderleik' target="_blank">DockerHub</a> </p>
+
+1. Navegue até a pasta raiz do projeto e abra o arquivo <a href='./docker-compose.yaml'>docker-compose.yaml</a>.
+2. Remova os comentários das linhas 67 em diante, salve o arquivo e execute o comando ``docker compose up -d`` em um terminal, certificand-se de estar com o Docker ligado. 
+
+![alt text](img/image-4.png)
+
+Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as imagens de cada microsserviço no Docker Hub e dessa forma iniciará o banco de dados PostgreSQL relacionado a cada serviço mais os back ends.
+
+
+![alt text](img/image-5.png)
+
+3. Na pasta do frontend, execute `npm install` em um terminal para instalar as dependências do Node.js.
+4. Inicie o frontend executando o comando `npm run dev` em um terminal.
+4. Agora você deve ser capaz de acessar a aplicação em <a href='http://localhost:5173' target="_blank"> `http://localhost:5173`</a>, que deve se apresentar com a seguinte aparência:
+
+![alt text](img/image-2.png)
+
 
 ### Executando cada microsserviço individualmente
 Para executar o projeto, siga os passos abaixo:
@@ -60,23 +81,6 @@ Para executar o projeto, siga os passos abaixo:
 ![alt text](img/image-2.png)
 
 
-### Executando o projeto como um todo a partir de uma imagem Docker
-
-<p>Alternativamente é possível iniciar os serviços de forma automática utilizando as imagens dos serviços disponíveis no <a href='https://hub.docker.com/' target="_blank">DockerHub</a> </p>
-
-1. Navegue até a pasta raiz do projeto e abra o arquivo <a href='./docker-compose.yaml'>docker-compose.yaml</a>.
-2. Remova os comentários das linhas 67 em diante, salve o arquivo e execute o comando ``docker compose up -d`` em um terminal, certificand-se de estar com o Docker ligado. 
-
-![alt text](img/image-4.png)
-
-Ao proceder dessa forma o docker-compose.yaml se encarregará de baixar as imagens de cada microsserviço no Docker Hub e dessa forma iniciará o banco de dados PostgreSQL relacionado a cada serviço mais os back ends.
-
-
-![alt text](img/image-5.png)
-
-3. Agora você deve ser capaz de acessar a aplicação em <a href='http://localhost:5173' target="_blank"> `http://localhost:5173`</a>, que deve se apresentar com a seguinte aparência:
-
-![alt text](img/image-2.png)
 
 ## Navegando pela solução
 
