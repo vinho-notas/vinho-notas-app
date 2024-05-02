@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_BFF_URL}/persons`;
+const API_URL = 'http://localhost:8084/api/v1/persons';
 
 export const createPerson = (person) => {
     return axios.post(API_URL, person);

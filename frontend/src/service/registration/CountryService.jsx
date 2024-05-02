@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_API_BFF_URL}/countries`;
+const API_URL = 'http://localhost:8084/api/v1/countries';
 
 export const getAllCountries = () => {
     return axios.get(API_URL);

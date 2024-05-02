@@ -19,12 +19,12 @@ RUN mvn clean install
 FROM openjdk:17-jdk-slim
 
 # Copie o arquivo JAR do aplicativo
-COPY --from=build /app/target/cadastro-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /app/target/cadastro-1.0.0-alpha.jar /app/app.jar
 
 WORKDIR /app
 
 # Defina o endereço do banco de dados
 ENV DATABASE_URL jdbc:postgresql://postgresql-cadastro:5432/vinho-notas-cadastro
 
-EXPOSE 8081
+EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
