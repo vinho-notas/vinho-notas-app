@@ -12,6 +12,8 @@ import com.vinhonotas.cadastro.interfaces.dtos.inputs.UserInputDTO;
 import com.vinhonotas.cadastro.interfaces.dtos.outputs.LoginResponseDTO;
 import com.vinhonotas.cadastro.utils.EnumConverter;
 import com.vinhonotas.cadastro.utils.MessagesConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Autenticação", description = "Operações relacionadas a autenticação")
 public class AuthenticationController{
 
     private final AuthenticationManager authenticationManager;
@@ -40,6 +43,7 @@ public class AuthenticationController{
     private final PersonService personService;
     private final TokenService tokenService;
 
+    @Operation(summary = "Realiza o login de um usuário")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data){
         log.info("login :: Login request received {}: ", data);
@@ -52,6 +56,7 @@ public class AuthenticationController{
         return ResponseEntity.ok(login);
     }
 
+    @Operation(summary = "Realiza o registro de um usuário")
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid UserInputDTO data){
         log.info("register :: Register request received {}: ", data);
