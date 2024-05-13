@@ -23,7 +23,6 @@ describe('ListPersonComponent', () => {
         render(<ListPersonComponent />);
 
         expect(screen.getByText('Nome')).toBeInTheDocument();
-        expect(screen.getByText('Documento')).toBeInTheDocument();
         expect(screen.getByText('Data de Nascimento')).toBeInTheDocument();
     });
 

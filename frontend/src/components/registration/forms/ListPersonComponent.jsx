@@ -24,13 +24,11 @@ const ListPersonComponent = () => {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        document: { value: null, matchMode: FilterMatchMode.CONTAINS },
         birthDate: { value: null, matchMode: FilterMatchMode.CONTAINS }
     });
 
     const columns = [
         { field: 'name', header: 'Nome', sortable: true, filterField: 'name' },
-        { field: 'document', header: 'Documento', sortable: true, filterField: 'document' },
         { field: 'birthDate', header: 'Data de Nascimento', sortable: true, filterField: 'birthDate' }
     ];
 
@@ -135,13 +133,7 @@ const ListPersonComponent = () => {
                         <div className="p-col-12 p-md-10">
                             <InputText id="name" value={editingPerson?.name} onChange={(e) => setEditingPerson({ ...editingPerson, name: e.target.value })} />
                         </div>
-                    </div>
-                    <div className="p-fluid">
-                        <label htmlFor="document" className="p-col-12 p-md-2">Documento</label>
-                        <div className="p-col-12 p-md-10">
-                            <InputText id="document" value={editingPerson?.document} onChange={(e) => setEditingPerson({ ...editingPerson, document: e.target.value })} />
-                        </div>
-                    </div>
+                    </div>                    
                     <div className="p-fluid">
                         <label htmlFor="birthDate" className="p-col-12 p-md-2">Data de Nascimento</label>
                         <div className="p-col-12 p-md-10">
@@ -234,7 +226,7 @@ const ListPersonComponent = () => {
                 rowsPerPageOptions={[10, 20, 30, 50]}
                 loading={loading}
                 filters={filters}
-                globalFilterFields={['name', 'document', 'birthDate']}
+                globalFilterFields={['name', 'birthDate']}
                 header={header}
                 showGridlines
                 selectionMode="multiple"
