@@ -22,23 +22,6 @@ Você pode iniciar o aplicativo executando `mvn spring-boot:run`. O serviço est
 
 ## Endpoints
 
-### Tasting: Operações relacionadas a degustação do vinho
-
-POST
-- `/api/v1/tasting`: Cadastrar uma degustação.
-
-GET
-- `/api/v1/tasting`: Retorna uma lista com todas as degustações cadastradas.
-
-GET
-- `/api/v1/tasting/{id}`: Retorna uma degustação cadastrada pelo id.
-
-PUT
-- `/api/v1/tasting/{id}`: Atualiza uma degustação cadastrada pelo id.
-
-DELETE
-- `/api/v1/tasting/{id}`: Deleta uma degustação cadastrada pelo id.
-
 ### Tasting Card: Operações relacionadas a ficha de degustação do vinho
 
 POST
@@ -55,74 +38,6 @@ PUT
 
 DELETE
 - `/api/v1/tasting-card/{id}`: Deleta uma ficha de degustação cadastrada pelo id.
-
-### Aromas: Operações relacionadas a percepção de Aromas dos vinhos
-
-POST
-- `/api/v1/aromas`: Cadastrar os aromas.
-
-GET
-- `/api/v1/aromas`: Retorna uma lista com todos os aromas cadastrados.
-
-GET
-- `/api/v1/aromas/{id}`: Retorna um aroma cadastrado pelo id.
-
-PUT
-- `/api/v1/aromas/{id}`: Atualiza um aroma cadastrado pelo id.
-
-DELETE
-- `/api/v1/aromas/{id}`: Deleta um aroma cadastrado pelo id.
-
-### Olfactory Inspection: Operações relacionadas a percepção olfativa na degustação do vinho
-
-POST
-- `/api/v1/olfactory-inspection`: Cadastrar percepções olfativas.
-
-GET
-- `/api/v1/olfactory-inspection`: Retorna uma lista com todas as percepções olfativas cadastradas.
-
-GET
-- `/api/v1/olfactory-inspection/{id}`: Retorna uma percepção olfativa cadastrada pelo id.
-
-PUT
-- `/api/v1/olfactory-inspection/{id}`: Atualiza uma percepção olfativa cadastrada pelo id.
-
-DELETE
-- `/api/v1/olfactory-inspection/{id}`: Deleta uma percepção olfativa cadastrada pelo id.
-
-### Visual Inspection: Operações relacionadas a percepção visual na degustação do vinho
-
-POST
-- `/api/v1/visual-inspection`: Cadastrar percepções visuais.
-
-GET
-- `/api/v1/visual-inspection`: Retorna uma lista com todas as percepções visuais cadastradas.
-
-GET
-- `/api/v1/visual-inspection/{id}`: Retorna uma percepção visual cadastrada pelo id.
-
-PUT
-- `/api/v1/visual-inspection/{id}`: Atualiza uma percepção visual cadastrada pelo id.
-
-DELETE
-- `/api/v1/visual-inspection/{id}`: Deleta uma percepção visual cadastrada pelo id.
-
-### Gustatory Inspection: Operações relacionadas a percepção gustativa na degustação do vinho
-
-POST
-- `/api/v1/gustatory-inspection`: Cadastrar percepções gustativas.
-
-GET
-- `/api/v1/gustatory-inspection`: Retorna uma lista com todas as percepções gustativas cadastradas.
-
-GET
-- `/api/v1/gustatory-inspection/{id}`: Retorna uma percepção gustativa cadastrada pelo id.
-
-PUT
-- `/api/v1/gustatory-inspection/{id}`: Atualiza uma percepção gustativa cadastrada pelo id.
-
-DELETE
-- `/api/v1/gustatory-inspection/{id}`: Deleta uma percepção gustativa cadastrada pelo id.
 
 ## Licença
 
