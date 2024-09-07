@@ -1,13 +1,14 @@
 package com.vinhonotas.vinho.application.services.impl;
 
-import com.vinhonotas.vinho.application.converters.WineConverter;
-import com.vinhonotas.vinho.domain.entities.WineEntity;
-import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
-import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
-import com.vinhonotas.vinho.domain.enums.EnumWineType;
-import com.vinhonotas.vinho.infraestructure.WineRepository;
-import com.vinhonotas.vinho.interfaces.dtos.inputs.WineInputDTO;
-import com.vinhonotas.vinho.utils.MessagesConstants;
+import com.vinhonotas.vinho.v1.application.converters.WineConverter;
+import com.vinhonotas.vinho.v1.application.services.impl.WineServiceImpl;
+import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
+import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
+import com.vinhonotas.vinho.v1.infraestructure.WineRepository;
+import com.vinhonotas.vinho.v1.interfaces.dtos.inputs.WineInputDTO;
+import com.vinhonotas.vinho.v1.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
