@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.application.services.impl;
+package com.vinhonotas.vinho.v1.application.services.impl;
 
 import com.vinhonotas.vinho.v1.application.converters.WineConverter;
 import com.vinhonotas.vinho.v1.application.services.impl.WineServiceImpl;

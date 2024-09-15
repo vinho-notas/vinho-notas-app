@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.interfaces.controllers;
+package com.vinhonotas.vinho.v1.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.vinho.v1.application.converters.WineConverter;

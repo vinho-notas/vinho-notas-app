@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.infraestructure;
+package com.vinhonotas.vinho.v1.infraestructure;
 
 import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;

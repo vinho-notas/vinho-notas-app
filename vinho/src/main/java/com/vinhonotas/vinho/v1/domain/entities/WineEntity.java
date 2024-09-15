@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -81,14 +79,12 @@ public class WineEntity {
     @Column(name = "harmonization")
     private String harmonization;
 
-    @CreationTimestamp
     @Column(name = "dthreg")
     private LocalDateTime dthreg;
 
     @Column(name = "userreg")
     private String userreg;
 
-    @UpdateTimestamp
     @Column(name = "dthalt")
     private LocalDateTime dthalt;
 
@@ -97,5 +93,16 @@ public class WineEntity {
 
     @Version
     private Long version;
+
+    @PrePersist
+    protected void onCreate() {
+        dthreg = LocalDateTime.now();
+        dthalt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        dthalt = LocalDateTime.now();
+    }
 
 }

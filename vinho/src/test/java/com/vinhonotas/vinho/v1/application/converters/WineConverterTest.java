@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.application.converters;
+package com.vinhonotas.vinho.v1.application.converters;
 
 import com.vinhonotas.vinho.v1.application.converters.WineConverter;
 import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
