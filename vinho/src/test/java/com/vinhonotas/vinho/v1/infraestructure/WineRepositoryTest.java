@@ -3,7 +3,6 @@ package com.vinhonotas.vinho.v1.infraestructure;
 import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
-import com.vinhonotas.vinho.v1.infraestructure.WineRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -132,6 +131,7 @@ class WineRepositoryTest {
                 .dthreg(LocalDateTime.now())
                 .useralt(null)
                 .dthalt(null)
+                .version(0L)
                 .build();
     }
 
@@ -159,6 +159,7 @@ class WineRepositoryTest {
                 .dthreg(LocalDateTime.now())
                 .useralt(null)
                 .dthalt(null)
+                .version(0L)
                 .build();
     }
 
