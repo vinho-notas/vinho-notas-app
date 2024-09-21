@@ -1,7 +1,7 @@
 package com.vinhonotas.vinho.v1.application.services;
 
 import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
-import com.vinhonotas.vinho.v1.interfaces.dtos.inputs.WineInputDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 
 import java.util.List;
 import java.util.UUID;
