@@ -3,53 +3,21 @@ package com.vinhonotas.vinho.domain.entities.wine;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 public class WineDomain {
 
-    private String sku;
-    private String name;
-    private BigDecimal price;
-    private String purchaseLocation;
-    private LocalDate purchaseDate;
-    private EnumWineType wineType;
-    private EnumWineClassification wineClassification;
-    private String alcoholContent;
-    private int volumeMl;
-    private String grape;
-    private String winery;
-    private String serviceTemperature;
-    private String harvest;
-    private String country;
-    private String guardTime;
-    private String region;
-    private String maturation;
-    private String harmonization;
+    private final String sku;
+    private final String name;
+    private final WineDetails wineDetails;
+    private final PurchaseInfo purchaseInfo;
+    private final WineOrigin wineOrigin;
 
-    public WineDomain(final String sku, final String name, final BigDecimal price, final String purchaseLocation,
-                      final LocalDate purchaseDate, final EnumWineType wineType, final EnumWineClassification wineClassification,
-                      final String alcoholContent, final int volumeMl, final String grape, final String winery, final String serviceTemperature,
-                      final String harvest, final String country, final String guardTime, final String region, final String maturation,
-                      final String harmonization) {
+    public WineDomain(final String sku, final String name, final WineDetails wineDetails, final PurchaseInfo purchaseInfo,
+                      final WineOrigin wineOrigin) {
         this.sku = sku;
         this.name = name;
-        this.price = price;
-        this.purchaseLocation = purchaseLocation;
-        this.purchaseDate = purchaseDate;
-        this.wineType = wineType;
-        this.wineClassification = wineClassification;
-        this.alcoholContent = alcoholContent;
-        this.volumeMl = volumeMl;
-        this.grape = grape;
-        this.winery = winery;
-        this.serviceTemperature = serviceTemperature;
-        this.harvest = harvest;
-        this.country = country;
-        this.guardTime = guardTime;
-        this.region = region;
-        this.maturation = maturation;
-        this.harmonization = harmonization;
+        this.wineDetails = wineDetails;
+        this.purchaseInfo = purchaseInfo;
+        this.wineOrigin = wineOrigin;
     }
 
     public static WineDomainBuilder builder() {
@@ -64,68 +32,16 @@ public class WineDomain {
         return name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public WineDetails getWineDetails() {
+        return wineDetails;
     }
 
-    public String getPurchaseLocation() {
-        return purchaseLocation;
+    public PurchaseInfo getPurchaseInfo() {
+        return purchaseInfo;
     }
 
-    public LocalDate getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public EnumWineType getWineType() {
-        return wineType;
-    }
-
-    public EnumWineClassification getWineClassification() {
-        return wineClassification;
-    }
-
-    public String getAlcoholContent() {
-        return alcoholContent;
-    }
-
-    public int getVolumeMl() {
-        return volumeMl;
-    }
-
-    public String getGrape() {
-        return grape;
-    }
-
-    public String getWinery() {
-        return winery;
-    }
-
-    public String getServiceTemperature() {
-        return serviceTemperature;
-    }
-
-    public String getHarvest() {
-        return harvest;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getGuardTime() {
-        return guardTime;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public String getMaturation() {
-        return maturation;
-    }
-
-    public String getHarmonization() {
-        return harmonization;
+    public WineOrigin getWineOrigin() {
+        return wineOrigin;
     }
 
     @Override
@@ -133,44 +49,18 @@ public class WineDomain {
         return "WineDomain{" +
                 "sku='" + sku + '\'' +
                 ", name='" + name + '\'' +
-                ", price=" + price +
-                ", purchaseLocation='" + purchaseLocation + '\'' +
-                ", purchaseDate=" + purchaseDate +
-                ", wineType=" + wineType +
-                ", wineClassification=" + wineClassification +
-                ", alcoholContent='" + alcoholContent + '\'' +
-                ", volumeMl=" + volumeMl +
-                ", grape='" + grape + '\'' +
-                ", winery='" + winery + '\'' +
-                ", serviceTemperature='" + serviceTemperature + '\'' +
-                ", harvest='" + harvest + '\'' +
-                ", country='" + country + '\'' +
-                ", guardTime='" + guardTime + '\'' +
-                ", region='" + region + '\'' +
-                ", maturation='" + maturation + '\'' +
-                ", harmonization='" + harmonization + '\'' +
+                ", wineDetails=" + wineDetails +
+                ", purchaseInfo=" + purchaseInfo +
+                ", wineOrigin=" + wineOrigin +
                 '}';
     }
 
     public static class WineDomainBuilder {
         private String sku;
         private String name;
-        private BigDecimal price;
-        private String purchaseLocation;
-        private LocalDate purchaseDate;
-        private EnumWineType wineType;
-        private EnumWineClassification wineClassification;
-        private String alcoholContent;
-        private int volumeMl;
-        private String grape;
-        private String winery;
-        private String serviceTemperature;
-        private String harvest;
-        private String country;
-        private String guardTime;
-        private String region;
-        private String maturation;
-        private String harmonization;
+        private WineDetails wineDetails;
+        private PurchaseInfo purchaseInfo;
+        private WineOrigin wineOrigin;
 
         WineDomainBuilder() {
         }
@@ -184,12 +74,12 @@ public class WineDomain {
          * - 2 primeiras letras do EnumWineClassification
          * - harvest
          * - 2 primeiras letras do country.
-         * @param name
-         * @param wineType
-         * @param wineClassification
-         * @param harvest
-         * @param country
-         * @return String sku
+         * @param name: nome do vinho
+         * @param wineType: tipo do vinho
+         * @param wineClassification: classificação do vinho
+         * @param harvest: safra do vinho
+         * @param country: país de origem do vinho
+         * @return String sku: código SKU gerado
          */
         private String generateSku(String name, EnumWineType wineType, EnumWineClassification wineClassification, String harvest, String country) {
             return name.substring(0, 2) + wineType.name().substring(0, 2) + wineClassification.name().substring(0, 2) + harvest + country.substring(0, 2);
@@ -205,93 +95,30 @@ public class WineDomain {
             return this;
         }
 
-        public WineDomainBuilder price(BigDecimal price) {
-            this.price = price;
+        public WineDomainBuilder wineDetails(WineDetails wineDetails) {
+            this.wineDetails = wineDetails;
             return this;
         }
 
-        public WineDomainBuilder purchaseLocation(String purchaseLocation) {
-            this.purchaseLocation = purchaseLocation;
+        public WineDomainBuilder purchaseInfo(PurchaseInfo purchaseInfo) {
+            this.purchaseInfo = purchaseInfo;
             return this;
         }
 
-        public WineDomainBuilder purchaseDate(LocalDate purchaseDate) {
-            this.purchaseDate = purchaseDate;
-            return this;
-        }
-
-        public WineDomainBuilder wineType(EnumWineType wineType) {
-            this.wineType = wineType;
-            return this;
-        }
-
-        public WineDomainBuilder wineClassification(EnumWineClassification wineClassification) {
-            this.wineClassification = wineClassification;
-            return this;
-        }
-
-        public WineDomainBuilder alcoholContent(String alcoholContent) {
-            this.alcoholContent = alcoholContent;
-            return this;
-        }
-
-        public WineDomainBuilder volumeMl(int volumeMl) {
-            this.volumeMl = volumeMl;
-            return this;
-        }
-
-        public WineDomainBuilder grape(String grape) {
-            this.grape = grape;
-            return this;
-        }
-
-        public WineDomainBuilder winery(String winery) {
-            this.winery = winery;
-            return this;
-        }
-
-        public WineDomainBuilder serviceTemperature(String serviceTemperature) {
-            this.serviceTemperature = serviceTemperature;
-            return this;
-        }
-
-        public WineDomainBuilder harvest(String harvest) {
-            this.harvest = harvest;
-            return this;
-        }
-
-        public WineDomainBuilder country(String country) {
-            this.country = country;
-            return this;
-        }
-
-        public WineDomainBuilder guardTime(String guardTime) {
-            this.guardTime = guardTime;
-            return this;
-        }
-
-        public WineDomainBuilder region(String region) {
-            this.region = region;
-            return this;
-        }
-
-        public WineDomainBuilder maturation(String maturation) {
-            this.maturation = maturation;
-            return this;
-        }
-
-        public WineDomainBuilder harmonization(String harmonization) {
-            this.harmonization = harmonization;
+        public WineDomainBuilder wineOrigin(WineOrigin wineOrigin) {
+            this.wineOrigin = wineOrigin;
             return this;
         }
 
         public WineDomain build() {
             if (this.sku == null) {
-                this.sku = generateSku(this.name, this.wineType, this.wineClassification, this.harvest, this.country);
+                this.sku = generateSku(this.name, this.wineDetails.getWineType(), this.wineDetails.getWineClassification(),
+                        this.wineOrigin.getHarvest(), this.wineOrigin.getCountry());
             }
 
-            return new WineDomain(this.sku, this.name, this.price, this.purchaseLocation, this.purchaseDate, this.wineType, this.wineClassification, this.alcoholContent, this.volumeMl, this.grape, this.winery, this.serviceTemperature, this.harvest, this.country, this.guardTime, this.region, this.maturation, this.harmonization);
+            return new WineDomain(this.sku, this.name, this.wineDetails, this.purchaseInfo, this.wineOrigin);
         }
 
     }
+
 }
