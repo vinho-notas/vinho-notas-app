@@ -4,8 +4,8 @@
 //
 //import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.infraestructure.gateways.repositories.WineRepositoryJPA;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
+//import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+//import com.vinhonotas.vinho.domain.enums.EnumWineType;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;

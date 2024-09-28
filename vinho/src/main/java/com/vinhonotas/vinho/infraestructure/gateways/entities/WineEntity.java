@@ -1,7 +1,7 @@
 package com.vinhonotas.vinho.infraestructure.gateways.entities;
 
-import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
-import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
+import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

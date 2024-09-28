@@ -4,12 +4,12 @@
 //import com.vinhonotas.vinho.v1.application.converters.WineConverter;
 //import com.vinhonotas.vinho.v1.application.services.WineService;
 //import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
-//import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
+//import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
+//import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+//import com.vinhonotas.vinho.domain.enums.EnumWineType;
 //import com.vinhonotas.vinho.v1.interfaces.controllers.WineController;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
-//import com.vinhonotas.vinho.v1.interfaces.dtos.outputs.WineOutputDTO;
+//import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
 //import com.vinhonotas.vinho.v1.utils.MessagesConstants;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;

@@ -4,7 +4,7 @@
 //import com.vinhonotas.vinho.v1.application.services.WineService;
 //import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
-//import com.vinhonotas.vinho.v1.interfaces.dtos.outputs.WineOutputDTO;
+//import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 //import jakarta.validation.Valid;

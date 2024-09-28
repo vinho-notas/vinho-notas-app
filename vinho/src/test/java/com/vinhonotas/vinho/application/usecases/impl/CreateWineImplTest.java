@@ -9,9 +9,9 @@
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineDetailsDTO;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineOriginDTO;
-//import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
-//import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
+//import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
+//import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+//import com.vinhonotas.vinho.domain.enums.EnumWineType;
 //import com.vinhonotas.vinho.v1.utils.MessagesConstants;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.jupiter.api.Test;
