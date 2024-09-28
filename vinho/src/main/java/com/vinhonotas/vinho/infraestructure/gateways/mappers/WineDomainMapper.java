@@ -4,10 +4,13 @@ import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
 import com.vinhonotas.vinho.domain.entities.wine.WineDetails;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
+import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.PurchaseInfoDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineDetailsDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineOriginDTO;
+import com.vinhonotas.vinho.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,11 +18,13 @@ public class WineDomainMapper {
 
     public WineDomain toWineDomain(WineInputDTO input) {
         return WineDomain.builder()
-                .sku(input.name(), input.wineDetailsDTO().wineType(), input.wineDetailsDTO().wineClassification(), input.wineOriginDTO().harvest(), input.wineOriginDTO().country())
+                .sku(input.name(), EnumConverter.fromString(input.wineDetails().wineType(), EnumWineType.class),
+                        EnumConverter.fromString(input.wineDetails().wineClassification(), EnumWineClassification.class),
+                        input.wineOrigin().harvest(), input.wineOrigin().country())
                 .name(input.name())
-                .wineDetails(toWineDetails(input.wineDetailsDTO()))
-                .purchaseInfo(toPurchaseInfo(input.purchaseInfoDTO()))
-                .wineOrigin(toWineOrigin(input.wineOriginDTO()))
+                .wineDetails(toWineDetails(input.wineDetails()))
+                .purchaseInfo(toPurchaseInfo(input.purchaseInfo()))
+                .wineOrigin(toWineOrigin(input.wineOrigin()))
                 .build();
     }
 
@@ -44,10 +49,10 @@ public class WineDomainMapper {
 
     private WineDetails toWineDetails(WineDetailsDTO wineDetailsDTO) {
         return WineDetails.builder()
-                .wineType(wineDetailsDTO.wineType())
-                .wineClassification(wineDetailsDTO.wineClassification())
+                .wineType(EnumConverter.fromString(wineDetailsDTO.wineType(), EnumWineType.class))
+                .wineClassification(EnumConverter.fromString(wineDetailsDTO.wineClassification(), EnumWineClassification.class))
                 .alcoholContent(wineDetailsDTO.alcoholContent())
-                .volumeMl(wineDetailsDTO.volumeMl())
+                .volumeMl(Integer.parseInt(wineDetailsDTO.volumeMl()))
                 .grape(wineDetailsDTO.grape())
                 .winery(wineDetailsDTO.winery())
                 .serviceTemperature(wineDetailsDTO.serviceTemperature())
