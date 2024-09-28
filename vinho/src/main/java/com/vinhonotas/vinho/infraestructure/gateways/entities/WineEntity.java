@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.domain.entities;
+package com.vinhonotas.vinho.infraestructure.gateways.entities;
 
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
@@ -25,6 +25,9 @@ public class WineEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
+
+    @Column(name = "sku", nullable = false)
+    private String sku;
 
     @Column(name = "name", nullable = false)
     private String name;
