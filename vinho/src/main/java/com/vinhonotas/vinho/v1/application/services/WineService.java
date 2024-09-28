@@ -1,6 +1,6 @@
 package com.vinhonotas.vinho.v1.application.services;
 
-import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 
 import java.util.List;

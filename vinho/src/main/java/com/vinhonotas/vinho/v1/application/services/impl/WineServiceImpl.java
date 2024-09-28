@@ -2,10 +2,10 @@
 //
 //import com.vinhonotas.vinho.v1.application.converters.WineConverter;
 //import com.vinhonotas.vinho.v1.application.services.WineService;
-//import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+//import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
 //import com.vinhonotas.vinho.v1.domain.entities.exceptions.WineNotFoundException;
-//import com.vinhonotas.vinho.v1.infraestructure.WineRepository;
+//import com.vinhonotas.vinho.v1.infraestructure.CreateWineRepository;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 //import com.vinhonotas.vinho.v1.utils.MessagesConstants;
 //import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@
 //@Slf4j
 //public class WineServiceImpl implements WineService {
 //
-//    private final WineRepository wineRepository;
+//    private final CreateWineRepository wineRepository;
 //    private final WineConverter wineConverter;
 //
 //    @Override
