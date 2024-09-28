@@ -3,7 +3,7 @@
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.vinhonotas.vinho.v1.application.converters.WineConverter;
 //import com.vinhonotas.vinho.v1.application.services.WineService;
-//import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+//import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;

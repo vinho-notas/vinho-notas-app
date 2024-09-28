@@ -1,6 +1,6 @@
 //package com.vinhonotas.vinho.v1.application.converters;
 //
-//import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+//import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;

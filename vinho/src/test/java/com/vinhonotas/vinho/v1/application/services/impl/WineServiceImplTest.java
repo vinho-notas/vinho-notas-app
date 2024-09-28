@@ -1,11 +1,11 @@
 //package com.vinhonotas.vinho.v1.application.services.impl;
 //
 //import com.vinhonotas.vinho.v1.application.converters.WineConverter;
-//import com.vinhonotas.vinho.v1.domain.entities.WineEntity;
+//import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 //import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineClassification;
 //import com.vinhonotas.vinho.v1.domain.enums.EnumWineType;
-//import com.vinhonotas.vinho.v1.infraestructure.WineRepository;
+//import com.vinhonotas.vinho.v1.infraestructure.CreateWineRepository;
 //import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 //import com.vinhonotas.vinho.v1.utils.MessagesConstants;
 //import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@
 //    private WineServiceImpl wineServiceImpl;
 //
 //    @Mock
-//    private WineRepository wineRepository;
+//    private CreateWineRepository wineRepository;
 //    @Mock
 //    private WineConverter wineConverter;
 //    private WineInputDTO redWineInputDTO;
