@@ -1,6 +1,6 @@
-package com.vinhonotas.vinho.v1.utils;
+package com.vinhonotas.vinho.utils;
 
-import com.vinhonotas.vinho.v1.domain.enums.EnumCode;
+import com.vinhonotas.vinho.domain.enums.EnumCode;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

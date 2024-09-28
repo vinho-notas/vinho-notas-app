@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.interfaces.dtos.outputs;
+package com.vinhonotas.vinho.infraestructure.controller.dtos.output;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +12,7 @@ import java.util.UUID;
 public class WineOutputDTO {
 
     private UUID id;
+    private String sku;
     private String name;
     private BigDecimal price;
     private String purchaseLocation;

@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.utils;
+package com.vinhonotas.vinho.utils;
 
 public class MessagesConstants {
 

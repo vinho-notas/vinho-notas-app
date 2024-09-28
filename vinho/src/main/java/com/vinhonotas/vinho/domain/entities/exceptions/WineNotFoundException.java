@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.domain.entities.exceptions;
+package com.vinhonotas.vinho.domain.entities.exceptions;
 
 public class WineNotFoundException extends RuntimeException {
 

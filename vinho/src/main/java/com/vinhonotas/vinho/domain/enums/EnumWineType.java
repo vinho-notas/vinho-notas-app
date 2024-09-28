@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.domain.enums;
+package com.vinhonotas.vinho.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
