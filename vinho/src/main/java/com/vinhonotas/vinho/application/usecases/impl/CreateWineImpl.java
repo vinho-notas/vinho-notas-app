@@ -7,9 +7,11 @@ import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.utils.MessagesConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
+@Service
 public class CreateWineImpl implements CreateWine {
 
     private final CreateWineRepository createWineRepository;

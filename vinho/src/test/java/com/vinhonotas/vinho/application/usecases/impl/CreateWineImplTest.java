@@ -1,98 +1,122 @@
-//package com.vinhonotas.vinho.application.usecases.impl;
-//
-//import com.vinhonotas.vinho.application.gateways.CreateWineRepository;
-//import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
-//import com.vinhonotas.vinho.domain.entities.wine.WineDetails;
-//import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
-//import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
-//import com.vinhonotas.vinho.infraestructure.controller.dtos.input.PurchaseInfoDTO;
-//import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineDetailsDTO;
-//import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
-//import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineOriginDTO;
-//import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
-//import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
-//import com.vinhonotas.vinho.domain.enums.EnumWineType;
-//import com.vinhonotas.vinho.v1.utils.MessagesConstants;
-//import lombok.extern.slf4j.Slf4j;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.Mockito;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//
-//import java.math.BigDecimal;
-//import java.time.LocalDate;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//@Slf4j
-//@ExtendWith(MockitoExtension.class)
-//class CreateWineImplTest {
-//
-//    @InjectMocks
-//    private CreateWineImpl createWineImpl;
-//
-//    @Mock
-//    private CreateWineRepository createWineRepository;
-//
-//    @Test
-//    void testCreateWineSuccess() {
-//        WineDetailsDTO details = new WineDetailsDTO(
-//                EnumWineType.REDWINE,
-//                EnumWineClassification.DRYWINE,
-//                "13%",
-//                750,
-//                "Cabernet Sauvignon",
-//                "DFJ Vinhos",
-//                "16°C");
-//
-//        PurchaseInfoDTO purchaseInfo = new PurchaseInfoDTO(
-//                BigDecimal.valueOf(50.00),
-//                "Supermercado ABC",
-//                LocalDate.now());
-//        WineOriginDTO origin = new WineOriginDTO(
-//                "Portugal",
-//                "Lisboa",
-//                "2020",
-//                "1 ano",
-//                "1 mês em garrafa",
-//                "Carnes vermelhas, Queijos, Pato assado, polenta com ragus de sabor intenso, excelente com " +
-//                        "carnes de caça, queijos de massa dura, com longa maturação."
-//        );
-//        WineDetails wineDetails = new WineDetails(
-//                EnumWineType.REDWINE,
-//                EnumWineClassification.DRYWINE,
-//                "13%",
-//                750,
-//                "Cabernet Sauvignon",
-//                "DFJ Vinhos",
-//                "16°C");
-//
-//        PurchaseInfo info = new PurchaseInfo(BigDecimal.valueOf(50.00), "Supermercado ABC", LocalDate.now());
-//        WineOrigin wineOrigin = new WineOrigin("Portugal", "Lisboa", "2020", "1 ano", "1 mês em garrafa",
-//                "Carnes vermelhas, Queijos, Pato assado, polenta com ragus de sabor intenso, excelente com " +
-//                        "carnes de caça, queijos de massa dura, com longa maturação.");
-//        WineDomain wineDomain = new WineDomain("", "Portada Winemaker's Selection 2020", wineDetails, info, wineOrigin);
-//
-//        Mockito.when(createWineRepository.createWine(Mockito.any(WineInputDTO.class))).thenReturn(wineDomain);
-//
-//        WineInputDTO wine = new WineInputDTO("Portada Winemaker's Selection 2020", details, purchaseInfo, origin);
-//
-//        WineDomain wineCreated = assertDoesNotThrow(() -> createWineImpl.createWine(wine));
-//        assertNotNull(wineCreated);
-//
-//        log.info("createWine :: Vinho criado: {}", wineCreated);
-//
-//    }
-//
-//    @Test
-//    void testCreateWithException() {
-//        WineInputDTO wine = new WineInputDTO("Portada Winemaker's Selection 2020", null, null, null);
-//        Mockito.when(createWineRepository.createWine(wine)).thenThrow(new BadRequestException(MessagesConstants.ERROR_CREATE_WINE));
-//
-//        BadRequestException ex = assertThrows(BadRequestException.class, () -> createWineImpl.createWine(wine));
-//        assertEquals(MessagesConstants.ERROR_CREATE_WINE, ex.getMessage());
-//        Mockito.verify(createWineRepository, Mockito.times(1)).createWine(wine);
-//    }
-//}
+package com.vinhonotas.vinho.application.usecases.impl;
+
+import com.vinhonotas.vinho.application.gateways.CreateWineRepository;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
+import com.vinhonotas.vinho.domain.entities.wine.WineDetails;
+import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
+import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
+import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
+import com.vinhonotas.vinho.domain.enums.EnumWineType;
+import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
+import com.vinhonotas.vinho.utils.MessagesConstants;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+class CreateWineImplTest {
+
+    @InjectMocks
+    private CreateWineImpl createWineImpl;
+
+    @Mock
+    private CreateWineRepository createWineRepository;
+
+    private WineDomain wineDomain;
+    private WineEntity wineEntity;
+
+    @BeforeEach
+    void setUp() {
+        wineDomain = createWineDomain();
+        wineEntity = createWineEntity();
+    }
+
+
+
+    @Test
+    @DisplayName("Deve criar um vinho")
+    void testCreateWine() {
+        Mockito.when(createWineRepository.createWine(wineDomain)).thenReturn(wineEntity);
+
+        WineEntity wineCreated = assertDoesNotThrow(() -> createWineImpl.createWine(wineDomain));
+        assertNotNull(wineCreated);
+        assertEquals(wineEntity, wineCreated);
+    }
+
+    @Test
+    @DisplayName("Deve lançar BadRequestException ao tentar criar um vinho")
+    void testCreateWineThrowBadRequestException() {
+        Mockito.when(createWineRepository.createWine(wineDomain)).thenThrow(new BadRequestException(MessagesConstants.ERROR_CREATE_WINE));
+
+        Exception ex = assertThrows(Exception.class, () -> createWineImpl.createWine(wineDomain));
+        assertEquals(MessagesConstants.ERROR_CREATE_WINE, ex.getMessage());
+    }
+
+    private WineEntity createWineEntity() {
+        return WineEntity.builder()
+                .sku("MiREDR2020It")
+                .name("Miliasso Barolo DOCG 2020")
+                .wineType(EnumWineType.REDWINE)
+                .wineClassification(EnumWineClassification.DRYWINE)
+                .alcoholContent("14.5%")
+                .volumeMl(750)
+                .grape("Nebbiolo")
+                .winery("Cantine Pover")
+                .serviceTemperature("16-18°C")
+                .price(new BigDecimal("150.00"))
+                .purchaseLocation("Vinhos do Mundo")
+                .purchaseDate(LocalDate.of(2021, 10, 10))
+                .country("Italy")
+                .region("Piemonte")
+                .harvest("2020")
+                .guardTime("10 years")
+                .maturation("24 months in oak barrels")
+                .harmonization("Red meats and mature cheeses")
+                .build();
+    }
+
+    private WineDomain createWineDomain() {
+        return WineDomain.builder()
+                .name("Miliasso Barolo DOCG 2020")
+                .wineDetails(
+                        WineDetails.builder()
+                                .wineType(EnumWineType.REDWINE)
+                                .wineClassification(EnumWineClassification.DRYWINE)
+                                .alcoholContent("14.5%")
+                                .volumeMl(750)
+                                .grape("Nebbiolo")
+                                .winery("Cantine Povero")
+                                .serviceTemperature("16-18°C")
+                                .build()
+                )
+                .purchaseInfo(
+                        PurchaseInfo.builder()
+                                .price(new BigDecimal("150.00"))
+                                .purchaseLocation("Vinhos do Mundo")
+                                .purchaseDate(LocalDate.of(2021, 10, 10))
+                                .build()
+                )
+                .wineOrigin(
+                        WineOrigin.builder()
+                                .country("Italy")
+                                .region("Piemonte")
+                                .harvest("2020")
+                                .guardTime("10 years")
+                                .maturation("24 months in oak barrels")
+                                .harmonization("Red meats and mature cheeses")
+                                .build()
+                )
+                .build();
+    }
+}
