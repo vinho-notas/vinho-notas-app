@@ -105,6 +105,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
 				<executions>
 					<execution>
 						<goals>
@@ -127,8 +128,13 @@
 				<configuration>
 					<excludes>
 						<exclude>**/com/vinhonotas/vinho/VinhoApplication.class</exclude>
-						<exclude>**/com/vinhonotas/vinho/domain/**</exclude>
-						<exclude>**/com/vinhonotas/vinho/interfaces/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/PurchaseInfo.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/WineDetails.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/WineOrigin.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/infraestructure/controller/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/enums/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/exceptions/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/infraestructure/gateways/entities/**</exclude>
 						<exclude>**/com/vinhonotas/vinho/utils/**</exclude>
 						<exclude>**/com/vinhonotas/vinho/configuration/**</exclude>
 					</excludes>
