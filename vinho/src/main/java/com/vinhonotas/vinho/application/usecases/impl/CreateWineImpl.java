@@ -4,8 +4,8 @@ import com.vinhonotas.vinho.application.gateways.CreateWineRepository;
 import com.vinhonotas.vinho.application.usecases.CreateWine;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
-import com.vinhonotas.vinho.v1.domain.entities.exceptions.BadRequestException;
-import com.vinhonotas.vinho.v1.utils.MessagesConstants;
+import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
+import com.vinhonotas.vinho.utils.MessagesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 

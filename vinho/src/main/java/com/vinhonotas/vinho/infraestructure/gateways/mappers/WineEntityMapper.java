@@ -1,7 +1,9 @@
 package com.vinhonotas.vinho.infraestructure.gateways.mappers;
 
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
 import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
+import com.vinhonotas.vinho.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,6 +30,30 @@ public class WineEntityMapper {
         .maturation(wineDomain.getWineOrigin().getMaturation())
         .harmonization(wineDomain.getWineOrigin().getHarmonization())
         .build();
+    }
+
+    public WineOutputDTO toWineOutputDTO(WineEntity wineEntity) {
+        return WineOutputDTO.builder()
+                .id(wineEntity.getId())
+                .sku(wineEntity.getSku())
+                .name(wineEntity.getName())
+                .price(wineEntity.getPrice())
+                .purchaseLocation(wineEntity.getPurchaseLocation())
+                .purchaseDate(wineEntity.getPurchaseDate())
+                .wineType(EnumConverter.toString(wineEntity.getWineType()))
+                .wineClassification(EnumConverter.toString(wineEntity.getWineClassification()))
+                .alcoholContent(wineEntity.getAlcoholContent())
+                .volumeMl(String.valueOf(wineEntity.getVolumeMl()))
+                .grape(wineEntity.getGrape())
+                .winery(wineEntity.getWinery())
+                .serviceTemperature(wineEntity.getServiceTemperature())
+                .harvest(wineEntity.getHarvest())
+                .country(wineEntity.getCountry())
+                .guardTime(wineEntity.getGuardTime())
+                .region(wineEntity.getRegion())
+                .maturation(wineEntity.getMaturation())
+                .harmonization(wineEntity.getHarmonization())
+                .build();
     }
 
 }

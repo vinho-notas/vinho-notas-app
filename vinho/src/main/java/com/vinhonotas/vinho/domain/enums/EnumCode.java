@@ -1,4 +1,4 @@
-package com.vinhonotas.vinho.v1.domain.enums;
+package com.vinhonotas.vinho.domain.enums;
 
 public interface EnumCode {
         String getCode();
