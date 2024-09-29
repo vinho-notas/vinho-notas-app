@@ -2,15 +2,14 @@ package com.vinhonotas.vinho.domain.entities.wine;
 
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Slf4j
 class WineDomainTest {
 
     @Test
@@ -57,7 +56,6 @@ class WineDomainTest {
                                 .winery("Luca Bosio Vineyards")
                                 .serviceTemperature("16-18°C")
                                 .build()
-
                 )
                 .purchaseInfo(PurchaseInfo.builder()
                         .price(BigDecimal.valueOf(200.00))
@@ -133,11 +131,10 @@ class WineDomainTest {
                         .build())
                 .build());
 
-        log.info("WineDomain1: SKU: {}", wineDomain1.getSku());
-        log.info("WineDomain2: SKU: {}", wineDomain2.getSku());
-        log.info("WineDomain3: SKU: {}", wineDomain3.getSku());
-        log.info("WineDomain4: SKU: {}", wineDomain4.getSku());
-
+        assertEquals("LuREDR2020It", wineDomain1.getSku());
+        assertEquals("LuWHDE2023It", wineDomain2.getSku());
+        assertEquals("ExBLIC2010It", wineDomain3.getSku());
+        assertEquals("ExNASW2019It", wineDomain4.getSku());
     }
 
 }
