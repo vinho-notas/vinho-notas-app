@@ -32,7 +32,7 @@ class RetrieveWineByIdImplTest {
 
     @Test
     @DisplayName("Deve retornar um vinho quando informado um id")
-    void retrieveWineById() {
+    void testRetrieveWineById() {
         WineEntity wineEntity = createWine();
 
         when(retrieveWineByIdRepository.retrieveWineById("562aaf01-f0c6-4bd6-aa22-30b4596e217f"))
@@ -46,7 +46,7 @@ class RetrieveWineByIdImplTest {
 
     @Test
     @DisplayName("Deve lançar uma exceção ao tentar recuperar um vinho que não existe")
-    void retrieveWineByIdThrowException() {
+    void testRetrieveWineByIdThrowException() {
         when(retrieveWineByIdRepository.retrieveWineById("562aaf01-f0c6-4bd6-aa22-30b4596e217f"))
                 .thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
 

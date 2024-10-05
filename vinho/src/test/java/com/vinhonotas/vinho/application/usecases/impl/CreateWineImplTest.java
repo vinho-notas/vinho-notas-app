@@ -42,8 +42,6 @@ class CreateWineImplTest {
         wineEntity = createWineEntity();
     }
 
-
-
     @Test
     @DisplayName("Deve criar um vinho")
     void testCreateWine() {
