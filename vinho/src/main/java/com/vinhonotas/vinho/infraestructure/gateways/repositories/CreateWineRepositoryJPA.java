@@ -8,12 +8,12 @@ import com.vinhonotas.vinho.infraestructure.persistence.WineRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class WineRepositoryJPA implements CreateWineRepository {
+public class CreateWineRepositoryJPA implements CreateWineRepository {
 
     private final WineRepository wineRepository;
     private final WineEntityMapper wineEntityMapper;
 
-    public WineRepositoryJPA(WineRepository wineRepository, WineEntityMapper wineEntityMapper) {
+    public CreateWineRepositoryJPA(WineRepository wineRepository, WineEntityMapper wineEntityMapper) {
         this.wineRepository = wineRepository;
         this.wineEntityMapper = wineEntityMapper;
     }

@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface WineService {
 
-    WineEntity create(WineInputDTO wineInputDTO);
+//    WineEntity create(WineInputDTO wineInputDTO);
     List<WineEntity> getAll();
-    WineEntity getById(UUID id);
+//    WineEntity getById(UUID id);
     WineEntity update(UUID id, WineInputDTO wineInputDTO);
     void delete(UUID id);
 }
