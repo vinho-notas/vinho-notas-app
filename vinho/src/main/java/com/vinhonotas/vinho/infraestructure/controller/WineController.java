@@ -2,6 +2,7 @@ package com.vinhonotas.vinho.infraestructure.controller;
 
 import com.vinhonotas.vinho.application.usecases.CreateWine;
 import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
+import com.vinhonotas.vinho.application.usecases.RetrieveWines;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
@@ -15,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/wines")
@@ -23,14 +26,16 @@ public class WineController {
 
     private final CreateWine createWine;
     private final RetrieveWineById retrieveWineById;
+    private final RetrieveWines retrieveWines;
     private final WineDomainMapper wineDomainMapper;
     private final WineEntityMapper wineEntityMapper;
 
-    public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper, RetrieveWineById retrieveWineById){
+    public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper, RetrieveWineById retrieveWineById, RetrieveWines retrieveWines){
         this.createWine = createWine;
         this.wineDomainMapper = wineDomainMapper;
         this.wineEntityMapper = wineEntityMapper;
         this.retrieveWineById = retrieveWineById;
+        this.retrieveWines = retrieveWines;
     }
 
     @Operation(summary = "Cria um vinho")
@@ -56,6 +61,16 @@ public class WineController {
 
         log.info("retrieveWineById:: Vinho retornado com sucesso: {}", wineOutput);
         return ResponseEntity.ok(wineOutput);
+    }
+
+    @Operation(summary = "Retorna uma lista de vinhos")
+    @GetMapping
+    public ResponseEntity<List<WineOutputDTO>> retrieveAllWines(){
+        log.info("retrieveAllWines:: Recebendo requisição para retornar todos os vinhos");
+        List<WineEntity> wineList = retrieveWines.retrieveAllWines();
+
+        log.info("retrieveAllWines:: Lista de vinhos retornada com sucesso: {}", wineList);
+        return ResponseEntity.ok(wineEntityMapper.toWineOutputDTOList(wineList));
     }
 
 }
