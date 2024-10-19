@@ -6,10 +6,17 @@ import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import com.vinhonotas.vinho.utils.EnumConverter;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
+
 @Component
 public class WineEntityMapper {
 
     public WineEntity toWineEntity(WineDomain wineDomain) {
+        if (wineDomain == null) {
+            return null;
+        }
+
         return WineEntity.builder()
         .sku(wineDomain.getSku())
         .name(wineDomain.getName())
@@ -33,6 +40,10 @@ public class WineEntityMapper {
     }
 
     public WineOutputDTO toWineOutputDTO(WineEntity wineEntity) {
+        if (wineEntity == null) {
+            return null;
+        }
+
         return WineOutputDTO.builder()
                 .id(wineEntity.getId())
                 .sku(wineEntity.getSku())
@@ -54,6 +65,16 @@ public class WineEntityMapper {
                 .maturation(wineEntity.getMaturation())
                 .harmonization(wineEntity.getHarmonization())
                 .build();
+    }
+
+    public List<WineOutputDTO> toWineOutputDTOList(List<WineEntity> wineList) {
+        if (wineList.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return wineList.stream()
+                .map(this::toWineOutputDTO)
+                .toList();
     }
 
 }
