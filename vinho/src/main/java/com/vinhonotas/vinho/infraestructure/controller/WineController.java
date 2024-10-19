@@ -3,6 +3,7 @@ package com.vinhonotas.vinho.infraestructure.controller;
 import com.vinhonotas.vinho.application.usecases.CreateWine;
 import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
 import com.vinhonotas.vinho.application.usecases.RetrieveWines;
+import com.vinhonotas.vinho.application.usecases.UpdateWine;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
@@ -27,15 +28,18 @@ public class WineController {
     private final CreateWine createWine;
     private final RetrieveWineById retrieveWineById;
     private final RetrieveWines retrieveWines;
+    private final UpdateWine updateWine;
     private final WineDomainMapper wineDomainMapper;
     private final WineEntityMapper wineEntityMapper;
 
-    public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper, RetrieveWineById retrieveWineById, RetrieveWines retrieveWines){
+    public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper,
+                          RetrieveWineById retrieveWineById, RetrieveWines retrieveWines, UpdateWine updateWine){
         this.createWine = createWine;
         this.wineDomainMapper = wineDomainMapper;
         this.wineEntityMapper = wineEntityMapper;
         this.retrieveWineById = retrieveWineById;
         this.retrieveWines = retrieveWines;
+        this.updateWine = updateWine;
     }
 
     @Operation(summary = "Cria um vinho")
@@ -71,6 +75,19 @@ public class WineController {
 
         log.info("retrieveAllWines:: Lista de vinhos retornada com sucesso: {}", wineList);
         return ResponseEntity.ok(wineEntityMapper.toWineOutputDTOList(wineList));
+    }
+
+    @Operation(summary = "Atualiza um vinho pelo id")
+    @PutMapping("/{id}")
+    public ResponseEntity<WineOutputDTO> updateWine(@PathVariable("id") String id, @Valid @RequestBody WineInputDTO wineInputDTO) {
+        log.info("updateWine:: Recebendo requisição para atualizar um vinho pelo id: {}", id);
+
+        WineDomain wineDomain = wineDomainMapper.toWineDomain(wineInputDTO);
+        WineEntity wineUpdated = updateWine.updateWine(id, wineDomain);
+        WineOutputDTO wineOutputDTO = wineEntityMapper.toWineOutputDTO(wineUpdated);
+
+        log.info("updateWine:: Vinho atualizado com sucesso: {}", wineOutputDTO);
+        return ResponseEntity.ok(wineOutputDTO);
     }
 
 }
