@@ -5,6 +5,7 @@ import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
 import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -17,11 +18,11 @@ public class RetrieveWineByIdImpl implements RetrieveWineById {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public WineEntity retrieveWineById(String id) {
         log.info("retrieveWineById:: Buscando vinho pelo id: {}", id);
 
         return retrieveWineByIdRepository.retrieveWineById(id);
-
     }
 
 }

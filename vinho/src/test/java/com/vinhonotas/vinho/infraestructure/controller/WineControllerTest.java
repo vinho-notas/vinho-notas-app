@@ -3,6 +3,7 @@ package com.vinhonotas.vinho.infraestructure.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vinhonotas.vinho.application.usecases.CreateWine;
 import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
+import com.vinhonotas.vinho.application.usecases.RetrieveWines;
 import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.exceptions.WineNotFoundException;
 import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
@@ -35,6 +36,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -53,6 +55,8 @@ class WineControllerTest {
     private CreateWine createWine;
     @MockBean
     private RetrieveWineById retrieveWineById;
+    @MockBean
+    private RetrieveWines retrieveWines;
     @MockBean
     private WineDomainMapper wineDomainMapper;
     @MockBean
@@ -122,6 +126,29 @@ class WineControllerTest {
         when(retrieveWineById.retrieveWineById(id)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
 
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + id))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Nenhum vinho encontrado"));
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de vinhos")
+    void testRetrieveAllWines() throws Exception {
+        when(retrieveWines.retrieveAllWines()).thenReturn(List.of(wineEntity));
+        when(wineEntityMapper.toWineOutputDTOList(List.of(wineEntity))).thenReturn(List.of(wineOutputDTO));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(List.of(wineOutputDTO))));
+    }
+
+    @Test
+    @DisplayName("Deve lançar WineNotFoundException ao tentar retornar uma lista de vinhos")
+    void testRetrieveAllWinesBadRequest() throws Exception {
+        when(retrieveWines.retrieveAllWines()).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Nenhum vinho encontrado"));

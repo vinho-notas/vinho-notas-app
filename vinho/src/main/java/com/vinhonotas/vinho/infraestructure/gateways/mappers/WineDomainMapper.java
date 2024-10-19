@@ -17,6 +17,10 @@ import org.springframework.stereotype.Component;
 public class WineDomainMapper {
 
     public WineDomain toWineDomain(WineInputDTO input) {
+        if (input == null) {
+            return null;
+        }
+
         return WineDomain.builder()
                 .sku(input.name(), EnumConverter.fromString(input.wineDetails().wineType(), EnumWineType.class),
                         EnumConverter.fromString(input.wineDetails().wineClassification(), EnumWineClassification.class),
@@ -29,6 +33,10 @@ public class WineDomainMapper {
     }
 
     private WineOrigin toWineOrigin(WineOriginDTO wineOriginDTO) {
+        if (wineOriginDTO == null) {
+            return null;
+        }
+
         return WineOrigin.builder()
                 .country(wineOriginDTO.country())
                 .region(wineOriginDTO.region())
@@ -40,6 +48,10 @@ public class WineDomainMapper {
     }
 
     private PurchaseInfo toPurchaseInfo(PurchaseInfoDTO purchaseInfoDTO) {
+        if (purchaseInfoDTO == null) {
+            return null;
+        }
+
         return PurchaseInfo.builder()
                 .price(purchaseInfoDTO.price())
                 .purchaseLocation(purchaseInfoDTO.purchaseLocation())
@@ -48,6 +60,10 @@ public class WineDomainMapper {
     }
 
     private WineDetails toWineDetails(WineDetailsDTO wineDetailsDTO) {
+        if (wineDetailsDTO == null) {
+            return null;
+        }
+
         return WineDetails.builder()
                 .wineType(EnumConverter.fromString(wineDetailsDTO.wineType(), EnumWineType.class))
                 .wineClassification(EnumConverter.fromString(wineDetailsDTO.wineClassification(), EnumWineClassification.class))
