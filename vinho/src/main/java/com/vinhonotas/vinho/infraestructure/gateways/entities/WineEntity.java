@@ -53,7 +53,7 @@ public class WineEntity {
     private String alcoholContent;
 
     @Column(name = "volume")
-    private int volumeMl;
+    private Integer volumeMl;
 
     @Column(name = "grape")
     private String grape;
