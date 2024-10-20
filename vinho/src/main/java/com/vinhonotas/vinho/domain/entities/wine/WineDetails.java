@@ -11,13 +11,13 @@ public class WineDetails {
     private final EnumWineType wineType;
     private final EnumWineClassification wineClassification;
     private final String alcoholContent;
-    private final int volumeMl;
+    private final Integer volumeMl;
     private final String grape;
     private final String winery;
     private final String serviceTemperature;
 
     public WineDetails(EnumWineType wineType, EnumWineClassification wineClassification, String alcoholContent,
-                       int volumeMl, String grape, String winery, String serviceTemperature) {
+                       Integer volumeMl, String grape, String winery, String serviceTemperature) {
         this.wineType = wineType;
         this.wineClassification = wineClassification;
         this.alcoholContent = alcoholContent;
@@ -43,7 +43,7 @@ public class WineDetails {
         return alcoholContent;
     }
 
-    public int getVolumeMl() {
+    public Integer getVolumeMl() {
         return volumeMl;
     }
 
@@ -76,7 +76,7 @@ public class WineDetails {
         private EnumWineType wineType;
         private EnumWineClassification wineClassification;
         private String alcoholContent;
-        private int volumeMl;
+        private Integer volumeMl;
         private String grape;
         private String winery;
         private String serviceTemperature;
@@ -99,7 +99,7 @@ public class WineDetails {
             return this;
         }
 
-        public WineDetailsBuilder volumeMl(int volumeMl) {
+        public WineDetailsBuilder volumeMl(Integer volumeMl) {
             this.volumeMl = volumeMl;
             return this;
         }
