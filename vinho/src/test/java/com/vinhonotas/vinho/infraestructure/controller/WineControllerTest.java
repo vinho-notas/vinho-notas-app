@@ -1,10 +1,7 @@
 package com.vinhonotas.vinho.infraestructure.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vinhonotas.vinho.application.usecases.CreateWine;
-import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
-import com.vinhonotas.vinho.application.usecases.RetrieveWines;
-import com.vinhonotas.vinho.application.usecases.UpdateWine;
+import com.vinhonotas.vinho.application.usecases.*;
 import com.vinhonotas.vinho.domain.entities.exceptions.BadRequestException;
 import com.vinhonotas.vinho.domain.entities.exceptions.WineNotFoundException;
 import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
@@ -43,11 +40,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(WineController.class)
 class WineControllerTest {
 
+    public static final String ID = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
     private final String BASE_URL = "/api/v1/wines";
 
     @Autowired
@@ -67,6 +66,8 @@ class WineControllerTest {
     private WineDomainMapper wineDomainMapper;
     @MockBean
     private WineEntityMapper wineEntityMapper;
+    @MockBean
+    private DeleteWine deleteWine;
 
     private WineInputDTO wineInputDTO;
     private WineOutputDTO wineOutputDTO;
@@ -113,12 +114,10 @@ class WineControllerTest {
     @Test
     @DisplayName("Deve retornar um vinho pelo id")
     void testRetrieveWineById() throws Exception {
-        String id = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
-
-        when(retrieveWineById.retrieveWineById(id)).thenReturn(wineEntity);
+        when(retrieveWineById.retrieveWineById(ID)).thenReturn(wineEntity);
         when(wineEntityMapper.toWineOutputDTO(wineEntity)).thenReturn(wineOutputDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + id))
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + ID))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(wineOutputDTO)));
@@ -127,11 +126,9 @@ class WineControllerTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao tentar retornar um vinho pelo id")
     void testRetrieveWineByIdBadRequest() throws Exception {
-        String id = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
+        when(retrieveWineById.retrieveWineById(ID)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
 
-        when(retrieveWineById.retrieveWineById(id)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
-
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + id))
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/" + ID))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Nenhum vinho encontrado"));
@@ -162,14 +159,11 @@ class WineControllerTest {
 
     @Test
     @DisplayName("Deve atualizar um vinho pelo id")
-    void testUpdateWine() throws Exception {
-        String id = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
-
-        when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
-        when(updateWine.updateWine(id, wineDomain)).thenReturn(wineEntity);
+    void testUpdateWine() throws Exception {when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
+        when(updateWine.updateWine(ID, wineDomain)).thenReturn(wineEntity);
         when(wineEntityMapper.toWineOutputDTO(wineEntity)).thenReturn(wineOutputDTO);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(wineInputDTO)))
                 .andDo(MockMvcResultHandlers.print())
@@ -181,13 +175,12 @@ class WineControllerTest {
     @DisplayName("Deve lançar WineNotFoundException ao tentar atualizar um vinho pelo id")
     void testUpdateWineBadRequest() throws Exception {
         WineRepository wineRepository = Mockito.mock(WineRepository.class);
-        String id = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
 
         when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
-        when(wineRepository.findById(UUID.fromString(id))).thenReturn(Optional.empty());
-        when(updateWine.updateWine(id, wineDomain)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
+        when(wineRepository.findById(UUID.fromString(ID))).thenReturn(Optional.empty());
+        when(updateWine.updateWine(ID, wineDomain)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
 
-        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(wineInputDTO)))
                 .andDo(MockMvcResultHandlers.print())
@@ -198,17 +191,47 @@ class WineControllerTest {
     @Test
     @DisplayName("Deve lançar BadRequestException ao tentar atualizar um vinho pelo id")
     void testUpdateWineBadRequestException() throws Exception {
-        String id = "562aaf01-f0c6-4bd6-aa22-30b4596e217f";
-
         when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
-        when(updateWine.updateWine(id, wineDomain)).thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_WINE_DATA));
+        when(updateWine.updateWine(ID, wineDomain)).thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_WINE_DATA));
 
-        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(wineInputDTO)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Erro ao atualizar dados do vinho"));
+    }
+
+    @Test
+    @DisplayName("Deve deletar um vinho pelo id")
+    void testDeleteWine() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "/" + ID))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve lançar WineNotFoundException ao tentar deletar um vinho pelo id")
+    void testDeleteWineBadRequest() throws Exception {
+        doThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND)).when(deleteWine)
+                .deleteWineById(UUID.fromString(ID));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "/" + ID))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Nenhum vinho encontrado"));
+    }
+
+    @Test
+    @DisplayName("Deve lançar BadRequestException ao tentar deletar um vinho pelo id")
+    void testDeleteWineBadRequestException() throws Exception {
+        doThrow(new BadRequestException(MessagesConstants.ERROR_DELETE_WINE)).when(deleteWine)
+                .deleteWineById(UUID.fromString(ID));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL + "/" + ID))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Erro ao deletar vinho"));
     }
 
     private WineDomain createWineDomain() {
@@ -273,7 +296,7 @@ class WineControllerTest {
 
     private WineOutputDTO createWineOutputDTO() {
         return WineOutputDTO.builder()
-                .id(UUID.fromString("562aaf01-f0c6-4bd6-aa22-30b4596e217f"))
+                .id(UUID.fromString(ID))
                 .sku("MiREDR2020It")
                 .name("Miliasso Barolo DOCG 2020")
                 .wineType(EnumConverter.toString(EnumWineType.REDWINE))
@@ -297,7 +320,7 @@ class WineControllerTest {
 
     private WineEntity createWineEntity() {
         return WineEntity.builder()
-                .id(UUID.fromString("562aaf01-f0c6-4bd6-aa22-30b4596e217f"))
+                .id(UUID.fromString(ID))
                 .sku("MiREDR2020It")
                 .name("Miliasso Barolo DOCG 2020")
                 .wineType(EnumWineType.REDWINE)

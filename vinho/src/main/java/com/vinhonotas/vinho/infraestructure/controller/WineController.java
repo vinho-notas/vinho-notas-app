@@ -4,6 +4,7 @@ import com.vinhonotas.vinho.application.usecases.CreateWine;
 import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
 import com.vinhonotas.vinho.application.usecases.RetrieveWines;
 import com.vinhonotas.vinho.application.usecases.UpdateWine;
+import com.vinhonotas.vinho.application.usecases.DeleteWine;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -31,15 +33,17 @@ public class WineController {
     private final UpdateWine updateWine;
     private final WineDomainMapper wineDomainMapper;
     private final WineEntityMapper wineEntityMapper;
+    private final DeleteWine deleteWine;
 
     public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper,
-                          RetrieveWineById retrieveWineById, RetrieveWines retrieveWines, UpdateWine updateWine){
+                          RetrieveWineById retrieveWineById, RetrieveWines retrieveWines, UpdateWine updateWine, DeleteWine deleteWine){
         this.createWine = createWine;
         this.wineDomainMapper = wineDomainMapper;
         this.wineEntityMapper = wineEntityMapper;
         this.retrieveWineById = retrieveWineById;
         this.retrieveWines = retrieveWines;
         this.updateWine = updateWine;
+        this.deleteWine = deleteWine;
     }
 
     @Operation(summary = "Cria um vinho")
@@ -88,6 +92,17 @@ public class WineController {
 
         log.info("updateWine:: Vinho atualizado com sucesso: {}", wineOutputDTO);
         return ResponseEntity.ok(wineOutputDTO);
+    }
+
+    @Operation(summary = "Deleta um vinho pelo id")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWine(@PathVariable("id") String id) {
+        log.info("deleteWine:: Recebendo requisição para deletar um vinho pelo id: {}", id);
+
+        deleteWine.deleteWineById(UUID.fromString(id));
+
+        log.info("deleteWine:: Vinho deletado com sucesso");
+        return ResponseEntity.noContent().build();
     }
 
 }
