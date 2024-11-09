@@ -155,11 +155,7 @@
 				</dependencies>
 				<configuration>
 					<targetClasses>
-						<param>com.vinhonotas.vinho.application.usecases.impl*</param>
-						<param>com.vinhonotas.vinho.domain.entities.wine.WineDomain</param>
-						<param>com.vinhonotas.vinho.infraestructure.controller.WineController</param>
-						<param>com.vinhonotas.vinho.infraestructure.gateways.mappers.*</param>
-						<param>com.vinhonotas.vinho.infraestructure.gateways.repositories.*</param>
+						<param>com.vinhonotas.vinho.*</param>
 					</targetClasses>
 					<targetTests>
 						<param>com.vinhonotas.vinho.*</param>
