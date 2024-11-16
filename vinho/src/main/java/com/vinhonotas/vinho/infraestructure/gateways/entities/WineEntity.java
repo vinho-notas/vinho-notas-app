@@ -3,6 +3,7 @@ package com.vinhonotas.vinho.infraestructure.gateways.entities;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +27,11 @@ public class WineEntity {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "sku", nullable = false)
+    @NotNull(message = "SKU is required")
+    @Column(name = "sku")
     private String sku;
 
+    @NotNull(message = "Name is required")
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -41,10 +44,12 @@ public class WineEntity {
     @Column(name = "purchasedate")
     private LocalDate purchaseDate;
 
+    @NotNull(message = "WineType is required")
     @Column(name = "winetype")
     @Enumerated(EnumType.STRING)
     private EnumWineType wineType;
 
+    @NotNull(message = "WineClassification is required")
     @Column(name = "wineclassification")
     @Enumerated(EnumType.STRING)
     private EnumWineClassification wineClassification;
@@ -64,9 +69,11 @@ public class WineEntity {
     @Column(name = "servicetemperature")
     private String serviceTemperature;
 
+    @NotNull(message = "Harvest is required")
     @Column(name = "harvest")
     private String harvest;
 
+    @NotNull(message = "Country is required")
     @Column(name = "country")
     private String country;
 
