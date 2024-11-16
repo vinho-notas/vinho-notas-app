@@ -20,7 +20,6 @@ public class RetrieveWineByIdRepositoryJPA implements RetrieveWineByIdRepository
 
     @Override
     public WineEntity retrieveWineById(String id) {
-
         return wineRepository.findById(UUID.fromString(id))
         .orElseThrow(() -> new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
     }
