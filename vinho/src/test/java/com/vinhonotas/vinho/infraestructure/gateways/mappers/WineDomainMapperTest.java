@@ -18,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class WineDomainMapperTest {
 
@@ -35,17 +37,36 @@ class WineDomainMapperTest {
     void testToWineDomainInputNotNull() {
         WineDomain wineDomain = Assertions.assertDoesNotThrow(() -> wineDomainMapper.toWineDomain(wineInputDTO));
 
-        Assertions.assertNotNull(wineDomain);
-        Assertions.assertNotNull(wineDomain.getWineDetails());
-        Assertions.assertNotNull(wineDomain.getPurchaseInfo());
-        Assertions.assertNotNull(wineDomain.getWineOrigin());
+        assertNotNull(wineDomain);
+        assertNotNull(wineDomain.getSku());
+        assertEquals("MiREDR2020It", wineDomain.getSku());
+        assertEquals(wineInputDTO.name(), wineDomain.getName());
+        assertNotNull(wineDomain.getWineDetails());
+        assertEquals(EnumWineType.REDWINE, wineDomain.getWineDetails().getWineType());
+        assertEquals(EnumWineClassification.DRYWINE, wineDomain.getWineDetails().getWineClassification());
+        assertEquals("14.5%", wineDomain.getWineDetails().getAlcoholContent());
+        assertEquals(750, wineDomain.getWineDetails().getVolumeMl());
+        assertEquals("Nebbiolo", wineDomain.getWineDetails().getGrape());
+        assertEquals("Cantine Pover", wineDomain.getWineDetails().getWinery());
+        assertEquals("16-18°C", wineDomain.getWineDetails().getServiceTemperature());
+        assertNotNull(wineDomain.getPurchaseInfo());
+        assertEquals(new BigDecimal("150.00"), wineDomain.getPurchaseInfo().getPrice());
+        assertEquals("Vinhos do Mundo", wineDomain.getPurchaseInfo().getPurchaseLocation());
+        assertEquals(LocalDate.now(), wineDomain.getPurchaseInfo().getPurchaseDate());
+        assertNotNull(wineDomain.getWineOrigin());
+        assertEquals("Italy", wineDomain.getWineOrigin().getCountry());
+        assertEquals("Piemonte", wineDomain.getWineOrigin().getRegion());
+        assertEquals("2020", wineDomain.getWineOrigin().getHarvest());
+        assertEquals("10 years", wineDomain.getWineOrigin().getGuardTime());
+        assertEquals("24 months in oak barrels", wineDomain.getWineOrigin().getMaturation());
+        assertEquals("Red meats and mature cheeses", wineDomain.getWineOrigin().getHarmonization());
     }
 
     @Test
     void testWineDomainInputNull() {
         WineDomain wineDomain = Assertions.assertDoesNotThrow(() -> wineDomainMapper.toWineDomain(null));
 
-        Assertions.assertNull(wineDomain);
+        assertNull(wineDomain);
     }
 
     private WineInputDTO createWineInputDTO() {
