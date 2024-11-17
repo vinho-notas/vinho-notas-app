@@ -28,7 +28,6 @@ import static org.mockito.Mockito.doThrow;
 class DeleteWineImplTest {
     private static final String ID = "123e4567-e89b-12d3-a456-426614174000";
 
-
     @InjectMocks
     private DeleteWineImpl deleteWineImpl;
 
@@ -74,6 +73,16 @@ class DeleteWineImplTest {
         Exception exception = assertThrows(Exception.class, () -> deleteWineImpl.deleteWineById(UUID.fromString(ID)));
         assertEquals(MessagesConstants.ERROR_DELETE_WINE, exception.getMessage());
         Mockito.verify(deleteWineRepository, Mockito.times(1)).deleteWineById(UUID.fromString(ID));
+        Mockito.verify(retrieveWineByIdRepository, Mockito.times(1)).retrieveWineById(ID);
+    }
+
+    @Test
+    @DisplayName("wineRetrieved deve ser nulo")
+    void deleteWineByIdErrorWineRetrievedNull() {
+        Mockito.when(retrieveWineByIdRepository.retrieveWineById(ID)).thenReturn(null);
+
+        assertDoesNotThrow(() -> deleteWineImpl.deleteWineById(UUID.fromString(ID)));
+        Mockito.verify(deleteWineRepository, Mockito.never()).deleteWineById(UUID.fromString(ID));
         Mockito.verify(retrieveWineByIdRepository, Mockito.times(1)).retrieveWineById(ID);
     }
 

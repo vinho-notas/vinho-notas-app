@@ -23,10 +23,9 @@ public class UpdateWineRepositoryJPA implements UpdateWineRepository {
 
     @Override
     public WineEntity updateWine(String id, WineDomain wineDomain) {
-        try {
             WineEntity wineRetrieved = wineRepository.findById(UUID.fromString(id)).orElseThrow(
                     () -> new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
-
+        try {
             updatePurchaseInfo(wineRetrieved, wineDomain);
             updateWineDetails(wineRetrieved, wineDomain);
             updateWineOrigin(wineRetrieved, wineDomain);

@@ -82,7 +82,14 @@ public class WineDomain {
          * @return String sku: código SKU gerado
          */
         private String generateSku(String name, EnumWineType wineType, EnumWineClassification wineClassification, String harvest, String country) {
-            return name.substring(0, 2) + wineType.name().substring(0, 2) + wineClassification.name().substring(0, 2) + harvest + country.substring(0, 2);
+            if (name == null || wineType == null || wineClassification == null || harvest == null || country == null) {
+                throw new IllegalArgumentException("Os parâmetros 'name', 'wineType', 'wineClassification', 'harvest' e 'country' não podem ser nulos.");
+            }
+            return name.substring(0, 2)
+                    + wineType.name().substring(0, 2)
+                    + wineClassification.name().substring(0, 2)
+                    + harvest
+                    + country.substring(0, 2);
         }
 
         public WineDomainBuilder sku(String name, EnumWineType wineType, EnumWineClassification wineClassification, String harvest, String country) {
