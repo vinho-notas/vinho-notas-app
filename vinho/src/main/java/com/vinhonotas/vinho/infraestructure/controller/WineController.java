@@ -1,10 +1,6 @@
 package com.vinhonotas.vinho.infraestructure.controller;
 
-import com.vinhonotas.vinho.application.usecases.CreateWine;
-import com.vinhonotas.vinho.application.usecases.RetrieveWineById;
-import com.vinhonotas.vinho.application.usecases.RetrieveWines;
-import com.vinhonotas.vinho.application.usecases.UpdateWine;
-import com.vinhonotas.vinho.application.usecases.DeleteWine;
+import com.vinhonotas.vinho.application.usecases.*;
 import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.output.WineOutputDTO;
@@ -12,8 +8,13 @@ import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import com.vinhonotas.vinho.infraestructure.gateways.mappers.WineDomainMapper;
 import com.vinhonotas.vinho.infraestructure.gateways.mappers.WineEntityMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@Tag(name = "Vinhos", description = "Operações relacionadas a vinhos")
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/wines")
-@Tag(name = "Vinhos", description = "Operações relacionadas a vinhos")
 public class WineController {
 
     private final CreateWine createWine;
@@ -35,18 +37,15 @@ public class WineController {
     private final WineEntityMapper wineEntityMapper;
     private final DeleteWine deleteWine;
 
-    public WineController(CreateWine createWine, WineDomainMapper wineDomainMapper, WineEntityMapper wineEntityMapper,
-                          RetrieveWineById retrieveWineById, RetrieveWines retrieveWines, UpdateWine updateWine, DeleteWine deleteWine){
-        this.createWine = createWine;
-        this.wineDomainMapper = wineDomainMapper;
-        this.wineEntityMapper = wineEntityMapper;
-        this.retrieveWineById = retrieveWineById;
-        this.retrieveWines = retrieveWines;
-        this.updateWine = updateWine;
-        this.deleteWine = deleteWine;
-    }
-
-    @Operation(summary = "Cria um vinho")
+    @Operation(summary = "Endpoint responsável por cadastrar um vinho")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vinho cadastrado com sucesso",
+                    content = @Content(schema = @Schema(implementation = WineOutputDTO.class) )),
+            @ApiResponse(responseCode = "400", description = "Erro na requisição",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @PostMapping
     public ResponseEntity<WineOutputDTO> createWine(@Valid @RequestBody WineInputDTO wineInputDTO){
         log.info("createWine:: Recebendo requisição para criar um vinho com o input: {}", wineInputDTO);
@@ -59,7 +58,17 @@ public class WineController {
         return ResponseEntity.ok(wineOutput);
     }
 
-    @Operation(summary = "Busca um vinho pelo id")
+    @Operation(summary = "Endpoint responsável por buscar um vinho pelo id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vinho retornado com sucesso",
+                    content = @Content(schema = @Schema(implementation = WineOutputDTO.class) )),
+            @ApiResponse(responseCode = "400", description = "Erro na requisição",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "Vinho não encontrado",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @GetMapping("/{id}")
     public ResponseEntity<WineOutputDTO> retrieveWineById(@PathVariable String id){
         log.info("retrieveWineById:: Recebedo requisição para retornar um vinho pelo id: {}", id);
@@ -71,9 +80,17 @@ public class WineController {
         return ResponseEntity.ok(wineOutput);
     }
 
-    @Operation(summary = "Retorna uma lista de vinhos")
+    @Operation(summary = "Entpoint responsável por retornar uma lista de vinhos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de vinhos retornada com sucesso",
+                    content = @Content(schema = @Schema(implementation = WineOutputDTO.class) )),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @GetMapping
     public ResponseEntity<List<WineOutputDTO>> retrieveAllWines(){
+        // TODO implementar lista paginável de vinhos
+
         log.info("retrieveAllWines:: Recebendo requisição para retornar todos os vinhos");
         List<WineEntity> wineList = retrieveWines.retrieveAllWines();
 
@@ -81,11 +98,23 @@ public class WineController {
         return ResponseEntity.ok(wineEntityMapper.toWineOutputDTOList(wineList));
     }
 
-    @Operation(summary = "Atualiza um vinho pelo id")
+    @Operation(summary = "Endpoint responsável por atualizar um vinho pelo id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vinho atualizado com sucesso",
+                    content = @Content(schema = @Schema(implementation = WineOutputDTO.class) )),
+            @ApiResponse(responseCode = "400", description = "Erro na requisição",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "Vinho não encontrado",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @PutMapping("/{id}")
     public ResponseEntity<WineOutputDTO> updateWine(@PathVariable("id") String id, @Valid @RequestBody WineInputDTO wineInputDTO) {
         log.info("updateWine:: Recebendo requisição para atualizar um vinho pelo id: {}", id);
 
+        // TODO ocorreu um erro ao atualizar o vinho
+        // TODO será necessário implementar nova lógica de atualização do vinho
         WineDomain wineDomain = wineDomainMapper.toWineDomain(wineInputDTO);
         WineEntity wineUpdated = updateWine.updateWine(id, wineDomain);
         WineOutputDTO wineOutputDTO = wineEntityMapper.toWineOutputDTO(wineUpdated);
@@ -94,7 +123,16 @@ public class WineController {
         return ResponseEntity.ok(wineOutputDTO);
     }
 
-    @Operation(summary = "Deleta um vinho pelo id")
+    @Operation(summary = "Endpoitn responsável por deletar um vinho pelo id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vinho deletado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro na requisição",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "Vinho não encontrado",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWine(@PathVariable("id") String id) {
         log.info("deleteWine:: Recebendo requisição para deletar um vinho pelo id: {}", id);
