@@ -143,4 +143,7 @@ public class WineController {
         return ResponseEntity.noContent().build();
     }
 
+    // TODO implementar endpoint para retornar vinhos filtro personalizado usando QueryDSL
+    // TODO implementar endpoint para retornar vinhos por SKU
+
 }
