@@ -89,8 +89,6 @@ public class WineController {
     })
     @GetMapping
     public ResponseEntity<List<WineOutputDTO>> retrieveAllWines(){
-        // TODO implementar lista paginável de vinhos
-
         log.info("retrieveAllWines:: Recebendo requisição para retornar todos os vinhos");
         List<WineEntity> wineList = retrieveWines.retrieveAllWines();
 
@@ -111,12 +109,9 @@ public class WineController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<WineOutputDTO> updateWine(@PathVariable("id") String id, @Valid @RequestBody WineInputDTO wineInputDTO) {
-        log.info("updateWine:: Recebendo requisição para atualizar um vinho pelo id: {}", id);
+        log.info("updateWine:: Recebendo requisição para atualizar um vinho pelo id: {}, com os dados: {}", id, wineInputDTO);
 
-        // TODO ocorreu um erro ao atualizar o vinho
-        // TODO será necessário implementar nova lógica de atualização do vinho
-        WineDomain wineDomain = wineDomainMapper.toWineDomain(wineInputDTO);
-        WineEntity wineUpdated = updateWine.updateWine(id, wineDomain);
+        WineEntity wineUpdated = updateWine.updateWine(id, wineInputDTO);
         WineOutputDTO wineOutputDTO = wineEntityMapper.toWineOutputDTO(wineUpdated);
 
         log.info("updateWine:: Vinho atualizado com sucesso: {}", wineOutputDTO);
@@ -142,8 +137,5 @@ public class WineController {
         log.info("deleteWine:: Vinho deletado com sucesso");
         return ResponseEntity.noContent().build();
     }
-
-    // TODO implementar endpoint para retornar vinhos filtro personalizado usando QueryDSL
-    // TODO implementar endpoint para retornar vinhos por SKU
 
 }

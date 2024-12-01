@@ -160,7 +160,7 @@ class WineControllerTest {
     @Test
     @DisplayName("Deve atualizar um vinho pelo id")
     void testUpdateWine() throws Exception {when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
-        when(updateWine.updateWine(ID, wineDomain)).thenReturn(wineEntity);
+        when(updateWine.updateWine(ID, wineInputDTO)).thenReturn(wineEntity);
         when(wineEntityMapper.toWineOutputDTO(wineEntity)).thenReturn(wineOutputDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
@@ -178,7 +178,7 @@ class WineControllerTest {
 
         when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
         when(wineRepository.findById(UUID.fromString(ID))).thenReturn(Optional.empty());
-        when(updateWine.updateWine(ID, wineDomain)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
+        when(updateWine.updateWine(ID, wineInputDTO)).thenThrow(new WineNotFoundException(MessagesConstants.ERROR_WINE_NOT_FOUND));
 
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -192,7 +192,7 @@ class WineControllerTest {
     @DisplayName("Deve lançar BadRequestException ao tentar atualizar um vinho pelo id")
     void testUpdateWineBadRequestException() throws Exception {
         when(wineDomainMapper.toWineDomain(wineInputDTO)).thenReturn(wineDomain);
-        when(updateWine.updateWine(ID, wineDomain)).thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_WINE_DATA));
+        when(updateWine.updateWine(ID, wineInputDTO)).thenThrow(new BadRequestException(MessagesConstants.ERROR_UPDATE_WINE_DATA));
 
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/" + ID)
                 .contentType(MediaType.APPLICATION_JSON)

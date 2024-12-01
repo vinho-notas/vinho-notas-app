@@ -6,8 +6,13 @@ import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
 import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.PurchaseInfoDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineDetailsDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineOriginDTO;
 import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
 import com.vinhonotas.vinho.infraestructure.persistence.WineRepository;
+import com.vinhonotas.vinho.utils.EnumConverter;
 import com.vinhonotas.vinho.utils.MessagesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,11 +43,13 @@ class UpdateWineRepositoryJPATest {
 
     private WineEntity wineEntity;
     private WineDomain wineDomain;
+    private WineInputDTO wineInputDTO;
 
     @BeforeEach
     void setUp() {
         wineEntity = createWineEntity();
         wineDomain = createWineDomain();
+        wineInputDTO = createWineInputDTO();
     }
 
     @Test
@@ -51,7 +58,7 @@ class UpdateWineRepositoryJPATest {
         when(wineRepository.findById(UUID.fromString(ID))).thenReturn(Optional.of(wineEntity));
         when(wineRepository.save(wineEntity)).thenReturn(wineEntity);
 
-        WineEntity wineEntityUpdated = assertDoesNotThrow(() -> updateWineRepositoryJPA.updateWine(ID, wineDomain));
+        WineEntity wineEntityUpdated = assertDoesNotThrow(() -> updateWineRepositoryJPA.updateWine(ID, wineInputDTO));
 
         assertNotNull(wineEntityUpdated);
         assertEquals(wineDomain.getSku(), wineEntityUpdated.getSku());
@@ -81,7 +88,7 @@ class UpdateWineRepositoryJPATest {
     void testUpdateWineNotFound() {
         when(wineRepository.findById(UUID.fromString(ID))).thenReturn(Optional.ofNullable(null));
 
-        Exception exception = assertThrows(Exception.class, () -> updateWineRepositoryJPA.updateWine(ID, wineDomain));
+        Exception exception = assertThrows(Exception.class, () -> updateWineRepositoryJPA.updateWine(ID, wineInputDTO));
         assertEquals(MessagesConstants.ERROR_WINE_NOT_FOUND, exception.getMessage());
         verify(wineRepository).findById(UUID.fromString(ID));
         verify(wineRepository, times(0)).save(any());
@@ -93,7 +100,7 @@ class UpdateWineRepositoryJPATest {
         when(wineRepository.findById(UUID.fromString(ID))).thenReturn(Optional.of(wineEntity));
         doThrow(new RuntimeException()).when(wineRepository).save(wineEntity);
 
-        Exception exception = assertThrows(Exception.class, () -> updateWineRepositoryJPA.updateWine(ID, wineDomain));
+        Exception exception = assertThrows(Exception.class, () -> updateWineRepositoryJPA.updateWine(ID, wineInputDTO));
         assertEquals(MessagesConstants.ERROR_UPDATE_WINE_DATA, exception.getMessage());
         verify(wineRepository).findById(UUID.fromString(ID));
         verify(wineRepository).save(wineEntity);
@@ -162,6 +169,34 @@ class UpdateWineRepositoryJPATest {
                 .winery("Cantine Pover")
                 .serviceTemperature("16-18°C")
                 .build();
+    }
+
+    private WineInputDTO createWineInputDTO() {
+        return new WineInputDTO(
+                "Miliasso Barolo DOCG 2020",
+                new WineDetailsDTO(
+                        EnumConverter.toString(EnumWineType.REDWINE),
+                        EnumConverter.toString(EnumWineClassification.DRYWINE),
+                        "14.5%",
+                        "750",
+                        "Nebbiolo",
+                        "Cantine Pover",
+                        "16-18°C"
+                ),
+                new PurchaseInfoDTO(
+                        new BigDecimal("150.00"),
+                        "Vinhos do Mundo",
+                        LocalDate.now()
+                ),
+                new WineOriginDTO(
+                        "Italy",
+                        "Piemonte",
+                        "2020",
+                        "10 years",
+                        "24 months in oak barrels",
+                        "Red meats and mature cheeses"
+                )
+        );
     }
 
 }

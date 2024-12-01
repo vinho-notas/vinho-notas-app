@@ -1,13 +1,14 @@
 package com.vinhonotas.vinho.application.usecases.impl;
 
 import com.vinhonotas.vinho.application.gateways.UpdateWineRepository;
-import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
-import com.vinhonotas.vinho.domain.entities.wine.WineDetails;
-import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
-import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.PurchaseInfoDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineDetailsDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineInputDTO;
+import com.vinhonotas.vinho.infraestructure.controller.dtos.input.WineOriginDTO;
 import com.vinhonotas.vinho.infraestructure.gateways.entities.WineEntity;
+import com.vinhonotas.vinho.utils.EnumConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,24 +36,24 @@ class UpdateWineImplTest {
     @Mock
     private UpdateWineRepository updateWineRepository;
 
-    private WineDomain wineDomain;
     private WineEntity wineEntity;
+    private WineInputDTO wineInputDTO;
 
     @BeforeEach
     void setUp() {
-        wineDomain = createWineDomain();
         wineEntity = createWineEntity();
+        wineInputDTO = createWineInputDTO();
     }
 
     @Test
     @DisplayName("Deve atualizar um vinho pelo id")
     void testUpdateWine() {
-        when(updateWineRepository.updateWine(WINE_ID, wineDomain)).thenReturn(wineEntity);
+        when(updateWineRepository.updateWine(WINE_ID, wineInputDTO)).thenReturn(wineEntity);
 
-        WineEntity updatedWine = Assertions.assertDoesNotThrow(() -> updateWineImpl.updateWine(WINE_ID, wineDomain));
+        WineEntity updatedWine = Assertions.assertDoesNotThrow(() -> updateWineImpl.updateWine(WINE_ID, wineInputDTO));
         Assertions.assertNotNull(updatedWine);
         Assertions.assertEquals(wineEntity, updatedWine);
-        verify(updateWineRepository).updateWine(WINE_ID, wineDomain);
+        verify(updateWineRepository).updateWine(WINE_ID, wineInputDTO);
     }
 
     private WineEntity createWineEntity() {
@@ -79,37 +80,32 @@ class UpdateWineImplTest {
                 .build();
     }
 
-    private WineDomain createWineDomain() {
-        return WineDomain.builder()
-                .name("Miliasso Barolo DOCG 2020")
-                .wineDetails(
-                        WineDetails.builder()
-                                .wineType(EnumWineType.REDWINE)
-                                .wineClassification(EnumWineClassification.DRYWINE)
-                                .alcoholContent("14.5%")
-                                .volumeMl(750)
-                                .grape("Nebbiolo")
-                                .winery("Cantine Povero")
-                                .serviceTemperature("16-18°C")
-                                .build()
+     private WineInputDTO createWineInputDTO() {
+        return new WineInputDTO(
+                "Miliasso Barolo DOCG 2020",
+                new WineDetailsDTO(
+                        EnumConverter.toString(EnumWineType.REDWINE),
+                        EnumConverter.toString(EnumWineClassification.DRYWINE),
+                        "14.5%",
+                        "750",
+                        "Nebbiolo",
+                        "Cantine Pover",
+                        "16-18°C"
+                ),
+                new PurchaseInfoDTO(
+                        new BigDecimal("150.00"),
+                        "Vinhos do Mundo",
+                        LocalDate.now()
+                ),
+                new WineOriginDTO(
+                        "Italy",
+                        "Piemonte",
+                        "2020",
+                        "10 years",
+                        "24 months in oak barrels",
+                        "Red meats and mature cheeses"
                 )
-                .purchaseInfo(
-                        PurchaseInfo.builder()
-                                .price(new BigDecimal("150.00"))
-                                .purchaseLocation("Vinhos do Mundo")
-                                .purchaseDate(LocalDate.of(2021, 10, 10))
-                                .build()
-                )
-                .wineOrigin(
-                        WineOrigin.builder()
-                                .country("Italy")
-                                .region("Piemonte")
-                                .harvest("2020")
-                                .guardTime("10 years")
-                                .maturation("24 months in oak barrels")
-                                .harmonization("Red meats and mature cheeses")
-                                .build()
-                )
-                .build();
+        );
     }
+
 }
