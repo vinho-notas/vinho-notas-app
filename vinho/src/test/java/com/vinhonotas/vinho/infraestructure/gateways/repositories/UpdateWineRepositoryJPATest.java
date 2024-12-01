@@ -1,9 +1,5 @@
 package com.vinhonotas.vinho.infraestructure.gateways.repositories;
 
-import com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo;
-import com.vinhonotas.vinho.domain.entities.wine.WineDetails;
-import com.vinhonotas.vinho.domain.entities.wine.WineDomain;
-import com.vinhonotas.vinho.domain.entities.wine.WineOrigin;
 import com.vinhonotas.vinho.domain.enums.EnumWineClassification;
 import com.vinhonotas.vinho.domain.enums.EnumWineType;
 import com.vinhonotas.vinho.infraestructure.controller.dtos.input.PurchaseInfoDTO;
@@ -22,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -42,13 +39,11 @@ class UpdateWineRepositoryJPATest {
     private WineRepository wineRepository;
 
     private WineEntity wineEntity;
-    private WineDomain wineDomain;
     private WineInputDTO wineInputDTO;
 
     @BeforeEach
     void setUp() {
         wineEntity = createWineEntity();
-        wineDomain = createWineDomain();
         wineInputDTO = createWineInputDTO();
     }
 
@@ -61,24 +56,24 @@ class UpdateWineRepositoryJPATest {
         WineEntity wineEntityUpdated = assertDoesNotThrow(() -> updateWineRepositoryJPA.updateWine(ID, wineInputDTO));
 
         assertNotNull(wineEntityUpdated);
-        assertEquals(wineDomain.getSku(), wineEntityUpdated.getSku());
-        assertEquals(wineDomain.getName(), wineEntityUpdated.getName());
-        assertEquals(wineDomain.getWineDetails().getWineType(), wineEntityUpdated.getWineType());
-        assertEquals(wineDomain.getWineDetails().getWineClassification(), wineEntityUpdated.getWineClassification());
-        assertEquals(wineDomain.getWineDetails().getAlcoholContent(), wineEntityUpdated.getAlcoholContent());
-        assertEquals(wineDomain.getWineDetails().getVolumeMl(), wineEntityUpdated.getVolumeMl());
-        assertEquals(wineDomain.getWineDetails().getGrape(), wineEntityUpdated.getGrape());
-        assertEquals(wineDomain.getWineDetails().getWinery(), wineEntityUpdated.getWinery());
-        assertEquals(wineDomain.getWineDetails().getServiceTemperature(), wineEntityUpdated.getServiceTemperature());
-        assertEquals(wineDomain.getPurchaseInfo().getPrice(), wineEntityUpdated.getPrice());
-        assertEquals(wineDomain.getPurchaseInfo().getPurchaseLocation(), wineEntityUpdated.getPurchaseLocation());
-        assertEquals(wineDomain.getPurchaseInfo().getPurchaseDate(), wineEntityUpdated.getPurchaseDate());
-        assertEquals(wineDomain.getWineOrigin().getCountry(), wineEntityUpdated.getCountry());
-        assertEquals(wineDomain.getWineOrigin().getRegion(), wineEntityUpdated.getRegion());
-        assertEquals(wineDomain.getWineOrigin().getHarvest(), wineEntityUpdated.getHarvest());
-        assertEquals(wineDomain.getWineOrigin().getGuardTime(), wineEntityUpdated.getGuardTime());
-        assertEquals(wineDomain.getWineOrigin().getMaturation(), wineEntityUpdated.getMaturation());
-        assertEquals(wineDomain.getWineOrigin().getHarmonization(), wineEntityUpdated.getHarmonization());
+        assertEquals(wineInputDTO.name(), wineEntityUpdated.getName());
+        assertEquals(EnumConverter.fromString(wineInputDTO.wineDetails().wineType(), EnumWineType.class), wineEntityUpdated.getWineType());
+        assertEquals(EnumConverter.fromString(wineInputDTO.wineDetails().wineClassification(), EnumWineClassification.class),
+                wineEntityUpdated.getWineClassification());
+        assertEquals(wineInputDTO.wineDetails().alcoholContent(), wineEntityUpdated.getAlcoholContent());
+        assertEquals(wineInputDTO.wineDetails().volumeMl(), wineEntityUpdated.getVolumeMl().toString());
+        assertEquals(wineInputDTO.wineDetails().grape(), wineEntityUpdated.getGrape());
+        assertEquals(wineInputDTO.wineDetails().winery(), wineEntityUpdated.getWinery());
+        assertEquals(wineInputDTO.wineDetails().serviceTemperature(), wineEntityUpdated.getServiceTemperature());
+        assertEquals(wineInputDTO.purchaseInfo().price(), wineEntityUpdated.getPrice());
+        assertEquals(wineInputDTO.purchaseInfo().purchaseLocation(), wineEntityUpdated.getPurchaseLocation());
+        assertEquals(wineInputDTO.purchaseInfo().purchaseDate(), wineEntityUpdated.getPurchaseDate());
+        assertEquals(wineInputDTO.wineOrigin().country(), wineEntityUpdated.getCountry());
+        assertEquals(wineInputDTO.wineOrigin().region(), wineEntityUpdated.getRegion());
+        assertEquals(wineInputDTO.wineOrigin().harvest(), wineEntityUpdated.getHarvest());
+        assertEquals(wineInputDTO.wineOrigin().guardTime(), wineEntityUpdated.getGuardTime());
+        assertEquals(wineInputDTO.wineOrigin().maturation(), wineEntityUpdated.getMaturation());
+        assertEquals(wineInputDTO.wineOrigin().harmonization(), wineEntityUpdated.getHarmonization());
         verify(wineRepository).findById(UUID.fromString(ID));
         verify(wineRepository).save(wineEntity);
     }
@@ -106,6 +101,82 @@ class UpdateWineRepositoryJPATest {
         verify(wineRepository).save(wineEntity);
     }
 
+    @Test
+    @DisplayName("Deve atualizar as informações de compra corretamente")
+    void testUpdatePurchaseInfo() throws Exception {
+        UpdateWineRepositoryJPA updateWineRepositoryJPAReflection = new UpdateWineRepositoryJPA(wineRepository);
+        Method method = UpdateWineRepositoryJPA.class.getDeclaredMethod("updatePurchaseInfo", WineEntity.class, WineInputDTO.class);
+        method.setAccessible(true);
+
+        WineEntity wineEntityPurchaseInfo = createWineEntity();
+        PurchaseInfoDTO purchaseInfo = new PurchaseInfoDTO(new BigDecimal("200.00"), "Loja Nova", LocalDate.now());
+        WineInputDTO wineInputDTOPurchaseInfo= new WineInputDTO(null, null, purchaseInfo, null);
+
+        assertDoesNotThrow(() -> method.invoke(updateWineRepositoryJPAReflection, wineEntityPurchaseInfo, wineInputDTOPurchaseInfo));
+
+        assertEquals(new BigDecimal("200.00"), wineEntityPurchaseInfo.getPrice());
+        assertEquals("Loja Nova", wineEntityPurchaseInfo.getPurchaseLocation());
+        assertEquals(LocalDate.now(), wineEntityPurchaseInfo.getPurchaseDate());
+    }
+
+    @Test
+    @DisplayName("Deve atualizar as informações de origem do vinho corretamente")
+    void testUpdateWineDetails() throws Exception {
+        UpdateWineRepositoryJPA updateWineRepositoryJPAReflection = new UpdateWineRepositoryJPA(wineRepository);
+        Method method = UpdateWineRepositoryJPA.class.getDeclaredMethod("updateWineDetails", WineEntity.class, WineInputDTO.class);
+        method.setAccessible(true);
+
+        WineEntity wineEntityWineDetails = createWineEntity();
+        WineDetailsDTO wineDetails = new WineDetailsDTO(
+                EnumConverter.toString(EnumWineType.ROSEWINE),
+                EnumConverter.toString(EnumWineClassification.SWEETWINE),
+                "12.5%",
+                "500",
+                "Merlot",
+                "Cantine Pover",
+                "10-12°C"
+        );
+        WineInputDTO wineInputDTOWineDetails = new WineInputDTO(null, wineDetails, null, null);
+
+        assertDoesNotThrow(() -> method.invoke(updateWineRepositoryJPAReflection, wineEntityWineDetails, wineInputDTOWineDetails));
+
+        assertEquals(EnumWineType.ROSEWINE, wineEntityWineDetails.getWineType());
+        assertEquals(EnumWineClassification.SWEETWINE, wineEntityWineDetails.getWineClassification());
+        assertEquals("12.5%", wineEntityWineDetails.getAlcoholContent());
+        assertEquals("500", wineEntityWineDetails.getVolumeMl().toString());
+        assertEquals("Merlot", wineEntityWineDetails.getGrape());
+        assertEquals("Cantine Pover", wineEntityWineDetails.getWinery());
+        assertEquals("10-12°C", wineEntityWineDetails.getServiceTemperature());
+    }
+
+    @Test
+    @DisplayName("Deve atualizar as informações de origem do vinho corretamente")
+    void testUpdateWineOrigin() throws Exception {
+        UpdateWineRepositoryJPA updateWineRepositoryJPAReflection = new UpdateWineRepositoryJPA(wineRepository);
+        Method method = UpdateWineRepositoryJPA.class.getDeclaredMethod("updateWineOrigin", WineEntity.class, WineInputDTO.class);
+        method.setAccessible(true);
+
+        WineEntity wineEntityWineOrigin = createWineEntity();
+        WineOriginDTO wineOrigin = new WineOriginDTO(
+                "France",
+                "Bordeaux",
+                "2019",
+                "5 years",
+                "12 months in oak barrels",
+                "White meats and soft cheeses"
+        );
+        WineInputDTO wineInputDTOWineOrigin = new WineInputDTO(null, null, null, wineOrigin);
+
+        assertDoesNotThrow(() -> method.invoke(updateWineRepositoryJPAReflection, wineEntityWineOrigin, wineInputDTOWineOrigin));
+
+        assertEquals("France", wineEntityWineOrigin.getCountry());
+        assertEquals("Bordeaux", wineEntityWineOrigin.getRegion());
+        assertEquals("2019", wineEntityWineOrigin.getHarvest());
+        assertEquals("5 years", wineEntityWineOrigin.getGuardTime());
+        assertEquals("12 months in oak barrels", wineEntityWineOrigin.getMaturation());
+        assertEquals("White meats and soft cheeses", wineEntityWineOrigin.getHarmonization());
+    }
+
     private WineEntity createWineEntity() {
         return WineEntity.builder()
                 .id(UUID.fromString(ID))
@@ -127,47 +198,6 @@ class UpdateWineRepositoryJPATest {
                 .guardTime("10 years")
                 .maturation("24 months in oak barrels")
                 .harmonization("Red meats and mature cheeses")
-                .build();
-    }
-
-    private WineDomain createWineDomain() {
-        return WineDomain.builder()
-                .sku("Miliasso Barolo DOCG 2020", EnumWineType.REDWINE, EnumWineClassification.DRYWINE, "2020", "Italy")
-                .name("Miliasso Barolo DOCG 2020")
-                .wineDetails(createWineDetails())
-                .purchaseInfo(createPurchaseInfo())
-                .wineOrigin(createWineOrigin())
-                .build();
-    }
-
-    private WineOrigin createWineOrigin() {
-        return WineOrigin.builder()
-                .country("Italy")
-                .region("Piemonte")
-                .harvest("2020")
-                .guardTime("10 years")
-                .maturation("24 months in oak barrels")
-                .harmonization("Red meats and mature cheeses")
-                .build();
-    }
-
-    private PurchaseInfo createPurchaseInfo() {
-        return PurchaseInfo.builder()
-                .price(new BigDecimal("150.00"))
-                .purchaseLocation("Vinhos do Mundo")
-                .purchaseDate(LocalDate.now())
-                .build();
-    }
-
-    private WineDetails createWineDetails() {
-        return WineDetails.builder()
-                .wineType(EnumWineType.REDWINE)
-                .wineClassification(EnumWineClassification.DRYWINE)
-                .alcoholContent("14.5%")
-                .volumeMl(750)
-                .grape("Nebbiolo")
-                .winery("Cantine Pover")
-                .serviceTemperature("16-18°C")
                 .build();
     }
 

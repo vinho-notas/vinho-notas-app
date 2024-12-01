@@ -162,6 +162,7 @@
 						<param>com.vinhonotas.vinho.domain.entities.wine.WineOrigin</param>
 						<param>com.vinhonotas.vinho.domain.enums.*</param>
 						<param>com.vinhonotas.vinho.infraestructure.controller.dtos.*</param>
+						<param>com.vinhonotas.vinho.infraestructure.controller.exceptions.*</param>
 						<param>com.vinhonotas.vinho.infraestructure.gateways.entities.*</param>
 						<param>com.vinhonotas.vinho.utils.*</param>
 						<param>com.vinhonotas.vinho.configuration.*</param>
