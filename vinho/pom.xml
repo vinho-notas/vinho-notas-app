@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.3.5</version>
+		<relativePath/>
 	</parent>
 	<groupId>com.vinho-notas</groupId>
 	<artifactId>vinho</artifactId>
@@ -15,7 +15,7 @@
 	<description>vinho</description>
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2023.0.0</spring-cloud.version>
+		<spring-cloud.version>2023.0.3</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
+			<artifactId>flyway-database-postgresql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -70,11 +70,6 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -87,7 +82,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -105,6 +99,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
 				<executions>
 					<execution>
 						<goals>
@@ -127,13 +122,58 @@
 				<configuration>
 					<excludes>
 						<exclude>**/com/vinhonotas/vinho/VinhoApplication.class</exclude>
-						<exclude>**/com/vinhonotas/vinho/domain/**</exclude>
-						<exclude>**/com/vinhonotas/vinho/interfaces/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/exceptions/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/PurchaseInfo.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/WineDetails.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/entities/wine/WineOrigin.class</exclude>
+						<exclude>**/com/vinhonotas/vinho/domain/enums/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/infraestructure/controller/dtos/**</exclude>
+						<exclude>**/com/vinhonotas/vinho/infraestructure/gateways/entities/**</exclude>
 						<exclude>**/com/vinhonotas/vinho/utils/**</exclude>
 						<exclude>**/com/vinhonotas/vinho/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<!--Mutation testing-->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.17.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<param>com.vinhonotas.vinho.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.vinhonotas.vinho.*</param>
+					</targetTests>
+					<excludedClasses>
+						<param>com.vinhonotas.vinho.VinhoApplication</param>
+						<param>com.vinhonotas.vinho.domain.entities.exceptions.*</param>
+						<param>com.vinhonotas.vinho.domain.entities.wine.PurchaseInfo</param>
+						<param>com.vinhonotas.vinho.domain.entities.wine.WineDetails</param>
+						<param>com.vinhonotas.vinho.domain.entities.wine.WineOrigin</param>
+						<param>com.vinhonotas.vinho.domain.enums.*</param>
+						<param>com.vinhonotas.vinho.infraestructure.controller.dtos.*</param>
+						<param>com.vinhonotas.vinho.infraestructure.controller.exceptions.*</param>
+						<param>com.vinhonotas.vinho.infraestructure.gateways.entities.*</param>
+						<param>com.vinhonotas.vinho.utils.*</param>
+						<param>com.vinhonotas.vinho.configuration.*</param>
+					</excludedClasses>
+					<mutators>
+						<mutator>ALL</mutator>
+					</mutators>
+				</configuration>
+			</plugin>
+			<!--Mutation testing-->
+
 		</plugins>
 	</build>
 

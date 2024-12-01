@@ -1,0 +1,1 @@
+ALTER TABLE vinho.tbwine ADD COLUMN sku VARCHAR(30) not null;
