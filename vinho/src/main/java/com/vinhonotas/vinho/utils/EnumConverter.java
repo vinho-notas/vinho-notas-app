@@ -7,6 +7,10 @@ import lombok.experimental.UtilityClass;
 public class EnumConverter {
 
     public static <T extends Enum<T> & EnumCode> T fromString(String value, Class<T> enumType) {
+        if (value == null || value.isEmpty()) {
+            return null;
+        }
+
         for (T enumValue : enumType.getEnumConstants()) {
             if (enumValue.getCode().equals(value)) {
                 return enumValue;
