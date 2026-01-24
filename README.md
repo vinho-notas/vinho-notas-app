@@ -25,9 +25,9 @@ Este é o repositório do projeto `vinho-notas-app`, uma aplicação para facili
 
 ## Funcionalidades
 <p>A solução toda foi pensada para ser agnóstica, ou seja, independente de qualquer plataforma ou tecnologia específica. Em outras palavras, ela não está vinculada a um sistema operacional, linguagem de programação ou ambiente de desenvolvimento específico.</p>
-<p>Para conseguir isso, optou-se pela construção de APIs (Interfaces de Programação de Aplicativos) permitindo que diferentes sistemas se comuniquem entre si de forma padronizada, independentemente das tecnologias subjacentes. Dessa forma consegui-se garantir que ela possa ser facilmente integrada a uma variedade de plataformas, sistemas e linguagens de programação, tornando-a mais agnóstica em relação às tecnologias específicas.</p>
+<p>Para conseguir isso, optou-se pela construção de APIs (Interfaces de Programação de Aplicativos) permitindo que diferentes sistemas se comuniquem entre si de forma padronizada, independentemente das tecnologias subjacentes. Dessa forma consegue-se garantir que ela possa ser facilmente integrada a uma variedade de plataformas, sistemas e linguagens de programação, tornando-a mais agnóstica em relação às tecnologias específicas.</p>
 <p>Para dao ao usuário a experiência similar à uma aplicação desktop, optou-se pela criação de uma SPA (Single Page Application). Além disso, para garantir uma experiência ainda melhor, buscou-se a combinação da SPA com uma PWA (Progressive Web Application), permitindo assim que o Vinho Notas seja instalado tanto no computador quanto no celular do usuário.</p>
-<p>Com isso, consegui-se combinar a eficiência e a experiência do usuário de uma SPA com as vantagens adicionais de uma PWA, como capacidades offline, instalação na tela inicial e atualizações automáticas, resultando em uma experiência de usuário mais atraente e resiliente.</p>
+<p>Com isso, consegue-se combinar a eficiência e a experiência do usuário de uma SPA com as vantagens adicionais de uma PWA, como capacidades offline, instalação na tela inicial e atualizações automáticas, resultando em uma experiência de usuário mais atraente e resiliente.</p>
 
 ## Configuração do Projeto
 
